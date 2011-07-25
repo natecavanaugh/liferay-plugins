@@ -85,11 +85,17 @@ public class KaleoTransitionCacheModel implements CacheModel<KaleoTransition> {
 			kaleoTransitionImpl.setUserName(userName);
 		}
 
-		if (createDate > 0) {
+		if (createDate == Long.MIN_VALUE) {
+			kaleoTransitionImpl.setCreateDate(null);
+		}
+		else {
 			kaleoTransitionImpl.setCreateDate(new Date(createDate));
 		}
 
-		if (modifiedDate > 0) {
+		if (modifiedDate == Long.MIN_VALUE) {
+			kaleoTransitionImpl.setModifiedDate(null);
+		}
+		else {
 			kaleoTransitionImpl.setModifiedDate(new Date(modifiedDate));
 		}
 

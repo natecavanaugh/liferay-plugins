@@ -81,11 +81,17 @@ public class OAuthTokenCacheModel implements CacheModel<OAuthToken> {
 			oAuthTokenImpl.setUserName(userName);
 		}
 
-		if (createDate > 0) {
+		if (createDate == Long.MIN_VALUE) {
+			oAuthTokenImpl.setCreateDate(null);
+		}
+		else {
 			oAuthTokenImpl.setCreateDate(new Date(createDate));
 		}
 
-		if (modifiedDate > 0) {
+		if (modifiedDate == Long.MIN_VALUE) {
+			oAuthTokenImpl.setModifiedDate(null);
+		}
+		else {
 			oAuthTokenImpl.setModifiedDate(new Date(modifiedDate));
 		}
 

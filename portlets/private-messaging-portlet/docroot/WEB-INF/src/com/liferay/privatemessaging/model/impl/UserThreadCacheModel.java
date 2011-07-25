@@ -63,11 +63,17 @@ public class UserThreadCacheModel implements CacheModel<UserThread> {
 		userThreadImpl.setCompanyId(companyId);
 		userThreadImpl.setUserId(userId);
 
-		if (createDate > 0) {
+		if (createDate == Long.MIN_VALUE) {
+			userThreadImpl.setCreateDate(null);
+		}
+		else {
 			userThreadImpl.setCreateDate(new Date(createDate));
 		}
 
-		if (modifiedDate > 0) {
+		if (modifiedDate == Long.MIN_VALUE) {
+			userThreadImpl.setModifiedDate(null);
+		}
+		else {
 			userThreadImpl.setModifiedDate(new Date(modifiedDate));
 		}
 

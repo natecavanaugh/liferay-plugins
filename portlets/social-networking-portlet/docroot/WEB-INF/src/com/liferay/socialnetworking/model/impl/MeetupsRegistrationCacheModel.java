@@ -71,11 +71,17 @@ public class MeetupsRegistrationCacheModel implements CacheModel<MeetupsRegistra
 			meetupsRegistrationImpl.setUserName(userName);
 		}
 
-		if (createDate > 0) {
+		if (createDate == Long.MIN_VALUE) {
+			meetupsRegistrationImpl.setCreateDate(null);
+		}
+		else {
 			meetupsRegistrationImpl.setCreateDate(new Date(createDate));
 		}
 
-		if (modifiedDate > 0) {
+		if (modifiedDate == Long.MIN_VALUE) {
+			meetupsRegistrationImpl.setModifiedDate(null);
+		}
+		else {
 			meetupsRegistrationImpl.setModifiedDate(new Date(modifiedDate));
 		}
 

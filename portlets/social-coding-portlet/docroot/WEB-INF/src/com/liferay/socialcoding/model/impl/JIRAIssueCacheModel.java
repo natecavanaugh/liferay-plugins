@@ -66,11 +66,17 @@ public class JIRAIssueCacheModel implements CacheModel<JIRAIssue> {
 
 		jiraIssueImpl.setJiraIssueId(jiraIssueId);
 
-		if (createDate > 0) {
+		if (createDate == Long.MIN_VALUE) {
+			jiraIssueImpl.setCreateDate(null);
+		}
+		else {
 			jiraIssueImpl.setCreateDate(new Date(createDate));
 		}
 
-		if (modifiedDate > 0) {
+		if (modifiedDate == Long.MIN_VALUE) {
+			jiraIssueImpl.setModifiedDate(null);
+		}
+		else {
 			jiraIssueImpl.setModifiedDate(new Date(modifiedDate));
 		}
 

@@ -174,6 +174,13 @@ public class KaleoActionLocalServiceUtil {
 		return getService().getKaleoAction(kaleoActionId);
 	}
 
+	public static com.liferay.portal.model.PersistedModel getPersistedModel(
+		java.io.Serializable primaryKeyObj)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService().getPersistedModel(primaryKeyObj);
+	}
+
 	/**
 	* Returns a range of all the kaleo actions.
 	*
@@ -250,15 +257,15 @@ public class KaleoActionLocalServiceUtil {
 	}
 
 	public static com.liferay.portal.workflow.kaleo.model.KaleoAction addKaleoAction(
-		long kaleoDefinitionId, long kaleoNodeId,
-		java.lang.String kaleoNodeName,
+		java.lang.String kaleoClassName, long kaleoClassPK,
+		long kaleoDefinitionId, java.lang.String kaleoNodeName,
 		com.liferay.portal.workflow.kaleo.definition.Action action,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		return getService()
-				   .addKaleoAction(kaleoDefinitionId, kaleoNodeId,
-			kaleoNodeName, action, serviceContext);
+				   .addKaleoAction(kaleoClassName, kaleoClassPK,
+			kaleoDefinitionId, kaleoNodeName, action, serviceContext);
 	}
 
 	public static void deleteCompanyKaleoActions(long companyId)
@@ -272,9 +279,11 @@ public class KaleoActionLocalServiceUtil {
 	}
 
 	public static java.util.List<com.liferay.portal.workflow.kaleo.model.KaleoAction> getKaleoActions(
-		long kaleoNodeId, java.lang.String executionType)
+		java.lang.String kaleoClassName, long kaleoClassPK,
+		java.lang.String executionType)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		return getService().getKaleoActions(kaleoNodeId, executionType);
+		return getService()
+				   .getKaleoActions(kaleoClassName, kaleoClassPK, executionType);
 	}
 
 	public static void clearService() {

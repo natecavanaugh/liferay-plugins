@@ -164,6 +164,13 @@ public class KaleoTimerLocalServiceWrapper implements KaleoTimerLocalService {
 		return _kaleoTimerLocalService.getKaleoTimer(kaleoTimerId);
 	}
 
+	public com.liferay.portal.model.PersistedModel getPersistedModel(
+		java.io.Serializable primaryKeyObj)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _kaleoTimerLocalService.getPersistedModel(primaryKeyObj);
+	}
+
 	/**
 	* Returns a range of all the kaleo timers.
 	*
@@ -240,26 +247,28 @@ public class KaleoTimerLocalServiceWrapper implements KaleoTimerLocalService {
 	}
 
 	public com.liferay.portal.workflow.kaleo.model.KaleoTimer addKaleoTimer(
-		long kaleoDefinitionId, long kaleoNodeId, long parentKaleoNodeId,
+		java.lang.String kaleoClassName, long kaleoClassPK,
+		long kaleoDefinitionId,
 		com.liferay.portal.workflow.kaleo.definition.Timer timer,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
-		return _kaleoTimerLocalService.addKaleoTimer(kaleoDefinitionId,
-			kaleoNodeId, parentKaleoNodeId, timer, serviceContext);
-	}
-
-	public com.liferay.portal.workflow.kaleo.model.KaleoTimer getDefaultKaleoTimer(
-		long parentKaleoNodeId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
-		return _kaleoTimerLocalService.getDefaultKaleoTimer(parentKaleoNodeId);
+		return _kaleoTimerLocalService.addKaleoTimer(kaleoClassName,
+			kaleoClassPK, kaleoDefinitionId, timer, serviceContext);
 	}
 
 	public java.util.List<com.liferay.portal.workflow.kaleo.model.KaleoTimer> getKaleoTimers(
-		long parentKaleoNodeId)
+		java.lang.String kaleoClassName, long kaleoClassPK)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		return _kaleoTimerLocalService.getKaleoTimers(parentKaleoNodeId);
+		return _kaleoTimerLocalService.getKaleoTimers(kaleoClassName,
+			kaleoClassPK);
+	}
+
+	public java.util.List<com.liferay.portal.workflow.kaleo.model.KaleoTimer> getKaleoTimers(
+		java.lang.String kaleoClassName, long kaleoClassPK, boolean blocking)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _kaleoTimerLocalService.getKaleoTimers(kaleoClassName,
+			kaleoClassPK, blocking);
 	}
 
 	public KaleoTimerLocalService getWrappedKaleoTimerLocalService() {

@@ -72,11 +72,17 @@ public class HRTimeOffTypeCacheModel implements CacheModel<HRTimeOffType> {
 			hrTimeOffTypeImpl.setUserName(userName);
 		}
 
-		if (createDate > 0) {
+		if (createDate == Long.MIN_VALUE) {
+			hrTimeOffTypeImpl.setCreateDate(null);
+		}
+		else {
 			hrTimeOffTypeImpl.setCreateDate(new Date(createDate));
 		}
 
-		if (modifiedDate > 0) {
+		if (modifiedDate == Long.MIN_VALUE) {
+			hrTimeOffTypeImpl.setModifiedDate(null);
+		}
+		else {
 			hrTimeOffTypeImpl.setModifiedDate(new Date(modifiedDate));
 		}
 

@@ -78,11 +78,17 @@ public class MemberRequestCacheModel implements CacheModel<MemberRequest> {
 			memberRequestImpl.setUserName(userName);
 		}
 
-		if (createDate > 0) {
+		if (createDate == Long.MIN_VALUE) {
+			memberRequestImpl.setCreateDate(null);
+		}
+		else {
 			memberRequestImpl.setCreateDate(new Date(createDate));
 		}
 
-		if (modifiedDate > 0) {
+		if (modifiedDate == Long.MIN_VALUE) {
+			memberRequestImpl.setModifiedDate(null);
+		}
+		else {
 			memberRequestImpl.setModifiedDate(new Date(modifiedDate));
 		}
 

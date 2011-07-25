@@ -85,11 +85,17 @@ public class KaleoInstanceTokenCacheModel implements CacheModel<KaleoInstanceTok
 			kaleoInstanceTokenImpl.setUserName(userName);
 		}
 
-		if (createDate > 0) {
+		if (createDate == Long.MIN_VALUE) {
+			kaleoInstanceTokenImpl.setCreateDate(null);
+		}
+		else {
 			kaleoInstanceTokenImpl.setCreateDate(new Date(createDate));
 		}
 
-		if (modifiedDate > 0) {
+		if (modifiedDate == Long.MIN_VALUE) {
+			kaleoInstanceTokenImpl.setModifiedDate(null);
+		}
+		else {
 			kaleoInstanceTokenImpl.setModifiedDate(new Date(modifiedDate));
 		}
 
@@ -115,7 +121,10 @@ public class KaleoInstanceTokenCacheModel implements CacheModel<KaleoInstanceTok
 		kaleoInstanceTokenImpl.setClassPK(classPK);
 		kaleoInstanceTokenImpl.setCompleted(completed);
 
-		if (completionDate > 0) {
+		if (completionDate == Long.MIN_VALUE) {
+			kaleoInstanceTokenImpl.setCompletionDate(null);
+		}
+		else {
 			kaleoInstanceTokenImpl.setCompletionDate(new Date(completionDate));
 		}
 

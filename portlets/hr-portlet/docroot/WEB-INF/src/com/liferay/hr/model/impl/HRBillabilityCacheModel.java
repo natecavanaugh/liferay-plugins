@@ -74,11 +74,17 @@ public class HRBillabilityCacheModel implements CacheModel<HRBillability> {
 			hrBillabilityImpl.setUserName(userName);
 		}
 
-		if (createDate > 0) {
+		if (createDate == Long.MIN_VALUE) {
+			hrBillabilityImpl.setCreateDate(null);
+		}
+		else {
 			hrBillabilityImpl.setCreateDate(new Date(createDate));
 		}
 
-		if (modifiedDate > 0) {
+		if (modifiedDate == Long.MIN_VALUE) {
+			hrBillabilityImpl.setModifiedDate(null);
+		}
+		else {
 			hrBillabilityImpl.setModifiedDate(new Date(modifiedDate));
 		}
 

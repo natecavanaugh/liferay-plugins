@@ -63,7 +63,10 @@ public class SVNRevisionCacheModel implements CacheModel<SVNRevision> {
 			svnRevisionImpl.setSvnUserId(svnUserId);
 		}
 
-		if (createDate > 0) {
+		if (createDate == Long.MIN_VALUE) {
+			svnRevisionImpl.setCreateDate(null);
+		}
+		else {
 			svnRevisionImpl.setCreateDate(new Date(createDate));
 		}
 

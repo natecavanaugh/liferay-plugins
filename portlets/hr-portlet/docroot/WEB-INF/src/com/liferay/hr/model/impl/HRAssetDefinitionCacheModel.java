@@ -84,11 +84,17 @@ public class HRAssetDefinitionCacheModel implements CacheModel<HRAssetDefinition
 			hrAssetDefinitionImpl.setUserName(userName);
 		}
 
-		if (createDate > 0) {
+		if (createDate == Long.MIN_VALUE) {
+			hrAssetDefinitionImpl.setCreateDate(null);
+		}
+		else {
 			hrAssetDefinitionImpl.setCreateDate(new Date(createDate));
 		}
 
-		if (modifiedDate > 0) {
+		if (modifiedDate == Long.MIN_VALUE) {
+			hrAssetDefinitionImpl.setModifiedDate(null);
+		}
+		else {
 			hrAssetDefinitionImpl.setModifiedDate(new Date(modifiedDate));
 		}
 
@@ -109,11 +115,17 @@ public class HRAssetDefinitionCacheModel implements CacheModel<HRAssetDefinition
 			hrAssetDefinitionImpl.setDefinitionNumber(definitionNumber);
 		}
 
-		if (orderId > 0) {
+		if (orderId == Long.MIN_VALUE) {
+			hrAssetDefinitionImpl.setOrderId(null);
+		}
+		else {
 			hrAssetDefinitionImpl.setOrderId(new Date(orderId));
 		}
 
-		if (orderDate > 0) {
+		if (orderDate == Long.MIN_VALUE) {
+			hrAssetDefinitionImpl.setOrderDate(null);
+		}
+		else {
 			hrAssetDefinitionImpl.setOrderDate(new Date(orderDate));
 		}
 

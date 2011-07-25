@@ -59,7 +59,10 @@ public class JIRAChangeGroupCacheModel implements CacheModel<JIRAChangeGroup> {
 			jiraChangeGroupImpl.setJiraUserId(jiraUserId);
 		}
 
-		if (createDate > 0) {
+		if (createDate == Long.MIN_VALUE) {
+			jiraChangeGroupImpl.setCreateDate(null);
+		}
+		else {
 			jiraChangeGroupImpl.setCreateDate(new Date(createDate));
 		}
 

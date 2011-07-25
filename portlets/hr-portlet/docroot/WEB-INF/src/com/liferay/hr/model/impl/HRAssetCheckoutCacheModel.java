@@ -78,27 +78,42 @@ public class HRAssetCheckoutCacheModel implements CacheModel<HRAssetCheckout> {
 			hrAssetCheckoutImpl.setUserName(userName);
 		}
 
-		if (createDate > 0) {
+		if (createDate == Long.MIN_VALUE) {
+			hrAssetCheckoutImpl.setCreateDate(null);
+		}
+		else {
 			hrAssetCheckoutImpl.setCreateDate(new Date(createDate));
 		}
 
-		if (modifiedDate > 0) {
+		if (modifiedDate == Long.MIN_VALUE) {
+			hrAssetCheckoutImpl.setModifiedDate(null);
+		}
+		else {
 			hrAssetCheckoutImpl.setModifiedDate(new Date(modifiedDate));
 		}
 
 		hrAssetCheckoutImpl.setHrAssetId(hrAssetId);
 		hrAssetCheckoutImpl.setHrUserId(hrUserId);
 
-		if (checkoutDate > 0) {
+		if (checkoutDate == Long.MIN_VALUE) {
+			hrAssetCheckoutImpl.setCheckoutDate(null);
+		}
+		else {
 			hrAssetCheckoutImpl.setCheckoutDate(new Date(checkoutDate));
 		}
 
-		if (expectedCheckInDate > 0) {
+		if (expectedCheckInDate == Long.MIN_VALUE) {
+			hrAssetCheckoutImpl.setExpectedCheckInDate(null);
+		}
+		else {
 			hrAssetCheckoutImpl.setExpectedCheckInDate(new Date(
 					expectedCheckInDate));
 		}
 
-		if (actualCheckInDate > 0) {
+		if (actualCheckInDate == Long.MIN_VALUE) {
+			hrAssetCheckoutImpl.setActualCheckInDate(null);
+		}
+		else {
 			hrAssetCheckoutImpl.setActualCheckInDate(new Date(actualCheckInDate));
 		}
 

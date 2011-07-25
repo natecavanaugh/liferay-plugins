@@ -164,6 +164,13 @@ public class KaleoActionLocalServiceWrapper implements KaleoActionLocalService {
 		return _kaleoActionLocalService.getKaleoAction(kaleoActionId);
 	}
 
+	public com.liferay.portal.model.PersistedModel getPersistedModel(
+		java.io.Serializable primaryKeyObj)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _kaleoActionLocalService.getPersistedModel(primaryKeyObj);
+	}
+
 	/**
 	* Returns a range of all the kaleo actions.
 	*
@@ -240,14 +247,15 @@ public class KaleoActionLocalServiceWrapper implements KaleoActionLocalService {
 	}
 
 	public com.liferay.portal.workflow.kaleo.model.KaleoAction addKaleoAction(
-		long kaleoDefinitionId, long kaleoNodeId,
-		java.lang.String kaleoNodeName,
+		java.lang.String kaleoClassName, long kaleoClassPK,
+		long kaleoDefinitionId, java.lang.String kaleoNodeName,
 		com.liferay.portal.workflow.kaleo.definition.Action action,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
-		return _kaleoActionLocalService.addKaleoAction(kaleoDefinitionId,
-			kaleoNodeId, kaleoNodeName, action, serviceContext);
+		return _kaleoActionLocalService.addKaleoAction(kaleoClassName,
+			kaleoClassPK, kaleoDefinitionId, kaleoNodeName, action,
+			serviceContext);
 	}
 
 	public void deleteCompanyKaleoActions(long companyId)
@@ -261,10 +269,11 @@ public class KaleoActionLocalServiceWrapper implements KaleoActionLocalService {
 	}
 
 	public java.util.List<com.liferay.portal.workflow.kaleo.model.KaleoAction> getKaleoActions(
-		long kaleoNodeId, java.lang.String executionType)
+		java.lang.String kaleoClassName, long kaleoClassPK,
+		java.lang.String executionType)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		return _kaleoActionLocalService.getKaleoActions(kaleoNodeId,
-			executionType);
+		return _kaleoActionLocalService.getKaleoActions(kaleoClassName,
+			kaleoClassPK, executionType);
 	}
 
 	public KaleoActionLocalService getWrappedKaleoActionLocalService() {

@@ -31,7 +31,7 @@ import java.util.Date;
 public class KaleoTimerInstanceTokenCacheModel implements CacheModel<KaleoTimerInstanceToken> {
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(33);
+		StringBundler sb = new StringBundler(41);
 
 		sb.append("{kaleoTimerInstanceTokenId=");
 		sb.append(kaleoTimerInstanceTokenId);
@@ -47,16 +47,24 @@ public class KaleoTimerInstanceTokenCacheModel implements CacheModel<KaleoTimerI
 		sb.append(createDate);
 		sb.append(", modifiedDate=");
 		sb.append(modifiedDate);
+		sb.append(", kaleoClassName=");
+		sb.append(kaleoClassName);
+		sb.append(", kaleoClassPK=");
+		sb.append(kaleoClassPK);
 		sb.append(", kaleoDefinitionId=");
 		sb.append(kaleoDefinitionId);
 		sb.append(", kaleoInstanceId=");
 		sb.append(kaleoInstanceId);
 		sb.append(", kaleoInstanceTokenId=");
 		sb.append(kaleoInstanceTokenId);
+		sb.append(", kaleoTaskInstanceTokenId=");
+		sb.append(kaleoTaskInstanceTokenId);
 		sb.append(", kaleoTimerId=");
 		sb.append(kaleoTimerId);
 		sb.append(", kaleoTimerName=");
 		sb.append(kaleoTimerName);
+		sb.append(", blocking=");
+		sb.append(blocking);
 		sb.append(", completionUserId=");
 		sb.append(completionUserId);
 		sb.append(", completed=");
@@ -85,17 +93,32 @@ public class KaleoTimerInstanceTokenCacheModel implements CacheModel<KaleoTimerI
 			kaleoTimerInstanceTokenImpl.setUserName(userName);
 		}
 
-		if (createDate > 0) {
+		if (createDate == Long.MIN_VALUE) {
+			kaleoTimerInstanceTokenImpl.setCreateDate(null);
+		}
+		else {
 			kaleoTimerInstanceTokenImpl.setCreateDate(new Date(createDate));
 		}
 
-		if (modifiedDate > 0) {
+		if (modifiedDate == Long.MIN_VALUE) {
+			kaleoTimerInstanceTokenImpl.setModifiedDate(null);
+		}
+		else {
 			kaleoTimerInstanceTokenImpl.setModifiedDate(new Date(modifiedDate));
 		}
 
+		if (kaleoClassName == null) {
+			kaleoTimerInstanceTokenImpl.setKaleoClassName(StringPool.BLANK);
+		}
+		else {
+			kaleoTimerInstanceTokenImpl.setKaleoClassName(kaleoClassName);
+		}
+
+		kaleoTimerInstanceTokenImpl.setKaleoClassPK(kaleoClassPK);
 		kaleoTimerInstanceTokenImpl.setKaleoDefinitionId(kaleoDefinitionId);
 		kaleoTimerInstanceTokenImpl.setKaleoInstanceId(kaleoInstanceId);
 		kaleoTimerInstanceTokenImpl.setKaleoInstanceTokenId(kaleoInstanceTokenId);
+		kaleoTimerInstanceTokenImpl.setKaleoTaskInstanceTokenId(kaleoTaskInstanceTokenId);
 		kaleoTimerInstanceTokenImpl.setKaleoTimerId(kaleoTimerId);
 
 		if (kaleoTimerName == null) {
@@ -105,10 +128,14 @@ public class KaleoTimerInstanceTokenCacheModel implements CacheModel<KaleoTimerI
 			kaleoTimerInstanceTokenImpl.setKaleoTimerName(kaleoTimerName);
 		}
 
+		kaleoTimerInstanceTokenImpl.setBlocking(blocking);
 		kaleoTimerInstanceTokenImpl.setCompletionUserId(completionUserId);
 		kaleoTimerInstanceTokenImpl.setCompleted(completed);
 
-		if (completionDate > 0) {
+		if (completionDate == Long.MIN_VALUE) {
+			kaleoTimerInstanceTokenImpl.setCompletionDate(null);
+		}
+		else {
 			kaleoTimerInstanceTokenImpl.setCompletionDate(new Date(
 					completionDate));
 		}
@@ -132,11 +159,15 @@ public class KaleoTimerInstanceTokenCacheModel implements CacheModel<KaleoTimerI
 	public String userName;
 	public long createDate;
 	public long modifiedDate;
+	public String kaleoClassName;
+	public long kaleoClassPK;
 	public long kaleoDefinitionId;
 	public long kaleoInstanceId;
 	public long kaleoInstanceTokenId;
+	public long kaleoTaskInstanceTokenId;
 	public long kaleoTimerId;
 	public String kaleoTimerName;
+	public boolean blocking;
 	public long completionUserId;
 	public boolean completed;
 	public long completionDate;

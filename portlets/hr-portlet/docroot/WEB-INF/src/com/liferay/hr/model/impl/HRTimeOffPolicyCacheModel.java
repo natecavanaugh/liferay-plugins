@@ -88,11 +88,17 @@ public class HRTimeOffPolicyCacheModel implements CacheModel<HRTimeOffPolicy> {
 			hrTimeOffPolicyImpl.setUserName(userName);
 		}
 
-		if (createDate > 0) {
+		if (createDate == Long.MIN_VALUE) {
+			hrTimeOffPolicyImpl.setCreateDate(null);
+		}
+		else {
 			hrTimeOffPolicyImpl.setCreateDate(new Date(createDate));
 		}
 
-		if (modifiedDate > 0) {
+		if (modifiedDate == Long.MIN_VALUE) {
+			hrTimeOffPolicyImpl.setModifiedDate(null);
+		}
+		else {
 			hrTimeOffPolicyImpl.setModifiedDate(new Date(modifiedDate));
 		}
 
@@ -101,7 +107,10 @@ public class HRTimeOffPolicyCacheModel implements CacheModel<HRTimeOffPolicy> {
 		hrTimeOffPolicyImpl.setAccrueHRTimeOffFrequencyTypeId(accrueHRTimeOffFrequencyTypeId);
 		hrTimeOffPolicyImpl.setResetHRTimeOffFrequencyTypeId(resetHRTimeOffFrequencyTypeId);
 
-		if (effectiveDate > 0) {
+		if (effectiveDate == Long.MIN_VALUE) {
+			hrTimeOffPolicyImpl.setEffectiveDate(null);
+		}
+		else {
 			hrTimeOffPolicyImpl.setEffectiveDate(new Date(effectiveDate));
 		}
 

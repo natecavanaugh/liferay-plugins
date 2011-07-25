@@ -81,11 +81,17 @@ public class MeetupsEntryCacheModel implements CacheModel<MeetupsEntry> {
 			meetupsEntryImpl.setUserName(userName);
 		}
 
-		if (createDate > 0) {
+		if (createDate == Long.MIN_VALUE) {
+			meetupsEntryImpl.setCreateDate(null);
+		}
+		else {
 			meetupsEntryImpl.setCreateDate(new Date(createDate));
 		}
 
-		if (modifiedDate > 0) {
+		if (modifiedDate == Long.MIN_VALUE) {
+			meetupsEntryImpl.setModifiedDate(null);
+		}
+		else {
 			meetupsEntryImpl.setModifiedDate(new Date(modifiedDate));
 		}
 
@@ -103,11 +109,17 @@ public class MeetupsEntryCacheModel implements CacheModel<MeetupsEntry> {
 			meetupsEntryImpl.setDescription(description);
 		}
 
-		if (startDate > 0) {
+		if (startDate == Long.MIN_VALUE) {
+			meetupsEntryImpl.setStartDate(null);
+		}
+		else {
 			meetupsEntryImpl.setStartDate(new Date(startDate));
 		}
 
-		if (endDate > 0) {
+		if (endDate == Long.MIN_VALUE) {
+			meetupsEntryImpl.setEndDate(null);
+		}
+		else {
 			meetupsEntryImpl.setEndDate(new Date(endDate));
 		}
 

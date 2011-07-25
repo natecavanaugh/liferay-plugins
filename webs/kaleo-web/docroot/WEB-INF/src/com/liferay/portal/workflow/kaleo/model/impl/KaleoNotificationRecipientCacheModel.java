@@ -79,11 +79,17 @@ public class KaleoNotificationRecipientCacheModel implements CacheModel<KaleoNot
 			kaleoNotificationRecipientImpl.setUserName(userName);
 		}
 
-		if (createDate > 0) {
+		if (createDate == Long.MIN_VALUE) {
+			kaleoNotificationRecipientImpl.setCreateDate(null);
+		}
+		else {
 			kaleoNotificationRecipientImpl.setCreateDate(new Date(createDate));
 		}
 
-		if (modifiedDate > 0) {
+		if (modifiedDate == Long.MIN_VALUE) {
+			kaleoNotificationRecipientImpl.setModifiedDate(null);
+		}
+		else {
 			kaleoNotificationRecipientImpl.setModifiedDate(new Date(
 					modifiedDate));
 		}

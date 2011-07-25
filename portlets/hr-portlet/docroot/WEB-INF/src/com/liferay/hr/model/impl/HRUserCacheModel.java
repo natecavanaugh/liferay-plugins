@@ -90,11 +90,17 @@ public class HRUserCacheModel implements CacheModel<HRUser> {
 			hrUserImpl.setUserName(userName);
 		}
 
-		if (createDate > 0) {
+		if (createDate == Long.MIN_VALUE) {
+			hrUserImpl.setCreateDate(null);
+		}
+		else {
 			hrUserImpl.setCreateDate(new Date(createDate));
 		}
 
-		if (modifiedDate > 0) {
+		if (modifiedDate == Long.MIN_VALUE) {
+			hrUserImpl.setModifiedDate(null);
+		}
+		else {
 			hrUserImpl.setModifiedDate(new Date(modifiedDate));
 		}
 
@@ -104,11 +110,17 @@ public class HRUserCacheModel implements CacheModel<HRUser> {
 		hrUserImpl.setHrTerminationTypeId(hrTerminationTypeId);
 		hrUserImpl.setHrWageTypeId(hrWageTypeId);
 
-		if (hireDate > 0) {
+		if (hireDate == Long.MIN_VALUE) {
+			hrUserImpl.setHireDate(null);
+		}
+		else {
 			hrUserImpl.setHireDate(new Date(hireDate));
 		}
 
-		if (terminationDate > 0) {
+		if (terminationDate == Long.MIN_VALUE) {
+			hrUserImpl.setTerminationDate(null);
+		}
+		else {
 			hrUserImpl.setTerminationDate(new Date(terminationDate));
 		}
 

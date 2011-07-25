@@ -176,6 +176,13 @@ public class KaleoTaskInstanceTokenLocalServiceUtil {
 		return getService().getKaleoTaskInstanceToken(kaleoTaskInstanceTokenId);
 	}
 
+	public static com.liferay.portal.model.PersistedModel getPersistedModel(
+		java.io.Serializable primaryKeyObj)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService().getPersistedModel(primaryKeyObj);
+	}
+
 	/**
 	* Returns a range of all the kaleo task instance tokens.
 	*
@@ -305,6 +312,12 @@ public class KaleoTaskInstanceTokenLocalServiceUtil {
 		long kaleoInstanceId)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		getService().deleteKaleoInstanceKaleoTaskInstanceTokens(kaleoInstanceId);
+	}
+
+	public static com.liferay.portal.workflow.kaleo.model.KaleoTaskInstanceToken fetchKaleoTaskInstanceToken(
+		long kaleoTaskInstanceTokenId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService().fetchKaleoTaskInstanceToken(kaleoTaskInstanceTokenId);
 	}
 
 	public static java.util.List<com.liferay.portal.workflow.kaleo.model.KaleoTaskInstanceToken> getCompanyKaleoTaskInstanceTokens(

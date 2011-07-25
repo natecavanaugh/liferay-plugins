@@ -71,11 +71,17 @@ public class FeedCacheModel implements CacheModel<Feed> {
 			feedImpl.setUserName(userName);
 		}
 
-		if (createDate > 0) {
+		if (createDate == Long.MIN_VALUE) {
+			feedImpl.setCreateDate(null);
+		}
+		else {
 			feedImpl.setCreateDate(new Date(createDate));
 		}
 
-		if (modifiedDate > 0) {
+		if (modifiedDate == Long.MIN_VALUE) {
+			feedImpl.setModifiedDate(null);
+		}
+		else {
 			feedImpl.setModifiedDate(new Date(modifiedDate));
 		}
 

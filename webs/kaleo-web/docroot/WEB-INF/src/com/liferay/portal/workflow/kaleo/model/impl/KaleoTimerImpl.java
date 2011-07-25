@@ -14,7 +14,13 @@
 
 package com.liferay.portal.workflow.kaleo.model.impl;
 
+import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.workflow.kaleo.model.KaleoTaskAssignment;
 import com.liferay.portal.workflow.kaleo.model.KaleoTimer;
+import com.liferay.portal.workflow.kaleo.service.KaleoTaskAssignmentLocalServiceUtil;
+
+import java.util.List;
 
 /**
  * @author Brian Wing Shun Chan
@@ -22,6 +28,22 @@ import com.liferay.portal.workflow.kaleo.model.KaleoTimer;
 public class KaleoTimerImpl extends KaleoTimerBaseImpl {
 
 	public KaleoTimerImpl() {
+	}
+
+	public List<KaleoTaskAssignment> getKaleoTaskReassignments()
+		throws SystemException {
+
+		return KaleoTaskAssignmentLocalServiceUtil.getKaleoTaskAssignments(
+			KaleoTimer.class.getName(), getKaleoTimerId());
+	}
+
+	public boolean isRecurring() {
+		if (Validator.isNotNull(getRecurrenceScale())) {
+			return true;
+		}
+		else {
+			return false;
+		}
 	}
 
 }

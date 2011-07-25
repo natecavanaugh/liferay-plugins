@@ -91,11 +91,17 @@ public class MessageCacheModel implements CacheModel<Message> {
 			messageImpl.setUserName(userName);
 		}
 
-		if (createDate > 0) {
+		if (createDate == Long.MIN_VALUE) {
+			messageImpl.setCreateDate(null);
+		}
+		else {
 			messageImpl.setCreateDate(new Date(createDate));
 		}
 
-		if (modifiedDate > 0) {
+		if (modifiedDate == Long.MIN_VALUE) {
+			messageImpl.setModifiedDate(null);
+		}
+		else {
 			messageImpl.setModifiedDate(new Date(modifiedDate));
 		}
 
@@ -130,7 +136,10 @@ public class MessageCacheModel implements CacheModel<Message> {
 			messageImpl.setBcc(bcc);
 		}
 
-		if (sentDate > 0) {
+		if (sentDate == Long.MIN_VALUE) {
+			messageImpl.setSentDate(null);
+		}
+		else {
 			messageImpl.setSentDate(new Date(sentDate));
 		}
 

@@ -31,7 +31,7 @@ import java.util.Date;
 public class KaleoLogCacheModel implements CacheModel<KaleoLog> {
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(59);
+		StringBundler sb = new StringBundler(61);
 
 		sb.append("{kaleoLogId=");
 		sb.append(kaleoLogId);
@@ -47,6 +47,10 @@ public class KaleoLogCacheModel implements CacheModel<KaleoLog> {
 		sb.append(createDate);
 		sb.append(", modifiedDate=");
 		sb.append(modifiedDate);
+		sb.append(", kaleoClassName=");
+		sb.append(kaleoClassName);
+		sb.append(", kaleoClassPK=");
+		sb.append(kaleoClassPK);
 		sb.append(", kaleoDefinitionId=");
 		sb.append(kaleoDefinitionId);
 		sb.append(", kaleoInstanceId=");
@@ -55,8 +59,6 @@ public class KaleoLogCacheModel implements CacheModel<KaleoLog> {
 		sb.append(kaleoInstanceTokenId);
 		sb.append(", kaleoTaskInstanceTokenId=");
 		sb.append(kaleoTaskInstanceTokenId);
-		sb.append(", kaleoNodeId=");
-		sb.append(kaleoNodeId);
 		sb.append(", kaleoNodeName=");
 		sb.append(kaleoNodeName);
 		sb.append(", terminalKaleoNode=");
@@ -111,19 +113,32 @@ public class KaleoLogCacheModel implements CacheModel<KaleoLog> {
 			kaleoLogImpl.setUserName(userName);
 		}
 
-		if (createDate > 0) {
+		if (createDate == Long.MIN_VALUE) {
+			kaleoLogImpl.setCreateDate(null);
+		}
+		else {
 			kaleoLogImpl.setCreateDate(new Date(createDate));
 		}
 
-		if (modifiedDate > 0) {
+		if (modifiedDate == Long.MIN_VALUE) {
+			kaleoLogImpl.setModifiedDate(null);
+		}
+		else {
 			kaleoLogImpl.setModifiedDate(new Date(modifiedDate));
 		}
 
+		if (kaleoClassName == null) {
+			kaleoLogImpl.setKaleoClassName(StringPool.BLANK);
+		}
+		else {
+			kaleoLogImpl.setKaleoClassName(kaleoClassName);
+		}
+
+		kaleoLogImpl.setKaleoClassPK(kaleoClassPK);
 		kaleoLogImpl.setKaleoDefinitionId(kaleoDefinitionId);
 		kaleoLogImpl.setKaleoInstanceId(kaleoInstanceId);
 		kaleoLogImpl.setKaleoInstanceTokenId(kaleoInstanceTokenId);
 		kaleoLogImpl.setKaleoTaskInstanceTokenId(kaleoTaskInstanceTokenId);
-		kaleoLogImpl.setKaleoNodeId(kaleoNodeId);
 
 		if (kaleoNodeName == null) {
 			kaleoLogImpl.setKaleoNodeName(StringPool.BLANK);
@@ -190,11 +205,17 @@ public class KaleoLogCacheModel implements CacheModel<KaleoLog> {
 			kaleoLogImpl.setComment(comment);
 		}
 
-		if (startDate > 0) {
+		if (startDate == Long.MIN_VALUE) {
+			kaleoLogImpl.setStartDate(null);
+		}
+		else {
 			kaleoLogImpl.setStartDate(new Date(startDate));
 		}
 
-		if (endDate > 0) {
+		if (endDate == Long.MIN_VALUE) {
+			kaleoLogImpl.setEndDate(null);
+		}
+		else {
 			kaleoLogImpl.setEndDate(new Date(endDate));
 		}
 
@@ -219,11 +240,12 @@ public class KaleoLogCacheModel implements CacheModel<KaleoLog> {
 	public String userName;
 	public long createDate;
 	public long modifiedDate;
+	public String kaleoClassName;
+	public long kaleoClassPK;
 	public long kaleoDefinitionId;
 	public long kaleoInstanceId;
 	public long kaleoInstanceTokenId;
 	public long kaleoTaskInstanceTokenId;
-	public long kaleoNodeId;
 	public String kaleoNodeName;
 	public boolean terminalKaleoNode;
 	public long kaleoActionId;

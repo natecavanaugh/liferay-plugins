@@ -78,11 +78,17 @@ public class HRUserProjectCacheModel implements CacheModel<HRUserProject> {
 			hrUserProjectImpl.setUserName(userName);
 		}
 
-		if (createDate > 0) {
+		if (createDate == Long.MIN_VALUE) {
+			hrUserProjectImpl.setCreateDate(null);
+		}
+		else {
 			hrUserProjectImpl.setCreateDate(new Date(createDate));
 		}
 
-		if (modifiedDate > 0) {
+		if (modifiedDate == Long.MIN_VALUE) {
+			hrUserProjectImpl.setModifiedDate(null);
+		}
+		else {
 			hrUserProjectImpl.setModifiedDate(new Date(modifiedDate));
 		}
 

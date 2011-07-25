@@ -74,11 +74,17 @@ public class HRAssetProductCacheModel implements CacheModel<HRAssetProduct> {
 			hrAssetProductImpl.setUserName(userName);
 		}
 
-		if (createDate > 0) {
+		if (createDate == Long.MIN_VALUE) {
+			hrAssetProductImpl.setCreateDate(null);
+		}
+		else {
 			hrAssetProductImpl.setCreateDate(new Date(createDate));
 		}
 
-		if (modifiedDate > 0) {
+		if (modifiedDate == Long.MIN_VALUE) {
+			hrAssetProductImpl.setModifiedDate(null);
+		}
+		else {
 			hrAssetProductImpl.setModifiedDate(new Date(modifiedDate));
 		}
 

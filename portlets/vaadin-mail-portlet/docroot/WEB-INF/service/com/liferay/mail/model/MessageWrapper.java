@@ -462,7 +462,7 @@ public class MessageWrapper implements Message {
 		return new MessageWrapper((Message)_message.clone());
 	}
 
-	public int compareTo(com.liferay.mail.model.Message message) {
+	public int compareTo(Message message) {
 		return _message.compareTo(message);
 	}
 
@@ -471,11 +471,11 @@ public class MessageWrapper implements Message {
 		return _message.hashCode();
 	}
 
-	public com.liferay.portal.model.CacheModel<com.liferay.mail.model.Message> toCacheModel() {
+	public com.liferay.portal.model.CacheModel<Message> toCacheModel() {
 		return _message.toCacheModel();
 	}
 
-	public com.liferay.mail.model.Message toEscapedModel() {
+	public Message toEscapedModel() {
 		return new MessageWrapper(_message.toEscapedModel());
 	}
 
@@ -488,9 +488,9 @@ public class MessageWrapper implements Message {
 		return _message.toXmlString();
 	}
 
-	public void save()
+	public void persist()
 		throws com.liferay.portal.kernel.exception.SystemException {
-		_message.save();
+		_message.persist();
 	}
 
 	public long getGroupId()

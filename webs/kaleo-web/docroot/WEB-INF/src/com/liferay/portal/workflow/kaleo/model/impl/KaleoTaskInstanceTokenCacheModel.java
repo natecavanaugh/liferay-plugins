@@ -91,11 +91,17 @@ public class KaleoTaskInstanceTokenCacheModel implements CacheModel<KaleoTaskIns
 			kaleoTaskInstanceTokenImpl.setUserName(userName);
 		}
 
-		if (createDate > 0) {
+		if (createDate == Long.MIN_VALUE) {
+			kaleoTaskInstanceTokenImpl.setCreateDate(null);
+		}
+		else {
 			kaleoTaskInstanceTokenImpl.setCreateDate(new Date(createDate));
 		}
 
-		if (modifiedDate > 0) {
+		if (modifiedDate == Long.MIN_VALUE) {
+			kaleoTaskInstanceTokenImpl.setModifiedDate(null);
+		}
+		else {
 			kaleoTaskInstanceTokenImpl.setModifiedDate(new Date(modifiedDate));
 		}
 
@@ -122,12 +128,18 @@ public class KaleoTaskInstanceTokenCacheModel implements CacheModel<KaleoTaskIns
 		kaleoTaskInstanceTokenImpl.setCompletionUserId(completionUserId);
 		kaleoTaskInstanceTokenImpl.setCompleted(completed);
 
-		if (completionDate > 0) {
+		if (completionDate == Long.MIN_VALUE) {
+			kaleoTaskInstanceTokenImpl.setCompletionDate(null);
+		}
+		else {
 			kaleoTaskInstanceTokenImpl.setCompletionDate(new Date(
 					completionDate));
 		}
 
-		if (dueDate > 0) {
+		if (dueDate == Long.MIN_VALUE) {
+			kaleoTaskInstanceTokenImpl.setDueDate(null);
+		}
+		else {
 			kaleoTaskInstanceTokenImpl.setDueDate(new Date(dueDate));
 		}
 

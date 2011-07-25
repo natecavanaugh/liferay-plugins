@@ -85,11 +85,17 @@ public class KaleoInstanceCacheModel implements CacheModel<KaleoInstance> {
 			kaleoInstanceImpl.setUserName(userName);
 		}
 
-		if (createDate > 0) {
+		if (createDate == Long.MIN_VALUE) {
+			kaleoInstanceImpl.setCreateDate(null);
+		}
+		else {
 			kaleoInstanceImpl.setCreateDate(new Date(createDate));
 		}
 
-		if (modifiedDate > 0) {
+		if (modifiedDate == Long.MIN_VALUE) {
+			kaleoInstanceImpl.setModifiedDate(null);
+		}
+		else {
 			kaleoInstanceImpl.setModifiedDate(new Date(modifiedDate));
 		}
 
@@ -115,7 +121,10 @@ public class KaleoInstanceCacheModel implements CacheModel<KaleoInstance> {
 		kaleoInstanceImpl.setClassPK(classPK);
 		kaleoInstanceImpl.setCompleted(completed);
 
-		if (completionDate > 0) {
+		if (completionDate == Long.MIN_VALUE) {
+			kaleoInstanceImpl.setCompletionDate(null);
+		}
+		else {
 			kaleoInstanceImpl.setCompletionDate(new Date(completionDate));
 		}
 

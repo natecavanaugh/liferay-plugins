@@ -87,11 +87,17 @@ public class KaleoTaskAssignmentInstanceCacheModel implements CacheModel<KaleoTa
 			kaleoTaskAssignmentInstanceImpl.setUserName(userName);
 		}
 
-		if (createDate > 0) {
+		if (createDate == Long.MIN_VALUE) {
+			kaleoTaskAssignmentInstanceImpl.setCreateDate(null);
+		}
+		else {
 			kaleoTaskAssignmentInstanceImpl.setCreateDate(new Date(createDate));
 		}
 
-		if (modifiedDate > 0) {
+		if (modifiedDate == Long.MIN_VALUE) {
+			kaleoTaskAssignmentInstanceImpl.setModifiedDate(null);
+		}
+		else {
 			kaleoTaskAssignmentInstanceImpl.setModifiedDate(new Date(
 					modifiedDate));
 		}
@@ -119,7 +125,10 @@ public class KaleoTaskAssignmentInstanceCacheModel implements CacheModel<KaleoTa
 		kaleoTaskAssignmentInstanceImpl.setAssigneeClassPK(assigneeClassPK);
 		kaleoTaskAssignmentInstanceImpl.setCompleted(completed);
 
-		if (completionDate > 0) {
+		if (completionDate == Long.MIN_VALUE) {
+			kaleoTaskAssignmentInstanceImpl.setCompletionDate(null);
+		}
+		else {
 			kaleoTaskAssignmentInstanceImpl.setCompletionDate(new Date(
 					completionDate));
 		}

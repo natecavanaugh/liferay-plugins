@@ -115,11 +115,17 @@ public class CalendarBookingCacheModel implements CacheModel<CalendarBooking> {
 			calendarBookingImpl.setUserName(userName);
 		}
 
-		if (createDate > 0) {
+		if (createDate == Long.MIN_VALUE) {
+			calendarBookingImpl.setCreateDate(null);
+		}
+		else {
 			calendarBookingImpl.setCreateDate(new Date(createDate));
 		}
 
-		if (modifiedDate > 0) {
+		if (modifiedDate == Long.MIN_VALUE) {
+			calendarBookingImpl.setModifiedDate(null);
+		}
+		else {
 			calendarBookingImpl.setModifiedDate(new Date(modifiedDate));
 		}
 
@@ -156,11 +162,17 @@ public class CalendarBookingCacheModel implements CacheModel<CalendarBooking> {
 			calendarBookingImpl.setLocation(location);
 		}
 
-		if (startDate > 0) {
+		if (startDate == Long.MIN_VALUE) {
+			calendarBookingImpl.setStartDate(null);
+		}
+		else {
 			calendarBookingImpl.setStartDate(new Date(startDate));
 		}
 
-		if (endDate > 0) {
+		if (endDate == Long.MIN_VALUE) {
+			calendarBookingImpl.setEndDate(null);
+		}
+		else {
 			calendarBookingImpl.setEndDate(new Date(endDate));
 		}
 
@@ -192,7 +204,10 @@ public class CalendarBookingCacheModel implements CacheModel<CalendarBooking> {
 			calendarBookingImpl.setStatusByUserName(statusByUserName);
 		}
 
-		if (statusDate > 0) {
+		if (statusDate == Long.MIN_VALUE) {
+			calendarBookingImpl.setStatusDate(null);
+		}
+		else {
 			calendarBookingImpl.setStatusDate(new Date(statusDate));
 		}
 

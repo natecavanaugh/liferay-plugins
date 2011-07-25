@@ -63,11 +63,17 @@ public class OAuthConsumerCacheModel implements CacheModel<OAuthConsumer> {
 		oAuthConsumerImpl.setOAuthConsumerId(oAuthConsumerId);
 		oAuthConsumerImpl.setCompanyId(companyId);
 
-		if (createDate > 0) {
+		if (createDate == Long.MIN_VALUE) {
+			oAuthConsumerImpl.setCreateDate(null);
+		}
+		else {
 			oAuthConsumerImpl.setCreateDate(new Date(createDate));
 		}
 
-		if (modifiedDate > 0) {
+		if (modifiedDate == Long.MIN_VALUE) {
+			oAuthConsumerImpl.setModifiedDate(null);
+		}
+		else {
 			oAuthConsumerImpl.setModifiedDate(new Date(modifiedDate));
 		}
 

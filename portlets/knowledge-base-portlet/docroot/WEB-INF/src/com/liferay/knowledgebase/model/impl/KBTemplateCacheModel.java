@@ -32,7 +32,7 @@ import java.util.Date;
 public class KBTemplateCacheModel implements CacheModel<KBTemplate> {
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(25);
+		StringBundler sb = new StringBundler(21);
 
 		sb.append("{uuid=");
 		sb.append(uuid);
@@ -54,10 +54,6 @@ public class KBTemplateCacheModel implements CacheModel<KBTemplate> {
 		sb.append(title);
 		sb.append(", content=");
 		sb.append(content);
-		sb.append(", engineType=");
-		sb.append(engineType);
-		sb.append(", cacheable=");
-		sb.append(cacheable);
 		sb.append("}");
 
 		return sb.toString();
@@ -85,11 +81,17 @@ public class KBTemplateCacheModel implements CacheModel<KBTemplate> {
 			kbTemplateImpl.setUserName(userName);
 		}
 
-		if (createDate > 0) {
+		if (createDate == Long.MIN_VALUE) {
+			kbTemplateImpl.setCreateDate(null);
+		}
+		else {
 			kbTemplateImpl.setCreateDate(new Date(createDate));
 		}
 
-		if (modifiedDate > 0) {
+		if (modifiedDate == Long.MIN_VALUE) {
+			kbTemplateImpl.setModifiedDate(null);
+		}
+		else {
 			kbTemplateImpl.setModifiedDate(new Date(modifiedDate));
 		}
 
@@ -107,9 +109,6 @@ public class KBTemplateCacheModel implements CacheModel<KBTemplate> {
 			kbTemplateImpl.setContent(content);
 		}
 
-		kbTemplateImpl.setEngineType(engineType);
-		kbTemplateImpl.setCacheable(cacheable);
-
 		kbTemplateImpl.resetOriginalValues();
 
 		return kbTemplateImpl;
@@ -125,6 +124,4 @@ public class KBTemplateCacheModel implements CacheModel<KBTemplate> {
 	public long modifiedDate;
 	public String title;
 	public String content;
-	public int engineType;
-	public boolean cacheable;
 }

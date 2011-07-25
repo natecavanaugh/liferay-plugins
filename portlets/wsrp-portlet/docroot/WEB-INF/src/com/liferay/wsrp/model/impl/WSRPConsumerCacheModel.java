@@ -74,11 +74,17 @@ public class WSRPConsumerCacheModel implements CacheModel<WSRPConsumer> {
 		wsrpConsumerImpl.setWsrpConsumerId(wsrpConsumerId);
 		wsrpConsumerImpl.setCompanyId(companyId);
 
-		if (createDate > 0) {
+		if (createDate == Long.MIN_VALUE) {
+			wsrpConsumerImpl.setCreateDate(null);
+		}
+		else {
 			wsrpConsumerImpl.setCreateDate(new Date(createDate));
 		}
 
-		if (modifiedDate > 0) {
+		if (modifiedDate == Long.MIN_VALUE) {
+			wsrpConsumerImpl.setModifiedDate(null);
+		}
+		else {
 			wsrpConsumerImpl.setModifiedDate(new Date(modifiedDate));
 		}
 

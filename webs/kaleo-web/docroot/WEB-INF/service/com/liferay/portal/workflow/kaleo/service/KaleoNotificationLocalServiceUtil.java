@@ -174,6 +174,13 @@ public class KaleoNotificationLocalServiceUtil {
 		return getService().getKaleoNotification(kaleoNotificationId);
 	}
 
+	public static com.liferay.portal.model.PersistedModel getPersistedModel(
+		java.io.Serializable primaryKeyObj)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService().getPersistedModel(primaryKeyObj);
+	}
+
 	/**
 	* Returns a range of all the kaleo notifications.
 	*
@@ -250,15 +257,15 @@ public class KaleoNotificationLocalServiceUtil {
 	}
 
 	public static com.liferay.portal.workflow.kaleo.model.KaleoNotification addKaleoNotification(
-		long kaleoDefinitionId, long kaleoNodeId,
-		java.lang.String kaleoNodeName,
+		java.lang.String kaleoClassName, long kaleoClassPK,
+		long kaleoDefinitionId, java.lang.String kaleoNodeName,
 		com.liferay.portal.workflow.kaleo.definition.Notification notification,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		return getService()
-				   .addKaleoNotification(kaleoDefinitionId, kaleoNodeId,
-			kaleoNodeName, notification, serviceContext);
+				   .addKaleoNotification(kaleoClassName, kaleoClassPK,
+			kaleoDefinitionId, kaleoNodeName, notification, serviceContext);
 	}
 
 	public static void deleteCompanyKaleoNotifications(long companyId)
@@ -273,9 +280,12 @@ public class KaleoNotificationLocalServiceUtil {
 	}
 
 	public static java.util.List<com.liferay.portal.workflow.kaleo.model.KaleoNotification> getKaleoNotifications(
-		long kaleoNodeId, java.lang.String executionType)
+		java.lang.String kaleoClassName, long kaleoClassPK,
+		java.lang.String executionType)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		return getService().getKaleoNotifications(kaleoNodeId, executionType);
+		return getService()
+				   .getKaleoNotifications(kaleoClassName, kaleoClassPK,
+			executionType);
 	}
 
 	public static void clearService() {

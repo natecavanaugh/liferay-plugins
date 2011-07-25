@@ -31,7 +31,7 @@ import java.util.Date;
 public class KaleoNotificationCacheModel implements CacheModel<KaleoNotification> {
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(33);
+		StringBundler sb = new StringBundler(35);
 
 		sb.append("{kaleoNotificationId=");
 		sb.append(kaleoNotificationId);
@@ -47,10 +47,12 @@ public class KaleoNotificationCacheModel implements CacheModel<KaleoNotification
 		sb.append(createDate);
 		sb.append(", modifiedDate=");
 		sb.append(modifiedDate);
+		sb.append(", kaleoClassName=");
+		sb.append(kaleoClassName);
+		sb.append(", kaleoClassPK=");
+		sb.append(kaleoClassPK);
 		sb.append(", kaleoDefinitionId=");
 		sb.append(kaleoDefinitionId);
-		sb.append(", kaleoNodeId=");
-		sb.append(kaleoNodeId);
 		sb.append(", kaleoNodeName=");
 		sb.append(kaleoNodeName);
 		sb.append(", name=");
@@ -85,16 +87,29 @@ public class KaleoNotificationCacheModel implements CacheModel<KaleoNotification
 			kaleoNotificationImpl.setUserName(userName);
 		}
 
-		if (createDate > 0) {
+		if (createDate == Long.MIN_VALUE) {
+			kaleoNotificationImpl.setCreateDate(null);
+		}
+		else {
 			kaleoNotificationImpl.setCreateDate(new Date(createDate));
 		}
 
-		if (modifiedDate > 0) {
+		if (modifiedDate == Long.MIN_VALUE) {
+			kaleoNotificationImpl.setModifiedDate(null);
+		}
+		else {
 			kaleoNotificationImpl.setModifiedDate(new Date(modifiedDate));
 		}
 
+		if (kaleoClassName == null) {
+			kaleoNotificationImpl.setKaleoClassName(StringPool.BLANK);
+		}
+		else {
+			kaleoNotificationImpl.setKaleoClassName(kaleoClassName);
+		}
+
+		kaleoNotificationImpl.setKaleoClassPK(kaleoClassPK);
 		kaleoNotificationImpl.setKaleoDefinitionId(kaleoDefinitionId);
-		kaleoNotificationImpl.setKaleoNodeId(kaleoNodeId);
 
 		if (kaleoNodeName == null) {
 			kaleoNotificationImpl.setKaleoNodeName(StringPool.BLANK);
@@ -157,8 +172,9 @@ public class KaleoNotificationCacheModel implements CacheModel<KaleoNotification
 	public String userName;
 	public long createDate;
 	public long modifiedDate;
+	public String kaleoClassName;
+	public long kaleoClassPK;
 	public long kaleoDefinitionId;
-	public long kaleoNodeId;
 	public String kaleoNodeName;
 	public String name;
 	public String description;

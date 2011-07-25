@@ -76,11 +76,17 @@ public class HRUserTaskCacheModel implements CacheModel<HRUserTask> {
 			hrUserTaskImpl.setUserName(userName);
 		}
 
-		if (createDate > 0) {
+		if (createDate == Long.MIN_VALUE) {
+			hrUserTaskImpl.setCreateDate(null);
+		}
+		else {
 			hrUserTaskImpl.setCreateDate(new Date(createDate));
 		}
 
-		if (modifiedDate > 0) {
+		if (modifiedDate == Long.MIN_VALUE) {
+			hrUserTaskImpl.setModifiedDate(null);
+		}
+		else {
 			hrUserTaskImpl.setModifiedDate(new Date(modifiedDate));
 		}
 

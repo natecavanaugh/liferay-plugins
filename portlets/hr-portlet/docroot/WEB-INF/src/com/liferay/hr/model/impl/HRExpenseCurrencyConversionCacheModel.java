@@ -76,11 +76,17 @@ public class HRExpenseCurrencyConversionCacheModel implements CacheModel<HRExpen
 			hrExpenseCurrencyConversionImpl.setUserName(userName);
 		}
 
-		if (createDate > 0) {
+		if (createDate == Long.MIN_VALUE) {
+			hrExpenseCurrencyConversionImpl.setCreateDate(null);
+		}
+		else {
 			hrExpenseCurrencyConversionImpl.setCreateDate(new Date(createDate));
 		}
 
-		if (modifiedDate > 0) {
+		if (modifiedDate == Long.MIN_VALUE) {
+			hrExpenseCurrencyConversionImpl.setModifiedDate(null);
+		}
+		else {
 			hrExpenseCurrencyConversionImpl.setModifiedDate(new Date(
 					modifiedDate));
 		}
@@ -88,7 +94,10 @@ public class HRExpenseCurrencyConversionCacheModel implements CacheModel<HRExpen
 		hrExpenseCurrencyConversionImpl.setFromHRExpenseCurrencyId(fromHRExpenseCurrencyId);
 		hrExpenseCurrencyConversionImpl.setToHRExpenseCurrencyId(toHRExpenseCurrencyId);
 
-		if (conversionDate > 0) {
+		if (conversionDate == Long.MIN_VALUE) {
+			hrExpenseCurrencyConversionImpl.setConversionDate(null);
+		}
+		else {
 			hrExpenseCurrencyConversionImpl.setConversionDate(new Date(
 					conversionDate));
 		}

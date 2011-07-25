@@ -79,11 +79,17 @@ public class KaleoDefinitionCacheModel implements CacheModel<KaleoDefinition> {
 			kaleoDefinitionImpl.setUserName(userName);
 		}
 
-		if (createDate > 0) {
+		if (createDate == Long.MIN_VALUE) {
+			kaleoDefinitionImpl.setCreateDate(null);
+		}
+		else {
 			kaleoDefinitionImpl.setCreateDate(new Date(createDate));
 		}
 
-		if (modifiedDate > 0) {
+		if (modifiedDate == Long.MIN_VALUE) {
+			kaleoDefinitionImpl.setModifiedDate(null);
+		}
+		else {
 			kaleoDefinitionImpl.setModifiedDate(new Date(modifiedDate));
 		}
 

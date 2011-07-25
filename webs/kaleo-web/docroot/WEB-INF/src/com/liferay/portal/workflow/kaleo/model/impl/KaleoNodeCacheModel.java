@@ -31,7 +31,7 @@ import java.util.Date;
 public class KaleoNodeCacheModel implements CacheModel<KaleoNode> {
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(27);
+		StringBundler sb = new StringBundler(29);
 
 		sb.append("{kaleoNodeId=");
 		sb.append(kaleoNodeId);
@@ -51,6 +51,8 @@ public class KaleoNodeCacheModel implements CacheModel<KaleoNode> {
 		sb.append(kaleoDefinitionId);
 		sb.append(", name=");
 		sb.append(name);
+		sb.append(", metadata=");
+		sb.append(metadata);
 		sb.append(", description=");
 		sb.append(description);
 		sb.append(", type=");
@@ -79,11 +81,17 @@ public class KaleoNodeCacheModel implements CacheModel<KaleoNode> {
 			kaleoNodeImpl.setUserName(userName);
 		}
 
-		if (createDate > 0) {
+		if (createDate == Long.MIN_VALUE) {
+			kaleoNodeImpl.setCreateDate(null);
+		}
+		else {
 			kaleoNodeImpl.setCreateDate(new Date(createDate));
 		}
 
-		if (modifiedDate > 0) {
+		if (modifiedDate == Long.MIN_VALUE) {
+			kaleoNodeImpl.setModifiedDate(null);
+		}
+		else {
 			kaleoNodeImpl.setModifiedDate(new Date(modifiedDate));
 		}
 
@@ -94,6 +102,13 @@ public class KaleoNodeCacheModel implements CacheModel<KaleoNode> {
 		}
 		else {
 			kaleoNodeImpl.setName(name);
+		}
+
+		if (metadata == null) {
+			kaleoNodeImpl.setMetadata(StringPool.BLANK);
+		}
+		else {
+			kaleoNodeImpl.setMetadata(metadata);
 		}
 
 		if (description == null) {
@@ -127,6 +142,7 @@ public class KaleoNodeCacheModel implements CacheModel<KaleoNode> {
 	public long modifiedDate;
 	public long kaleoDefinitionId;
 	public String name;
+	public String metadata;
 	public String description;
 	public String type;
 	public boolean initial;

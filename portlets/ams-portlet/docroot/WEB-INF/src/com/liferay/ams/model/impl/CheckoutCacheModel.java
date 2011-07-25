@@ -73,25 +73,40 @@ public class CheckoutCacheModel implements CacheModel<Checkout> {
 			checkoutImpl.setUserName(userName);
 		}
 
-		if (createDate > 0) {
+		if (createDate == Long.MIN_VALUE) {
+			checkoutImpl.setCreateDate(null);
+		}
+		else {
 			checkoutImpl.setCreateDate(new Date(createDate));
 		}
 
-		if (modifiedDate > 0) {
+		if (modifiedDate == Long.MIN_VALUE) {
+			checkoutImpl.setModifiedDate(null);
+		}
+		else {
 			checkoutImpl.setModifiedDate(new Date(modifiedDate));
 		}
 
 		checkoutImpl.setAssetId(assetId);
 
-		if (checkOutDate > 0) {
+		if (checkOutDate == Long.MIN_VALUE) {
+			checkoutImpl.setCheckOutDate(null);
+		}
+		else {
 			checkoutImpl.setCheckOutDate(new Date(checkOutDate));
 		}
 
-		if (expectedCheckInDate > 0) {
+		if (expectedCheckInDate == Long.MIN_VALUE) {
+			checkoutImpl.setExpectedCheckInDate(null);
+		}
+		else {
 			checkoutImpl.setExpectedCheckInDate(new Date(expectedCheckInDate));
 		}
 
-		if (actualCheckInDate > 0) {
+		if (actualCheckInDate == Long.MIN_VALUE) {
+			checkoutImpl.setActualCheckInDate(null);
+		}
+		else {
 			checkoutImpl.setActualCheckInDate(new Date(actualCheckInDate));
 		}
 

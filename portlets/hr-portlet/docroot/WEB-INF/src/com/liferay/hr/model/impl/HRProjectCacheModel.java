@@ -104,11 +104,17 @@ public class HRProjectCacheModel implements CacheModel<HRProject> {
 			hrProjectImpl.setUserName(userName);
 		}
 
-		if (createDate > 0) {
+		if (createDate == Long.MIN_VALUE) {
+			hrProjectImpl.setCreateDate(null);
+		}
+		else {
 			hrProjectImpl.setCreateDate(new Date(createDate));
 		}
 
-		if (modifiedDate > 0) {
+		if (modifiedDate == Long.MIN_VALUE) {
+			hrProjectImpl.setModifiedDate(null);
+		}
+		else {
 			hrProjectImpl.setModifiedDate(new Date(modifiedDate));
 		}
 
@@ -129,11 +135,17 @@ public class HRProjectCacheModel implements CacheModel<HRProject> {
 			hrProjectImpl.setDescription(description);
 		}
 
-		if (estimatedStartDate > 0) {
+		if (estimatedStartDate == Long.MIN_VALUE) {
+			hrProjectImpl.setEstimatedStartDate(null);
+		}
+		else {
 			hrProjectImpl.setEstimatedStartDate(new Date(estimatedStartDate));
 		}
 
-		if (estimatedEndDate > 0) {
+		if (estimatedEndDate == Long.MIN_VALUE) {
+			hrProjectImpl.setEstimatedEndDate(null);
+		}
+		else {
 			hrProjectImpl.setEstimatedEndDate(new Date(estimatedEndDate));
 		}
 
@@ -156,11 +168,17 @@ public class HRProjectCacheModel implements CacheModel<HRProject> {
 			hrProjectImpl.setEstimatedExpensesCurrencyCode(estimatedExpensesCurrencyCode);
 		}
 
-		if (actualStartDate > 0) {
+		if (actualStartDate == Long.MIN_VALUE) {
+			hrProjectImpl.setActualStartDate(null);
+		}
+		else {
 			hrProjectImpl.setActualStartDate(new Date(actualStartDate));
 		}
 
-		if (actualEndDate > 0) {
+		if (actualEndDate == Long.MIN_VALUE) {
+			hrProjectImpl.setActualEndDate(null);
+		}
+		else {
 			hrProjectImpl.setActualEndDate(new Date(actualEndDate));
 		}
 
