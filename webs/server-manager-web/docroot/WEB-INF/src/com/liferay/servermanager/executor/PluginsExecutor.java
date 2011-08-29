@@ -33,6 +33,15 @@ import javax.servlet.http.HttpServletRequest;
 public class PluginsExecutor extends BaseExecutor {
 
 	@Override
+	public void executeCreate(
+			HttpServletRequest request, JSONObject responseJSONObject,
+			Queue<String> arguments)
+		throws Exception {
+
+		_pluginExecutor.executeCreate(request, responseJSONObject, arguments);
+	}
+
+	@Override
 	public void executeRead(
 		HttpServletRequest request, JSONObject responseJSONObject,
 		Queue<String> arguments) {

@@ -160,12 +160,13 @@ public class EditorPortlet extends AdminPortlet {
 			String publishGadgetRedirect = ParamUtil.getString(
 				actionRequest, "publishGadgetRedirect");
 
-			boolean deletePermission = GadgetPermission.contains(
+			boolean unpublishPermission = GadgetPermission.contains(
 				permissionChecker, groupId, gadget.getGadgetId(),
 				ActionKeys.DELETE);
 
 			publishGadgetRedirect = HttpUtil.addParameter(
-				publishGadgetRedirect, "deletePermission", deletePermission);
+				publishGadgetRedirect, "unpublishPermission",
+				unpublishPermission);
 
 			publishGadgetRedirect = HttpUtil.addParameter(
 				publishGadgetRedirect, "gadgetId", gadget.getGadgetId());
@@ -496,9 +497,9 @@ public class EditorPortlet extends AdminPortlet {
 		serviceContext.setModifiedDate(fileEntry.getModifiedDate());
 
 		DLAppServiceUtil.updateFileEntry(
-			fileEntryId, fileEntryTitle, fileEntryTitle,
-			resourceRequest.getContentType(), fileEntry.getDescription(),
-			StringPool.BLANK, false, bytes, serviceContext);
+			fileEntryId, fileEntryTitle, resourceRequest.getContentType(),
+			fileEntryTitle, fileEntry.getDescription(), StringPool.BLANK, 
+			false, bytes, serviceContext);
 
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 

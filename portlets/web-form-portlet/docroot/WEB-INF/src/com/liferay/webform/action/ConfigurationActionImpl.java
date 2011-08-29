@@ -243,13 +243,18 @@ public class ConfigurationActionImpl extends DefaultConfigurationAction {
 		}
 
 		if (sendAsEmail) {
-			String emailAddress = getParameter(actionRequest, "emailAddress");
+			String[] emailAdresses = WebFormUtil.split(
+				getParameter(actionRequest, "emailAddress"));
 
-			if (Validator.isNull(emailAddress)) {
-				SessionErrors.add(actionRequest, "emailAddressRequired");
-			}
-			else if (!Validator.isEmailAddress(emailAddress)) {
-				SessionErrors.add(actionRequest, "emailAddressInvalid");
+			for (String emailAdress : emailAdresses) {
+				emailAdress = emailAdress.trim();
+
+				if (Validator.isNull(emailAdress)) {
+					SessionErrors.add(actionRequest, "emailAddressRequired");
+				}
+				else if (!Validator.isEmailAddress(emailAdress)) {
+					SessionErrors.add(actionRequest, "emailAddressInvalid");
+				}
 			}
 		}
 

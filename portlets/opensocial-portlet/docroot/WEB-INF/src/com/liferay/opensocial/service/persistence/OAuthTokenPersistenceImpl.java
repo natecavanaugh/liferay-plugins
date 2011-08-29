@@ -1598,10 +1598,12 @@ public class OAuthTokenPersistenceImpl extends BasePersistenceImpl<OAuthToken>
 				PropsKeys.HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE));
 	private static Log _log = LogFactoryUtil.getLog(OAuthTokenPersistenceImpl.class);
 	private static OAuthToken _nullOAuthToken = new OAuthTokenImpl() {
+			@Override
 			public Object clone() {
 				return this;
 			}
 
+			@Override
 			public CacheModel<OAuthToken> toCacheModel() {
 				return _nullOAuthTokenCacheModel;
 			}
