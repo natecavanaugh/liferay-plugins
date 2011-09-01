@@ -31,10 +31,42 @@
 	margin: 0;
 }
 
-.microblogs-portlet .aui-field-input-text {
+.microblogs-portlet .highlighter {
+	position: relative;
+	height: 0px;
+}
+
+.microblogs-portlet .highlighter .highlighter-content {
+	top: 11px;
+	-moz-border-bottom-colors: none;
+	-moz-border-image: none;
+	-moz-border-left-colors: none;
+	-moz-border-right-colors: none;
+	-moz-border-top-colors: none;
+	background-color:#FFFFFF;
+	background-repeat: no-repeat;
+	border-color: #BFBFBF #DEDEDE #DEDEDE #BFBFBF;
+	border-style: solid;
+	border-width: 1px;
+	font: 1em Arial,Helvetica,Verdana,sans-serif;
+	padding: 5px 1px;
 	-moz-border-radius: 5px;
 	-webkit-border-radius: 5px;
 	border-radius: 5px;
+	position:absolute;
+	min-width: 400px;
+	width: 99%;
+	height: 15px;
+}
+
+.microblogs-portlet .highlighter .highlighter-content b {
+	font-weight: normal;
+	background-color: #D8DFEA;
+}
+
+.microblogs-portlet .aui-field-input-text {
+	background: none transparent;
+	border: none;
 	height: 18px;
 	margin: 10px 0 5px;
 	min-width: 400px;
@@ -182,4 +214,43 @@
 
 .microblogs-portlet .aui-tabview-list {
 	margin-top: 5px;
+}
+
+.microblogs-portlet .microblogs-reply-icon {
+	float: right;
+	font-size: 10px;
+	font-weight: normal;
+	margin: 5px -3px;
+}
+
+.microblogs-portlet .aui-toolbar {
+	display: none;
+}
+
+.microblogs-portlet .aui-combobox-content .aui-field-content {
+	display: block;
+}
+
+.microblogs-autocomplete {
+	clear: both;
+	height: 50px;
+}
+
+.microblogs-autocomplete .thumbnail {
+	margin: 0 5px 0 0;
+}
+
+.microblogs-autocomplete .thumbnail img {
+	float:left;
+	width: 50px;
+}
+
+.microblogs-autocomplete .user-name {
+	font-size: 12px;
+	font-weight: bold;
+}
+
+.microblogs-autocomplete .small {
+	color: #4F4F4F;
+	font-size: 10px;
 }

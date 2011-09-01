@@ -32,6 +32,7 @@
 <%@ page import="com.liferay.microblogs.service.MicroblogsEntryServiceUtil" %>
 <%@ page import="com.liferay.microblogs.service.permission.MicroblogsEntryPermission" %>
 <%@ page import="com.liferay.microblogs.service.permission.MicroblogsPermission" %>
+<%@ page import="com.liferay.microblogs.util.MicroblogsUtil" %>
 <%@ page import="com.liferay.microblogs.util.WebKeys" %>
 <%@ page import="com.liferay.portal.kernel.dao.orm.QueryUtil" %>
 <%@ page import="com.liferay.portal.kernel.dao.search.SearchContainer" %>

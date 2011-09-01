@@ -141,7 +141,15 @@ header = LanguageUtil.format(pageContext, header, receiverUserFullName);
 	<aui:model-context bean="<%= microblogsEntry %>" model="<%= MicroblogsEntry.class %>" />
 
 	<c:if test="<%= !repost %>">
-		<aui:input label="" type="textarea" name="content" />
+		<div class="highlighter">
+			<div class="highlighter-content" id="<portlet:namespace />highlighterContent"> </div>
+		</div>
+
+		<div id="<portlet:namespace />autoCompleteContainer">
+			<aui:input label="" name="contentInput" type="text" />
+		</div>
+
+		<aui:input label="" name="content" type="hidden" />
 	</c:if>
 
 	<aui:button-row cssClass='<%= view ? "aui-helper-hidden" : StringPool.BLANK %>'>
@@ -177,12 +185,25 @@ header = LanguageUtil.format(pageContext, header, receiverUserFullName);
 	</aui:button-row>
 </aui:form>
 
-<aui:script use="aui-base,aui-io-plugin">
+<aui:script use="aui-base,autocomplete,autocomplete-filters">
 	var form = A.one(document.<portlet:namespace /><%= formName %>);
+
+	var MAP_MATCHED_USERS = {
+		userId: function(str, match) {
+			return '[@' + MAP_USERS[str] + ']';
+		},
+		userName: function(str, match) {
+			return '<b>' + str + '</b>'
+		}
+	};
+
+	var MAP_USERS = {};
+
+	var REGEX_USER_NAME = /@[^\s]*$/;
 
 	<c:if test="<%= !repost %>">
 		var buttonContainer = form.one('.aui-button-holder');
-		var contentInput = form.one('textarea[name=<portlet:namespace />content]');
+		var contentInput = form.one('input[name=<portlet:namespace />contentInput]');
 		var countdown = form.one('.microblogs-countdown');
 		var submitButton = form.one('.aui-button-input-submit');
 	</c:if>
@@ -191,8 +212,6 @@ header = LanguageUtil.format(pageContext, header, receiverUserFullName);
 		contentInput.on(
 			'focus',
 			function(event) {
-				contentInput.setStyle("height", "60px");
-
 				buttonContainer.show();
 			}
 		);
@@ -202,6 +221,13 @@ header = LanguageUtil.format(pageContext, header, receiverUserFullName);
 		'submit',
 		function(event) {
 			event.halt(true);
+
+			var content = A.one('#<portlet:namespace />content');
+			var contentInputValue = A.one('#<portlet:namespace />contentInput').val();
+
+			var updatedText = replaceName(contentInputValue, 'userId');
+
+			content.val(updatedText);
 
 			Liferay.Microblogs.updateMicroblogs(form);
 
@@ -255,5 +281,121 @@ header = LanguageUtil.format(pageContext, header, receiverUserFullName);
 		);
 
 		countContent();
+
+		var customFormatter = function(query, results) {
+			var searchResultTemplate = '<div class="microblogs-autocomplete">' +
+				'<div class="thumbnail">' +
+					'<img src="{portrait_url}" alt="{user_fullname}" />' +
+				'</div>' +
+				'<div>' +
+					'<span class="user-name">{user_fullname}</span><br />' +
+					'<span class="small">{user_email}</span>' +
+				'</div>' +
+			'</div>';
+
+			return A.Array.map(
+				results,
+				function(result) {
+					var userData = result.raw;
+
+					return A.Lang.sub(
+						searchResultTemplate,
+						{
+							portrait_url : userData.portraitURL,
+							user_email : userData.email,
+							user_fullname : userData.userFullName
+						}
+					);
+				}
+			);
+		};
+
+		var replaceName = function(inputText, returnType) {
+			var matchedUsers = {};
+
+			var updatedText = inputText;
+
+			var users = A.Object.keys(MAP_USERS);
+
+			var findNames = new RegExp('('+users.join('|')+')', 'g');
+
+			if (users.length > 0) {
+				updatedText = updatedText.replace(
+					findNames,
+					function(userName) {
+						if (userName !== '') {
+							matchedUsers[userName] = MAP_USERS[userName];
+
+							return MAP_MATCHED_USERS[returnType](userName, MAP_USERS[userName]);
+						}
+					}
+				);
+			}
+
+			MAP_USERS = matchedUsers;
+
+			return updatedText;
+		};
+
+		var updateHighlightDiv = function(event) {
+			var highlighterContent = A.one('#<portlet:namespace/>highlighterContent');
+
+			var inputValue = event.inputValue;
+
+			var query = inputValue.match(REGEX_USER_NAME);
+
+			if (query) {
+				event.query = query[0].substr(1);
+			}
+			else {
+				event.preventDefault();
+			}
+
+			var updatedText = replaceName(inputValue, 'userName');
+
+			updatedText = updatedText.replace(/\s/g, '&nbsp;');
+
+			highlighterContent.html(updatedText);
+		};
+
+		var updateContentTextbox = function(event) {
+			event.preventDefault();
+
+			var fullName = event.result.raw.userFullName;
+			var inputNode = event.currentTarget._inputNode;
+			var userId = event.result.raw.userId;
+
+			var highlighterContent = A.one('#<portlet:namespace/>highlighterContent');
+
+			var inputNodeValue = inputNode.val();
+
+			var inputValueUpdated = inputNodeValue.replace(inputNodeValue.match(REGEX_USER_NAME), fullName);
+
+			inputNode._node.value = inputValueUpdated;
+
+			MAP_USERS[fullName] = userId;
+
+			autocomplete.hide();
+		};
+
+		var autocomplete = new A.AutoComplete(
+			{
+				inputNode: '#<portlet:namespace/>contentInput',
+				maxResults: 20,
+				on: {
+					clear: function() {
+						var highlightDiv = A.one('#<portlet:namespace/>highlighterContent');
+
+						highlightDiv.html('');
+					},
+					query: updateHighlightDiv,
+					select: updateContentTextbox
+				},
+				resultFilters: 'phraseMatch',
+				resultFormatter: customFormatter,
+				resultTextLocator: 'userFullName',
+				source: <%= MicroblogsUtil.getJSONRecipients(user.getUserId(), themeDisplay) %>
+			}
+		).render();
 	</c:if>
 </aui:script>
