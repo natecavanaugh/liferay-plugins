@@ -25,38 +25,37 @@
 	visibility: visible;
 }
 
-.microblogs-portlet .taglib-header,
-.aui-dialog.microblogs-portlet .taglib-header {
+.microblogs-portlet .taglib-header, .aui-dialog.microblogs-portlet .taglib-header {
 	border-bottom: none;
 	margin: 0;
 }
 
 .microblogs-portlet .highlighter {
-	position: relative;
 	height: 0px;
+	position: relative;
 }
 
 .microblogs-portlet .highlighter .highlighter-content {
-	top: 11px;
 	-moz-border-bottom-colors: none;
 	-moz-border-image: none;
 	-moz-border-left-colors: none;
 	-moz-border-right-colors: none;
 	-moz-border-top-colors: none;
-	background-color:#FFFFFF;
+	-moz-border-radius: 5px;
+	-webkit-border-radius: 5px;
+	background-color:#FFF;
 	background-repeat: no-repeat;
 	border-color: #BFBFBF #DEDEDE #DEDEDE #BFBFBF;
+	border-radius: 5px;
 	border-style: solid;
 	border-width: 1px;
 	font: 1em Arial,Helvetica,Verdana,sans-serif;
-	padding: 5px 1px;
-	-moz-border-radius: 5px;
-	-webkit-border-radius: 5px;
-	border-radius: 5px;
-	position:absolute;
-	min-width: 400px;
-	width: 99%;
 	height: 15px;
+	min-width: 400px;
+	padding: 5px 1px;
+	position:absolute;
+	top: 11px;
+	width: 99%;
 }
 
 .microblogs-portlet .highlighter .highlighter-content b {
@@ -101,6 +100,10 @@
 	vertical-align: bottom;
 }
 
+.microblogs-portlet .microblogs-countdown-warned {
+	color: #F00;
+}
+
 .microblogs-portlet .microblogs-entry .user-name {
 	font-size: 12px;
 	font-weight: bold;
@@ -130,8 +133,7 @@
 	width: 100%;
 }
 
-.microblogs-portlet .aui-button-holder .aui-field-select,
-.microblogs-portlet .thumbnail {
+.microblogs-portlet .aui-button-holder .aui-field-select, .microblogs-portlet .thumbnail {
 	float: left;
 }
 
@@ -147,8 +149,7 @@
 	text-decoration: none;
 }
 
-.microblogs-portlet .entry-bubble,
-.microblogs-portlet .my-entry-bubble {
+.microblogs-portlet .entry-bubble, .microblogs-portlet .my-entry-bubble {
 	-moz-border-radius: 5px;
 	-webkit-border-radius: 5px;
 	background: #DDE1E6;
@@ -158,8 +159,8 @@
 	border-width: 1px 1px 3px 3px;
 	color: #000;
 	margin-left: 65px;
-	padding: 3px;
 	padding-left: 5px;
+	padding: 3px;
 	position: relative;
 }
 
@@ -170,11 +171,10 @@
 	position: relative;
 }
 
-.microblogs-portlet .entry-bubble:before,
-.microblogs-portlet .entry-bubble:after {
+.microblogs-portlet .entry-bubble:before, .microblogs-portlet .entry-bubble:after {
 	border: 12px solid transparent;
-	border-right-color: #C8C9CA;
 	border-left: 0;
+	border-right-color: #C8C9CA;
 	content: "";
 	left: -13px;
 	position: absolute;
@@ -187,19 +187,17 @@
 	left: -20px;
 }
 
-.microblogs-portlet .entry-bubble div,
-.microblogs-portlet .my-entry-bubble div {
+.microblogs-portlet .entry-bubble div, .microblogs-portlet .my-entry-bubble div {
 	left: -7px;
 	margin-bottom: 3px;
-	position: relative;
 	margin-left: 10px;
+	position: relative;
 }
 
-.microblogs-portlet .my-entry-bubble:before,
-.microblogs-portlet .my-entry-bubble:after {
+.microblogs-portlet .my-entry-bubble:before, .microblogs-portlet .my-entry-bubble:after {
 	border: 12px solid transparent;
-	border-right-color: #A7CEDF;
 	border-left: 0;
+	border-right-color: #A7CEDF;
 	content: "";
 	left: -13px;
 	position: absolute;
@@ -229,6 +227,14 @@
 
 .microblogs-portlet .aui-combobox-content .aui-field-content {
 	display: block;
+}
+
+.microblogs-portlet .microblogs-button-input {
+	color: #34404F;
+}
+
+.microblogs-portlet .microblogs-button-input-disabled {
+	color: #C8C9CA;
 }
 
 .microblogs-autocomplete {

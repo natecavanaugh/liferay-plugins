@@ -176,7 +176,7 @@ header = LanguageUtil.format(pageContext, header, receiverUserFullName);
 				<span class="microblogs-countdown">150</span>
 			</c:if>
 
-			<aui:button name="submit" type="submit" value="post" />
+			<aui:button inputCssClass="microblogs-button-input" name="submit" type="submit" value="post" />
 
 			<c:if test="<%= !view %>">
 				<aui:button onClick="Liferay.Microblogs.closePopup();" type="cancel" />
@@ -185,9 +185,7 @@ header = LanguageUtil.format(pageContext, header, receiverUserFullName);
 	</aui:button-row>
 </aui:form>
 
-<aui:script use="aui-base,autocomplete,autocomplete-filters">
-	var form = A.one(document.<portlet:namespace /><%= formName %>);
-
+<aui:script use="aui-base,aui-event-input,aui-template,autocomplete,autocomplete-filters">
 	var MAP_MATCHED_USERS = {
 		userId: function(str, match) {
 			return '[@' + MAP_USERS[str] + ']';
@@ -201,6 +199,18 @@ header = LanguageUtil.format(pageContext, header, receiverUserFullName);
 
 	var REGEX_USER_NAME = /@[^\s]*$/;
 
+	var TPL_SEARCH_RESULTS = '<div class="microblogs-autocomplete">' +
+		'<div class="thumbnail">' +
+			'<img src="{portraitURL}" alt="{userFullName}" />' +
+		'</div>' +
+		'<div>' +
+			'<span class="user-name">{userFullName}</span><br />' +
+			'<span class="small">{email}</span>' +
+		'</div>' +
+	'</div>';
+
+	var form = A.one(document.<portlet:namespace /><%= formName %>);
+
 	<c:if test="<%= !repost %>">
 		var buttonContainer = form.one('.aui-button-holder');
 		var contentInput = form.one('input[name=<portlet:namespace />contentInput]');
@@ -209,12 +219,7 @@ header = LanguageUtil.format(pageContext, header, receiverUserFullName);
 	</c:if>
 
 	<c:if test="<%= view %>">
-		contentInput.on(
-			'focus',
-			function(event) {
-				buttonContainer.show();
-			}
-		);
+		contentInput.on('focus', A.fn(0, 'show', buttonContainer));
 	</c:if>
 
 	form.on(
@@ -233,8 +238,9 @@ header = LanguageUtil.format(pageContext, header, receiverUserFullName);
 
 			<c:choose>
 				<c:when test="<%= view %>">
-					contentInput.setStyle('height', '18px');
-					contentInput.set('value', '');
+					contentInput.height(18);
+
+					contentInput.val('');
 
 					countContent();
 
@@ -248,67 +254,28 @@ header = LanguageUtil.format(pageContext, header, receiverUserFullName);
 	);
 
 	<c:if test="<%= reply %>">
-		contentInput.set('value', '');
+		contentInput.val('');
 
 		contentInput.focus();
 	</c:if>
 
 	<c:if test="<%= !repost %>">
 		var countContent = function() {
-			var remainCount = 150 - contentInput.get('value').length;
+			var remaining = (150 - contentInput.val().length);
 
-			countdown.set('innerHTML', remainCount);
+			countdown.html(remaining);
 
-			if((remainCount < 0) || (remainCount == 150)) {
-				submitButton.set('disabled', true);
-				submitButton.setStyle('color', '#C8C9CA');
+			var disabled = ((remaining < 0) || (remaining == 150));
 
-				if (remainCount < 0) {
-					countdown.setStyle('color', '#F00');
-				}
-			}
-			else {
-				submitButton.set('disabled', false);
-				submitButton.setStyle('color', '#34404F');
+			submitButton.attr('disabled', disabled);
+			submitButton.toggleClass('microblogs-button-input-disabled', disabled);
 
-				countdown.setStyle('color', '#C8C9CA');
-			}
+			countdown.toggleClass('microblogs-countdown-warned', (remaining < 0));
 		};
 
-		contentInput.on(
-			'keyup',
-			countContent
-		);
+		contentInput.on('input', countContent);
 
 		countContent();
-
-		var customFormatter = function(query, results) {
-			var searchResultTemplate = '<div class="microblogs-autocomplete">' +
-				'<div class="thumbnail">' +
-					'<img src="{portrait_url}" alt="{user_fullname}" />' +
-				'</div>' +
-				'<div>' +
-					'<span class="user-name">{user_fullname}</span><br />' +
-					'<span class="small">{user_email}</span>' +
-				'</div>' +
-			'</div>';
-
-			return A.Array.map(
-				results,
-				function(result) {
-					var userData = result.raw;
-
-					return A.Lang.sub(
-						searchResultTemplate,
-						{
-							portrait_url : userData.portraitURL,
-							user_email : userData.email,
-							user_fullname : userData.userFullName
-						}
-					);
-				}
-			);
-		};
 
 		var replaceName = function(inputText, returnType) {
 			var matchedUsers = {};
@@ -317,7 +284,7 @@ header = LanguageUtil.format(pageContext, header, receiverUserFullName);
 
 			var users = A.Object.keys(MAP_USERS);
 
-			var findNames = new RegExp('('+users.join('|')+')', 'g');
+			var findNames = new RegExp('(' + users.join('|') + ')', 'g');
 
 			if (users.length > 0) {
 				updatedText = updatedText.replace(
@@ -335,6 +302,17 @@ header = LanguageUtil.format(pageContext, header, receiverUserFullName);
 			MAP_USERS = matchedUsers;
 
 			return updatedText;
+		};
+
+		var resultFormatter = function(query, results) {
+			return A.Array.map(
+				results,
+				function(result) {
+					var userData = result.raw;
+
+					return A.Lang.sub(TPL_SEARCH_RESULTS, userData);
+				}
+			);
 		};
 
 		var updateHighlightDiv = function(event) {
@@ -361,17 +339,20 @@ header = LanguageUtil.format(pageContext, header, receiverUserFullName);
 		var updateContentTextbox = function(event) {
 			event.preventDefault();
 
-			var fullName = event.result.raw.userFullName;
+			var rawResult = event.result;
+
+			var fullName = rawResult.userFullName;
+			var userId = rawResult.userId;
+
 			var inputNode = event.currentTarget._inputNode;
-			var userId = event.result.raw.userId;
 
 			var highlighterContent = A.one('#<portlet:namespace/>highlighterContent');
 
 			var inputNodeValue = inputNode.val();
 
-			var inputValueUpdated = inputNodeValue.replace(inputNodeValue.match(REGEX_USER_NAME), fullName);
+			var inputValueUpdated = inputNodeValue.replace(REGEX_USER_NAME, fullName);
 
-			inputNode._node.value = inputValueUpdated;
+			inputNode.val(inputValueUpdated);
 
 			MAP_USERS[fullName] = userId;
 
@@ -392,7 +373,7 @@ header = LanguageUtil.format(pageContext, header, receiverUserFullName);
 					select: updateContentTextbox
 				},
 				resultFilters: 'phraseMatch',
-				resultFormatter: customFormatter,
+				resultFormatter: resultFormatter,
 				resultTextLocator: 'userFullName',
 				source: <%= MicroblogsUtil.getJSONRecipients(user.getUserId(), themeDisplay) %>
 			}
