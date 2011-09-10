@@ -61,7 +61,7 @@ if ((microblogsEntry != null) && (reply || repost)) {
 }
 
 String header = "whats-happening";
-
+String highlighterDivClass = "highlighter-content";
 String formName = "dialogFm";
 
 boolean view = false;
@@ -77,6 +77,7 @@ else if (reply) {
 }
 else {
 	formName = "fm";
+	highlighterDivClass = "highlighter-content textbox";
 
 	view = true;
 }
@@ -141,12 +142,10 @@ header = LanguageUtil.format(pageContext, header, receiverUserFullName);
 	<aui:model-context bean="<%= microblogsEntry %>" model="<%= MicroblogsEntry.class %>" />
 
 	<c:if test="<%= !repost %>">
-		<div class="highlighter">
-			<div class="highlighter-content" id="<portlet:namespace />highlighterContent"> </div>
-		</div>
+		<div class="autocomplete" id="<portlet:namespace />autocomplete">
+			<div id="<portlet:namespace />autocompleteContent"></div>
 
-		<div id="<portlet:namespace />autoCompleteContainer">
-			<aui:input label="" name="contentInput" type="text" />
+			<div class="<%= highlighterDivClass %>" id="<portlet:namespace />highlighterContent"> </div>
 		</div>
 
 		<aui:input label="" name="content" type="hidden" />
@@ -154,7 +153,6 @@ header = LanguageUtil.format(pageContext, header, receiverUserFullName);
 
 	<aui:button-row cssClass='<%= view ? "aui-helper-hidden" : StringPool.BLANK %>'>
 		<c:if test="<%= !repost && !reply %>">
-
 			<%
 			int socialRelationType = 0;
 
@@ -185,7 +183,7 @@ header = LanguageUtil.format(pageContext, header, receiverUserFullName);
 	</aui:button-row>
 </aui:form>
 
-<aui:script use="aui-base,aui-event-input,aui-template,autocomplete,autocomplete-filters">
+<aui:script use="aui-base,aui-event-input,aui-template,aui-form-textarea,autocomplete,autocomplete-filters">
 	var MAP_MATCHED_USERS = {
 		userId: function(str, match) {
 			return '[@' + MAP_USERS[str] + ']';
@@ -209,63 +207,20 @@ header = LanguageUtil.format(pageContext, header, receiverUserFullName);
 		'</div>' +
 	'</div>';
 
-	var form = A.one(document.<portlet:namespace /><%= formName %>);
+	var form = A.one('#<portlet:namespace /><%= formName %>');
 
 	<c:if test="<%= !repost %>">
-		var buttonContainer = form.one('.aui-button-holder');
-		var contentInput = form.one('input[name=<portlet:namespace />contentInput]');
-		var countdown = form.one('.microblogs-countdown');
-		var submitButton = form.one('.aui-button-input-submit');
-	</c:if>
+		var countContent = function(event) {
+			var contentInput = event.currentTarget;
 
-	<c:if test="<%= view %>">
-		contentInput.on('focus', A.fn(0, 'show', buttonContainer));
-	</c:if>
+			var countdown = form.one('.microblogs-countdown');
+			var submitButton = form.one('.aui-button-input-submit');
 
-	form.on(
-		'submit',
-		function(event) {
-			event.halt(true);
-
-			var content = A.one('#<portlet:namespace />content');
-			var contentInputValue = A.one('#<portlet:namespace />contentInput').val();
-
-			var updatedText = replaceName(contentInputValue, 'userId');
-
-			content.val(updatedText);
-
-			Liferay.Microblogs.updateMicroblogs(form);
-
-			<c:choose>
-				<c:when test="<%= view %>">
-					contentInput.height(18);
-
-					contentInput.val('');
-
-					countContent();
-
-					buttonContainer.hide();
-				</c:when>
-				<c:otherwise>
-					Liferay.Microblogs.closePopup();
-				</c:otherwise>
-			</c:choose>
-		}
-	);
-
-	<c:if test="<%= reply %>">
-		contentInput.val('');
-
-		contentInput.focus();
-	</c:if>
-
-	<c:if test="<%= !repost %>">
-		var countContent = function() {
 			var remaining = (150 - contentInput.val().length);
 
-			countdown.html(remaining);
-
 			var disabled = ((remaining < 0) || (remaining == 150));
+
+			countdown.html(remaining);
 
 			submitButton.attr('disabled', disabled);
 			submitButton.toggleClass('microblogs-button-input-disabled', disabled);
@@ -273,9 +228,55 @@ header = LanguageUtil.format(pageContext, header, receiverUserFullName);
 			countdown.toggleClass('microblogs-countdown-warned', (remaining < 0));
 		};
 
-		contentInput.on('input', countContent);
+		var createTextarea = function(divId) {
+			var autocomplete = A.one('#<portlet:namespace/>autocomplete');
+			var highlighterContent = A.one('#<portlet:namespace/>highlighterContent');
 
-		countContent();
+			var inputValue = '<%= ((microblogsEntry != null) && (edit)) ? microblogsEntry.getContent() : StringPool.BLANK %>';
+
+			if (autocomplete.height() < 60 || highlighterContent.height() < 60) {
+				autocomplete.height(60);
+
+				highlighterContent.height(60);
+			}
+
+			var textarea = new A.Textarea(
+				{
+					autoSize: true,
+					id: '<portlet:namespace />contentInput',
+					minHeight: 60,
+					value: inputValue
+				}
+			).render(divId);
+
+			var contentTextarea = A.one('#<portlet:namespace />contentInput textarea');
+
+			<c:if test="<%= view %>">
+				contentTextarea.on(
+					'focus',
+					function(contentTextarea) {
+						var buttonContainer = form.one('.aui-button-holder');
+
+						buttonContainer.show();
+					}
+				);
+			</c:if>
+
+			contentTextarea.on(
+				'input',
+				function(contentTextarea) {
+					updateHighlightDivSize(contentTextarea);
+
+					countContent(contentTextarea);
+				}
+			);
+
+			createAutocomplete(contentTextarea);
+
+			contentTextarea.focus();
+
+			return contentTextarea;
+		};
 
 		var replaceName = function(inputText, returnType) {
 			var matchedUsers = {};
@@ -315,10 +316,10 @@ header = LanguageUtil.format(pageContext, header, receiverUserFullName);
 			);
 		};
 
-		var updateHighlightDiv = function(event) {
-			var highlighterContent = A.one('#<portlet:namespace/>highlighterContent');
-
+		var updateHighlightDivContent = function(event) {
 			var inputValue = event.inputValue;
+
+			var highlighterContent = A.one('#<portlet:namespace/>highlighterContent');
 
 			var query = inputValue.match(REGEX_USER_NAME);
 
@@ -331,22 +332,34 @@ header = LanguageUtil.format(pageContext, header, receiverUserFullName);
 
 			var updatedText = replaceName(inputValue, 'userName');
 
-			updatedText = updatedText.replace(/\s/g, '&nbsp;');
+			updatedText = updatedText.replace(/(\n)/gm, '<br />');
+			updatedText = updatedText.replace(/\s{2}/g, '&nbsp; ');
 
-			highlighterContent.html(updatedText);
+			highlighterContent.html('<span>' + updatedText + '</span>');
+		};
+
+		var updateHighlightDivSize = function(event) {
+			var contentInput = event.currentTarget;
+
+			var autocomplete = A.one('#<portlet:namespace/>autocomplete');
+			var highlighterContent = A.one('#<portlet:namespace/>highlighterContent');
+
+			var contentInputHeight = contentInput.height();
+
+			autocomplete.height(contentInputHeight);
+
+			highlighterContent.height(contentInputHeight);
 		};
 
 		var updateContentTextbox = function(event) {
 			event.preventDefault();
 
-			var rawResult = event.result;
+			var rawResult = event.result.raw;
 
 			var fullName = rawResult.userFullName;
 			var userId = rawResult.userId;
 
 			var inputNode = event.currentTarget._inputNode;
-
-			var highlighterContent = A.one('#<portlet:namespace/>highlighterContent');
 
 			var inputNodeValue = inputNode.val();
 
@@ -356,27 +369,71 @@ header = LanguageUtil.format(pageContext, header, receiverUserFullName);
 
 			MAP_USERS[fullName] = userId;
 
-			autocomplete.hide();
+			autocompleteDiv.hide()
 		};
 
-		var autocomplete = new A.AutoComplete(
-			{
-				inputNode: '#<portlet:namespace/>contentInput',
-				maxResults: 20,
-				on: {
-					clear: function() {
-						var highlightDiv = A.one('#<portlet:namespace/>highlighterContent');
+		var createAutocomplete = function(contentTextarea) {
+			return autocompleteDiv = new A.AutoComplete(
+				{
+					inputNode: contentTextarea,
+					maxResults: 20,
+					on: {
+						clear: function() {
+							var highlighterContent = A.one('#<portlet:namespace/>highlighterContent');
 
-						highlightDiv.html('');
+							highlighterContent.html('');
+						},
+						query: updateHighlightDivContent,
+						select: updateContentTextbox
 					},
-					query: updateHighlightDiv,
-					select: updateContentTextbox
-				},
-				resultFilters: 'phraseMatch',
-				resultFormatter: resultFormatter,
-				resultTextLocator: 'userFullName',
-				source: <%= MicroblogsUtil.getJSONRecipients(user.getUserId(), themeDisplay) %>
+					resultFilters: 'phraseMatch',
+					resultFormatter: resultFormatter,
+					resultTextLocator: 'userFullName',
+					source: <%= MicroblogsUtil.getJSONRecipients(user.getUserId(), themeDisplay) %>
+				}
+			).render();
+		}
+
+		form.on(
+			'submit',
+			function(event) {
+				event.halt(true);
+
+				var content = A.one('#<portlet:namespace />content');
+				var contentInput = A.one('#<portlet:namespace />contentInput textarea');
+
+				var contentInputValue = contentInput.val();
+
+				var updatedText = replaceName(contentInputValue, 'userId');
+
+				content.val(updatedText);
+
+				Liferay.Microblogs.updateMicroblogs(form);
+
+				<c:if test="<%= !view %>">
+					Liferay.Microblogs.closePopup();
+				</c:if>
 			}
-		).render();
+		);
+
+		<c:choose>
+			<c:when test="<%= !reply && !edit %>">
+				var autocomplete = A.one('#<portlet:namespace/>autocomplete');
+
+				autocomplete.on(
+					'click',
+					function(event) {
+						var highlighterContent = A.one('#<portlet:namespace/>highlighterContent');
+
+						highlighterContent.removeClass('textbox');
+
+						createTextarea('#<portlet:namespace />autocompleteContent');
+					}
+				);
+			</c:when>
+			<c:otherwise>
+				createTextarea('#<portlet:namespace />autocompleteContent');
+			</c:otherwise>
+		</c:choose>
 	</c:if>
 </aui:script>
