@@ -116,7 +116,7 @@ public class BarPersistenceImpl extends BasePersistenceImpl<Bar>
 	public void cacheResult(List<Bar> bars) {
 		for (Bar bar : bars) {
 			if (EntityCacheUtil.getResult(BarModelImpl.ENTITY_CACHE_ENABLED,
-						BarImpl.class, bar.getPrimaryKey(), this) == null) {
+						BarImpl.class, bar.getPrimaryKey()) == null) {
 				cacheResult(bar);
 			}
 		}
@@ -151,6 +151,8 @@ public class BarPersistenceImpl extends BasePersistenceImpl<Bar>
 	public void clearCache(Bar bar) {
 		EntityCacheUtil.removeResult(BarModelImpl.ENTITY_CACHE_ENABLED,
 			BarImpl.class, bar.getPrimaryKey());
+
+		FinderCacheUtil.removeResult(FINDER_PATH_FIND_ALL, FINDER_ARGS_EMPTY);
 	}
 
 	/**
@@ -363,7 +365,7 @@ public class BarPersistenceImpl extends BasePersistenceImpl<Bar>
 	 */
 	public Bar fetchByPrimaryKey(long barId) throws SystemException {
 		Bar bar = (Bar)EntityCacheUtil.getResult(BarModelImpl.ENTITY_CACHE_ENABLED,
-				BarImpl.class, barId, this);
+				BarImpl.class, barId);
 
 		if (bar == _nullBar) {
 			return null;
@@ -445,12 +447,7 @@ public class BarPersistenceImpl extends BasePersistenceImpl<Bar>
 	 */
 	public List<Bar> findByText(String text, int start, int end,
 		OrderByComparator orderByComparator) throws SystemException {
-		Object[] finderArgs = new Object[] {
-				text,
-				
-				String.valueOf(start), String.valueOf(end),
-				String.valueOf(orderByComparator)
-			};
+		Object[] finderArgs = new Object[] { text, start, end, orderByComparator };
 
 		List<Bar> list = (List<Bar>)FinderCacheUtil.getResult(FINDER_PATH_FIND_BY_TEXT,
 				finderArgs, this);
@@ -798,10 +795,7 @@ public class BarPersistenceImpl extends BasePersistenceImpl<Bar>
 	 */
 	public List<Bar> findAll(int start, int end,
 		OrderByComparator orderByComparator) throws SystemException {
-		Object[] finderArgs = new Object[] {
-				String.valueOf(start), String.valueOf(end),
-				String.valueOf(orderByComparator)
-			};
+		Object[] finderArgs = new Object[] { start, end, orderByComparator };
 
 		List<Bar> list = (List<Bar>)FinderCacheUtil.getResult(FINDER_PATH_FIND_ALL,
 				finderArgs, this);
@@ -959,10 +953,8 @@ public class BarPersistenceImpl extends BasePersistenceImpl<Bar>
 	 * @throws SystemException if a system exception occurred
 	 */
 	public int countAll() throws SystemException {
-		Object[] finderArgs = new Object[0];
-
 		Long count = (Long)FinderCacheUtil.getResult(FINDER_PATH_COUNT_ALL,
-				finderArgs, this);
+				FINDER_ARGS_EMPTY, this);
 
 		if (count == null) {
 			Session session = null;
@@ -982,8 +974,8 @@ public class BarPersistenceImpl extends BasePersistenceImpl<Bar>
 					count = Long.valueOf(0);
 				}
 
-				FinderCacheUtil.putResult(FINDER_PATH_COUNT_ALL, finderArgs,
-					count);
+				FinderCacheUtil.putResult(FINDER_PATH_COUNT_ALL,
+					FINDER_ARGS_EMPTY, count);
 
 				closeSession(session);
 			}

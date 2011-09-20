@@ -199,7 +199,7 @@ public class EntryPersistenceImpl extends BasePersistenceImpl<Entry>
 	public void cacheResult(List<Entry> entries) {
 		for (Entry entry : entries) {
 			if (EntityCacheUtil.getResult(EntryModelImpl.ENTITY_CACHE_ENABLED,
-						EntryImpl.class, entry.getPrimaryKey(), this) == null) {
+						EntryImpl.class, entry.getPrimaryKey()) == null) {
 				cacheResult(entry);
 			}
 		}
@@ -234,6 +234,8 @@ public class EntryPersistenceImpl extends BasePersistenceImpl<Entry>
 	public void clearCache(Entry entry) {
 		EntityCacheUtil.removeResult(EntryModelImpl.ENTITY_CACHE_ENABLED,
 			EntryImpl.class, entry.getPrimaryKey());
+
+		FinderCacheUtil.removeResult(FINDER_PATH_FIND_ALL, FINDER_ARGS_EMPTY);
 	}
 
 	/**
@@ -451,7 +453,7 @@ public class EntryPersistenceImpl extends BasePersistenceImpl<Entry>
 	 */
 	public Entry fetchByPrimaryKey(long entryId) throws SystemException {
 		Entry entry = (Entry)EntityCacheUtil.getResult(EntryModelImpl.ENTITY_CACHE_ENABLED,
-				EntryImpl.class, entryId, this);
+				EntryImpl.class, entryId);
 
 		if (entry == _nullEntry) {
 			return null;
@@ -539,8 +541,7 @@ public class EntryPersistenceImpl extends BasePersistenceImpl<Entry>
 		Object[] finderArgs = new Object[] {
 				createDate,
 				
-				String.valueOf(start), String.valueOf(end),
-				String.valueOf(orderByComparator)
+				start, end, orderByComparator
 			};
 
 		List<Entry> list = (List<Entry>)FinderCacheUtil.getResult(FINDER_PATH_FIND_BY_CREATEDATE,
@@ -877,8 +878,7 @@ public class EntryPersistenceImpl extends BasePersistenceImpl<Entry>
 		Object[] finderArgs = new Object[] {
 				fromUserId,
 				
-				String.valueOf(start), String.valueOf(end),
-				String.valueOf(orderByComparator)
+				start, end, orderByComparator
 			};
 
 		List<Entry> list = (List<Entry>)FinderCacheUtil.getResult(FINDER_PATH_FIND_BY_FROMUSERID,
@@ -1214,8 +1214,7 @@ public class EntryPersistenceImpl extends BasePersistenceImpl<Entry>
 		Object[] finderArgs = new Object[] {
 				toUserId,
 				
-				String.valueOf(start), String.valueOf(end),
-				String.valueOf(orderByComparator)
+				start, end, orderByComparator
 			};
 
 		List<Entry> list = (List<Entry>)FinderCacheUtil.getResult(FINDER_PATH_FIND_BY_TOUSERID,
@@ -1555,8 +1554,7 @@ public class EntryPersistenceImpl extends BasePersistenceImpl<Entry>
 		Object[] finderArgs = new Object[] {
 				createDate, fromUserId,
 				
-				String.valueOf(start), String.valueOf(end),
-				String.valueOf(orderByComparator)
+				start, end, orderByComparator
 			};
 
 		List<Entry> list = (List<Entry>)FinderCacheUtil.getResult(FINDER_PATH_FIND_BY_C_F,
@@ -1915,8 +1913,7 @@ public class EntryPersistenceImpl extends BasePersistenceImpl<Entry>
 		Object[] finderArgs = new Object[] {
 				createDate, toUserId,
 				
-				String.valueOf(start), String.valueOf(end),
-				String.valueOf(orderByComparator)
+				start, end, orderByComparator
 			};
 
 		List<Entry> list = (List<Entry>)FinderCacheUtil.getResult(FINDER_PATH_FIND_BY_C_T,
@@ -2279,8 +2276,7 @@ public class EntryPersistenceImpl extends BasePersistenceImpl<Entry>
 		Object[] finderArgs = new Object[] {
 				createDate, fromUserId, toUserId,
 				
-				String.valueOf(start), String.valueOf(end),
-				String.valueOf(orderByComparator)
+				start, end, orderByComparator
 			};
 
 		List<Entry> list = (List<Entry>)FinderCacheUtil.getResult(FINDER_PATH_FIND_BY_C_F_T,
@@ -2660,8 +2656,7 @@ public class EntryPersistenceImpl extends BasePersistenceImpl<Entry>
 		Object[] finderArgs = new Object[] {
 				fromUserId, toUserId, content,
 				
-				String.valueOf(start), String.valueOf(end),
-				String.valueOf(orderByComparator)
+				start, end, orderByComparator
 			};
 
 		List<Entry> list = (List<Entry>)FinderCacheUtil.getResult(FINDER_PATH_FIND_BY_F_T_C,
@@ -3049,10 +3044,7 @@ public class EntryPersistenceImpl extends BasePersistenceImpl<Entry>
 	 */
 	public List<Entry> findAll(int start, int end,
 		OrderByComparator orderByComparator) throws SystemException {
-		Object[] finderArgs = new Object[] {
-				String.valueOf(start), String.valueOf(end),
-				String.valueOf(orderByComparator)
-			};
+		Object[] finderArgs = new Object[] { start, end, orderByComparator };
 
 		List<Entry> list = (List<Entry>)FinderCacheUtil.getResult(FINDER_PATH_FIND_ALL,
 				finderArgs, this);
@@ -3645,10 +3637,8 @@ public class EntryPersistenceImpl extends BasePersistenceImpl<Entry>
 	 * @throws SystemException if a system exception occurred
 	 */
 	public int countAll() throws SystemException {
-		Object[] finderArgs = new Object[0];
-
 		Long count = (Long)FinderCacheUtil.getResult(FINDER_PATH_COUNT_ALL,
-				finderArgs, this);
+				FINDER_ARGS_EMPTY, this);
 
 		if (count == null) {
 			Session session = null;
@@ -3668,8 +3658,8 @@ public class EntryPersistenceImpl extends BasePersistenceImpl<Entry>
 					count = Long.valueOf(0);
 				}
 
-				FinderCacheUtil.putResult(FINDER_PATH_COUNT_ALL, finderArgs,
-					count);
+				FinderCacheUtil.putResult(FINDER_PATH_COUNT_ALL,
+					FINDER_ARGS_EMPTY, count);
 
 				closeSession(session);
 			}

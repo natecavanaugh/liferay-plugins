@@ -101,7 +101,7 @@ public class CheckoutPersistenceImpl extends BasePersistenceImpl<Checkout>
 		for (Checkout checkout : checkouts) {
 			if (EntityCacheUtil.getResult(
 						CheckoutModelImpl.ENTITY_CACHE_ENABLED,
-						CheckoutImpl.class, checkout.getPrimaryKey(), this) == null) {
+						CheckoutImpl.class, checkout.getPrimaryKey()) == null) {
 				cacheResult(checkout);
 			}
 		}
@@ -136,6 +136,8 @@ public class CheckoutPersistenceImpl extends BasePersistenceImpl<Checkout>
 	public void clearCache(Checkout checkout) {
 		EntityCacheUtil.removeResult(CheckoutModelImpl.ENTITY_CACHE_ENABLED,
 			CheckoutImpl.class, checkout.getPrimaryKey());
+
+		FinderCacheUtil.removeResult(FINDER_PATH_FIND_ALL, FINDER_ARGS_EMPTY);
 	}
 
 	/**
@@ -359,7 +361,7 @@ public class CheckoutPersistenceImpl extends BasePersistenceImpl<Checkout>
 	public Checkout fetchByPrimaryKey(long checkoutId)
 		throws SystemException {
 		Checkout checkout = (Checkout)EntityCacheUtil.getResult(CheckoutModelImpl.ENTITY_CACHE_ENABLED,
-				CheckoutImpl.class, checkoutId, this);
+				CheckoutImpl.class, checkoutId);
 
 		if (checkout == _nullCheckout) {
 			return null;
@@ -438,10 +440,7 @@ public class CheckoutPersistenceImpl extends BasePersistenceImpl<Checkout>
 	 */
 	public List<Checkout> findAll(int start, int end,
 		OrderByComparator orderByComparator) throws SystemException {
-		Object[] finderArgs = new Object[] {
-				String.valueOf(start), String.valueOf(end),
-				String.valueOf(orderByComparator)
-			};
+		Object[] finderArgs = new Object[] { start, end, orderByComparator };
 
 		List<Checkout> list = (List<Checkout>)FinderCacheUtil.getResult(FINDER_PATH_FIND_ALL,
 				finderArgs, this);
@@ -523,10 +522,8 @@ public class CheckoutPersistenceImpl extends BasePersistenceImpl<Checkout>
 	 * @throws SystemException if a system exception occurred
 	 */
 	public int countAll() throws SystemException {
-		Object[] finderArgs = new Object[0];
-
 		Long count = (Long)FinderCacheUtil.getResult(FINDER_PATH_COUNT_ALL,
-				finderArgs, this);
+				FINDER_ARGS_EMPTY, this);
 
 		if (count == null) {
 			Session session = null;
@@ -546,8 +543,8 @@ public class CheckoutPersistenceImpl extends BasePersistenceImpl<Checkout>
 					count = Long.valueOf(0);
 				}
 
-				FinderCacheUtil.putResult(FINDER_PATH_COUNT_ALL, finderArgs,
-					count);
+				FinderCacheUtil.putResult(FINDER_PATH_COUNT_ALL,
+					FINDER_ARGS_EMPTY, count);
 
 				closeSession(session);
 			}

@@ -116,7 +116,7 @@ public class AttachmentPersistenceImpl extends BasePersistenceImpl<Attachment>
 		for (Attachment attachment : attachments) {
 			if (EntityCacheUtil.getResult(
 						AttachmentModelImpl.ENTITY_CACHE_ENABLED,
-						AttachmentImpl.class, attachment.getPrimaryKey(), this) == null) {
+						AttachmentImpl.class, attachment.getPrimaryKey()) == null) {
 				cacheResult(attachment);
 			}
 		}
@@ -151,6 +151,8 @@ public class AttachmentPersistenceImpl extends BasePersistenceImpl<Attachment>
 	public void clearCache(Attachment attachment) {
 		EntityCacheUtil.removeResult(AttachmentModelImpl.ENTITY_CACHE_ENABLED,
 			AttachmentImpl.class, attachment.getPrimaryKey());
+
+		FinderCacheUtil.removeResult(FINDER_PATH_FIND_ALL, FINDER_ARGS_EMPTY);
 	}
 
 	/**
@@ -374,7 +376,7 @@ public class AttachmentPersistenceImpl extends BasePersistenceImpl<Attachment>
 	public Attachment fetchByPrimaryKey(long attachmentId)
 		throws SystemException {
 		Attachment attachment = (Attachment)EntityCacheUtil.getResult(AttachmentModelImpl.ENTITY_CACHE_ENABLED,
-				AttachmentImpl.class, attachmentId, this);
+				AttachmentImpl.class, attachmentId);
 
 		if (attachment == _nullAttachment) {
 			return null;
@@ -462,8 +464,7 @@ public class AttachmentPersistenceImpl extends BasePersistenceImpl<Attachment>
 		Object[] finderArgs = new Object[] {
 				messageId,
 				
-				String.valueOf(start), String.valueOf(end),
-				String.valueOf(orderByComparator)
+				start, end, orderByComparator
 			};
 
 		List<Attachment> list = (List<Attachment>)FinderCacheUtil.getResult(FINDER_PATH_FIND_BY_MESSAGEID,
@@ -787,10 +788,7 @@ public class AttachmentPersistenceImpl extends BasePersistenceImpl<Attachment>
 	 */
 	public List<Attachment> findAll(int start, int end,
 		OrderByComparator orderByComparator) throws SystemException {
-		Object[] finderArgs = new Object[] {
-				String.valueOf(start), String.valueOf(end),
-				String.valueOf(orderByComparator)
-			};
+		Object[] finderArgs = new Object[] { start, end, orderByComparator };
 
 		List<Attachment> list = (List<Attachment>)FinderCacheUtil.getResult(FINDER_PATH_FIND_ALL,
 				finderArgs, this);
@@ -937,10 +935,8 @@ public class AttachmentPersistenceImpl extends BasePersistenceImpl<Attachment>
 	 * @throws SystemException if a system exception occurred
 	 */
 	public int countAll() throws SystemException {
-		Object[] finderArgs = new Object[0];
-
 		Long count = (Long)FinderCacheUtil.getResult(FINDER_PATH_COUNT_ALL,
-				finderArgs, this);
+				FINDER_ARGS_EMPTY, this);
 
 		if (count == null) {
 			Session session = null;
@@ -960,8 +956,8 @@ public class AttachmentPersistenceImpl extends BasePersistenceImpl<Attachment>
 					count = Long.valueOf(0);
 				}
 
-				FinderCacheUtil.putResult(FINDER_PATH_COUNT_ALL, finderArgs,
-					count);
+				FinderCacheUtil.putResult(FINDER_PATH_COUNT_ALL,
+					FINDER_ARGS_EMPTY, count);
 
 				closeSession(session);
 			}

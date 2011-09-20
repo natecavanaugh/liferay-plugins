@@ -143,7 +143,7 @@ public class MessagePersistenceImpl extends BasePersistenceImpl<Message>
 		for (Message message : messages) {
 			if (EntityCacheUtil.getResult(
 						MessageModelImpl.ENTITY_CACHE_ENABLED,
-						MessageImpl.class, message.getPrimaryKey(), this) == null) {
+						MessageImpl.class, message.getPrimaryKey()) == null) {
 				cacheResult(message);
 			}
 		}
@@ -178,6 +178,8 @@ public class MessagePersistenceImpl extends BasePersistenceImpl<Message>
 	public void clearCache(Message message) {
 		EntityCacheUtil.removeResult(MessageModelImpl.ENTITY_CACHE_ENABLED,
 			MessageImpl.class, message.getPrimaryKey());
+
+		FinderCacheUtil.removeResult(FINDER_PATH_FIND_ALL, FINDER_ARGS_EMPTY);
 
 		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_F_R,
 			new Object[] {
@@ -447,7 +449,7 @@ public class MessagePersistenceImpl extends BasePersistenceImpl<Message>
 	 */
 	public Message fetchByPrimaryKey(long messageId) throws SystemException {
 		Message message = (Message)EntityCacheUtil.getResult(MessageModelImpl.ENTITY_CACHE_ENABLED,
-				MessageImpl.class, messageId, this);
+				MessageImpl.class, messageId);
 
 		if (message == _nullMessage) {
 			return null;
@@ -535,8 +537,7 @@ public class MessagePersistenceImpl extends BasePersistenceImpl<Message>
 		Object[] finderArgs = new Object[] {
 				companyId,
 				
-				String.valueOf(start), String.valueOf(end),
-				String.valueOf(orderByComparator)
+				start, end, orderByComparator
 			};
 
 		List<Message> list = (List<Message>)FinderCacheUtil.getResult(FINDER_PATH_FIND_BY_COMPANYID,
@@ -874,8 +875,7 @@ public class MessagePersistenceImpl extends BasePersistenceImpl<Message>
 		Object[] finderArgs = new Object[] {
 				folderId,
 				
-				String.valueOf(start), String.valueOf(end),
-				String.valueOf(orderByComparator)
+				start, end, orderByComparator
 			};
 
 		List<Message> list = (List<Message>)FinderCacheUtil.getResult(FINDER_PATH_FIND_BY_FOLDERID,
@@ -1345,10 +1345,7 @@ public class MessagePersistenceImpl extends BasePersistenceImpl<Message>
 	 */
 	public List<Message> findAll(int start, int end,
 		OrderByComparator orderByComparator) throws SystemException {
-		Object[] finderArgs = new Object[] {
-				String.valueOf(start), String.valueOf(end),
-				String.valueOf(orderByComparator)
-			};
+		Object[] finderArgs = new Object[] { start, end, orderByComparator };
 
 		List<Message> list = (List<Message>)FinderCacheUtil.getResult(FINDER_PATH_FIND_ALL,
 				finderArgs, this);
@@ -1633,10 +1630,8 @@ public class MessagePersistenceImpl extends BasePersistenceImpl<Message>
 	 * @throws SystemException if a system exception occurred
 	 */
 	public int countAll() throws SystemException {
-		Object[] finderArgs = new Object[0];
-
 		Long count = (Long)FinderCacheUtil.getResult(FINDER_PATH_COUNT_ALL,
-				finderArgs, this);
+				FINDER_ARGS_EMPTY, this);
 
 		if (count == null) {
 			Session session = null;
@@ -1656,8 +1651,8 @@ public class MessagePersistenceImpl extends BasePersistenceImpl<Message>
 					count = Long.valueOf(0);
 				}
 
-				FinderCacheUtil.putResult(FINDER_PATH_COUNT_ALL, finderArgs,
-					count);
+				FinderCacheUtil.putResult(FINDER_PATH_COUNT_ALL,
+					FINDER_ARGS_EMPTY, count);
 
 				closeSession(session);
 			}

@@ -145,8 +145,7 @@ public class KaleoTaskFormPersistenceImpl extends BasePersistenceImpl<KaleoTaskF
 		for (KaleoTaskForm kaleoTaskForm : kaleoTaskForms) {
 			if (EntityCacheUtil.getResult(
 						KaleoTaskFormModelImpl.ENTITY_CACHE_ENABLED,
-						KaleoTaskFormImpl.class, kaleoTaskForm.getPrimaryKey(),
-						this) == null) {
+						KaleoTaskFormImpl.class, kaleoTaskForm.getPrimaryKey()) == null) {
 				cacheResult(kaleoTaskForm);
 			}
 		}
@@ -181,6 +180,8 @@ public class KaleoTaskFormPersistenceImpl extends BasePersistenceImpl<KaleoTaskF
 	public void clearCache(KaleoTaskForm kaleoTaskForm) {
 		EntityCacheUtil.removeResult(KaleoTaskFormModelImpl.ENTITY_CACHE_ENABLED,
 			KaleoTaskFormImpl.class, kaleoTaskForm.getPrimaryKey());
+
+		FinderCacheUtil.removeResult(FINDER_PATH_FIND_ALL, FINDER_ARGS_EMPTY);
 	}
 
 	/**
@@ -410,7 +411,7 @@ public class KaleoTaskFormPersistenceImpl extends BasePersistenceImpl<KaleoTaskF
 	public KaleoTaskForm fetchByPrimaryKey(long kaleoTaskFormId)
 		throws SystemException {
 		KaleoTaskForm kaleoTaskForm = (KaleoTaskForm)EntityCacheUtil.getResult(KaleoTaskFormModelImpl.ENTITY_CACHE_ENABLED,
-				KaleoTaskFormImpl.class, kaleoTaskFormId, this);
+				KaleoTaskFormImpl.class, kaleoTaskFormId);
 
 		if (kaleoTaskForm == _nullKaleoTaskForm) {
 			return null;
@@ -499,8 +500,7 @@ public class KaleoTaskFormPersistenceImpl extends BasePersistenceImpl<KaleoTaskF
 		Object[] finderArgs = new Object[] {
 				companyId,
 				
-				String.valueOf(start), String.valueOf(end),
-				String.valueOf(orderByComparator)
+				start, end, orderByComparator
 			};
 
 		List<KaleoTaskForm> list = (List<KaleoTaskForm>)FinderCacheUtil.getResult(FINDER_PATH_FIND_BY_COMPANYID,
@@ -841,8 +841,7 @@ public class KaleoTaskFormPersistenceImpl extends BasePersistenceImpl<KaleoTaskF
 		Object[] finderArgs = new Object[] {
 				kaleoDefinitionId,
 				
-				String.valueOf(start), String.valueOf(end),
-				String.valueOf(orderByComparator)
+				start, end, orderByComparator
 			};
 
 		List<KaleoTaskForm> list = (List<KaleoTaskForm>)FinderCacheUtil.getResult(FINDER_PATH_FIND_BY_KALEODEFINITIONID,
@@ -1183,8 +1182,7 @@ public class KaleoTaskFormPersistenceImpl extends BasePersistenceImpl<KaleoTaskF
 		Object[] finderArgs = new Object[] {
 				kaleoTaskId,
 				
-				String.valueOf(start), String.valueOf(end),
-				String.valueOf(orderByComparator)
+				start, end, orderByComparator
 			};
 
 		List<KaleoTaskForm> list = (List<KaleoTaskForm>)FinderCacheUtil.getResult(FINDER_PATH_FIND_BY_KALEOTASKID,
@@ -1516,10 +1514,7 @@ public class KaleoTaskFormPersistenceImpl extends BasePersistenceImpl<KaleoTaskF
 	 */
 	public List<KaleoTaskForm> findAll(int start, int end,
 		OrderByComparator orderByComparator) throws SystemException {
-		Object[] finderArgs = new Object[] {
-				String.valueOf(start), String.valueOf(end),
-				String.valueOf(orderByComparator)
-			};
+		Object[] finderArgs = new Object[] { start, end, orderByComparator };
 
 		List<KaleoTaskForm> list = (List<KaleoTaskForm>)FinderCacheUtil.getResult(FINDER_PATH_FIND_ALL,
 				finderArgs, this);
@@ -1799,10 +1794,8 @@ public class KaleoTaskFormPersistenceImpl extends BasePersistenceImpl<KaleoTaskF
 	 * @throws SystemException if a system exception occurred
 	 */
 	public int countAll() throws SystemException {
-		Object[] finderArgs = new Object[0];
-
 		Long count = (Long)FinderCacheUtil.getResult(FINDER_PATH_COUNT_ALL,
-				finderArgs, this);
+				FINDER_ARGS_EMPTY, this);
 
 		if (count == null) {
 			Session session = null;
@@ -1822,8 +1815,8 @@ public class KaleoTaskFormPersistenceImpl extends BasePersistenceImpl<KaleoTaskF
 					count = Long.valueOf(0);
 				}
 
-				FinderCacheUtil.putResult(FINDER_PATH_COUNT_ALL, finderArgs,
-					count);
+				FinderCacheUtil.putResult(FINDER_PATH_COUNT_ALL,
+					FINDER_ARGS_EMPTY, count);
 
 				closeSession(session);
 			}

@@ -168,8 +168,7 @@ public class MemberRequestPersistenceImpl extends BasePersistenceImpl<MemberRequ
 		for (MemberRequest memberRequest : memberRequests) {
 			if (EntityCacheUtil.getResult(
 						MemberRequestModelImpl.ENTITY_CACHE_ENABLED,
-						MemberRequestImpl.class, memberRequest.getPrimaryKey(),
-						this) == null) {
+						MemberRequestImpl.class, memberRequest.getPrimaryKey()) == null) {
 				cacheResult(memberRequest);
 			}
 		}
@@ -204,6 +203,8 @@ public class MemberRequestPersistenceImpl extends BasePersistenceImpl<MemberRequ
 	public void clearCache(MemberRequest memberRequest) {
 		EntityCacheUtil.removeResult(MemberRequestModelImpl.ENTITY_CACHE_ENABLED,
 			MemberRequestImpl.class, memberRequest.getPrimaryKey());
+
+		FinderCacheUtil.removeResult(FINDER_PATH_FIND_ALL, FINDER_ARGS_EMPTY);
 
 		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_KEY,
 			new Object[] { memberRequest.getKey() });
@@ -499,7 +500,7 @@ public class MemberRequestPersistenceImpl extends BasePersistenceImpl<MemberRequ
 	public MemberRequest fetchByPrimaryKey(long memberRequestId)
 		throws SystemException {
 		MemberRequest memberRequest = (MemberRequest)EntityCacheUtil.getResult(MemberRequestModelImpl.ENTITY_CACHE_ENABLED,
-				MemberRequestImpl.class, memberRequestId, this);
+				MemberRequestImpl.class, memberRequestId);
 
 		if (memberRequest == _nullMemberRequest) {
 			return null;
@@ -731,8 +732,7 @@ public class MemberRequestPersistenceImpl extends BasePersistenceImpl<MemberRequ
 		Object[] finderArgs = new Object[] {
 				receiverUserId,
 				
-				String.valueOf(start), String.valueOf(end),
-				String.valueOf(orderByComparator)
+				start, end, orderByComparator
 			};
 
 		List<MemberRequest> list = (List<MemberRequest>)FinderCacheUtil.getResult(FINDER_PATH_FIND_BY_RECEIVERUSERID,
@@ -1077,8 +1077,7 @@ public class MemberRequestPersistenceImpl extends BasePersistenceImpl<MemberRequ
 		Object[] finderArgs = new Object[] {
 				receiverUserId, status,
 				
-				String.valueOf(start), String.valueOf(end),
-				String.valueOf(orderByComparator)
+				start, end, orderByComparator
 			};
 
 		List<MemberRequest> list = (List<MemberRequest>)FinderCacheUtil.getResult(FINDER_PATH_FIND_BY_R_S,
@@ -1580,10 +1579,7 @@ public class MemberRequestPersistenceImpl extends BasePersistenceImpl<MemberRequ
 	 */
 	public List<MemberRequest> findAll(int start, int end,
 		OrderByComparator orderByComparator) throws SystemException {
-		Object[] finderArgs = new Object[] {
-				String.valueOf(start), String.valueOf(end),
-				String.valueOf(orderByComparator)
-			};
+		Object[] finderArgs = new Object[] { start, end, orderByComparator };
 
 		List<MemberRequest> list = (List<MemberRequest>)FinderCacheUtil.getResult(FINDER_PATH_FIND_ALL,
 				finderArgs, this);
@@ -1963,10 +1959,8 @@ public class MemberRequestPersistenceImpl extends BasePersistenceImpl<MemberRequ
 	 * @throws SystemException if a system exception occurred
 	 */
 	public int countAll() throws SystemException {
-		Object[] finderArgs = new Object[0];
-
 		Long count = (Long)FinderCacheUtil.getResult(FINDER_PATH_COUNT_ALL,
-				finderArgs, this);
+				FINDER_ARGS_EMPTY, this);
 
 		if (count == null) {
 			Session session = null;
@@ -1986,8 +1980,8 @@ public class MemberRequestPersistenceImpl extends BasePersistenceImpl<MemberRequ
 					count = Long.valueOf(0);
 				}
 
-				FinderCacheUtil.putResult(FINDER_PATH_COUNT_ALL, finderArgs,
-					count);
+				FinderCacheUtil.putResult(FINDER_PATH_COUNT_ALL,
+					FINDER_ARGS_EMPTY, count);
 
 				closeSession(session);
 			}

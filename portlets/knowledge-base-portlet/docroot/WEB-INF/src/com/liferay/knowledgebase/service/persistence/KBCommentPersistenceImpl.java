@@ -191,7 +191,7 @@ public class KBCommentPersistenceImpl extends BasePersistenceImpl<KBComment>
 		for (KBComment kbComment : kbComments) {
 			if (EntityCacheUtil.getResult(
 						KBCommentModelImpl.ENTITY_CACHE_ENABLED,
-						KBCommentImpl.class, kbComment.getPrimaryKey(), this) == null) {
+						KBCommentImpl.class, kbComment.getPrimaryKey()) == null) {
 				cacheResult(kbComment);
 			}
 		}
@@ -226,6 +226,8 @@ public class KBCommentPersistenceImpl extends BasePersistenceImpl<KBComment>
 	public void clearCache(KBComment kbComment) {
 		EntityCacheUtil.removeResult(KBCommentModelImpl.ENTITY_CACHE_ENABLED,
 			KBCommentImpl.class, kbComment.getPrimaryKey());
+
+		FinderCacheUtil.removeResult(FINDER_PATH_FIND_ALL, FINDER_ARGS_EMPTY);
 
 		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_UUID_G,
 			new Object[] {
@@ -539,7 +541,7 @@ public class KBCommentPersistenceImpl extends BasePersistenceImpl<KBComment>
 	public KBComment fetchByPrimaryKey(long kbCommentId)
 		throws SystemException {
 		KBComment kbComment = (KBComment)EntityCacheUtil.getResult(KBCommentModelImpl.ENTITY_CACHE_ENABLED,
-				KBCommentImpl.class, kbCommentId, this);
+				KBCommentImpl.class, kbCommentId);
 
 		if (kbComment == _nullKBComment) {
 			return null;
@@ -622,12 +624,7 @@ public class KBCommentPersistenceImpl extends BasePersistenceImpl<KBComment>
 	 */
 	public List<KBComment> findByUuid(String uuid, int start, int end,
 		OrderByComparator orderByComparator) throws SystemException {
-		Object[] finderArgs = new Object[] {
-				uuid,
-				
-				String.valueOf(start), String.valueOf(end),
-				String.valueOf(orderByComparator)
-			};
+		Object[] finderArgs = new Object[] { uuid, start, end, orderByComparator };
 
 		List<KBComment> list = (List<KBComment>)FinderCacheUtil.getResult(FINDER_PATH_FIND_BY_UUID,
 				finderArgs, this);
@@ -1142,8 +1139,7 @@ public class KBCommentPersistenceImpl extends BasePersistenceImpl<KBComment>
 		Object[] finderArgs = new Object[] {
 				groupId,
 				
-				String.valueOf(start), String.valueOf(end),
-				String.valueOf(orderByComparator)
+				start, end, orderByComparator
 			};
 
 		List<KBComment> list = (List<KBComment>)FinderCacheUtil.getResult(FINDER_PATH_FIND_BY_GROUPID,
@@ -1485,8 +1481,7 @@ public class KBCommentPersistenceImpl extends BasePersistenceImpl<KBComment>
 		Object[] finderArgs = new Object[] {
 				groupId, classNameId,
 				
-				String.valueOf(start), String.valueOf(end),
-				String.valueOf(orderByComparator)
+				start, end, orderByComparator
 			};
 
 		List<KBComment> list = (List<KBComment>)FinderCacheUtil.getResult(FINDER_PATH_FIND_BY_G_C,
@@ -1846,8 +1841,7 @@ public class KBCommentPersistenceImpl extends BasePersistenceImpl<KBComment>
 		Object[] finderArgs = new Object[] {
 				classNameId, classPK,
 				
-				String.valueOf(start), String.valueOf(end),
-				String.valueOf(orderByComparator)
+				start, end, orderByComparator
 			};
 
 		List<KBComment> list = (List<KBComment>)FinderCacheUtil.getResult(FINDER_PATH_FIND_BY_C_C,
@@ -2348,10 +2342,7 @@ public class KBCommentPersistenceImpl extends BasePersistenceImpl<KBComment>
 	 */
 	public List<KBComment> findAll(int start, int end,
 		OrderByComparator orderByComparator) throws SystemException {
-		Object[] finderArgs = new Object[] {
-				String.valueOf(start), String.valueOf(end),
-				String.valueOf(orderByComparator)
-			};
+		Object[] finderArgs = new Object[] { start, end, orderByComparator };
 
 		List<KBComment> list = (List<KBComment>)FinderCacheUtil.getResult(FINDER_PATH_FIND_ALL,
 				finderArgs, this);
@@ -2885,10 +2876,8 @@ public class KBCommentPersistenceImpl extends BasePersistenceImpl<KBComment>
 	 * @throws SystemException if a system exception occurred
 	 */
 	public int countAll() throws SystemException {
-		Object[] finderArgs = new Object[0];
-
 		Long count = (Long)FinderCacheUtil.getResult(FINDER_PATH_COUNT_ALL,
-				finderArgs, this);
+				FINDER_ARGS_EMPTY, this);
 
 		if (count == null) {
 			Session session = null;
@@ -2908,8 +2897,8 @@ public class KBCommentPersistenceImpl extends BasePersistenceImpl<KBComment>
 					count = Long.valueOf(0);
 				}
 
-				FinderCacheUtil.putResult(FINDER_PATH_COUNT_ALL, finderArgs,
-					count);
+				FinderCacheUtil.putResult(FINDER_PATH_COUNT_ALL,
+					FINDER_ARGS_EMPTY, count);
 
 				closeSession(session);
 			}

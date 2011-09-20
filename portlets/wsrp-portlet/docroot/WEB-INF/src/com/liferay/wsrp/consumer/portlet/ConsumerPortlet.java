@@ -29,6 +29,7 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.StreamUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.TransientValue;
@@ -63,8 +64,8 @@ import com.liferay.wsrp.util.WSRPConsumerManager;
 import com.liferay.wsrp.util.WSRPConsumerManagerFactory;
 import com.liferay.wsrp.util.WebKeys;
 
-import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -849,9 +850,17 @@ public class ConsumerPortlet extends GenericPortlet {
 		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		return baseKey + StringPool.UNDERLINE +
-			themeDisplay.getScopeGroupId() + StringPool.UNDERLINE +
-			wsrpConsumer.getWsrpConsumerId();
+		StringBundler sb = new StringBundler();
+
+		sb.append(baseKey);
+		sb.append(StringPool.UNDERLINE);
+		sb.append(themeDisplay.getScopeGroupId());
+		sb.append(StringPool.UNDERLINE);
+		sb.append(wsrpConsumer.getWsrpConsumerId());
+		sb.append(StringPool.UNDERLINE);
+		sb.append(wsrpConsumer.getUrl());
+
+		return sb.toString();
 	}
 
 	protected Telecom getTelecom(User user, String listTypeName)
@@ -1529,15 +1538,26 @@ public class ConsumerPortlet extends GenericPortlet {
 				uploadContext.setMimeAttributes(
 					new NamedString[] {mimeAttribute});
 
-				File file = uploadPortletRequest.getFile(name);
+				InputStream inputStream = null;
 
-				byte[] bytes = FileUtil.getBytes(file);
+				try {
+					inputStream = uploadPortletRequest.getFileAsStream(name);
 
-				if (bytes == null) {
-					continue;
+					if (inputStream == null) {
+						continue;
+					}
+
+					byte[] bytes = FileUtil.getBytes(inputStream);
+
+					if (bytes == null) {
+						continue;
+					}
+
+					uploadContext.setUploadData(bytes);
 				}
-
-				uploadContext.setUploadData(bytes);
+				finally {
+					StreamUtil.cleanUp(inputStream);
+				}
 
 				uploadContexts.add(uploadContext);
 			}

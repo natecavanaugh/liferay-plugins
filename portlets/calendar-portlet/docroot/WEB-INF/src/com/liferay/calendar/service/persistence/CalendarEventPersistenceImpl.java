@@ -136,8 +136,7 @@ public class CalendarEventPersistenceImpl extends BasePersistenceImpl<CalendarEv
 		for (CalendarEvent calendarEvent : calendarEvents) {
 			if (EntityCacheUtil.getResult(
 						CalendarEventModelImpl.ENTITY_CACHE_ENABLED,
-						CalendarEventImpl.class, calendarEvent.getPrimaryKey(),
-						this) == null) {
+						CalendarEventImpl.class, calendarEvent.getPrimaryKey()) == null) {
 				cacheResult(calendarEvent);
 			}
 		}
@@ -172,6 +171,8 @@ public class CalendarEventPersistenceImpl extends BasePersistenceImpl<CalendarEv
 	public void clearCache(CalendarEvent calendarEvent) {
 		EntityCacheUtil.removeResult(CalendarEventModelImpl.ENTITY_CACHE_ENABLED,
 			CalendarEventImpl.class, calendarEvent.getPrimaryKey());
+
+		FinderCacheUtil.removeResult(FINDER_PATH_FIND_ALL, FINDER_ARGS_EMPTY);
 
 		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_UUID_G,
 			new Object[] {
@@ -461,7 +462,7 @@ public class CalendarEventPersistenceImpl extends BasePersistenceImpl<CalendarEv
 	public CalendarEvent fetchByPrimaryKey(long calendarEventId)
 		throws SystemException {
 		CalendarEvent calendarEvent = (CalendarEvent)EntityCacheUtil.getResult(CalendarEventModelImpl.ENTITY_CACHE_ENABLED,
-				CalendarEventImpl.class, calendarEventId, this);
+				CalendarEventImpl.class, calendarEventId);
 
 		if (calendarEvent == _nullCalendarEvent) {
 			return null;
@@ -546,12 +547,7 @@ public class CalendarEventPersistenceImpl extends BasePersistenceImpl<CalendarEv
 	 */
 	public List<CalendarEvent> findByUuid(String uuid, int start, int end,
 		OrderByComparator orderByComparator) throws SystemException {
-		Object[] finderArgs = new Object[] {
-				uuid,
-				
-				String.valueOf(start), String.valueOf(end),
-				String.valueOf(orderByComparator)
-			};
+		Object[] finderArgs = new Object[] { uuid, start, end, orderByComparator };
 
 		List<CalendarEvent> list = (List<CalendarEvent>)FinderCacheUtil.getResult(FINDER_PATH_FIND_BY_UUID,
 				finderArgs, this);
@@ -1059,10 +1055,7 @@ public class CalendarEventPersistenceImpl extends BasePersistenceImpl<CalendarEv
 	 */
 	public List<CalendarEvent> findAll(int start, int end,
 		OrderByComparator orderByComparator) throws SystemException {
-		Object[] finderArgs = new Object[] {
-				String.valueOf(start), String.valueOf(end),
-				String.valueOf(orderByComparator)
-			};
+		Object[] finderArgs = new Object[] { start, end, orderByComparator };
 
 		List<CalendarEvent> list = (List<CalendarEvent>)FinderCacheUtil.getResult(FINDER_PATH_FIND_ALL,
 				finderArgs, this);
@@ -1306,10 +1299,8 @@ public class CalendarEventPersistenceImpl extends BasePersistenceImpl<CalendarEv
 	 * @throws SystemException if a system exception occurred
 	 */
 	public int countAll() throws SystemException {
-		Object[] finderArgs = new Object[0];
-
 		Long count = (Long)FinderCacheUtil.getResult(FINDER_PATH_COUNT_ALL,
-				finderArgs, this);
+				FINDER_ARGS_EMPTY, this);
 
 		if (count == null) {
 			Session session = null;
@@ -1329,8 +1320,8 @@ public class CalendarEventPersistenceImpl extends BasePersistenceImpl<CalendarEv
 					count = Long.valueOf(0);
 				}
 
-				FinderCacheUtil.putResult(FINDER_PATH_COUNT_ALL, finderArgs,
-					count);
+				FinderCacheUtil.putResult(FINDER_PATH_COUNT_ALL,
+					FINDER_ARGS_EMPTY, count);
 
 				closeSession(session);
 			}

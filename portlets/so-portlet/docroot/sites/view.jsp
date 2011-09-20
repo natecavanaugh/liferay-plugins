@@ -25,19 +25,32 @@ String tabs1 = ParamUtil.getString(request, "tabs1", "my-sites");
 String name = ParamUtil.getString(request, "name");
 String searchName = DAOParamUtil.getLike(request, "name");
 
-List<Group> groups = SitesUtil.getStarredSites(preferences);
-int groupsCount = groups.size();
+List<Group> groups = null;
+int groupsCount = 0;
 
-if (groups.isEmpty()) {
-	groups = SitesUtil.getVisibleSites(themeDisplay.getCompanyId(), themeDisplay.getUserId(), searchName, maxResultSize);
-	groupsCount = SitesUtil.getVisibleSitesCount(themeDisplay.getCompanyId(), themeDisplay.getUserId(), searchName);
+if (tabs1.equals("my-favorites")) {
+	groups = SitesUtil.getStarredSites(themeDisplay.getUserId(), name);
+	groupsCount = groups.size();
+}
+else if (tabs1.equals("my-sites")) {
+	groups = SitesUtil.getVisibleSites(themeDisplay.getCompanyId(), themeDisplay.getUserId(), searchName, true, maxResultSize);
+	groupsCount = SitesUtil.getVisibleSitesCount(themeDisplay.getCompanyId(), themeDisplay.getUserId(), searchName, true);
+
+	if (groupsCount == 0) {
+		tabs1 = "all-sites";
+
+		groups = SitesUtil.getVisibleSites(themeDisplay.getCompanyId(), themeDisplay.getUserId(), searchName, false, maxResultSize);
+		groupsCount = SitesUtil.getVisibleSitesCount(themeDisplay.getCompanyId(), themeDisplay.getUserId(), searchName, false);
+	}
+}
+else {
+	groups = SitesUtil.getVisibleSites(themeDisplay.getCompanyId(), themeDisplay.getUserId(), searchName, false, maxResultSize);
+	groupsCount = SitesUtil.getVisibleSitesCount(themeDisplay.getCompanyId(), themeDisplay.getUserId(), searchName, false);
 }
 
 PortletURL portletURL = renderResponse.createRenderURL();
 
 portletURL.setWindowState(WindowState.NORMAL);
-
-portletURL.setParameter("tabs1", tabs1);
 
 pageContext.setAttribute("portletURL", portletURL);
 %>
@@ -45,18 +58,27 @@ pageContext.setAttribute("portletURL", portletURL);
 <form action="<%= portletURL.toString() %>" method="get" name="<portlet:namespace />fm">
 <liferay-portlet:renderURLParams varImpl="portletURL" />
 
-<div class="site-list-container">
-	<div class="search">
-		<input id="<portlet:namespace />name" name="<portlet:namespace />name" size="30" type="text" value="<%= HtmlUtil.escape(name) %>" />
+<div class="sites-tabs">
+	<aui:select label="" name="tabs1">
+		<aui:option label="all-sites" selected='<%= tabs1.equals("all-sites") %>' value="all-sites" />
+		<aui:option label="my-sites" selected='<%= tabs1.equals("my-sites") %>' value="my-sites" />
+		<aui:option label="my-favorites" selected='<%= tabs1.equals("my-favorites") %>' value="my-favorites" />
+	</aui:select>
+</div>
 
-		<input type="submit" value="<liferay-ui:message key="search" />" />
-	</div>
+<div class="search">
+	<input class="search-input" id="<portlet:namespace />name" name="<portlet:namespace />name" size="30" type="text" value="<%= HtmlUtil.escape(name) %>" />
+
+	<input src="<%= themeDisplay.getPathThemeImages() %>/common/search.png" type="image" value='<liferay-ui:message key="search" />' />
+</div>
+
+<div class="site-list-container">
 
 	<%
 	boolean hideNotice = GetterUtil.getBoolean(preferences.getValue("hide-notice", StringPool.BLANK), false);
 	%>
 
-	<c:if test="<%= groups.isEmpty() && !hideNotice %>">
+	<c:if test="<%= !hideNotice %>">
 		<div class="portlet-msg-info star-msg-info <%= hideNotice %>">
 			<liferay-ui:message key="star-some-sites-to-customize-your-sites-list" />
 
@@ -77,12 +99,16 @@ pageContext.setAttribute("portletURL", portletURL);
 				<%
 				boolean alternate = false;
 
-				String starredGroupIds = preferences.getValue("starredGroupIds", StringPool.BLANK);
+				String starredGroupIds = SitesUtil.getStarredGroupIds(themeDisplay.getUserId());
 
 				for (Group group : groups) {
 					String className = StringPool.BLANK;
 
-					if (GetterUtil.getBoolean(group.getExpandoBridge().getAttribute("socialOfficeEnabled"))) {
+					ExpandoBridge expandoBridge = group.getExpandoBridge();
+
+					boolean socialOfficeEnabled = GetterUtil.getBoolean(expandoBridge.getAttribute("socialOfficeEnabled"));
+
+					if (socialOfficeEnabled) {
 						className += "social-office-enabled ";
 					}
 
@@ -107,7 +133,7 @@ pageContext.setAttribute("portletURL", portletURL);
 										<portlet:param name="starredGroupId" value="<%= String.valueOf(group.getGroupId()) %>" />
 									</liferay-portlet:actionURL>
 
-									<a class="star" href="<%= starURL %>"><liferay-ui:message key="star" /></a>
+									<a href="<%= starURL %>"><liferay-ui:message key="star" /></a>
 								</span>
 							</c:when>
 							<c:otherwise>
@@ -122,20 +148,6 @@ pageContext.setAttribute("portletURL", portletURL);
 								</span>
 							</c:otherwise>
 						</c:choose>
-
-						<c:if test="<%= !member %>">
-							<span class="action join">
-								<liferay-portlet:actionURL windowState="<%= WindowState.NORMAL.toString() %>" portletName="<%= PortletKeys.SITES_ADMIN %>" var="joinURL">
-									<portlet:param name="struts_action" value="/sites_admin/edit_site_assignments" />
-									<portlet:param name="<%= Constants.CMD %>" value="group_users" />
-									<portlet:param name="redirect" value="<%= currentURL %>" />
-									<portlet:param name="groupId" value="<%= String.valueOf(group.getGroupId()) %>" />
-									<portlet:param name="addUserIds" value="<%= String.valueOf(user.getUserId()) %>" />
-								</liferay-portlet:actionURL>
-
-								<a href="<%= joinURL %>"><liferay-ui:message key="join" /></a>
-							</span>
-						</c:if>
 
 						<span class="name">
 							<c:choose>
@@ -168,7 +180,17 @@ pageContext.setAttribute("portletURL", portletURL);
 			</c:when>
 			<c:otherwise>
 				<li class="empty">
-					<liferay-ui:message key="you-are-not-a-member-of-any-sites.-search-or-open-the-directory-to-get-started" />
+					<c:choose>
+						<c:when test='<%= tabs1.equals("my-sites") %>'>
+							<liferay-ui:message key="you-are-not-a-member-of-any-sites.-search-or-open-the-directory-to-get-started" />
+						</c:when>
+						<c:when test='<%= tabs1.equals("my-favorites") %>'>
+							<liferay-ui:message key="you-do-not-have-a-favorite-site" />
+						</c:when>
+						<c:otherwise>
+							<liferay-ui:message key="there-are-no-results" />
+						</c:otherwise>
+					</c:choose>
 				</li>
 			</c:otherwise>
 		</c:choose>
@@ -211,7 +233,7 @@ pageContext.setAttribute("portletURL", portletURL);
 					},
 				</c:if>
 				{
-					label: '<liferay-ui:message key="directory" />',
+					label: '<liferay-ui:message key="more-sites" />',
 					on: {
 						click: function(event) {
 							<liferay-portlet:renderURL windowState="<%= LiferayWindowState.EXCLUSIVE.toString() %>" var="viewSitesURL">
@@ -230,6 +252,28 @@ pageContext.setAttribute("portletURL", portletURL);
 
 	var siteList = A.one('.so-portlet-sites .site-list');
 
+	var sitesTabsContainer = A.one('.so-portlet-sites .sites-tabs');
+
+	var sitesTabsSelect = sitesTabsContainer.one('select[name=<portlet:namespace />tabs1]');
+
+	sitesTabsSelect.on(
+		'change',
+		function(event) {
+			searchInput.set('value', '');
+
+			Liferay.SO.Sites.init(
+				{
+					siteList: '.so-portlet-sites .site-list',
+					siteListContainer: '.so-portlet-sites .site-list-container',
+					siteListURL: '<portlet:resourceURL id="getSites"><portlet:param name="portletResource" value="<%= portletResource %>" /></portlet:resourceURL>',
+					siteSearchInput: '#<portlet:namespace />name'
+				}
+			);
+
+			Liferay.SO.Sites.updateSites();
+		}
+	);
+
 	siteList.delegate(
 		'click',
 		function(event) {
@@ -237,7 +281,7 @@ pageContext.setAttribute("portletURL", portletURL);
 
 			var data = {
 				keywords: keywords,
-				userSites: (keywords == '')
+				userSites: <%= tabs1.equals("my-sites") %>
 			};
 
 			<liferay-portlet:renderURL windowState="<%= LiferayWindowState.EXCLUSIVE.toString() %>" var="viewSitesURL">

@@ -101,7 +101,7 @@ public class DefinitionPersistenceImpl extends BasePersistenceImpl<Definition>
 		for (Definition definition : definitions) {
 			if (EntityCacheUtil.getResult(
 						DefinitionModelImpl.ENTITY_CACHE_ENABLED,
-						DefinitionImpl.class, definition.getPrimaryKey(), this) == null) {
+						DefinitionImpl.class, definition.getPrimaryKey()) == null) {
 				cacheResult(definition);
 			}
 		}
@@ -136,6 +136,8 @@ public class DefinitionPersistenceImpl extends BasePersistenceImpl<Definition>
 	public void clearCache(Definition definition) {
 		EntityCacheUtil.removeResult(DefinitionModelImpl.ENTITY_CACHE_ENABLED,
 			DefinitionImpl.class, definition.getPrimaryKey());
+
+		FinderCacheUtil.removeResult(FINDER_PATH_FIND_ALL, FINDER_ARGS_EMPTY);
 	}
 
 	/**
@@ -363,7 +365,7 @@ public class DefinitionPersistenceImpl extends BasePersistenceImpl<Definition>
 	public Definition fetchByPrimaryKey(long definitionId)
 		throws SystemException {
 		Definition definition = (Definition)EntityCacheUtil.getResult(DefinitionModelImpl.ENTITY_CACHE_ENABLED,
-				DefinitionImpl.class, definitionId, this);
+				DefinitionImpl.class, definitionId);
 
 		if (definition == _nullDefinition) {
 			return null;
@@ -443,10 +445,7 @@ public class DefinitionPersistenceImpl extends BasePersistenceImpl<Definition>
 	 */
 	public List<Definition> findAll(int start, int end,
 		OrderByComparator orderByComparator) throws SystemException {
-		Object[] finderArgs = new Object[] {
-				String.valueOf(start), String.valueOf(end),
-				String.valueOf(orderByComparator)
-			};
+		Object[] finderArgs = new Object[] { start, end, orderByComparator };
 
 		List<Definition> list = (List<Definition>)FinderCacheUtil.getResult(FINDER_PATH_FIND_ALL,
 				finderArgs, this);
@@ -528,10 +527,8 @@ public class DefinitionPersistenceImpl extends BasePersistenceImpl<Definition>
 	 * @throws SystemException if a system exception occurred
 	 */
 	public int countAll() throws SystemException {
-		Object[] finderArgs = new Object[0];
-
 		Long count = (Long)FinderCacheUtil.getResult(FINDER_PATH_COUNT_ALL,
-				finderArgs, this);
+				FINDER_ARGS_EMPTY, this);
 
 		if (count == null) {
 			Session session = null;
@@ -551,8 +548,8 @@ public class DefinitionPersistenceImpl extends BasePersistenceImpl<Definition>
 					count = Long.valueOf(0);
 				}
 
-				FinderCacheUtil.putResult(FINDER_PATH_COUNT_ALL, finderArgs,
-					count);
+				FinderCacheUtil.putResult(FINDER_PATH_COUNT_ALL,
+					FINDER_ARGS_EMPTY, count);
 
 				closeSession(session);
 			}

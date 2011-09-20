@@ -177,7 +177,7 @@ public class CalendarBookingPersistenceImpl extends BasePersistenceImpl<Calendar
 			if (EntityCacheUtil.getResult(
 						CalendarBookingModelImpl.ENTITY_CACHE_ENABLED,
 						CalendarBookingImpl.class,
-						calendarBooking.getPrimaryKey(), this) == null) {
+						calendarBooking.getPrimaryKey()) == null) {
 				cacheResult(calendarBooking);
 			}
 		}
@@ -212,6 +212,8 @@ public class CalendarBookingPersistenceImpl extends BasePersistenceImpl<Calendar
 	public void clearCache(CalendarBooking calendarBooking) {
 		EntityCacheUtil.removeResult(CalendarBookingModelImpl.ENTITY_CACHE_ENABLED,
 			CalendarBookingImpl.class, calendarBooking.getPrimaryKey());
+
+		FinderCacheUtil.removeResult(FINDER_PATH_FIND_ALL, FINDER_ARGS_EMPTY);
 
 		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_UUID_G,
 			new Object[] {
@@ -507,7 +509,7 @@ public class CalendarBookingPersistenceImpl extends BasePersistenceImpl<Calendar
 	public CalendarBooking fetchByPrimaryKey(long calendarBookingId)
 		throws SystemException {
 		CalendarBooking calendarBooking = (CalendarBooking)EntityCacheUtil.getResult(CalendarBookingModelImpl.ENTITY_CACHE_ENABLED,
-				CalendarBookingImpl.class, calendarBookingId, this);
+				CalendarBookingImpl.class, calendarBookingId);
 
 		if (calendarBooking == _nullCalendarBooking) {
 			return null;
@@ -592,12 +594,7 @@ public class CalendarBookingPersistenceImpl extends BasePersistenceImpl<Calendar
 	 */
 	public List<CalendarBooking> findByUuid(String uuid, int start, int end,
 		OrderByComparator orderByComparator) throws SystemException {
-		Object[] finderArgs = new Object[] {
-				uuid,
-				
-				String.valueOf(start), String.valueOf(end),
-				String.valueOf(orderByComparator)
-			};
+		Object[] finderArgs = new Object[] { uuid, start, end, orderByComparator };
 
 		List<CalendarBooking> list = (List<CalendarBooking>)FinderCacheUtil.getResult(FINDER_PATH_FIND_BY_UUID,
 				finderArgs, this);
@@ -1114,8 +1111,7 @@ public class CalendarBookingPersistenceImpl extends BasePersistenceImpl<Calendar
 		Object[] finderArgs = new Object[] {
 				calendarEventId,
 				
-				String.valueOf(start), String.valueOf(end),
-				String.valueOf(orderByComparator)
+				start, end, orderByComparator
 			};
 
 		List<CalendarBooking> list = (List<CalendarBooking>)FinderCacheUtil.getResult(FINDER_PATH_FIND_BY_CALENDAREVENTID,
@@ -1457,8 +1453,7 @@ public class CalendarBookingPersistenceImpl extends BasePersistenceImpl<Calendar
 		Object[] finderArgs = new Object[] {
 				calendarResourceId,
 				
-				String.valueOf(start), String.valueOf(end),
-				String.valueOf(orderByComparator)
+				start, end, orderByComparator
 			};
 
 		List<CalendarBooking> list = (List<CalendarBooking>)FinderCacheUtil.getResult(FINDER_PATH_FIND_BY_CALENDARRESOURCEID,
@@ -1805,8 +1800,7 @@ public class CalendarBookingPersistenceImpl extends BasePersistenceImpl<Calendar
 		Object[] finderArgs = new Object[] {
 				classNameId, classPK,
 				
-				String.valueOf(start), String.valueOf(end),
-				String.valueOf(orderByComparator)
+				start, end, orderByComparator
 			};
 
 		List<CalendarBooking> list = (List<CalendarBooking>)FinderCacheUtil.getResult(FINDER_PATH_FIND_BY_C_C,
@@ -2155,10 +2149,7 @@ public class CalendarBookingPersistenceImpl extends BasePersistenceImpl<Calendar
 	 */
 	public List<CalendarBooking> findAll(int start, int end,
 		OrderByComparator orderByComparator) throws SystemException {
-		Object[] finderArgs = new Object[] {
-				String.valueOf(start), String.valueOf(end),
-				String.valueOf(orderByComparator)
-			};
+		Object[] finderArgs = new Object[] { start, end, orderByComparator };
 
 		List<CalendarBooking> list = (List<CalendarBooking>)FinderCacheUtil.getResult(FINDER_PATH_FIND_ALL,
 				finderArgs, this);
@@ -2611,10 +2602,8 @@ public class CalendarBookingPersistenceImpl extends BasePersistenceImpl<Calendar
 	 * @throws SystemException if a system exception occurred
 	 */
 	public int countAll() throws SystemException {
-		Object[] finderArgs = new Object[0];
-
 		Long count = (Long)FinderCacheUtil.getResult(FINDER_PATH_COUNT_ALL,
-				finderArgs, this);
+				FINDER_ARGS_EMPTY, this);
 
 		if (count == null) {
 			Session session = null;
@@ -2634,8 +2623,8 @@ public class CalendarBookingPersistenceImpl extends BasePersistenceImpl<Calendar
 					count = Long.valueOf(0);
 				}
 
-				FinderCacheUtil.putResult(FINDER_PATH_COUNT_ALL, finderArgs,
-					count);
+				FinderCacheUtil.putResult(FINDER_PATH_COUNT_ALL,
+					FINDER_ARGS_EMPTY, count);
 
 				closeSession(session);
 			}

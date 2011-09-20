@@ -24,7 +24,6 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.PortletResponseUtil;
 import com.liferay.portal.kernel.upload.UploadPortletRequest;
-import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.MimeTypesUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -74,27 +73,43 @@ public class MailPortlet extends MVCPortlet {
 
 		List<MailFile> mailFiles = new ArrayList<MailFile>();
 
-		for (int i = 1; i <= attachmentCount; i++) {
-			File file = uploadPortletRequest.getFile("attachment" + i);
-			String filename = uploadPortletRequest.getFileName(
-				"attachment" + i);
+		try {
+			for (int i = 1; i <= attachmentCount; i++) {
+				File file = uploadPortletRequest.getFile(
+					"attachment" + i, true);
+				String fileName = uploadPortletRequest.getFileName(
+					"attachment" + i);
+				long size = uploadPortletRequest.getSize("attachment" + i);
 
-			if (FileUtil.getBytes(file) != null) {
-				mailFiles.add(new MailFile(file, filename, file.length()));
+				if (file == null) {
+					continue;
+				}
+
+				MailFile mailFile = new MailFile(file, fileName, size);
+
+				mailFiles.add(mailFile);
+			}
+
+			HttpServletRequest request = PortalUtil.getHttpServletRequest(
+				actionRequest);
+
+			MailManager mailManager = MailManager.getInstance(request);
+
+			JSONObject responseDataJSONObject = mailManager.sendMessage(
+				accountId, messageId, to, cc, bcc, subject, body, mailFiles);
+
+			String redirect =
+				PortalUtil.getLayoutURL(themeDisplay) +
+					"/-/mail/send_message?responseData=" +
+						responseDataJSONObject;
+
+			actionResponse.sendRedirect(redirect);
+		}
+		finally {
+			for (MailFile mailFile : mailFiles) {
+				mailFile.cleanUp();
 			}
 		}
-
-		HttpServletRequest request = PortalUtil.getHttpServletRequest(
-			actionRequest);
-
-		MailManager mailManager = MailManager.getInstance(request);
-
-		JSONObject responseData = mailManager.sendMessage(
-			accountId, messageId, to, cc, bcc, subject, body, mailFiles);
-
-		actionResponse.sendRedirect(
-			PortalUtil.getLayoutURL(themeDisplay) +
-				"/-/mail/send_message?responseData=" + responseData);
 	}
 
 	@Override
