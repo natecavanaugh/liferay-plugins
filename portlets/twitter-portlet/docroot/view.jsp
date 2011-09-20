@@ -35,6 +35,6 @@ String twitterSn = contact.getTwitterSn();
 		Your Twitter screen name is <a href="http://twitter.com/<%= twitterSn %>" target="_blank"><%= twitterSn %></a>. Your tweets will appear as activities.
 	</c:when>
 	<c:otherwise>
-		<a href="<%= themeDisplay.getURLMyAccount() %>&tabs4=social-network-ids">Please configure your Twitter screen name.</a>
+		<a href="<%= themeDisplay.getURLMyAccount() %>#_<%= PortletKeys.MY_ACCOUNT %>_socialNetwork">Please configure your Twitter screen name.</a>
 	</c:otherwise>
 </c:choose>
