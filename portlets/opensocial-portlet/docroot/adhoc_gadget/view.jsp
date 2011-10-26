@@ -22,8 +22,15 @@ Gadget gadget = (Gadget)renderRequest.getAttribute(WebKeys.GADGET);
 
 <c:choose>
 	<c:when test="<%= gadget == null %>">
-		<div class="portlet-msg-info">
-			<liferay-ui:message key="configure-a-gadget-to-be-displayed-in-this-portlet" />
+
+		<%
+		String taglibOnClick = "Liferay.Portlet.openConfiguration(\'#p_p_id_" + portletDisplay.getId() + "_\', \'" + portletDisplay.getId() + "\', \'" + portletDisplay.getURLConfiguration() + " \', \'" + portletDisplay.getNamespace() + "\'); return false;";
+		%>
+
+		<div class="portlet-configuration portlet-msg-info">
+			<a href="<%= portletDisplay.getURLConfiguration() %>" onClick="<%= taglibOnClick %>">
+				<liferay-ui:message key="configure-a-gadget-to-be-displayed-in-this-portlet" />
+			</a>
 		</div>
 
 		<liferay-ui:icon
@@ -31,6 +38,7 @@ Gadget gadget = (Gadget)renderRequest.getAttribute(WebKeys.GADGET);
 			image="configuration"
 			message="configure-gadget"
 			method="get"
+			onClick="<%= taglibOnClick %>""
 			url="<%= portletDisplay.getURLConfiguration() %>"
 		/>
 	</c:when>
