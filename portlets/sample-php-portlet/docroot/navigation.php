@@ -9,5 +9,7 @@
 
 	<a href="phpinfo.php">PHP Info</a> -
 
+	<a href="portlet_url.php">Portlet URL</a> -
+
 	<a href="test_db.php">Test Database Connection</a>
 </div>
