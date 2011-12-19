@@ -6,7 +6,7 @@
 
 <head>
 	<title>$the_title - $company_name</title>
-
+	<meta name="viewport" content="target-densitydpi=160dpi, width=device-width, minimum-scale=1, maximum-scale=1.25">
 	$theme.include($top_head_include)
 </head>
 
@@ -80,7 +80,6 @@ $theme.include($body_top_include)
 			<li><a href="./about-us"><span>About Us</span></a></li>
 			<li><span>&#169; 2011 RAY/ARCH All Rights Reserved</span></li>
 		</ul>
-	    
 		<p class="powered-by">
 			#language("powered-by") <a href="http://www.liferay.com" rel="external">Liferay</a>
 		</p>

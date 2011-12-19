@@ -1,5 +1,10 @@
 @import "compass";
 
+$mobile-s: 300px;
+$mobile-m: 460px;
+$mobile-l: 700px;
+
+
 /* -------- Global -------- */
 
 #skip-to-content,
@@ -18,7 +23,7 @@
 }
 
 body {
-	font:12px/1 Arial, Helvetica;
+	font: 12px/1 Arial, Helvetica;
 }
 
 .left {
@@ -136,6 +141,9 @@ a:visited {
 }
 
 .columns-2_10-90{
+	#layout-column_column-1 {
+		width: 140px;
+	}
 	#column-2 {
 		#layout-column_column-2 {
 			padding-left: 0;
@@ -144,6 +152,7 @@ a:visited {
 }
 
 /* -------- Web Content -------- */
+
 .areas-of-work,
 .home-news,
 .featured-project,
@@ -189,7 +198,7 @@ a:visited {
 	}
 	.featured-item {
 		padding-top: 10px;
-		&:first-child {
+		&.first {
 			padding-top: 0;
 		};
 	}
@@ -221,10 +230,12 @@ a:visited {
 	.featured-wrapper {
 		img {
 			float: left;
-			margin-right: 20px;
+			margin-bottom: 20px;
 		}
 		.featured-content {
+			display: inline-block;
 			padding-left: 20px;
+			width: 300px;
 			h3 {
 				border-bottom: none;
 				margin: 5px 0;
@@ -244,14 +255,19 @@ a:visited {
 
 .areas-of-work {
 	.featured-items {
+		.featured-items-content{
+			margin-left: 10px;
+		}
 		.featured-item {
 			border-bottom: none;
+			display: -moz-inline-stack;
+			display: inline-block;
 			float: left;
-			margin-left: 18px;
-			width: 221px;
-			&:first-child {
-				margin-left: 0;
-			}
+			margin: 0 10px 0 0;
+			min-height: 212px;
+			vertical-align: top;
+			width: 212px;
+			zoom: 1;
 			h3 {
 				border-bottom: none;
 				font-size: inherit;
@@ -284,7 +300,7 @@ a:visited {
 			.featured-item {
 				border-bottom: none;
 				padding: 1em 0;
-				&:first-child {
+				&.first {
 					padding-top: 0;
 				}
 			}
@@ -342,15 +358,16 @@ a:visited {
 .project-list,
 .defining-projects, {
 	.featured-items-content {
+		padding-left: 10px;
 		display: inline-block;
 		.featured-item {
-			display: block;
-			float: left;
-			margin: 0 10px;
+			display: -moz-inline-stack;
+			display: inline-block;
+			margin: 0 10px 0 0;
+			min-height: 139px;
+			vertical-align: top;
 			width: 139px;
-			&:nth-child(5n + 1) {
-				clear: both;
-			}
+			zoom: 1;
 		}
 	}
 	.featured-item-title {
@@ -384,6 +401,16 @@ a:visited {
 	}
 }
 
+.ie6 {
+	.project-list,
+	.defining-projects, {
+		.featured-items-content .featured-item {
+			display: inline;
+			height: 139px;
+		}
+	}
+}
+
 .project-page {
 	.article-wrapper {
 		h3 {
@@ -405,9 +432,11 @@ a:visited {
 	.featured-wrapper {
 		img {
 			float: left;
+			margin-bottom: 20px;
 		}
 		.featured-content {
-			padding-left: 480px;
+			display: inline-block;
+			padding-left: 20px;
 		}
 	}
 	.featured-items-content .featured-item {
@@ -421,10 +450,15 @@ a:visited {
 	}
 }
 
-.why-we-work .featured-items h3 {
-	font-size: 1.5em;
-	margin-bottom: 20px;
-	padding-bottom: 5px;
+.why-we-work {
+	.featured-content {
+		width: 460px;
+	}
+	.featured-items h3 {
+		font-size: 1.5em;
+		margin-bottom: 20px;
+		padding-bottom: 5px;
+	}
 }
 
 .defining-projects {
@@ -433,19 +467,15 @@ a:visited {
 		font-size: 1em;
 		text-transform: uppercase;
 	}
-	.featured-items-content {
-		.featured-item {
-			margin: 0 0 0 20px;
-			&:first-child {
-				margin-left: 0;
-			}
+	.featured-items {
+		.featured-items-content {
+			padding-left: 9px;
 		}
 	}
 }
 
 .web-form-portlet {
 	width: 455px;
-	margin-left: 10px;
 	.aui-legend,
 	.aui-field-label {
 		text-transform: uppercase;
@@ -462,12 +492,12 @@ a:visited {
 }
 
 .about-us {
+	.featured-content {
+		width: 300px;
+	}
 	.featured-items h3 {
 		font-size: 1.5em;
 		margin-bottom: 20px;
-	}
-	.featured-wrapper .featured-content {
-		padding-left: 640px;
 	}
 	p a.download {
 		color: #215172;
@@ -519,6 +549,10 @@ a:visited {
 	}
 }
 
+.lfr-panel-content .form-text {
+	width: 100%;
+}
+
 /* -------- Footer -------- */
 
 #footer ul {
@@ -537,6 +571,162 @@ a:visited {
 			&:hover {
 				text-decoration: underline;
 			};
+		}
+	}
+}
+
+/* -------- Mobile Global -------- */
+
+.touch.aui-view-320,
+.touch.aui-view-480,
+.touch.aui-view-720 {
+	#navigation {
+		border-top: 1px solid #000;
+	 	border-bottom: none;
+		ul {
+			width: 100%;
+			li {
+				border-bottom: 1px dashed #000;
+				clear: both;
+				padding: 10px 0;
+				width: 100%;
+			}
+		}
+	}
+	.page-search {
+		display: none;
+	}
+	#content #main-content {
+		.portlet-layout {
+			display: inline-block;
+			clear: both;
+			float: left;
+			.portlet-column {
+				clear: both;
+				float: left;
+				.portlet-column-content {
+					margin-left: 0;
+					padding-left: 0;
+				}
+			}
+		}
+	}
+}
+
+@mixin mobile($selector, $width) {
+	.#{$selector}{
+		#wrapper,
+		.portlet-column {
+			width: $width !important;
+		}
+	}
+}
+
+@include mobile("touch.aui-view-320", $mobile-s);
+@include mobile("touch.aui-view-480", $mobile-m);
+@include mobile("touch.aui-view-720", $mobile-l);
+
+/* -------- Mobile Custom Webcontent-------- */
+
+@mixin mobileCustomContent($selector, $width, $height) {
+	.#{$selector}{
+		.aui-carousel-content,
+		.aui-carousel-item img,
+		.web-form-portlet {
+			width: $width !important;
+		}
+		.aui-carousel,
+		.aui-carousel-content {
+			height: $height !important;
+		}
+		.aui-carousel-item img {
+			height: inherit !important;
+		}
+	}
+}
+
+@include mobileCustomContent("touch.aui-view-320", $mobile-s, 155px);
+@include mobileCustomContent("touch.aui-view-480", $mobile-m, 240px);
+@include mobileCustomContent("touch.aui-view-720", $mobile-l, 361px);
+
+/* -------- Custom Mobile Content -------- */
+.touch.aui-view-320,
+.touch.aui-view-480,
+.touch.aui-view-720 {
+	.project-list,
+	.defining-projects, {
+		.featured-items-content {
+			padding-left: 0;
+		}
+	}
+	.why-we-work,
+	.about-us {
+		.featured-wrapper {
+			img {
+				float: left;
+				margin-bottom: 20px;
+			}
+			.featured-content {
+				display: inline-block;
+				padding-left: 0;
+				width: 100%;
+			}
+		}
+	}
+	.entry-body img {
+		height: inherit !important;
+		width: 100% !important;
+	}
+}
+
+.touch.aui-view-320,
+.touch.aui-view-480 {
+	.why-we-work,
+	.about-us {
+		.featured-wrapper img {
+			height: inherit !important;
+			width: 100% !important;
+		}
+	}
+	.featured-project .featured-wrapper {
+		.featured-content {
+			padding-left: 0;
+			width: 100%;
+		}
+	}
+}
+
+.touch.aui-view-320 {
+	.web-form-portlet {
+		width: 300px !important;
+		.aui-legend {
+			font-size: 1.2em;
+		}
+	}
+}
+
+/* -------- Mobile Layout -------- */
+
+.touch.aui-view-480 {
+	.columns-2-2 {
+		#column-2 {
+			.portlet-boundary {
+				float: left;
+				padding-right: 10px;
+				width: 220px;
+			}
+		}
+	}
+}
+
+.touch.aui-view-720 {
+	.columns-2-2 {
+		#column-2 {
+			.portlet-boundary {
+				float: left;
+				padding-right: 20px;
+				width: 330px;
+			}
 		}
 	}
 }

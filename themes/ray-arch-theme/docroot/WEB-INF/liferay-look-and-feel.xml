@@ -1,0 +1,32 @@
+<?xml version="1.0"?>
+<!DOCTYPE look-and-feel PUBLIC "-//Liferay//DTD Look and Feel 6.1.0//EN" "http://www.liferay.com/dtd/liferay-look-and-feel_6_1_0.dtd">
+
+<look-and-feel>
+	<compatibility>
+		<version>6.1.0+</version>
+	</compatibility>
+	<theme id="ray-arch" name="Ray Arch Theme">
+		<settings>
+			<setting configurable="true" key="portlet-setup-show-borders-default" type="checkbox" value="false"></setting>
+		</settings>
+		<layout-templates>
+			<custom>
+				<layout-template id="2-2-columns" name="2-2 Columns">
+					<template-path>/layouttpl/custom/2-2-columns-layouttpl/2_2_columns.tpl</template-path>
+					<wap-template-path>/layouttpl/custom/2-2-columns-layouttpl/2_2_columns.tpl</wap-template-path>
+					<thumbnail-path>/layouttpl/custom/2-2-columns-layouttpl/2_2_columns.png</thumbnail-path>
+				</layout-template>
+				<layout-template id="columns-2_10-90" name="2 Columns Layout (10/90)">
+					<template-path>/layouttpl/custom/2-columns-10-90-layouttpl/2-columns-10-90.tpl</template-path>
+					<wap-template-path>/layouttpl/custom/2-columns-10-90-layouttpl/2-columns-10-90.tpl</wap-template-path>
+					<thumbnail-path>/layouttpl/custom/2-columns-10-90-layouttpl/2-columns-10-90.png</thumbnail-path>
+				</layout-template>
+				<layout-template id="1-2-columns" name="1-2 Columns Layout">
+					<template-path>/layouttpl/custom/1-2-columns-layouttpl/1_2_columns.tpl</template-path>
+					<wap-template-path>/layouttpl/custom/1-2-columns-layouttpl/1_2_columns.tpl</wap-template-path>
+					<thumbnail-path>/layouttpl/custom/1-2-columns-layouttpl/1_2_columns.png</thumbnail-path>
+				</layout-template>
+			</custom>
+		</layout-templates>
+	</theme>
+</look-and-feel>
