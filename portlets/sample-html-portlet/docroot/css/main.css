@@ -77,8 +77,8 @@
 	/* ---------- Typography ---------- */
 
 	.typography {
-		background-color: #FFF;
 		@include border-radius(5px);
+		background-color: #FFF;
 		margin: 0 1em 2em;
 		padding: 0 10px 10px 10px;
 	}
@@ -91,10 +91,10 @@
 
 	#lists {
 		.aui-column-content {
-		background-color: #FFF;
-		@include border-radius(5px);
-		margin-right: 1em;
-		padding: 0 10px 10px 10px;
+			@include border-radius(5px);
+			background-color: #FFF;
+			margin-right: 1em;
+			padding: 0 10px 10px 10px;
 		}
 
 		.last .aui-column-content {
@@ -107,21 +107,23 @@
 		margin: 0;
 		li {
 			padding: 3px 0;
+			
 			span {
 				display: inline;
 				list-style-type: none;
 				margin: 0;
 				padding-left: 20px;
-				&.alert {
+				
+				.alert {
 					background-position: 3px -145px;
 				}
-				&.carat {
+				.carat {
 					background-position: -32px 0;
 				}
-				&.close {
+				.close {
 					background-position: -95px -129px;
 				}
-				&.signal {
+				.signal {
 					background-position: -16px -176px;
 				}
 			}
@@ -132,8 +134,10 @@
 		list-style: none;
 		margin: 0;
 		position: relative;
+		
 		li {
 			padding: 3px 0 3px 20px;
+			
 			span {
 				height: 16px;
 				left: 0;
@@ -141,22 +145,23 @@
 				margin: 0;
 				position: absolute;
 				width: 16px;
-				&.check {
+				
+				.check {
 					background-position: -64px -144px;
 				}
-				&.close {
+				.close {
 					background-position: -95px -129px;
 				}
 			}
 		}
 	}
 
-	/* ---------- Pre & Code ---------- */
+	/* ---------- Pre / Code ---------- */
 
 	pre {
+		@include border-radius(5px);
 		background: #fff;
 		border: 1px solid #ddd;
-		@include border-radius(5px);
 		box-shadow: inset 0px 0px 7px rgba(0,0,0,0.2);
 		margin: 0 0 20px 0;
 		padding: 10px;
@@ -168,8 +173,8 @@
 		/* ---------- Columns ---------- */
 
 	#columns .aui-layout-content {
-		background-color: #FFF;
 		@include border-radius(10px);
+		background-color: #FFF;
 		padding: 10px;
 	}
 
@@ -210,8 +215,8 @@
 	/* ---------- Breadcrumbs ---------- */
 
 	.breadcrumb-styled {
-		border: 2px solid #0E080A;
 		@include border-radius(5px);
+		border: 2px solid #0E080A;
 		height: 4em;
 		margin-bottom: 2em;
 	}
@@ -232,8 +237,8 @@
 
 	#tooltips {
 		.aui-column-content {
-			background-color: #FFF;
 			@include border-radius(5px);
+			background-color: #FFF;
 			margin-right: 1em;
 			padding: 0 10px 10px 10px;
 		}
@@ -254,20 +259,21 @@
 		height:1px;
 		margin:30px 0;
 		min-height: 0px;
-		&.alt1 {
+		
+		.alt1 {
 			border-style: solid;
 		}
-		&.alt2 {
+		.alt2 {
 			border-style: dashed;
 		}
 	}
 
 	#hr {
 		.aui-column-content{
-		background-color: #FFF;
-		@include border-radius(5px);
-		margin-right: 1em;
-		padding: 10px;
+			@include border-radius(5px);
+			background-color: #FFF;
+			margin-right: 1em;
+			padding: 10px;
 		}
 
 		.last .aui-column-content {

@@ -161,7 +161,7 @@
 <li><a href="">Inline Link</a></li>
 <li><strike>Strike</strike></li>
 <li>Inline <span class="aui-buttonitem-icon aui-icon aui-icon-person"></span> Icons</li>
-<li><code>&lt;h1&gt;Sample Code&lt;/h1&gt;</code></li>
+<li><code><h1>Sample Code</h1></code></li>
 		</liferay-util:buffer>
 
 		<aui:input type="textarea" value="<%= codeContent %>" name="code" label="Inline Styles Code" class="textarea" />
@@ -181,11 +181,13 @@
 	<liferay-ui:section>
 		<liferay-util:buffer var="codeContent">
 <h4 class="style-heading">Address</h4>
-	<address><p>
+<address>
+	<p>
 		1234 South Creek Lane<br />
 		Calgary, Alberta, Canada<br />
 		T4Bâ€“1S6
-	</p></address>
+	</p>
+</address>
 		</liferay-util:buffer>
 
 		<aui:input type="textarea" value="<%= codeContent %>" name="code" label="Address Code" class="textarea" />
@@ -284,12 +286,12 @@
 		<liferay-ui:section>
 			<liferay-util:buffer var="codeContent">
 <h4 class="list-heading">UL.alt</h4>
-	<ul class="alt">
-		<li><span class="aui-icon aui-icon-carat-1-r"></span>tation ullamcorper suscipit lobortis</li>
-		<li><span class="aui-icon aui-icon-close"></span>Nam liber tempor cum soluta nobis</li>
-		<li><span class="aui-icon aui-icon-signal"></span>imperdiet doming id quod mazim</li>
-		<li><span class="aui-icon aui-icon-alert"></span>suscipit lobortis nisl ut aliquip ex</li>
-	</ul>
+<ul class="alt">
+	<li><span class="aui-icon aui-icon-carat-1-r"></span>tation ullamcorper suscipit lobortis</li>
+	<li><span class="aui-icon aui-icon-close"></span>Nam liber tempor cum soluta nobis</li>
+	<li><span class="aui-icon aui-icon-signal"></span>imperdiet doming id quod mazim</li>
+	<li><span class="aui-icon aui-icon-alert"></span>suscipit lobortis nisl ut aliquip ex</li>
+</ul>
 			</liferay-util:buffer>
 
 		<aui:input type="textarea" value="<%= codeContent %>" name="code" label="Unordered List Unique Icon Code" class="textarea" />
@@ -1597,6 +1599,9 @@ Breadcrumb Portlet
 						<aui:column columnWidth="95" first="true">
 							<h5>95%</h5>
 						</aui:column>
+						<aui:column columnWidth="5" last="true">
+							<h5>5%</h5>
+						</aui:column>
 					</aui:layout>
 					<aui:layout>
 						<aui:column columnWidth="100" first="true">
@@ -1964,8 +1969,8 @@ Breadcrumb Portlet
 
 <script type="text/javascript">
 
-	AUI().ready('aui-image-viewer-base', function(A) {
-
+AUI().ready('aui-image-viewer-base', function(A) {
+	
 	var imageViewer1 = new A.ImageViewer({
 		links: '#gallery1 a',
 		captionFromTitle: true,
@@ -1981,12 +1986,13 @@ Breadcrumb Portlet
 		}
 	})
 	.render();
-	});
+});
 
 </script>
 			</liferay-util:buffer>
 
 			<aui:input type="textarea" value="<%= codeContent %>" name="code" label="Image Viewer Code" class="textarea" />
+			
 	</liferay-ui:section>
 </liferay-ui:tabs>
 <hr class="alt1"/>
@@ -2181,7 +2187,6 @@ AUI().ready('aui-image-viewer-gallery', 'aui-media-viewer-plugin', function(A) {
 									<aui:input inlineLabel="right" name="radio buttons" type="radio" value="2" label="Radio 2" />
 									<aui:input inlineLabel="right" name="radio buttons" type="radio" value="3" label="Radio 3" />
 								</aui:field-wrapper>
-
 							</div>
 
 								<aui:button name="submitButton" type="button" value="submit" first="true" />
