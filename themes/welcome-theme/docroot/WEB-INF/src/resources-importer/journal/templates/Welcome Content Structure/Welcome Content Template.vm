@@ -1,11 +1,11 @@
 <div class="navigation-wrapper">
-    <header class="content-head content-head-liferay-portal">
+	<header class="content-head content-head-liferay-portal">
 		<hgroup>
 			<h1>$page-title.data</h1>
-			<div class="hr">
-				<div>&nbsp;</div>
-			</div>
+
+			<hr />
 		</hgroup>
+
 		<nav>
 			<ul id="contentNav">
 				#foreach($link in $links.siblings)
@@ -22,14 +22,21 @@
 	<div class="content-area-wrapper">
 		#foreach($link in $links.siblings)
 			#if($velocityCount == 1)
-				<style>
-				.content-area {
-					background: url($link.bg-image.data) 100% 0 no-repeat;
-				}
+				<style media="screen" type="text/css">
+					.content-area {
+						background: url($link.bg-image.data) 100% 0 no-repeat;
+					}
 				</style>
-				<div class="content-area selected" data-bannerImage="$link.bg-image.data" id="pageId$velocityCount">$link.data <a href="$link.action-link-url.data" id="marketplace">&nbsp;</a></div>
+
+				<div class="content-area selected" data-bannerImage="$link.bg-image.data" id="pageId$velocityCount">
+					$link.data
+					<a href="$link.action-link-url.data" id="marketplace">&nbsp;</a>
+				</div>
 			#else
-				<div class="content-area" data-bannerImage="$link.bg-image.data" id="pageId$velocityCount">$link.data <a href="$link.action-link-url.data" id="marketplace">&nbsp;</a></div>
+				<div class="content-area" data-bannerImage="$link.bg-image.data" id="pageId$velocityCount">
+					$link.data
+					<a href="$link.action-link-url.data" id="marketplace">&nbsp;</a>
+				</div>
 			#end
 		#end
 	</div>
@@ -39,35 +46,42 @@
 	AUI().ready(
 		'aui-base',
 		function(A) {
-			
-			function selectContent(href){
+			function selectContent(href) {
 				var div = A.one(href);
 			
 				if (div) {
 					div.radioClass('selected');
+
 					div.setStyle('background', 'url(' + div.attr('data-bannerImage')+') 100% 0 no-repeat');
+
 					hash = href;
 				}
 			}
 			
-			function selectNavItem (hash){
-				A.one('#contentNav a[href$="'+ hash +'"]').ancestor().radioClass('selected');
+			function selectNavItem (hash) {
+				if (hash) {
+					A.one('#contentNav a[href$="'+ hash +'"]').ancestor().radioClass('selected');
+				}
 			}
 
 			var hash = null;
 
 			if (location.hash) {
 				selectContent(location.hash);
+
 				selectNavItem(location.hash);
 			}
 
-			setInterval(function(){
-				if(location.hash != hash){
-					selectContent(location.hash);
-					selectNavItem(location.hash);
-				}
-			
-			}, 200);
+			setInterval(
+				function() {
+					if (location.hash != hash) {
+						selectContent(location.hash);
+
+						selectNavItem(location.hash);
+					}
+				},
+				200
+			);
 
 			A.one('#contentNav').delegate(
 				'click',

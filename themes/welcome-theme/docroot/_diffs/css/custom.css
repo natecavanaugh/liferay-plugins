@@ -103,7 +103,8 @@ h1 {
 	}
 
 	li {
-		border: 0 solid #E2E3E3;
+		border-color: #E2E3E3;
+		border-style: solid;
 		border-width: 0 1px;
 		display: table-cell;
 		width: 33.333%;
@@ -117,13 +118,13 @@ h1 {
 		}
 		
 		&.selected a {
-			background: #2cabe2;
+			background: #2CABE2;
 			color: #FFF;
 		}
 	}
 
 	a {
-		background: #f8f8f8;
+		background: #F8F8F8;
 		color: #908E91;
 		display: block;
 		font-size: 12px;
@@ -135,7 +136,7 @@ h1 {
 		text-decoration: none;
 
 		&:focus, &:hover {
-			background: #2cabe2;
+			background: #2CABE2;
 			color: #FFF;
 		}
 
@@ -158,10 +159,10 @@ h1 {
 	}
 
 	a, li span {
+		color: #484A4C;
 		font-size: 11px;
 		font-weight: bold;
 		text-decoration: none;
-		color: #484A4C;
 	}
 
 	p {
@@ -221,8 +222,10 @@ h1 {
 				padding: 1em
 			}
 
-			.hr {
-				border-top: 1px solid #CECDD2;
+			hr {
+				border-color: #CECDD2;
+				border-style: solid;
+				border-width: 1px 0 0 0;
 				height: 1px;
 				margin-left: 18px;
 				width: 80%;
@@ -251,7 +254,7 @@ h1 {
 		font-size: 13px;
 	}
 
-	a, .portlet-login .taglib-icon .taglib-text {
+	a, .taglib-icon .taglib-text {
 		text-decoration: none;
 	}
 
@@ -339,11 +342,11 @@ h1 {
 	}
 
 	#ide .footer-logo {
-		background-position-x: -76px;
+		background-position: -76px;
 	}
 
 	#social-office .footer-logo {
-		background-position-x: -152px;
+		background-position: -152px;
 	}
 }
 
@@ -376,7 +379,7 @@ h1 {
 }
 
 .ie6, .ie7 {
-	#footer div.column-1, #footer div.column-2, #footer div.column-3, #navigation li{
+	#footer div.column-1, #footer div.column-2, #footer div.column-3, #navigation li {
 		float: left;
 		width: 231px;
 	}
