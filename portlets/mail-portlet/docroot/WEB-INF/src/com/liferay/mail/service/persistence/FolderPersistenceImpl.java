@@ -336,6 +336,7 @@ public class FolderPersistenceImpl extends BasePersistenceImpl<Folder>
 		if (isNew || !FolderModelImpl.COLUMN_BITMASK_ENABLED) {
 			FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 		}
+
 		else {
 			if ((folderModelImpl.getColumnBitmask() &
 					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_ACCOUNTID.getColumnBitmask()) != 0) {
@@ -378,6 +379,7 @@ public class FolderPersistenceImpl extends BasePersistenceImpl<Folder>
 					};
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_A_F, args);
+
 				FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_A_F, args);
 
 				FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_A_F,
@@ -649,10 +651,6 @@ public class FolderPersistenceImpl extends BasePersistenceImpl<Folder>
 	/**
 	 * Returns the first folder in the ordered set where accountId = &#63;.
 	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	 * </p>
-	 *
 	 * @param accountId the account ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching folder
@@ -662,31 +660,45 @@ public class FolderPersistenceImpl extends BasePersistenceImpl<Folder>
 	public Folder findByAccountId_First(long accountId,
 		OrderByComparator orderByComparator)
 		throws NoSuchFolderException, SystemException {
+		Folder folder = fetchByAccountId_First(accountId, orderByComparator);
+
+		if (folder != null) {
+			return folder;
+		}
+
+		StringBundler msg = new StringBundler(4);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("accountId=");
+		msg.append(accountId);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchFolderException(msg.toString());
+	}
+
+	/**
+	 * Returns the first folder in the ordered set where accountId = &#63;.
+	 *
+	 * @param accountId the account ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching folder, or <code>null</code> if a matching folder could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public Folder fetchByAccountId_First(long accountId,
+		OrderByComparator orderByComparator) throws SystemException {
 		List<Folder> list = findByAccountId(accountId, 0, 1, orderByComparator);
 
-		if (list.isEmpty()) {
-			StringBundler msg = new StringBundler(4);
-
-			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			msg.append("accountId=");
-			msg.append(accountId);
-
-			msg.append(StringPool.CLOSE_CURLY_BRACE);
-
-			throw new NoSuchFolderException(msg.toString());
-		}
-		else {
+		if (!list.isEmpty()) {
 			return list.get(0);
 		}
+
+		return null;
 	}
 
 	/**
 	 * Returns the last folder in the ordered set where accountId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	 * </p>
 	 *
 	 * @param accountId the account ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
@@ -697,34 +709,48 @@ public class FolderPersistenceImpl extends BasePersistenceImpl<Folder>
 	public Folder findByAccountId_Last(long accountId,
 		OrderByComparator orderByComparator)
 		throws NoSuchFolderException, SystemException {
+		Folder folder = fetchByAccountId_Last(accountId, orderByComparator);
+
+		if (folder != null) {
+			return folder;
+		}
+
+		StringBundler msg = new StringBundler(4);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("accountId=");
+		msg.append(accountId);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchFolderException(msg.toString());
+	}
+
+	/**
+	 * Returns the last folder in the ordered set where accountId = &#63;.
+	 *
+	 * @param accountId the account ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching folder, or <code>null</code> if a matching folder could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public Folder fetchByAccountId_Last(long accountId,
+		OrderByComparator orderByComparator) throws SystemException {
 		int count = countByAccountId(accountId);
 
 		List<Folder> list = findByAccountId(accountId, count - 1, count,
 				orderByComparator);
 
-		if (list.isEmpty()) {
-			StringBundler msg = new StringBundler(4);
-
-			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			msg.append("accountId=");
-			msg.append(accountId);
-
-			msg.append(StringPool.CLOSE_CURLY_BRACE);
-
-			throw new NoSuchFolderException(msg.toString());
-		}
-		else {
+		if (!list.isEmpty()) {
 			return list.get(0);
 		}
+
+		return null;
 	}
 
 	/**
 	 * Returns the folders before and after the current folder in the ordered set where accountId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	 * </p>
 	 *
 	 * @param folderId the primary key of the current folder
 	 * @param accountId the account ID
@@ -1162,13 +1188,14 @@ public class FolderPersistenceImpl extends BasePersistenceImpl<Folder>
 	 *
 	 * @param accountId the account ID
 	 * @param fullName the full name
+	 * @return the folder that was removed
 	 * @throws SystemException if a system exception occurred
 	 */
-	public void removeByA_F(long accountId, String fullName)
+	public Folder removeByA_F(long accountId, String fullName)
 		throws NoSuchFolderException, SystemException {
 		Folder folder = findByA_F(accountId, fullName);
 
-		remove(folder);
+		return remove(folder);
 	}
 
 	/**

@@ -364,6 +364,7 @@ public class StatusPersistenceImpl extends BasePersistenceImpl<Status>
 		if (isNew || !StatusModelImpl.COLUMN_BITMASK_ENABLED) {
 			FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 		}
+
 		else {
 			if ((statusModelImpl.getColumnBitmask() &
 					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_MODIFIEDDATE.getColumnBitmask()) != 0) {
@@ -440,6 +441,7 @@ public class StatusPersistenceImpl extends BasePersistenceImpl<Status>
 					};
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_USERID, args);
+
 				FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_USERID, args);
 
 				FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_USERID,
@@ -840,10 +842,6 @@ public class StatusPersistenceImpl extends BasePersistenceImpl<Status>
 	/**
 	 * Returns the first status in the ordered set where modifiedDate = &#63;.
 	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	 * </p>
-	 *
 	 * @param modifiedDate the modified date
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching status
@@ -853,32 +851,47 @@ public class StatusPersistenceImpl extends BasePersistenceImpl<Status>
 	public Status findByModifiedDate_First(long modifiedDate,
 		OrderByComparator orderByComparator)
 		throws NoSuchStatusException, SystemException {
+		Status status = fetchByModifiedDate_First(modifiedDate,
+				orderByComparator);
+
+		if (status != null) {
+			return status;
+		}
+
+		StringBundler msg = new StringBundler(4);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("modifiedDate=");
+		msg.append(modifiedDate);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchStatusException(msg.toString());
+	}
+
+	/**
+	 * Returns the first status in the ordered set where modifiedDate = &#63;.
+	 *
+	 * @param modifiedDate the modified date
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching status, or <code>null</code> if a matching status could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public Status fetchByModifiedDate_First(long modifiedDate,
+		OrderByComparator orderByComparator) throws SystemException {
 		List<Status> list = findByModifiedDate(modifiedDate, 0, 1,
 				orderByComparator);
 
-		if (list.isEmpty()) {
-			StringBundler msg = new StringBundler(4);
-
-			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			msg.append("modifiedDate=");
-			msg.append(modifiedDate);
-
-			msg.append(StringPool.CLOSE_CURLY_BRACE);
-
-			throw new NoSuchStatusException(msg.toString());
-		}
-		else {
+		if (!list.isEmpty()) {
 			return list.get(0);
 		}
+
+		return null;
 	}
 
 	/**
 	 * Returns the last status in the ordered set where modifiedDate = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	 * </p>
 	 *
 	 * @param modifiedDate the modified date
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
@@ -889,34 +902,48 @@ public class StatusPersistenceImpl extends BasePersistenceImpl<Status>
 	public Status findByModifiedDate_Last(long modifiedDate,
 		OrderByComparator orderByComparator)
 		throws NoSuchStatusException, SystemException {
+		Status status = fetchByModifiedDate_Last(modifiedDate, orderByComparator);
+
+		if (status != null) {
+			return status;
+		}
+
+		StringBundler msg = new StringBundler(4);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("modifiedDate=");
+		msg.append(modifiedDate);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchStatusException(msg.toString());
+	}
+
+	/**
+	 * Returns the last status in the ordered set where modifiedDate = &#63;.
+	 *
+	 * @param modifiedDate the modified date
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching status, or <code>null</code> if a matching status could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public Status fetchByModifiedDate_Last(long modifiedDate,
+		OrderByComparator orderByComparator) throws SystemException {
 		int count = countByModifiedDate(modifiedDate);
 
 		List<Status> list = findByModifiedDate(modifiedDate, count - 1, count,
 				orderByComparator);
 
-		if (list.isEmpty()) {
-			StringBundler msg = new StringBundler(4);
-
-			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			msg.append("modifiedDate=");
-			msg.append(modifiedDate);
-
-			msg.append(StringPool.CLOSE_CURLY_BRACE);
-
-			throw new NoSuchStatusException(msg.toString());
-		}
-		else {
+		if (!list.isEmpty()) {
 			return list.get(0);
 		}
+
+		return null;
 	}
 
 	/**
 	 * Returns the statuses before and after the current status in the ordered set where modifiedDate = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	 * </p>
 	 *
 	 * @param statusId the primary key of the current status
 	 * @param modifiedDate the modified date
@@ -1186,10 +1213,6 @@ public class StatusPersistenceImpl extends BasePersistenceImpl<Status>
 	/**
 	 * Returns the first status in the ordered set where online = &#63;.
 	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	 * </p>
-	 *
 	 * @param online the online
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching status
@@ -1199,31 +1222,45 @@ public class StatusPersistenceImpl extends BasePersistenceImpl<Status>
 	public Status findByOnline_First(boolean online,
 		OrderByComparator orderByComparator)
 		throws NoSuchStatusException, SystemException {
+		Status status = fetchByOnline_First(online, orderByComparator);
+
+		if (status != null) {
+			return status;
+		}
+
+		StringBundler msg = new StringBundler(4);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("online=");
+		msg.append(online);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchStatusException(msg.toString());
+	}
+
+	/**
+	 * Returns the first status in the ordered set where online = &#63;.
+	 *
+	 * @param online the online
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching status, or <code>null</code> if a matching status could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public Status fetchByOnline_First(boolean online,
+		OrderByComparator orderByComparator) throws SystemException {
 		List<Status> list = findByOnline(online, 0, 1, orderByComparator);
 
-		if (list.isEmpty()) {
-			StringBundler msg = new StringBundler(4);
-
-			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			msg.append("online=");
-			msg.append(online);
-
-			msg.append(StringPool.CLOSE_CURLY_BRACE);
-
-			throw new NoSuchStatusException(msg.toString());
-		}
-		else {
+		if (!list.isEmpty()) {
 			return list.get(0);
 		}
+
+		return null;
 	}
 
 	/**
 	 * Returns the last status in the ordered set where online = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	 * </p>
 	 *
 	 * @param online the online
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
@@ -1234,34 +1271,48 @@ public class StatusPersistenceImpl extends BasePersistenceImpl<Status>
 	public Status findByOnline_Last(boolean online,
 		OrderByComparator orderByComparator)
 		throws NoSuchStatusException, SystemException {
+		Status status = fetchByOnline_Last(online, orderByComparator);
+
+		if (status != null) {
+			return status;
+		}
+
+		StringBundler msg = new StringBundler(4);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("online=");
+		msg.append(online);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchStatusException(msg.toString());
+	}
+
+	/**
+	 * Returns the last status in the ordered set where online = &#63;.
+	 *
+	 * @param online the online
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching status, or <code>null</code> if a matching status could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public Status fetchByOnline_Last(boolean online,
+		OrderByComparator orderByComparator) throws SystemException {
 		int count = countByOnline(online);
 
 		List<Status> list = findByOnline(online, count - 1, count,
 				orderByComparator);
 
-		if (list.isEmpty()) {
-			StringBundler msg = new StringBundler(4);
-
-			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			msg.append("online=");
-			msg.append(online);
-
-			msg.append(StringPool.CLOSE_CURLY_BRACE);
-
-			throw new NoSuchStatusException(msg.toString());
-		}
-		else {
+		if (!list.isEmpty()) {
 			return list.get(0);
 		}
+
+		return null;
 	}
 
 	/**
 	 * Returns the statuses before and after the current status in the ordered set where online = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	 * </p>
 	 *
 	 * @param statusId the primary key of the current status
 	 * @param online the online
@@ -1544,10 +1595,6 @@ public class StatusPersistenceImpl extends BasePersistenceImpl<Status>
 	/**
 	 * Returns the first status in the ordered set where modifiedDate = &#63; and online = &#63;.
 	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	 * </p>
-	 *
 	 * @param modifiedDate the modified date
 	 * @param online the online
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
@@ -1558,35 +1605,50 @@ public class StatusPersistenceImpl extends BasePersistenceImpl<Status>
 	public Status findByM_O_First(long modifiedDate, boolean online,
 		OrderByComparator orderByComparator)
 		throws NoSuchStatusException, SystemException {
+		Status status = fetchByM_O_First(modifiedDate, online, orderByComparator);
+
+		if (status != null) {
+			return status;
+		}
+
+		StringBundler msg = new StringBundler(6);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("modifiedDate=");
+		msg.append(modifiedDate);
+
+		msg.append(", online=");
+		msg.append(online);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchStatusException(msg.toString());
+	}
+
+	/**
+	 * Returns the first status in the ordered set where modifiedDate = &#63; and online = &#63;.
+	 *
+	 * @param modifiedDate the modified date
+	 * @param online the online
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching status, or <code>null</code> if a matching status could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public Status fetchByM_O_First(long modifiedDate, boolean online,
+		OrderByComparator orderByComparator) throws SystemException {
 		List<Status> list = findByM_O(modifiedDate, online, 0, 1,
 				orderByComparator);
 
-		if (list.isEmpty()) {
-			StringBundler msg = new StringBundler(6);
-
-			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			msg.append("modifiedDate=");
-			msg.append(modifiedDate);
-
-			msg.append(", online=");
-			msg.append(online);
-
-			msg.append(StringPool.CLOSE_CURLY_BRACE);
-
-			throw new NoSuchStatusException(msg.toString());
-		}
-		else {
+		if (!list.isEmpty()) {
 			return list.get(0);
 		}
+
+		return null;
 	}
 
 	/**
 	 * Returns the last status in the ordered set where modifiedDate = &#63; and online = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	 * </p>
 	 *
 	 * @param modifiedDate the modified date
 	 * @param online the online
@@ -1598,37 +1660,52 @@ public class StatusPersistenceImpl extends BasePersistenceImpl<Status>
 	public Status findByM_O_Last(long modifiedDate, boolean online,
 		OrderByComparator orderByComparator)
 		throws NoSuchStatusException, SystemException {
+		Status status = fetchByM_O_Last(modifiedDate, online, orderByComparator);
+
+		if (status != null) {
+			return status;
+		}
+
+		StringBundler msg = new StringBundler(6);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("modifiedDate=");
+		msg.append(modifiedDate);
+
+		msg.append(", online=");
+		msg.append(online);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchStatusException(msg.toString());
+	}
+
+	/**
+	 * Returns the last status in the ordered set where modifiedDate = &#63; and online = &#63;.
+	 *
+	 * @param modifiedDate the modified date
+	 * @param online the online
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching status, or <code>null</code> if a matching status could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public Status fetchByM_O_Last(long modifiedDate, boolean online,
+		OrderByComparator orderByComparator) throws SystemException {
 		int count = countByM_O(modifiedDate, online);
 
 		List<Status> list = findByM_O(modifiedDate, online, count - 1, count,
 				orderByComparator);
 
-		if (list.isEmpty()) {
-			StringBundler msg = new StringBundler(6);
-
-			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			msg.append("modifiedDate=");
-			msg.append(modifiedDate);
-
-			msg.append(", online=");
-			msg.append(online);
-
-			msg.append(StringPool.CLOSE_CURLY_BRACE);
-
-			throw new NoSuchStatusException(msg.toString());
-		}
-		else {
+		if (!list.isEmpty()) {
 			return list.get(0);
 		}
+
+		return null;
 	}
 
 	/**
 	 * Returns the statuses before and after the current status in the ordered set where modifiedDate = &#63; and online = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	 * </p>
 	 *
 	 * @param statusId the primary key of the current status
 	 * @param modifiedDate the modified date
@@ -1892,13 +1969,14 @@ public class StatusPersistenceImpl extends BasePersistenceImpl<Status>
 	 * Removes the status where userId = &#63; from the database.
 	 *
 	 * @param userId the user ID
+	 * @return the status that was removed
 	 * @throws SystemException if a system exception occurred
 	 */
-	public void removeByUserId(long userId)
+	public Status removeByUserId(long userId)
 		throws NoSuchStatusException, SystemException {
 		Status status = findByUserId(userId);
 
-		remove(status);
+		return remove(status);
 	}
 
 	/**

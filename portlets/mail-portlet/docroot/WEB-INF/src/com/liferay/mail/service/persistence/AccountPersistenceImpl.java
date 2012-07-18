@@ -328,6 +328,7 @@ public class AccountPersistenceImpl extends BasePersistenceImpl<Account>
 		if (isNew || !AccountModelImpl.COLUMN_BITMASK_ENABLED) {
 			FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 		}
+
 		else {
 			if ((accountModelImpl.getColumnBitmask() &
 					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_USERID.getColumnBitmask()) != 0) {
@@ -368,6 +369,7 @@ public class AccountPersistenceImpl extends BasePersistenceImpl<Account>
 					};
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_U_A, args);
+
 				FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_U_A, args);
 
 				FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_U_A,
@@ -653,10 +655,6 @@ public class AccountPersistenceImpl extends BasePersistenceImpl<Account>
 	/**
 	 * Returns the first account in the ordered set where userId = &#63;.
 	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	 * </p>
-	 *
 	 * @param userId the user ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching account
@@ -666,31 +664,45 @@ public class AccountPersistenceImpl extends BasePersistenceImpl<Account>
 	public Account findByUserId_First(long userId,
 		OrderByComparator orderByComparator)
 		throws NoSuchAccountException, SystemException {
+		Account account = fetchByUserId_First(userId, orderByComparator);
+
+		if (account != null) {
+			return account;
+		}
+
+		StringBundler msg = new StringBundler(4);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("userId=");
+		msg.append(userId);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchAccountException(msg.toString());
+	}
+
+	/**
+	 * Returns the first account in the ordered set where userId = &#63;.
+	 *
+	 * @param userId the user ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching account, or <code>null</code> if a matching account could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public Account fetchByUserId_First(long userId,
+		OrderByComparator orderByComparator) throws SystemException {
 		List<Account> list = findByUserId(userId, 0, 1, orderByComparator);
 
-		if (list.isEmpty()) {
-			StringBundler msg = new StringBundler(4);
-
-			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			msg.append("userId=");
-			msg.append(userId);
-
-			msg.append(StringPool.CLOSE_CURLY_BRACE);
-
-			throw new NoSuchAccountException(msg.toString());
-		}
-		else {
+		if (!list.isEmpty()) {
 			return list.get(0);
 		}
+
+		return null;
 	}
 
 	/**
 	 * Returns the last account in the ordered set where userId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	 * </p>
 	 *
 	 * @param userId the user ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
@@ -701,34 +713,48 @@ public class AccountPersistenceImpl extends BasePersistenceImpl<Account>
 	public Account findByUserId_Last(long userId,
 		OrderByComparator orderByComparator)
 		throws NoSuchAccountException, SystemException {
+		Account account = fetchByUserId_Last(userId, orderByComparator);
+
+		if (account != null) {
+			return account;
+		}
+
+		StringBundler msg = new StringBundler(4);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("userId=");
+		msg.append(userId);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchAccountException(msg.toString());
+	}
+
+	/**
+	 * Returns the last account in the ordered set where userId = &#63;.
+	 *
+	 * @param userId the user ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching account, or <code>null</code> if a matching account could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public Account fetchByUserId_Last(long userId,
+		OrderByComparator orderByComparator) throws SystemException {
 		int count = countByUserId(userId);
 
 		List<Account> list = findByUserId(userId, count - 1, count,
 				orderByComparator);
 
-		if (list.isEmpty()) {
-			StringBundler msg = new StringBundler(4);
-
-			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			msg.append("userId=");
-			msg.append(userId);
-
-			msg.append(StringPool.CLOSE_CURLY_BRACE);
-
-			throw new NoSuchAccountException(msg.toString());
-		}
-		else {
+		if (!list.isEmpty()) {
 			return list.get(0);
 		}
+
+		return null;
 	}
 
 	/**
 	 * Returns the accounts before and after the current account in the ordered set where userId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	 * </p>
 	 *
 	 * @param accountId the primary key of the current account
 	 * @param userId the user ID
@@ -1166,13 +1192,14 @@ public class AccountPersistenceImpl extends BasePersistenceImpl<Account>
 	 *
 	 * @param userId the user ID
 	 * @param address the address
+	 * @return the account that was removed
 	 * @throws SystemException if a system exception occurred
 	 */
-	public void removeByU_A(long userId, String address)
+	public Account removeByU_A(long userId, String address)
 		throws NoSuchAccountException, SystemException {
 		Account account = findByU_A(userId, address);
 
-		remove(account);
+		return remove(account);
 	}
 
 	/**

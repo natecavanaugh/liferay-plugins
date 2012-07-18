@@ -379,6 +379,7 @@ public class WSRPConsumerPortletPersistenceImpl extends BasePersistenceImpl<WSRP
 		if (isNew || !WSRPConsumerPortletModelImpl.COLUMN_BITMASK_ENABLED) {
 			FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 		}
+
 		else {
 			if ((wsrpConsumerPortletModelImpl.getColumnBitmask() &
 					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_UUID.getColumnBitmask()) != 0) {
@@ -441,6 +442,7 @@ public class WSRPConsumerPortletPersistenceImpl extends BasePersistenceImpl<WSRP
 					};
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_W_P, args);
+
 				FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_W_P, args);
 
 				FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_W_P,
@@ -726,10 +728,6 @@ public class WSRPConsumerPortletPersistenceImpl extends BasePersistenceImpl<WSRP
 	/**
 	 * Returns the first w s r p consumer portlet in the ordered set where uuid = &#63;.
 	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	 * </p>
-	 *
 	 * @param uuid the uuid
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching w s r p consumer portlet
@@ -739,32 +737,47 @@ public class WSRPConsumerPortletPersistenceImpl extends BasePersistenceImpl<WSRP
 	public WSRPConsumerPortlet findByUuid_First(String uuid,
 		OrderByComparator orderByComparator)
 		throws NoSuchConsumerPortletException, SystemException {
+		WSRPConsumerPortlet wsrpConsumerPortlet = fetchByUuid_First(uuid,
+				orderByComparator);
+
+		if (wsrpConsumerPortlet != null) {
+			return wsrpConsumerPortlet;
+		}
+
+		StringBundler msg = new StringBundler(4);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("uuid=");
+		msg.append(uuid);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchConsumerPortletException(msg.toString());
+	}
+
+	/**
+	 * Returns the first w s r p consumer portlet in the ordered set where uuid = &#63;.
+	 *
+	 * @param uuid the uuid
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching w s r p consumer portlet, or <code>null</code> if a matching w s r p consumer portlet could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public WSRPConsumerPortlet fetchByUuid_First(String uuid,
+		OrderByComparator orderByComparator) throws SystemException {
 		List<WSRPConsumerPortlet> list = findByUuid(uuid, 0, 1,
 				orderByComparator);
 
-		if (list.isEmpty()) {
-			StringBundler msg = new StringBundler(4);
-
-			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			msg.append("uuid=");
-			msg.append(uuid);
-
-			msg.append(StringPool.CLOSE_CURLY_BRACE);
-
-			throw new NoSuchConsumerPortletException(msg.toString());
-		}
-		else {
+		if (!list.isEmpty()) {
 			return list.get(0);
 		}
+
+		return null;
 	}
 
 	/**
 	 * Returns the last w s r p consumer portlet in the ordered set where uuid = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	 * </p>
 	 *
 	 * @param uuid the uuid
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
@@ -775,34 +788,49 @@ public class WSRPConsumerPortletPersistenceImpl extends BasePersistenceImpl<WSRP
 	public WSRPConsumerPortlet findByUuid_Last(String uuid,
 		OrderByComparator orderByComparator)
 		throws NoSuchConsumerPortletException, SystemException {
+		WSRPConsumerPortlet wsrpConsumerPortlet = fetchByUuid_Last(uuid,
+				orderByComparator);
+
+		if (wsrpConsumerPortlet != null) {
+			return wsrpConsumerPortlet;
+		}
+
+		StringBundler msg = new StringBundler(4);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("uuid=");
+		msg.append(uuid);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchConsumerPortletException(msg.toString());
+	}
+
+	/**
+	 * Returns the last w s r p consumer portlet in the ordered set where uuid = &#63;.
+	 *
+	 * @param uuid the uuid
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching w s r p consumer portlet, or <code>null</code> if a matching w s r p consumer portlet could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public WSRPConsumerPortlet fetchByUuid_Last(String uuid,
+		OrderByComparator orderByComparator) throws SystemException {
 		int count = countByUuid(uuid);
 
 		List<WSRPConsumerPortlet> list = findByUuid(uuid, count - 1, count,
 				orderByComparator);
 
-		if (list.isEmpty()) {
-			StringBundler msg = new StringBundler(4);
-
-			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			msg.append("uuid=");
-			msg.append(uuid);
-
-			msg.append(StringPool.CLOSE_CURLY_BRACE);
-
-			throw new NoSuchConsumerPortletException(msg.toString());
-		}
-		else {
+		if (!list.isEmpty()) {
 			return list.get(0);
 		}
+
+		return null;
 	}
 
 	/**
 	 * Returns the w s r p consumer portlets before and after the current w s r p consumer portlet in the ordered set where uuid = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	 * </p>
 	 *
 	 * @param wsrpConsumerPortletId the primary key of the current w s r p consumer portlet
 	 * @param uuid the uuid
@@ -1101,10 +1129,6 @@ public class WSRPConsumerPortletPersistenceImpl extends BasePersistenceImpl<WSRP
 	/**
 	 * Returns the first w s r p consumer portlet in the ordered set where wsrpConsumerId = &#63;.
 	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	 * </p>
-	 *
 	 * @param wsrpConsumerId the wsrp consumer ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching w s r p consumer portlet
@@ -1114,32 +1138,48 @@ public class WSRPConsumerPortletPersistenceImpl extends BasePersistenceImpl<WSRP
 	public WSRPConsumerPortlet findByWsrpConsumerId_First(long wsrpConsumerId,
 		OrderByComparator orderByComparator)
 		throws NoSuchConsumerPortletException, SystemException {
+		WSRPConsumerPortlet wsrpConsumerPortlet = fetchByWsrpConsumerId_First(wsrpConsumerId,
+				orderByComparator);
+
+		if (wsrpConsumerPortlet != null) {
+			return wsrpConsumerPortlet;
+		}
+
+		StringBundler msg = new StringBundler(4);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("wsrpConsumerId=");
+		msg.append(wsrpConsumerId);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchConsumerPortletException(msg.toString());
+	}
+
+	/**
+	 * Returns the first w s r p consumer portlet in the ordered set where wsrpConsumerId = &#63;.
+	 *
+	 * @param wsrpConsumerId the wsrp consumer ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching w s r p consumer portlet, or <code>null</code> if a matching w s r p consumer portlet could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public WSRPConsumerPortlet fetchByWsrpConsumerId_First(
+		long wsrpConsumerId, OrderByComparator orderByComparator)
+		throws SystemException {
 		List<WSRPConsumerPortlet> list = findByWsrpConsumerId(wsrpConsumerId,
 				0, 1, orderByComparator);
 
-		if (list.isEmpty()) {
-			StringBundler msg = new StringBundler(4);
-
-			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			msg.append("wsrpConsumerId=");
-			msg.append(wsrpConsumerId);
-
-			msg.append(StringPool.CLOSE_CURLY_BRACE);
-
-			throw new NoSuchConsumerPortletException(msg.toString());
-		}
-		else {
+		if (!list.isEmpty()) {
 			return list.get(0);
 		}
+
+		return null;
 	}
 
 	/**
 	 * Returns the last w s r p consumer portlet in the ordered set where wsrpConsumerId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	 * </p>
 	 *
 	 * @param wsrpConsumerId the wsrp consumer ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
@@ -1150,34 +1190,49 @@ public class WSRPConsumerPortletPersistenceImpl extends BasePersistenceImpl<WSRP
 	public WSRPConsumerPortlet findByWsrpConsumerId_Last(long wsrpConsumerId,
 		OrderByComparator orderByComparator)
 		throws NoSuchConsumerPortletException, SystemException {
+		WSRPConsumerPortlet wsrpConsumerPortlet = fetchByWsrpConsumerId_Last(wsrpConsumerId,
+				orderByComparator);
+
+		if (wsrpConsumerPortlet != null) {
+			return wsrpConsumerPortlet;
+		}
+
+		StringBundler msg = new StringBundler(4);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("wsrpConsumerId=");
+		msg.append(wsrpConsumerId);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchConsumerPortletException(msg.toString());
+	}
+
+	/**
+	 * Returns the last w s r p consumer portlet in the ordered set where wsrpConsumerId = &#63;.
+	 *
+	 * @param wsrpConsumerId the wsrp consumer ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching w s r p consumer portlet, or <code>null</code> if a matching w s r p consumer portlet could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public WSRPConsumerPortlet fetchByWsrpConsumerId_Last(long wsrpConsumerId,
+		OrderByComparator orderByComparator) throws SystemException {
 		int count = countByWsrpConsumerId(wsrpConsumerId);
 
 		List<WSRPConsumerPortlet> list = findByWsrpConsumerId(wsrpConsumerId,
 				count - 1, count, orderByComparator);
 
-		if (list.isEmpty()) {
-			StringBundler msg = new StringBundler(4);
-
-			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			msg.append("wsrpConsumerId=");
-			msg.append(wsrpConsumerId);
-
-			msg.append(StringPool.CLOSE_CURLY_BRACE);
-
-			throw new NoSuchConsumerPortletException(msg.toString());
-		}
-		else {
+		if (!list.isEmpty()) {
 			return list.get(0);
 		}
+
+		return null;
 	}
 
 	/**
 	 * Returns the w s r p consumer portlets before and after the current w s r p consumer portlet in the ordered set where wsrpConsumerId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	 * </p>
 	 *
 	 * @param wsrpConsumerPortletId the primary key of the current w s r p consumer portlet
 	 * @param wsrpConsumerId the wsrp consumer ID
@@ -1639,14 +1694,16 @@ public class WSRPConsumerPortletPersistenceImpl extends BasePersistenceImpl<WSRP
 	 *
 	 * @param wsrpConsumerId the wsrp consumer ID
 	 * @param portletHandle the portlet handle
+	 * @return the w s r p consumer portlet that was removed
 	 * @throws SystemException if a system exception occurred
 	 */
-	public void removeByW_P(long wsrpConsumerId, String portletHandle)
+	public WSRPConsumerPortlet removeByW_P(long wsrpConsumerId,
+		String portletHandle)
 		throws NoSuchConsumerPortletException, SystemException {
 		WSRPConsumerPortlet wsrpConsumerPortlet = findByW_P(wsrpConsumerId,
 				portletHandle);
 
-		remove(wsrpConsumerPortlet);
+		return remove(wsrpConsumerPortlet);
 	}
 
 	/**

@@ -147,10 +147,6 @@ public interface EntryPersistence extends BasePersistence<Entry> {
 	/**
 	* Returns the first entry in the ordered set where userId = &#63;.
 	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	* </p>
-	*
 	* @param userId the user ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching entry
@@ -163,11 +159,19 @@ public interface EntryPersistence extends BasePersistence<Entry> {
 			com.liferay.portal.kernel.exception.SystemException;
 
 	/**
-	* Returns the last entry in the ordered set where userId = &#63;.
+	* Returns the first entry in the ordered set where userId = &#63;.
 	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	* </p>
+	* @param userId the user ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching entry, or <code>null</code> if a matching entry could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public com.liferay.contacts.model.Entry fetchByUserId_First(long userId,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns the last entry in the ordered set where userId = &#63;.
 	*
 	* @param userId the user ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
@@ -181,11 +185,19 @@ public interface EntryPersistence extends BasePersistence<Entry> {
 			com.liferay.portal.kernel.exception.SystemException;
 
 	/**
-	* Returns the entries before and after the current entry in the ordered set where userId = &#63;.
+	* Returns the last entry in the ordered set where userId = &#63;.
 	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	* </p>
+	* @param userId the user ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching entry, or <code>null</code> if a matching entry could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public com.liferay.contacts.model.Entry fetchByUserId_Last(long userId,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns the entries before and after the current entry in the ordered set where userId = &#63;.
 	*
 	* @param entryId the primary key of the current entry
 	* @param userId the user ID
@@ -295,9 +307,11 @@ public interface EntryPersistence extends BasePersistence<Entry> {
 	*
 	* @param userId the user ID
 	* @param emailAddress the email address
+	* @return the entry that was removed
 	* @throws SystemException if a system exception occurred
 	*/
-	public void removeByU_EA(long userId, java.lang.String emailAddress)
+	public com.liferay.contacts.model.Entry removeByU_EA(long userId,
+		java.lang.String emailAddress)
 		throws com.liferay.contacts.NoSuchEntryException,
 			com.liferay.portal.kernel.exception.SystemException;
 

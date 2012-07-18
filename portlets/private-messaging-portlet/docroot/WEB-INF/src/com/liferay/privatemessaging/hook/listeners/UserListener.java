@@ -26,6 +26,24 @@ import com.liferay.privatemessaging.service.UserThreadLocalServiceUtil;
 public class UserListener extends BaseModelListener<User> {
 
 	@Override
+	public void onAfterUpdate(User user) {
+		try {
+			if (_log.isDebugEnabled()) {
+				_log.debug(
+					"Updating private messages user name for user " +
+						user.getUserId());
+			}
+
+			UserThreadLocalServiceUtil.updateUserName(user);
+		}
+		catch (Exception e) {
+			_log.error(
+				"Unable to update private messages user name for user " +
+					user.getUserId());
+		}
+	}
+
+	@Override
 	public void onBeforeRemove(User user) {
 		try {
 			if (_log.isDebugEnabled()) {
