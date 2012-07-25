@@ -78,15 +78,13 @@ int oAuthServiceCount = 0;
 
 		String serviceName = oAuthService.getName();
 
-		OAuthConsumer oAuthConsumer = null;
+		long oAuthConsumerId = 0;
 
-		try {
-			oAuthConsumer = OAuthConsumerLocalServiceUtil.getOAuthConsumer(gadgetKey, serviceName);
-		}
-		catch (NoSuchOAuthConsumerException nsoace) {
-		}
+		OAuthConsumer oAuthConsumer = OAuthConsumerLocalServiceUtil.fetchOAuthConsumer(gadgetKey, serviceName);
 
-		long oAuthConsumerId = BeanParamUtil.getLong(oAuthConsumer, request, "oAuthConsumerId");
+		if (oAuthConsumer != null) {
+			oAuthConsumerId = oAuthConsumer.getOAuthConsumerId();
+		}
 	%>
 
 		<h3><%= serviceName %></h3>
@@ -152,6 +150,7 @@ int oAuthServiceCount = 0;
 	<%
 	for (int rowCount = 0; rowCount < oAuthServiceCount; rowCount++) {
 	%>
+
 		A.one('#<portlet:namespace />keyType<%= rowCount %>').on(
 			'change',
 			function() {
@@ -160,6 +159,7 @@ int oAuthServiceCount = 0;
 		);
 
 		<portlet:namespace />renderConsumerSecretRow(<%= rowCount %>);
+
 	<%
 	}
 	%>

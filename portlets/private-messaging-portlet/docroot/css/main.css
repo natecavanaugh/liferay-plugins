@@ -15,6 +15,10 @@
 		width: 50px;
 	}
 
+	.check-all {
+		margin: 0 20px 0 5px;
+	}
+
 	.controls {
 		@include border-radius(4px);
 		background-color: #EEE;
@@ -81,7 +85,7 @@
 		}
 	}
 
-	.results-header, .taglib-user-display.display-style-2 .user-name, .taglib-user-display.display-style-2 .user-details, .thread .taglib-search-iterator-page-iterator-bottom {
+	.private-messaging-container .results-header, .taglib-user-display.display-style-2 .user-name, .taglib-user-display.display-style-2 .user-details, .thread .taglib-search-iterator-page-iterator-bottom {
 		display: none;
 	}
 
@@ -95,13 +99,13 @@
 		}
 	}
 
-	.messages .taglib-search-iterator .col-1 {
+	.private-messaging-container .taglib-search-iterator .col-1 {
 		width: 10px;
 	}
 
 	/* Results */
 
-	.results-grid {
+	.messages .results-grid {
 		border: 0px;
 
 		table.taglib-search-iterator, .results-row td, .results-row.alt td {
@@ -141,8 +145,9 @@
 			padding: 0 10px 10px;
 		}
 
-		.results-row {
-			border: 1px solid #CFCFCF;
+		.results-row td {
+			border-bottom: 1px solid #CFCFCF;
+			background-color: transparent;
 		}
 
 		.name {
@@ -163,5 +168,9 @@
 
 	.messages .last-thread, .thread .message {
 		margin-left: 60px;
+	}
+
+	.line-through {
+		text-decoration: line-through;
 	}
 }

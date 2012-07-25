@@ -21,6 +21,8 @@ import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.MethodKey;
+import com.liferay.portal.kernel.util.PortalClassInvoker;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.model.Group;
@@ -29,9 +31,8 @@ import com.liferay.portal.model.LayoutSet;
 import com.liferay.portal.model.LayoutSetPrototype;
 import com.liferay.portal.service.LayoutLocalServiceUtil;
 import com.liferay.portal.service.LayoutSetLocalServiceUtil;
-import com.liferay.portal.service.LayoutSetPrototypeServiceUtil;
+import com.liferay.portal.service.LayoutSetPrototypeLocalServiceUtil;
 import com.liferay.portal.service.ServiceContext;
-import com.liferay.portlet.expando.model.ExpandoBridge;
 import com.liferay.portlet.expando.model.ExpandoTableConstants;
 import com.liferay.portlet.expando.model.ExpandoValue;
 import com.liferay.portlet.expando.service.ExpandoValueLocalServiceUtil;
@@ -40,11 +41,12 @@ import java.util.List;
 
 /**
  * @author Eudaldo Alonso
+ * @author Jonathan Lee
  */
 public class LayoutSetPrototypeUtil {
 
 	public static LayoutSetPrototype fetchLayoutSetPrototype(
-			long companyId, boolean privateLayoutSetPrototype)
+			long companyId, String layoutSetPrototypeKey)
 		throws PortalException, SystemException {
 
 		List<ExpandoValue> expandoValues =
@@ -55,35 +57,22 @@ public class LayoutSetPrototypeUtil {
 				QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 
 		for (ExpandoValue expandoValue : expandoValues) {
+			if (!layoutSetPrototypeKey.equals(expandoValue.getString())) {
+				continue;
+			}
+
 			LayoutSetPrototype layoutSetPrototype =
-				LayoutSetPrototypeServiceUtil.getLayoutSetPrototype(
+				LayoutSetPrototypeLocalServiceUtil.getLayoutSetPrototype(
 					expandoValue.getClassPK());
 
-			ExpandoBridge expandoBridge = layoutSetPrototype.getExpandoBridge();
-
-			String layoutSetPrototypeKey = (String)expandoBridge.getAttribute(
-				SocialOfficeConstants.LAYOUT_SET_PROTOTYPE_KEY);
-
-			if (privateLayoutSetPrototype &&
-				layoutSetPrototypeKey.equals(
-					SocialOfficeConstants.
-						LAYOUT_SET_PROTOTYPE_KEY_USER_PRIVATE)) {
-
-				return layoutSetPrototype;
-			}
-			else if (layoutSetPrototypeKey.equals(
-						SocialOfficeConstants.
-							LAYOUT_SET_PROTOTYPE_KEY_USER_PUBLIC)) {
-
-				return layoutSetPrototype;
-			}
+			return layoutSetPrototype;
 		}
 
 		return null;
 	}
 
 	public static void removeLayoutSetPrototype(
-			Group group, boolean privateLayout)
+			Group group, boolean privateLayout, String layoutSetPrototypeKey)
 		throws PortalException, SystemException {
 
 		LayoutSet layoutSet = LayoutSetLocalServiceUtil.getLayoutSet(
@@ -105,7 +94,7 @@ public class LayoutSetPrototypeUtil {
 			group.getGroupId(), null, null, StringPool.BLANK, false);
 
 		LayoutSetPrototype layoutSetPrototype = fetchLayoutSetPrototype(
-			group.getCompanyId(), privateLayout);
+			group.getCompanyId(), layoutSetPrototypeKey);
 
 		Group layoutSetPrototypeGroup = layoutSetPrototype.getGroup();
 
@@ -135,20 +124,34 @@ public class LayoutSetPrototypeUtil {
 	}
 
 	public static void updateLayoutSetPrototype(
-			Group group, boolean privateLayout)
-		throws PortalException, SystemException {
+			Group group, boolean privateLayout, String layoutSetPrototypeKey)
+		throws Exception {
 
 		LayoutSetPrototype layoutSetPrototype = fetchLayoutSetPrototype(
-			group.getCompanyId(), privateLayout);
+			group.getCompanyId(), layoutSetPrototypeKey);
 
 		if (layoutSetPrototype != null) {
 			LayoutSetLocalServiceUtil.updateLayoutSetPrototypeLinkEnabled(
 				group.getGroupId(), privateLayout, true,
 				layoutSetPrototype.getUuid());
 
+			LayoutSet layoutSet = group.getPublicLayoutSet();
+
+			if (privateLayout) {
+				layoutSet = group.getPrivateLayoutSet();
+			}
+
+			PortalClassInvoker.invoke(
+				true, _mergeLayoutSetProtypeLayoutsMethodKey, group, layoutSet);
+
 			LayoutLocalServiceUtil.updatePriorities(
 				group.getGroupId(), privateLayout);
 		}
 	}
+
+	private static MethodKey _mergeLayoutSetProtypeLayoutsMethodKey =
+		new MethodKey(
+			"com.liferay.portlet.sites.util.SitesUtil",
+			"mergeLayoutSetProtypeLayouts", Group.class, LayoutSet.class);
 
 }

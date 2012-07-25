@@ -30,6 +30,7 @@ import com.liferay.knowledgebase.util.ActionKeys;
 import com.liferay.knowledgebase.util.PortletKeys;
 import com.liferay.knowledgebase.util.WebKeys;
 import com.liferay.portal.NoSuchSubscriptionException;
+import com.liferay.portal.kernel.portlet.LiferayPortletConfig;
 import com.liferay.portal.kernel.portlet.PortletResponseUtil;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.servlet.SessionMessages;
@@ -63,7 +64,6 @@ import java.io.InputStream;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
-import javax.portlet.PortletConfig;
 import javax.portlet.PortletException;
 import javax.portlet.PortletPreferences;
 import javax.portlet.RenderRequest;
@@ -172,7 +172,7 @@ public class ArticlePortlet extends MVCPortlet {
 	@Override
 	public void render(
 			RenderRequest renderRequest, RenderResponse renderResponse)
-		throws PortletException, IOException {
+		throws IOException, PortletException {
 
 		try {
 			int status = getStatus(renderRequest);
@@ -197,11 +197,12 @@ public class ArticlePortlet extends MVCPortlet {
 
 				SessionErrors.add(renderRequest, e.getClass());
 
-				PortletConfig portletConfig = getPortletConfig();
+				LiferayPortletConfig liferayPortletConfig =
+					(LiferayPortletConfig)getPortletConfig();
 
 				SessionMessages.add(
 					renderRequest,
-					portletConfig.getPortletName() +
+					liferayPortletConfig.getPortletId() +
 						SessionMessages.KEY_SUFFIX_HIDE_DEFAULT_ERROR_MESSAGE);
 			}
 			else {
@@ -216,12 +217,17 @@ public class ArticlePortlet extends MVCPortlet {
 			ResourceRequest resourceRequest, ResourceResponse resourceResponse)
 		throws Exception {
 
-		long companyId = ParamUtil.getLong(resourceRequest, "companyId");
+		long resourcePrimKey = ParamUtil.getLong(
+			resourceRequest, "resourcePrimKey");
+
 		String fileName = ParamUtil.getString(resourceRequest, "fileName");
+
+		KBArticle kbArticle = KBArticleServiceUtil.getLatestKBArticle(
+			resourcePrimKey, WorkflowConstants.STATUS_ANY);
 
 		String shortFileName = FileUtil.getShortFileName(fileName);
 		InputStream is = DLStoreUtil.getFileAsStream(
-			companyId, CompanyConstants.SYSTEM, fileName);
+			kbArticle.getCompanyId(), CompanyConstants.SYSTEM, fileName);
 		String contentType = MimeTypesUtil.getContentType(fileName);
 
 		PortletResponseUtil.sendFile(

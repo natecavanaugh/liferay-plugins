@@ -61,6 +61,7 @@ import java.util.regex.Pattern;
 
 import org.apache.solr.client.solrj.SolrQuery.ORDER;
 import org.apache.solr.client.solrj.SolrQuery;
+import org.apache.solr.client.solrj.SolrRequest.METHOD;
 import org.apache.solr.client.solrj.SolrServer;
 import org.apache.solr.client.solrj.response.FacetField;
 import org.apache.solr.client.solrj.response.QueryResponse;
@@ -96,7 +97,8 @@ public class SolrIndexSearcherImpl implements IndexSearcher {
 			SolrQuery solrQuery = translateQuery(
 				companyId, query, sorts, start, end);
 
-			QueryResponse queryResponse = _solrServer.query(solrQuery);
+			QueryResponse queryResponse = _solrServer.query(
+				solrQuery, METHOD.POST);
 
 			boolean allResults = false;
 
@@ -176,7 +178,7 @@ public class SolrIndexSearcherImpl implements IndexSearcher {
 
 		solrQuery.setFacetLimit(-1);
 
-		QueryResponse queryResponse = _solrServer.query(solrQuery);
+		QueryResponse queryResponse = _solrServer.query(solrQuery, METHOD.POST);
 
 		boolean allResults = false;
 
@@ -325,10 +327,6 @@ public class SolrIndexSearcherImpl implements IndexSearcher {
 				snippet = getSnippet(
 					solrDocument, queryConfig, queryTerms,
 					queryResponse.getHighlighting());
-
-				if (Validator.isNull(snippet)) {
-					continue;
-				}
 			}
 
 			documents.add(document);
@@ -342,6 +340,9 @@ public class SolrIndexSearcherImpl implements IndexSearcher {
 				}
 
 				scores.add(score);
+			}
+			else {
+				scores.add(maxScore);
 			}
 
 			snippets.add(snippet);
@@ -384,15 +385,20 @@ public class SolrIndexSearcherImpl implements IndexSearcher {
 
 		SolrQuery solrQuery = new SolrQuery();
 
-		solrQuery.setHighlight(queryConfig.isHighlightEnabled());
-		solrQuery.setHighlightFragsize(queryConfig.getHighlightFragmentSize());
-		solrQuery.setHighlightSnippets(queryConfig.getHighlightSnippetSize());
+		if (queryConfig.isHighlightEnabled()) {
+			solrQuery.setHighlight(true);
+			solrQuery.setHighlightFragsize(
+				queryConfig.getHighlightFragmentSize());
+			solrQuery.setHighlightSnippets(
+				queryConfig.getHighlightSnippetSize());
+
+			String localizedName = DocumentImpl.getLocalizedName(
+				queryConfig.getLocale(), Field.CONTENT);
+
+			solrQuery.setParam("hl.fl", Field.CONTENT, localizedName);
+		}
+
 		solrQuery.setIncludeScore(queryConfig.isScoreEnabled());
-
-		String localizedName = DocumentImpl.getLocalizedName(
-			queryConfig.getLocale(), Field.CONTENT);
-
-		solrQuery.setParam("hl.fl", Field.CONTENT, localizedName);
 
 		QueryTranslatorUtil.translateForSolr(query);
 

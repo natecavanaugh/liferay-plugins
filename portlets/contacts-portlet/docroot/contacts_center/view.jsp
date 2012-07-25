@@ -2,15 +2,18 @@
 /**
  * Copyright (c) 2000-2012 Liferay, Inc. All rights reserved.
  *
- * This library is free software; you can redistribute it and/or modify it under
- * the terms of the GNU Lesser General Public License as published by the Free
- * Software Foundation; either version 2.1 of the License, or (at your option)
- * any later version.
+ * This file is part of Liferay Social Office. Liferay Social Office is free
+ * software: you can redistribute it and/or modify it under the terms of the GNU
+ * Affero General Public License as published by the Free Software Foundation,
+ * either version 3 of the License, or (at your option) any later version.
  *
- * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
- * details.
+ * Liferay Social Office is distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+ * FITNESS FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License
+ * for more details.
+ *
+ * You should have received a copy of the GNU General Public License along with
+ * Liferay Social Office. If not, see http://www.gnu.org/licenses/agpl-3.0.html.
  */
 --%>
 
@@ -97,15 +100,17 @@ portletURL.setWindowState(WindowState.NORMAL);
 
 			<aui:layout cssClass="contacts-result-container lfr-app-column-view">
 				<aui:column columnWidth="30" cssClass="contacts-list" first="<%= true %>">
-					<c:if test="<%= !userPublicPage %>">
-						<aui:layout cssClass="contact-group-filter">
+					<aui:layout cssClass="contact-group-filter">
+						<aui:button name="checkAll" type="checkbox" />
+
+						<c:if test="<%= !userPublicPage %>">
 							<aui:select cssClass="contact-group-filter-select" inlineField="true" label="" name="filterBy">
-								<aui:option label="all" selected='<%= filterBy.equals(ContactsConstants.FILTER_BY_DEFAULT) %>' value="<%= ContactsConstants.FILTER_BY_DEFAULT %>" />
-								<aui:option label="connections" selected='<%= filterBy.equals(ContactsConstants.FILTER_BY_TYPE_BI_CONNECTION) %>' value="<%= ContactsConstants.FILTER_BY_TYPE_BI_CONNECTION %>" />
-								<aui:option label="following" selected='<%= filterBy.equals(ContactsConstants.FILTER_BY_TYPE_UNI_FOLLOWER) %>' value="<%= ContactsConstants.FILTER_BY_TYPE_UNI_FOLLOWER %>" />
+								<aui:option label="all" selected="<%= filterBy.equals(ContactsConstants.FILTER_BY_DEFAULT) %>" value="<%= ContactsConstants.FILTER_BY_DEFAULT %>" />
+								<aui:option label="connections" selected="<%= filterBy.equals(ContactsConstants.FILTER_BY_TYPE_BI_CONNECTION) %>" value="<%= ContactsConstants.FILTER_BY_TYPE_BI_CONNECTION %>" />
+								<aui:option label="following" selected="<%= filterBy.equals(ContactsConstants.FILTER_BY_TYPE_UNI_FOLLOWER) %>" value="<%= ContactsConstants.FILTER_BY_TYPE_UNI_FOLLOWER %>" />
 
 								<c:if test="<%= !showOnlySiteMembers %>">
-									<aui:option label="my-contacts" selected='<%= filterBy.equals(ContactsConstants.FILTER_BY_TYPE_MY_CONTACTS) %>' value="<%= ContactsConstants.FILTER_BY_TYPE_MY_CONTACTS %>" />
+									<aui:option label="my-contacts" selected="<%= filterBy.equals(ContactsConstants.FILTER_BY_TYPE_MY_CONTACTS) %>" value="<%= ContactsConstants.FILTER_BY_TYPE_MY_CONTACTS %>" />
 
 									<%
 									List<Group> groups = user.getGroups();
@@ -119,7 +124,7 @@ portletURL.setWindowState(WindowState.NORMAL);
 											String filterByGroupId = ContactsConstants.FILTER_BY_GROUP + curGroup.getGroupId();
 										%>
 
-											<aui:option label="<%= HtmlUtil.escape(curGroup.getDescriptiveName(locale)) %>" selected='<%= filterBy.equals(filterByGroupId) %>' value="<%= filterByGroupId %>" />
+											<aui:option label="<%= HtmlUtil.escape(curGroup.getDescriptiveName(locale)) %>" selected="<%= filterBy.equals(filterByGroupId) %>" value="<%= filterByGroupId %>" />
 
 										<%
 										}
@@ -134,8 +139,8 @@ portletURL.setWindowState(WindowState.NORMAL);
 									<aui:a href="javascript:;" label="add" />
 								</span>
 							</c:if>
-						</aui:layout>
-					</c:if>
+						</c:if>
+					</aui:layout>
 
 					<aui:layout cssClass='<%= userPublicPage ? "contacts-result personal-contact-list" : "contacts-result" %>'>
 
@@ -369,6 +374,7 @@ portletURL.setWindowState(WindowState.NORMAL);
 					contactsSearchInput: '#<portlet:namespace />name',
 					defaultMessageError: '<liferay-ui:message key="an-error-occurred-while-retrieving-the-users-information" unicode="<%= true %>" />',
 					defaultMessageSuccess: '<liferay-ui:message key="your-request-completed-successfully" unicode="<%= true %>" />',
+					getSelectedContactsURL: '<portlet:resourceURL id="getSelectedContacts" />',
 					maxResultCount: <%= ContactsConstants.MAX_RESULT_COUNT %>,
 					namespace: '<portlet:namespace />',
 					showIcon: '<%= showIcon %>'

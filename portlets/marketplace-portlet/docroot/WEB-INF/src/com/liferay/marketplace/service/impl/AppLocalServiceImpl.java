@@ -42,6 +42,7 @@ import java.util.Date;
 import java.util.Enumeration;
 import java.util.List;
 import java.util.zip.ZipEntry;
+import java.util.zip.ZipException;
 import java.util.zip.ZipFile;
 
 /**
@@ -56,7 +57,7 @@ public class AppLocalServiceImpl extends AppLocalServiceBaseImpl {
 
 		// App
 
-		User user = userPersistence.findByPrimaryKey(userId);
+		User user = userPersistence.fetchByPrimaryKey(userId);
 		Date now = new Date();
 
 		validate(remoteAppId, version);
@@ -65,9 +66,12 @@ public class AppLocalServiceImpl extends AppLocalServiceBaseImpl {
 
 		App app = appPersistence.create(appId);
 
-		app.setCompanyId(user.getCompanyId());
-		app.setUserId(user.getUserId());
-		app.setUserName(user.getFullName());
+		if (user != null) {
+			app.setCompanyId(user.getCompanyId());
+			app.setUserId(user.getUserId());
+			app.setUserName(user.getFullName());
+		}
+
 		app.setCreateDate(now);
 		app.setModifiedDate(now);
 		app.setRemoteAppId(remoteAppId);
@@ -77,9 +81,11 @@ public class AppLocalServiceImpl extends AppLocalServiceBaseImpl {
 
 		// File
 
-		DLStoreUtil.addFile(
-			app.getCompanyId(), CompanyConstants.SYSTEM, app.getFilePath(),
-			false, inputStream);
+		if (inputStream != null) {
+			DLStoreUtil.addFile(
+				app.getCompanyId(), CompanyConstants.SYSTEM, app.getFilePath(),
+				false, inputStream);
+		}
 
 		return app;
 	}
@@ -182,6 +188,14 @@ public class AppLocalServiceImpl extends AppLocalServiceBaseImpl {
 				moduleLocalService.addModule(
 					app.getUserId(), app.getAppId(), contextName);
 			}
+		}
+		catch (ZipException ze) {
+			if (_log.isInfoEnabled()) {
+				_log.info(
+					"Deleting corrupt package from app " + app.getAppId(), ze);
+			}
+
+			deleteApp(app);
 		}
 		catch (Exception e) {
 			_log.error(e, e);

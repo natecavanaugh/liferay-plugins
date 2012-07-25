@@ -368,6 +368,7 @@ public class KBTemplatePersistenceImpl extends BasePersistenceImpl<KBTemplate>
 		if (isNew || !KBTemplateModelImpl.COLUMN_BITMASK_ENABLED) {
 			FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 		}
+
 		else {
 			if ((kbTemplateModelImpl.getColumnBitmask() &
 					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_UUID.getColumnBitmask()) != 0) {
@@ -424,6 +425,7 @@ public class KBTemplatePersistenceImpl extends BasePersistenceImpl<KBTemplate>
 					};
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_UUID_G, args);
+
 				FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_UUID_G, args);
 
 				FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_UUID_G,
@@ -706,10 +708,6 @@ public class KBTemplatePersistenceImpl extends BasePersistenceImpl<KBTemplate>
 	/**
 	 * Returns the first k b template in the ordered set where uuid = &#63;.
 	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	 * </p>
-	 *
 	 * @param uuid the uuid
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching k b template
@@ -719,31 +717,45 @@ public class KBTemplatePersistenceImpl extends BasePersistenceImpl<KBTemplate>
 	public KBTemplate findByUuid_First(String uuid,
 		OrderByComparator orderByComparator)
 		throws NoSuchTemplateException, SystemException {
+		KBTemplate kbTemplate = fetchByUuid_First(uuid, orderByComparator);
+
+		if (kbTemplate != null) {
+			return kbTemplate;
+		}
+
+		StringBundler msg = new StringBundler(4);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("uuid=");
+		msg.append(uuid);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchTemplateException(msg.toString());
+	}
+
+	/**
+	 * Returns the first k b template in the ordered set where uuid = &#63;.
+	 *
+	 * @param uuid the uuid
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching k b template, or <code>null</code> if a matching k b template could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public KBTemplate fetchByUuid_First(String uuid,
+		OrderByComparator orderByComparator) throws SystemException {
 		List<KBTemplate> list = findByUuid(uuid, 0, 1, orderByComparator);
 
-		if (list.isEmpty()) {
-			StringBundler msg = new StringBundler(4);
-
-			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			msg.append("uuid=");
-			msg.append(uuid);
-
-			msg.append(StringPool.CLOSE_CURLY_BRACE);
-
-			throw new NoSuchTemplateException(msg.toString());
-		}
-		else {
+		if (!list.isEmpty()) {
 			return list.get(0);
 		}
+
+		return null;
 	}
 
 	/**
 	 * Returns the last k b template in the ordered set where uuid = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	 * </p>
 	 *
 	 * @param uuid the uuid
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
@@ -754,34 +766,48 @@ public class KBTemplatePersistenceImpl extends BasePersistenceImpl<KBTemplate>
 	public KBTemplate findByUuid_Last(String uuid,
 		OrderByComparator orderByComparator)
 		throws NoSuchTemplateException, SystemException {
+		KBTemplate kbTemplate = fetchByUuid_Last(uuid, orderByComparator);
+
+		if (kbTemplate != null) {
+			return kbTemplate;
+		}
+
+		StringBundler msg = new StringBundler(4);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("uuid=");
+		msg.append(uuid);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchTemplateException(msg.toString());
+	}
+
+	/**
+	 * Returns the last k b template in the ordered set where uuid = &#63;.
+	 *
+	 * @param uuid the uuid
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching k b template, or <code>null</code> if a matching k b template could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public KBTemplate fetchByUuid_Last(String uuid,
+		OrderByComparator orderByComparator) throws SystemException {
 		int count = countByUuid(uuid);
 
 		List<KBTemplate> list = findByUuid(uuid, count - 1, count,
 				orderByComparator);
 
-		if (list.isEmpty()) {
-			StringBundler msg = new StringBundler(4);
-
-			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			msg.append("uuid=");
-			msg.append(uuid);
-
-			msg.append(StringPool.CLOSE_CURLY_BRACE);
-
-			throw new NoSuchTemplateException(msg.toString());
-		}
-		else {
+		if (!list.isEmpty()) {
 			return list.get(0);
 		}
+
+		return null;
 	}
 
 	/**
 	 * Returns the k b templates before and after the current k b template in the ordered set where uuid = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	 * </p>
 	 *
 	 * @param kbTemplateId the primary key of the current k b template
 	 * @param uuid the uuid
@@ -1236,10 +1262,6 @@ public class KBTemplatePersistenceImpl extends BasePersistenceImpl<KBTemplate>
 	/**
 	 * Returns the first k b template in the ordered set where groupId = &#63;.
 	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	 * </p>
-	 *
 	 * @param groupId the group ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching k b template
@@ -1249,31 +1271,45 @@ public class KBTemplatePersistenceImpl extends BasePersistenceImpl<KBTemplate>
 	public KBTemplate findByGroupId_First(long groupId,
 		OrderByComparator orderByComparator)
 		throws NoSuchTemplateException, SystemException {
+		KBTemplate kbTemplate = fetchByGroupId_First(groupId, orderByComparator);
+
+		if (kbTemplate != null) {
+			return kbTemplate;
+		}
+
+		StringBundler msg = new StringBundler(4);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("groupId=");
+		msg.append(groupId);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchTemplateException(msg.toString());
+	}
+
+	/**
+	 * Returns the first k b template in the ordered set where groupId = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching k b template, or <code>null</code> if a matching k b template could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public KBTemplate fetchByGroupId_First(long groupId,
+		OrderByComparator orderByComparator) throws SystemException {
 		List<KBTemplate> list = findByGroupId(groupId, 0, 1, orderByComparator);
 
-		if (list.isEmpty()) {
-			StringBundler msg = new StringBundler(4);
-
-			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			msg.append("groupId=");
-			msg.append(groupId);
-
-			msg.append(StringPool.CLOSE_CURLY_BRACE);
-
-			throw new NoSuchTemplateException(msg.toString());
-		}
-		else {
+		if (!list.isEmpty()) {
 			return list.get(0);
 		}
+
+		return null;
 	}
 
 	/**
 	 * Returns the last k b template in the ordered set where groupId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	 * </p>
 	 *
 	 * @param groupId the group ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
@@ -1284,34 +1320,48 @@ public class KBTemplatePersistenceImpl extends BasePersistenceImpl<KBTemplate>
 	public KBTemplate findByGroupId_Last(long groupId,
 		OrderByComparator orderByComparator)
 		throws NoSuchTemplateException, SystemException {
+		KBTemplate kbTemplate = fetchByGroupId_Last(groupId, orderByComparator);
+
+		if (kbTemplate != null) {
+			return kbTemplate;
+		}
+
+		StringBundler msg = new StringBundler(4);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("groupId=");
+		msg.append(groupId);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchTemplateException(msg.toString());
+	}
+
+	/**
+	 * Returns the last k b template in the ordered set where groupId = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching k b template, or <code>null</code> if a matching k b template could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	public KBTemplate fetchByGroupId_Last(long groupId,
+		OrderByComparator orderByComparator) throws SystemException {
 		int count = countByGroupId(groupId);
 
 		List<KBTemplate> list = findByGroupId(groupId, count - 1, count,
 				orderByComparator);
 
-		if (list.isEmpty()) {
-			StringBundler msg = new StringBundler(4);
-
-			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			msg.append("groupId=");
-			msg.append(groupId);
-
-			msg.append(StringPool.CLOSE_CURLY_BRACE);
-
-			throw new NoSuchTemplateException(msg.toString());
-		}
-		else {
+		if (!list.isEmpty()) {
 			return list.get(0);
 		}
+
+		return null;
 	}
 
 	/**
 	 * Returns the k b templates before and after the current k b template in the ordered set where groupId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set.
-	 * </p>
 	 *
 	 * @param kbTemplateId the primary key of the current k b template
 	 * @param groupId the group ID
@@ -1900,13 +1950,14 @@ public class KBTemplatePersistenceImpl extends BasePersistenceImpl<KBTemplate>
 	 *
 	 * @param uuid the uuid
 	 * @param groupId the group ID
+	 * @return the k b template that was removed
 	 * @throws SystemException if a system exception occurred
 	 */
-	public void removeByUUID_G(String uuid, long groupId)
+	public KBTemplate removeByUUID_G(String uuid, long groupId)
 		throws NoSuchTemplateException, SystemException {
 		KBTemplate kbTemplate = findByUUID_G(uuid, groupId);
 
-		remove(kbTemplate);
+		return remove(kbTemplate);
 	}
 
 	/**
