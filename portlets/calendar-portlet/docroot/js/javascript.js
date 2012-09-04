@@ -114,7 +114,7 @@
 							firstReminderType: schedulerEvent.get('firstReminderType'),
 							location: schedulerEvent.get('location'),
 							parentCalendarBookingId: schedulerEvent.get('parentCalendarBookingId'),
-							recurrence: schedulerEvent.get('repeat'),
+							recurrence: schedulerEvent.get('recurrence'),
 							secondReminder: schedulerEvent.get('secondReminder'),
 							secondReminderType: schedulerEvent.get('secondReminderType'),
 							startDate: instance.toUTCTimeZone(schedulerEvent.get('startDate')).getTime(),
@@ -211,6 +211,25 @@
 							if (scheduler) {
 								scheduler.fire('eventsChangeBatch');
 							}
+						}
+					}
+				);
+			},
+
+			deleteEventInstance: function(schedulerEvent, allFollowing) {
+				var instance = this;
+
+				instance.invoke(
+					{
+						'/calendar-portlet/calendarbooking/delete-calendar-booking-instance': {
+							allFollowing: allFollowing,
+							calendarBookingId: schedulerEvent.get('calendarBookingId'),
+							startDate: CalendarUtil.toUTCTimeZone(schedulerEvent.get('startDate')).getTime()
+						}
+					},
+					{
+						success: function() {
+							schedulerEvent.get('scheduler').loadCalendarBookings();
 						}
 					}
 				);
@@ -464,6 +483,7 @@
 				schedulerEvent.set('calendarBookingId', data.calendarBookingId);
 				schedulerEvent.set('calendarResourceId', data.calendarResourceId);
 				schedulerEvent.set('parentCalendarBookingId', data.parentCalendarBookingId);
+				schedulerEvent.set('recurrence', data.recurrence);
 
 				schedulerEvent.set('status', data.status);
 
@@ -524,6 +544,7 @@
 						endDate: instance.toUserTimeZone(calendarBooking.endDate),
 						location: calendarBooking.location,
 						parentCalendarBookingId: calendarBooking.parentCalendarBookingId,
+						recurrence: calendarBooking.recurrence,
 						startDate: instance.toUserTimeZone(calendarBooking.startDate),
 						status: calendarBooking.status
 					}
@@ -564,7 +585,7 @@
 							firstReminder: schedulerEvent.get('firstReminder'),
 							firstReminderType: schedulerEvent.get('firstReminderType'),
 							location: schedulerEvent.get('location'),
-							recurrence: schedulerEvent.get('repeat'),
+							recurrence: schedulerEvent.get('recurrence'),
 							secondReminder: schedulerEvent.get('secondReminder'),
 							secondReminderType: schedulerEvent.get('secondReminderType'),
 							startDate: instance.toUTCTimeZone(schedulerEvent.get('startDate')).getTime(),
@@ -722,17 +743,60 @@
 						}, 0);
 					},
 
+					_deleteEvent: function(schedulerEvent) {
+						var instance = this;
+
+						var eventRecorder = instance.get('eventRecorder');
+
+						instance.removeEvent(schedulerEvent);
+
+						eventRecorder.hideOverlay();
+
+						instance.syncEventsUI();
+					},
+
 					_onDeleteEvent: function(event) {
 						var instance = this;
 
 						var schedulerEvent = event.schedulerEvent;
 
-						if (schedulerEvent.isMasterBooking() && !confirm(Liferay.Language.get('deleting-this-event-will-cancel-the-meeting-with-your-guests-would-you-like-to-delete'))) {
-							event.preventDefault();
-							return;
-						}
+						if (schedulerEvent.isRecurring()) {
+							Liferay.RecurrenceUtil.openConfirmationPanel(
+								schedulerEvent,
+								'delete',
+								function() {
+									CalendarUtil.deleteEventInstance(schedulerEvent, false);
 
-						CalendarUtil.deleteEvent(schedulerEvent);
+									instance._deleteEvent(schedulerEvent);
+
+									Liferay.RecurrenceUtil.closeConfirmationPanel();
+								},
+								function() {
+									CalendarUtil.deleteEventInstance(schedulerEvent, true);
+
+									instance._deleteEvent(schedulerEvent);
+
+									Liferay.RecurrenceUtil.closeConfirmationPanel();
+								},
+								function() {
+									CalendarUtil.deleteEvent(schedulerEvent);
+
+									instance._deleteEvent(schedulerEvent);
+
+									Liferay.RecurrenceUtil.closeConfirmationPanel();
+								}
+							);
+
+							event.preventDefault();
+						}
+						else if (schedulerEvent.isMasterBooking() && confirm(Liferay.Language.get('deleting-this-event-will-cancel-the-meeting-with-your-guests-would-you-like-to-delete'))) {
+							CalendarUtil.deleteEvent(schedulerEvent);
+
+							instance._deleteEvent(schedulerEvent);
+						}
+						else {
+							event.preventDefault();
+						}
 					},
 
 					_onSaveEvent: function(event) {
@@ -800,6 +864,11 @@
 						value: 0
 					},
 
+					recurrence: {
+						validator: isString,
+						value: STR_BLANK
+					},
+
 					secondReminder: {
 						setter: toNumber,
 						value: 0
@@ -835,6 +904,14 @@
 						var instance = this;
 
 						return (instance.get('parentCalendarBookingId') === instance.get('calendarBookingId'));
+					},
+
+					isRecurring: function() {
+						var instance = this;
+
+						var recurrence = instance.get('recurrence');
+
+						return (recurrence !== STR_BLANK);
 					},
 
 					syncNodeColorUI: function() {
@@ -1290,7 +1367,7 @@
 	},
 	'' ,
 	{
-		requires: ['aui-io', 'aui-scheduler', 'autocomplete', 'autocomplete-highlighters', 'datasource-cache', 'datasource-get', 'liferay-portlet-url', 'liferay-store']
+		requires: ['aui-io', 'aui-scheduler', 'autocomplete', 'autocomplete-highlighters', 'datasource-cache', 'datasource-get', 'dd-plugin', 'liferay-portlet-url', 'liferay-calendar-recurrence-util', 'liferay-store', 'panel', 'resize-plugin']
 	}
 );
 }());
