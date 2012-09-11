@@ -82,10 +82,12 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.TimeZone;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 import javax.portlet.PortletException;
+import javax.portlet.PortletPreferences;
 import javax.portlet.PortletRequest;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
@@ -284,13 +286,18 @@ public class CalendarPortlet extends MVCPortlet {
 		if (calendarResourceId <= 0) {
 			CalendarResourceServiceUtil.addCalendarResource(
 				serviceContext.getScopeGroupId(), null, 0,
-				PortalUUIDUtil.generate(), defaultCalendarId, code, nameMap,
-				descriptionMap, type, active, serviceContext);
+				PortalUUIDUtil.generate(), code, nameMap, descriptionMap, type,
+				active, serviceContext);
 		}
 		else {
 			CalendarResourceServiceUtil.updateCalendarResource(
-				calendarResourceId, defaultCalendarId, nameMap, descriptionMap,
-				type, active, serviceContext);
+				calendarResourceId, nameMap, descriptionMap, type, active,
+				serviceContext);
+
+			if (defaultCalendarId > 0) {
+				CalendarLocalServiceUtil.updateCalendar(
+					defaultCalendarId, true);
+			}
 		}
 	}
 
@@ -388,9 +395,6 @@ public class CalendarPortlet extends MVCPortlet {
 	protected java.util.Calendar getJCalendar(
 		PortletRequest portletRequest, String name) {
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
 		int month = ParamUtil.getInteger(portletRequest, name + "Month");
 		int day = ParamUtil.getInteger(portletRequest, name + "Day");
 		int year = ParamUtil.getInteger(portletRequest, name + "Year");
@@ -404,7 +408,7 @@ public class CalendarPortlet extends MVCPortlet {
 		}
 
 		return JCalendarUtil.getJCalendar(
-			year, month, day, hour, minute, 0, 0, themeDisplay.getTimeZone());
+			year, month, day, hour, minute, 0, 0, getTimeZone(portletRequest));
 	}
 
 	protected String getRecurrence(ActionRequest actionRequest) {
@@ -452,7 +456,7 @@ public class CalendarPortlet extends MVCPortlet {
 			untilJCalendar.set(java.util.Calendar.YEAR, untilDateYear);
 		}
 
-		recurrence.setUntil(untilJCalendar);
+		recurrence.setUntilJCalendar(untilJCalendar);
 
 		List<Weekday> weekdays = new ArrayList<Weekday>();
 
@@ -497,6 +501,24 @@ public class CalendarPortlet extends MVCPortlet {
 		return new String[] {
 			firstReminderType, secondReminderType
 		};
+	}
+
+	protected TimeZone getTimeZone(PortletRequest portletRequest) {
+		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		PortletPreferences preferences = portletRequest.getPreferences();
+
+		User user = themeDisplay.getUser();
+
+		String timeZoneId = preferences.getValue(
+			"timeZoneId", user.getTimeZoneId());
+
+		if (Validator.isNull(timeZoneId)) {
+			timeZoneId = user.getTimeZoneId();
+		}
+
+		return TimeZone.getTimeZone(timeZoneId);
 	}
 
 	@Override

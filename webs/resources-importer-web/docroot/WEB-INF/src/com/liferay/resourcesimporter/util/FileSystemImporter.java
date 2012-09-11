@@ -25,13 +25,16 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.LayoutConstants;
+import com.liferay.portal.model.LayoutSetPrototype;
 import com.liferay.portal.model.LayoutTypePortlet;
 import com.liferay.portal.model.PortletConstants;
 import com.liferay.portal.model.Theme;
 import com.liferay.portal.service.LayoutLocalServiceUtil;
 import com.liferay.portal.service.LayoutSetLocalServiceUtil;
+import com.liferay.portal.service.LayoutSetPrototypeLocalServiceUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ThemeLocalServiceUtil;
 import com.liferay.portal.util.PortalUtil;
@@ -80,30 +83,13 @@ public class FileSystemImporter extends BaseImporter {
 				"Unaccessible resource directory " + resourcesDir);
 		}
 
-		serviceContext = new ServiceContext();
-
-		serviceContext.setAddGroupPermissions(true);
-
-		if (!privateLayout) {
-			serviceContext.setAddGuestPermissions(true);
-		}
-
-		serviceContext.setScopeGroupId(groupId);
-
-		addDLFileEntries("/document_library/documents");
-
-		addJournalArticles(
-			StringPool.BLANK, StringPool.BLANK, "/journal/articles");
-
-		addJournalStructures("/journal/structures");
-
-		addJournalTemplates(StringPool.BLANK, "/journal/templates");
-
-		addLayouts("sitemap.json");
+		doImportResources();
 	}
 
-	protected void addDLFileEntries(String fileEntriesDir) throws Exception {
-		File dlDocumentsDir = new File(_resourcesDir, fileEntriesDir);
+	protected void addDLFileEntries(String fileEntriesDirName)
+		throws Exception {
+
+		File dlDocumentsDir = new File(_resourcesDir, fileEntriesDirName);
 
 		if (!dlDocumentsDir.exists() || !dlDocumentsDir.isDirectory()||
 			!dlDocumentsDir.canRead()) {
@@ -249,6 +235,10 @@ public class FileSystemImporter extends BaseImporter {
 			StringPool.BLANK, LayoutConstants.TYPE_PORTLET, hidden, friendlyURL,
 			serviceContext);
 
+		String typeSettings = layoutJSONObject.getString("typeSettings");
+
+		layout.setTypeSettings(typeSettings);
+
 		LayoutTypePortlet layoutTypePortlet =
 			(LayoutTypePortlet)layout.getLayoutType();
 
@@ -371,30 +361,6 @@ public class FileSystemImporter extends BaseImporter {
 		}
 	}
 
-	protected void addLayouts(String siteMapName) throws Exception {
-		File sitemapJSONFile = new File(_resourcesDir, siteMapName);
-
-		if (!sitemapJSONFile.exists() || sitemapJSONFile.isDirectory() ||
-			!sitemapJSONFile.canRead()) {
-
-			return;
-		}
-
-		InputStream inputStream = null;
-
-		try {
-			inputStream = new BufferedInputStream(
-				new FileInputStream(sitemapJSONFile));
-
-			doAddLayouts(inputStream);
-		}
-		finally {
-			if (inputStream != null) {
-				inputStream.close();
-			}
-		}
-	}
-
 	protected void doAddDLFileEntries(
 			String name, InputStream inputStream, long length)
 		throws Exception {
@@ -478,23 +444,20 @@ public class FileSystemImporter extends BaseImporter {
 			"/journal/articles/" + name);
 	}
 
-	protected void doAddLayouts(InputStream inputStream) throws Exception {
-		String sitemapJSON = getSitemapJSON(inputStream);
+	protected void doImportResources() throws Exception {
+		serviceContext = new ServiceContext();
 
-		JSONObject sitemapJSONObject = JSONFactoryUtil.createJSONObject(
-			sitemapJSON);
+		serviceContext.setAddGroupPermissions(true);
 
-		LayoutLocalServiceUtil.deleteLayouts(
-			groupId, privateLayout, new ServiceContext());
+		if (!privateLayout) {
+			serviceContext.setAddGuestPermissions(true);
+		}
 
-		_defaultLayoutTemplateId = sitemapJSONObject.getString(
-			"layoutTemplateId", StringPool.BLANK);
+		serviceContext.setScopeGroupId(groupId);
 
-		updateLayoutSetThemeId(sitemapJSONObject);
-
-		JSONArray layoutsJSONArray = sitemapJSONObject.getJSONArray("layouts");
-
-		addLayouts(LayoutConstants.DEFAULT_PARENT_LAYOUT_ID, layoutsJSONArray);
+		setupAssets();
+		setupSettings("settings.json");
+		setupSitemap("sitemap.json");
 	}
 
 	protected JSONObject getDefaultPortletJSONObject(String articleId) {
@@ -524,6 +487,21 @@ public class FileSystemImporter extends BaseImporter {
 			journalArticleId, StringPool.SPACE, StringPool.DASH);
 	}
 
+	protected JSONObject getJSONObject(InputStream inputStream)
+		throws Exception {
+
+		String json = StringUtil.read(inputStream);
+
+		json = StringUtil.replace(
+			json, new String[] {"${companyId}", "${groupId}", "${userId}"},
+			new String[] {
+				String.valueOf(companyId), String.valueOf(groupId),
+				String.valueOf(userId)
+			});
+
+		return JSONFactoryUtil.createJSONObject(json);
+	}
+
 	protected String getName(String fileName) {
 		int x = fileName.lastIndexOf(StringPool.SLASH);
 
@@ -548,18 +526,6 @@ public class FileSystemImporter extends BaseImporter {
 		nameMap.put(locale, name);
 
 		return nameMap;
-	}
-
-	protected String getSitemapJSON(InputStream inputStream) throws Exception {
-		String sitemapJSON = StringUtil.read(inputStream);
-
-		return StringUtil.replace(
-			sitemapJSON,
-			new String[] {"${companyId}", "${groupId}", "${groupId}"},
-			new String[] {
-				String.valueOf(companyId), String.valueOf(groupId),
-				String.valueOf(userId)
-			});
 	}
 
 	protected File[] listFiles(File dir) {
@@ -624,6 +590,95 @@ public class FileSystemImporter extends BaseImporter {
 		sb.append("</static-content></root>");
 
 		return sb.toString();
+	}
+
+	protected void setupAssets() throws Exception {
+		addDLFileEntries("/document_library/documents");
+
+		addJournalArticles(
+			StringPool.BLANK, StringPool.BLANK, "/journal/articles");
+
+		addJournalStructures("/journal/structures");
+
+		addJournalTemplates(StringPool.BLANK, "/journal/templates");
+	}
+
+	protected void setupSettings(InputStream inputStream) throws Exception {
+		if (targetClassName.equals(Group.class.getName())) {
+			return;
+		}
+
+		LayoutSetPrototype layoutSetPrototype =
+			LayoutSetPrototypeLocalServiceUtil.getLayoutSetPrototype(
+				getTargetClassPK());
+
+		JSONObject jsonObject = getJSONObject(inputStream);
+
+		String layoutSetPrototypeSettings = jsonObject.getString(
+			"layoutSetPrototypeSettings", StringPool.BLANK);
+
+		layoutSetPrototype.setSettings(layoutSetPrototypeSettings);
+
+		LayoutSetPrototypeLocalServiceUtil.updateLayoutSetPrototype(
+			layoutSetPrototype);
+	}
+
+	protected void setupSettings(String settingsName) throws Exception {
+		File file = new File(_resourcesDir, settingsName);
+
+		if (!file.exists() || file.isDirectory() || !file.canRead()) {
+			return;
+		}
+
+		InputStream inputStream = null;
+
+		try {
+			inputStream = new BufferedInputStream(new FileInputStream(file));
+
+			setupSettings(inputStream);
+		}
+		finally {
+			if (inputStream != null) {
+				inputStream.close();
+			}
+		}
+	}
+
+	protected void setupSitemap(InputStream inputStream) throws Exception {
+		LayoutLocalServiceUtil.deleteLayouts(
+			groupId, privateLayout, new ServiceContext());
+
+		JSONObject jsonObject = getJSONObject(inputStream);
+
+		_defaultLayoutTemplateId = jsonObject.getString(
+			"layoutTemplateId", StringPool.BLANK);
+
+		updateLayoutSetThemeId(jsonObject);
+
+		JSONArray layoutsJSONArray = jsonObject.getJSONArray("layouts");
+
+		addLayouts(LayoutConstants.DEFAULT_PARENT_LAYOUT_ID, layoutsJSONArray);
+	}
+
+	protected void setupSitemap(String sitemapName) throws Exception {
+		File file = new File(_resourcesDir, sitemapName);
+
+		if (!file.exists() || file.isDirectory() || !file.canRead()) {
+			return;
+		}
+
+		InputStream inputStream = null;
+
+		try {
+			inputStream = new BufferedInputStream(new FileInputStream(file));
+
+			setupSitemap(inputStream);
+		}
+		finally {
+			if (inputStream != null) {
+				inputStream.close();
+			}
+		}
 	}
 
 	protected void updateLayoutSetThemeId(JSONObject sitemapJSONObject)

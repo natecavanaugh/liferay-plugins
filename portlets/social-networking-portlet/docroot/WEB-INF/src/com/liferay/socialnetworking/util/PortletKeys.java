@@ -12,16 +12,13 @@
  * details.
  */
 
-package com.liferay.portal.search.solr.util;
-
-import com.liferay.util.portlet.PortletProps;
+package com.liferay.socialnetworking.util;
 
 /**
- * @author Matthew Kong
+ * @author Brian Wing Shun Chan
  */
-public class PortletPropsValues {
+public class PortletKeys extends com.liferay.portal.util.PortletKeys {
 
-	public static final String[] SOLR_SORTABLE_TEXT_FIELDS =
-		PortletProps.getArray(PortletPropsKeys.SOLR_SORTABLE_TEXT_FIELDS);
+	public static final String SUMMARY = "1_WAR_socialnetworkingportlet";
 
 }

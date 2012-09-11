@@ -12,16 +12,14 @@
  * details.
  */
 
-package com.liferay.portal.search.solr.util;
+package com.liferay.weather.util;
 
 /**
- * @author Matthew Kong
+ * @author Samuel Kong
  */
 public interface PortletPropsKeys {
 
-	public static final String SOLR_COPY_FIELDS = "solr.copy.field";
-
-	public static final String SOLR_SORTABLE_TEXT_FIELDS =
-		"solr.sortable.text.fields";
+	public static final String WORLD_WEATHER_ONLINE_API_KEY =
+		"world.weather.online.api.key";
 
 }

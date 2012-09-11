@@ -263,9 +263,47 @@ List<Calendar> manageableCalendars = CalendarServiceUtil.search(themeDisplay.get
 				A.one('#<portlet:namespace />childCalendarIds').val(childCalendarIds.join(','));
 			</c:if>
 
-			submitForm(document.<portlet:namespace />fm);
+			<c:if test="<%= calendarBooking == null %>">
+				submitForm(document.<portlet:namespace />fm);
+			</c:if>
+
+			<c:if test="<%= (calendarBooking != null) && (calendar != null) %>">
+				<c:choose>
+					<c:when test="<%= calendarBooking.isMasterBooking() %>">
+						submitForm(document.<portlet:namespace />fm);
+					</c:when>
+					<c:otherwise>
+						var content = [
+							'<p class="calendar-portlet-confirmation-text">',
+							A.Lang.sub(
+								Liferay.Language.get('you-are-about-to-make-changes-that-will-only-be-reflected-on-calendar-x'),
+								['<%= calendar.getName(locale) %>']
+							),
+							'</p>'
+						].join('');
+
+						Liferay.CalendarMessageUtil.confirm(
+							content,
+							Liferay.Language.get('continue'),
+							Liferay.Language.get('dont-change-the-event'),
+							function() {
+								var dialog = this;
+
+								submitForm(document.<portlet:namespace />fm);
+
+								dialog.close();
+							},
+							function() {
+								var dialog = this;
+
+								dialog.close();
+							}
+						);
+					</c:otherwise>
+				</c:choose>
+			</c:if>
 		},
-		['aui-base', 'json']
+		['liferay-calendar-message-util', 'json']
 	);
 
 	Liferay.Util.focusFormField(document.<portlet:namespace />fm.<portlet:namespace />title);
@@ -526,8 +564,7 @@ List<Calendar> manageableCalendars = CalendarServiceUtil.search(themeDisplay.get
 			'valueChange',
 			function(event) {
 				var calendarId = parseInt(event.target.val(), 10);
-
-				var calendarJSON = Liferay.CalendarUtil.getCalendarJSONById(<%= CalendarUtil.toCalendarsJSONArray(themeDisplay, manageableCalendars) %>, calendarId);
+				var calendarJSON = Liferay.CalendarUtil.manageableCalendars[calendarId];
 
 				A.Array.each(
 					[<portlet:namespace />calendarListAccepted, <portlet:namespace />calendarListDeclined, <portlet:namespace />calendarListMaybe, <portlet:namespace />calendarListPending],

@@ -934,6 +934,16 @@
 					Liferay.Language.get('december')
 				],
 
+				closeConfirmationPanel: function() {
+					var instance = this;
+
+					var confirmationPanel = instance.confirmationPanel;
+
+					if (confirmationPanel) {
+						confirmationPanel.hide();
+					}
+				},
+
 				getSummary: function(recurrence) {
 					var instance = this;
 
@@ -982,6 +992,83 @@
 					);
 
 					return A.Lang.String.capitalize(summary);
+				},
+
+				openConfirmationPanel: function(schedulerEvent, actionName, onlyThisInstanceFn, allFollowingFn, allEventsInFn) {
+					var instance = this;
+
+					var titleText;
+					var changeDeleteText;
+
+					if (actionName === 'delete') {
+						titleText = Liferay.Language.get('delete-recurring-event');
+						changeDeleteText = Liferay.Language.get('would-you-like-to-delete-only-this-event-all-events-in-the-series-or-this-and-all-future-events-in-the-series');
+					}
+					else {
+						titleText = Liferay.Language.get('change-recurring-event');
+						changeDeleteText = Liferay.Language.get('would-you-like-to-change-only-this-event-all-events-in-the-series-or-this-and-all-future-events-in-the-series');
+					}
+
+					var content = [changeDeleteText];
+
+					if (schedulerEvent.isMasterBooking()) {
+						content.push(
+							A.Lang.sub(
+								'<br/><br/><b>{0}</b>',
+								[Liferay.Language.get('deleting-this-event-will-cancel-the-meeting-with-your-guests')]
+							)
+						);
+					}
+
+					var confirmationPanel = instance.confirmationPanel;
+
+					if (!confirmationPanel) {
+						confirmationPanel = new A.Dialog(
+							{
+								bodyContent: content.join(''),
+								buttons: [
+									{
+										handler: function(event, buttonItem) {
+											this.onlyThisInstanceFn.apply(this, arguments);
+										},
+										label: Liferay.Language.get('only-this-instance')
+									},
+									{
+										handler: function(event, buttonItem) {
+											this.allFollowingFn.apply(this, arguments);
+										},
+										label: Liferay.Language.get('all-following')
+									},
+									{
+										handler: function(event, buttonItem) {
+											this.allEventsInFn.apply(this, arguments);
+										},
+										label: Liferay.Language.get('all-events-in-the-series')
+									},
+									{
+										handler: function(event) {
+											instance.confirmationPanel.hide();
+										},
+										label: Liferay.Language.get('cancel-this-change')
+									}
+								],
+								centered: true,
+								modal: true,
+								title: titleText,
+								visible: false,
+								width: 550,
+								zIndex: 1000
+							}
+						);
+
+						confirmationPanel.onlyThisInstanceFn = onlyThisInstanceFn;
+						confirmationPanel.allFollowingFn = allFollowingFn;
+						confirmationPanel.allEventsInFn = allEventsInFn;
+
+						instance.confirmationPanel = confirmationPanel;
+					}
+
+					confirmationPanel.render().show();
 				}
 			};
 		},
@@ -990,4 +1077,61 @@
 			requires: ['aui-base']
 		}
 	);
+
+	AUI.add(
+		'liferay-calendar-message-util',
+		function(A) {
+			Liferay.CalendarMessageUtil = {
+				confirmationPanel: null,
+
+				confirm: function(message, yesButtonLabel, noButtonLabel, yesFn, noFn) {
+					var instance = this;
+
+					var confirmationPanel = instance.confirmationPanel;
+
+					if (!confirmationPanel) {
+						confirmationPanel = new A.Dialog(
+							{
+								bodyContent: message,
+								buttons: [
+									{
+										handler: function(event, buttonItem) {
+											this.yesFn.apply(this, arguments);
+										},
+										label: yesButtonLabel
+									},
+									{
+										handler: function(event, buttonItem) {
+											this.noFn.apply(this, arguments);
+										},
+										label: noButtonLabel
+									}
+								],
+								centered: true,
+								close: false,
+								modal: true,
+								resizable: false,
+								title: Liferay.Language.get('are-you-sure'),
+								visible: false,
+								width: 350,
+								zIndex: 1000
+							}
+						);
+
+						confirmationPanel.yesFn = yesFn;
+						confirmationPanel.noFn = noFn || confirmationPanel.close;
+
+						instance.confirmationPanel = confirmationPanel;
+					}
+
+					return confirmationPanel.render().show();
+				}
+			};
+		},
+		'',
+		{
+			requires: ['aui-dialog']
+		}
+	);
+
 }());

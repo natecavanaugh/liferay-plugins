@@ -101,7 +101,7 @@ if (comment) {
 					</div>
 
 					<div class="content">
-						<span><%= HtmlUtil.escape(microblogsEntry.getContent()) %><span>
+						<span><%= HtmlUtil.escape(microblogsEntry.getContent()) %></span>
 					</div>
 
 					<div class="footer">
@@ -126,18 +126,18 @@ if (comment) {
 	<aui:input name="receiverUserId" type="hidden" value="<%= receiverUserId %>" />
 	<aui:input name="receiverMicroblogsEntryId" type="hidden" value="<%= microblogsEntryId %>" />
 
+	<aui:model-context bean="<%= microblogsEntry %>" model="<%= MicroblogsEntry.class %>" />
+
 	<c:choose>
 		<c:when test="<%= repost %>">
 			<aui:input name="type" type="hidden" value="<%= MicroblogsEntryConstants.TYPE_REPOST %>" />
 
-			<aui:input name="content" type="hidden" value="<%= microblogsEntry.getContent() %>" />
+			<aui:input name="content" type="hidden" />
 		</c:when>
 		<c:when test="<%= comment %>">
 			<aui:input name="type" type="hidden" value="<%= MicroblogsEntryConstants.TYPE_REPLY %>" />
 		</c:when>
 	</c:choose>
-
-	<aui:model-context bean="<%= microblogsEntry %>" model="<%= MicroblogsEntry.class %>" />
 
 	<c:if test="<%= !repost %>">
 		<c:if test="<%= comment %>">
@@ -249,7 +249,7 @@ if (comment) {
 			var autocompleteContent = A.one('#<portlet:namespace />autocompleteContent<%= microblogsEntryId %>');
 			var highlighterContent = A.one('#<portlet:namespace/>highlighterContent<%= microblogsEntryId %>');
 
-			var inputValue = '<%= ((microblogsEntry != null) && (edit)) ? StringUtil.replace(microblogsEntry.getContent(), "\'", "\\'") : StringPool.BLANK %>';
+			var inputValue = '<%= ((microblogsEntry != null) && (edit)) ? StringUtil.replace(HtmlUtil.escape(microblogsEntry.getContent()), "\'", "\\'") : StringPool.BLANK %>';
 
 			if ((autocomplete.height() < 45) || (highlighterContent.height() < 45)) {
 				autocomplete.height(45);
