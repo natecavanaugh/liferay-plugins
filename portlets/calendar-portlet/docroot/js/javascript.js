@@ -495,23 +495,21 @@
 				schedulerEvent.set('recurrence', data.recurrence);
 				schedulerEvent.set('status', data.status);
 
-				if (!schedulerEvent.get('scheduler')) {
-					return;
+				if (schedulerEvent.get('scheduler')) {
+					var oldCalendar = instance.availableCalendars[oldCalendarId];
+
+					if (oldCalendar) {
+						oldCalendar.removeEvent(schedulerEvent);
+					}
+
+					var newCalendar = instance.availableCalendars[newCalendarId];
+
+					if (newCalendar) {
+						newCalendar.addEvent(schedulerEvent);
+					}
+
+					schedulerEvent.set('calendarId', newCalendarId);
 				}
-
-				var oldCalendar = instance.availableCalendars[oldCalendarId];
-
-				if (oldCalendar) {
-					oldCalendar.removeEvent(schedulerEvent);
-				}
-
-				var newCalendar = instance.availableCalendars[newCalendarId];
-
-				if (newCalendar) {
-					newCalendar.addEvent(schedulerEvent);
-				}
-
-				schedulerEvent.set('calendarId', newCalendarId);
 			},
 
 			syncCalendarsMap: function() {
@@ -816,9 +814,13 @@
 									this.close();
 								},
 								function() {
-									CalendarUtil.updateEventInstance(schedulerEvent, true, function() {
-										instance.loadCalendarBookings();
-									});
+									CalendarUtil.updateEventInstance(
+										schedulerEvent,
+										true,
+										function() {
+											instance.loadCalendarBookings();
+										}
+									);
 
 									this.close();
 								},
@@ -831,14 +833,18 @@
 											newSchedulerEvent.copyPropagateAttrValues(schedulerEvent);
 
 											var offset = 0;
-											var duration = schedulerEvent.getSecondsDuration() * 1000;
 
-											if (isDate(event.newVal) && isDate(event.prevVal)) {
-												offset = event.newVal.getTime() - event.prevVal.getTime();
+											var newVal = event.newVal;
+											var prevVal = event.prevVal;
+
+											if (isDate(newVal) && isDate(prevVal)) {
+												offset = newVal.getTime() - prevVal.getTime();
 											}
 
-											var startDate = CalendarUtil.toUserTimeZone(calendarBooking.startDate + offset);
-											var endDate = CalendarUtil.toUserTimeZone(calendarBooking.startDate + offset + duration);
+											var calendarStartDate = calendarBooking.startDate + offset;
+
+											var startDate = CalendarUtil.toUserTimeZone(calendarStartDate);
+											var endDate = CalendarUtil.toUserTimeZone(calendarStartDate + (schedulerEvent.getSecondsDuration() * 1000));
 
 											newSchedulerEvent.set('startDate', startDate);
 											newSchedulerEvent.set('endDate', endDate);
