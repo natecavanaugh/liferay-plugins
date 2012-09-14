@@ -15,6 +15,8 @@
 
 	var STR_SPACE = ' ';
 
+	var TPL_INVITEES_URL = '{inviteesURL}&{portletNamespace}parentCalendarBookingId={calendarBookingId}';
+
 	var TPL_RENDERING_RULES_URL = '{renderingRulesURL}&{portletNamespace}calendarIds={calendarIds}&{portletNamespace}startDate={startDate}&{portletNamespace}endDate={endDate}&{portletNamespace}ruleName={ruleName}';
 
 	var COMPANY_GROUP_ID = toNumber(themeDisplay.getCompanyGroupId());
@@ -89,6 +91,7 @@
 		Liferay.Time = Time;
 
 		var CalendarUtil = {
+			INVITEES_URL: null,
 			INVOKER_URL: '/api/jsonws/invoke',
 			NOTIFICATION_DEFAULT_TYPE: 'email',
 			PORTLET_NAMESPACE: STR_BLANK,
@@ -262,6 +265,31 @@
 				);
 
 				return events;
+			},
+
+			getCalendarBookingInvitees: function(calendarBookingId, callback) {
+				var instance = this;
+
+				var inviteesURL = A.Lang.sub(
+					TPL_INVITEES_URL,
+					{
+						calendarBookingId: calendarBookingId,
+						inviteesURL: instance.INVITEES_URL,
+						portletNamespace: instance.PORTLET_NAMESPACE
+					}
+				);
+
+				A.io.request(
+					inviteesURL,
+					{
+						dataType: 'json',
+						on: {
+							success: function() {
+								callback(this.get('responseData'));
+							}
+						}
+					}
+				);
 			},
 
 			getCalendarRenderingRules: function(calendarIds, startDate, endDate, ruleName, callback) {
@@ -1185,6 +1213,10 @@
 						}
 
 						instance._syncToolbarButtons(event.newVal);
+
+						if (event.newVal) {
+							instance._syncInvitees();
+						}
 					},
 
 					_renderOverlay: function() {
@@ -1209,6 +1241,46 @@
 							},
 							'#' + instance.get('portletNamespace') + 'eventRecorderCalendar'
 						);
+					},
+
+					_syncInvitees: function() {
+						var instance = this;
+
+						var schedulerEvent = instance.get('event');
+						var portletNamespace = instance.get('portletNamespace');
+						var parentCalendarBookingId = schedulerEvent.get('parentCalendarBookingId');
+
+						if (schedulerEvent) {
+							CalendarUtil.getCalendarBookingInvitees(
+								parentCalendarBookingId,
+								function(data) {
+									var results = A.Array.partition(
+										data,
+										function(item) {
+											return item.classNameId === CalendarUtil.USER_CLASS_NAME_ID;
+										}
+									);
+
+									instance._syncInviteesContent('#' + portletNamespace + 'eventRecorderUsers', results.matches);
+									instance._syncInviteesContent('#' + portletNamespace + 'eventRecorderResources', results.rejects);
+								}
+							);
+						}
+					},
+
+					_syncInviteesContent: function(contentNode, calendarResources) {
+						var instance = this;
+
+						var values = A.Array.map(
+							calendarResources,
+							function(item) {
+								return item.name;
+							}
+						);
+
+						if (values.length > 0) {
+							A.one(contentNode).show().one('.calendar-portlet-invitees').html(values.join(STR_COMMA_SPACE));
+						}
 					},
 
 					_syncToolbarButtons: function(overlayVisible) {
