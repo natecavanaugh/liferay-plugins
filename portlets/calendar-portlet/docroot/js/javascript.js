@@ -1660,6 +1660,16 @@ AUI.add(
 						else {
 							Liferay.Store('calendar-portlet-calendar-' + calendarId + '-color', color);
 						}
+					},
+
+					_afterVisibleChange: function(event) {
+						var instance = this;
+
+						Calendar.superclass._afterVisibleChange.apply(instance, arguments);
+
+						var scheduler = instance.get('scheduler');
+
+						scheduler.syncEventsUI();
 					}
 				}
 			}
