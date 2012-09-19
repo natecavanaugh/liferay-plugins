@@ -16,6 +16,7 @@ package com.liferay.calendar.util;
 
 import com.liferay.portal.kernel.util.CalendarFactoryUtil;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.Time;
 
 import java.util.Calendar;
 import java.util.Date;
@@ -27,6 +28,28 @@ import java.util.TimeZone;
  * @author Fabio Pezzutto
  */
 public class JCalendarUtil {
+
+	public static final long DAY = Time.HOUR * 24;
+
+	public static final long HOUR = Time.MINUTE * 60;
+
+	public static final long MINUTE = Time.SECOND * 60;
+
+	public static final long MONTH = Time.DAY * 30;
+
+	public static final long SECOND = 1000;
+
+	public static long getDaysBetween(
+		Calendar startDateJCalendar, Calendar endDateJCalendar) {
+
+		startDateJCalendar = toMidnightJCalendar(startDateJCalendar);
+		endDateJCalendar = toMidnightJCalendar(endDateJCalendar);
+
+		long startdateTime = startDateJCalendar.getTimeInMillis();
+		long endDateTime = endDateJCalendar.getTimeInMillis();
+
+		return (endDateTime - startdateTime) / DAY;
+	}
 
 	public static Calendar getJCalendar(
 		int year, int month, int day, int hour, int minutes, int seconds,

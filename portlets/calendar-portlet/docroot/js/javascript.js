@@ -904,7 +904,7 @@ AUI.add(
 							var content = [
 								'<p class="calendar-portlet-confirmation-text">',
 								Lang.sub(
-									Liferay.Language.get('you-are-about-to-make-changes-that-will-only-be-reflected-on-calendar-x'),
+									Liferay.Language.get('you-are-about-to-make-changes-that-will-only-effect-your-calendar-x'),
 									[calendar.get('name')]
 								),
 								'</p>'
@@ -1349,9 +1349,13 @@ AUI.add(
 						if (schedulerEvent) {
 							calendarId = schedulerEvent.get('calendarId');
 
-							color = CalendarUtil.manageableCalendars[calendarId].color;
+							var calendar = CalendarUtil.manageableCalendars[calendarId];
 
-							eventInstance = schedulerEvent;
+							if (calendar) {
+								color = calendar.color;
+
+								eventInstance = schedulerEvent;
+							}
 						}
 
 						eventInstance.set('color', color);
@@ -1660,6 +1664,16 @@ AUI.add(
 						else {
 							Liferay.Store('calendar-portlet-calendar-' + calendarId + '-color', color);
 						}
+					},
+
+					_afterVisibleChange: function(event) {
+						var instance = this;
+
+						Calendar.superclass._afterVisibleChange.apply(instance, arguments);
+
+						var scheduler = instance.get('scheduler');
+
+						scheduler.syncEventsUI();
 					}
 				}
 			}
