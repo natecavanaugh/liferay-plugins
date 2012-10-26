@@ -197,7 +197,7 @@ public class CalendarBookingLocalServiceClp
 
 		_methodParameterTypes34 = new String[] {
 				"long", "com.liferay.calendar.model.CalendarBooking", "long[][]",
-				"java.lang.String[][]"
+				"java.lang.String[][]", "long[][]"
 			};
 
 		_methodName35 = "updateCalendarBooking";
@@ -1382,7 +1382,8 @@ public class CalendarBookingLocalServiceClp
 
 	public void updateAsset(long userId,
 		com.liferay.calendar.model.CalendarBooking calendarBooking,
-		long[] assetCategoryIds, java.lang.String[] assetTagNames)
+		long[] assetCategoryIds, java.lang.String[] assetTagNames,
+		long[] assetLinkEntryIds)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
@@ -1395,7 +1396,9 @@ public class CalendarBookingLocalServiceClp
 					
 				ClpSerializer.translateInput(assetCategoryIds),
 					
-				ClpSerializer.translateInput(assetTagNames)
+				ClpSerializer.translateInput(assetTagNames),
+					
+				ClpSerializer.translateInput(assetLinkEntryIds)
 				});
 		}
 		catch (Throwable t) {
