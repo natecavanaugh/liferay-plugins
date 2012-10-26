@@ -14,11 +14,6 @@
 
 package com.liferay.calendar.service.impl;
 
-import java.util.Date;
-import java.util.List;
-import java.util.Locale;
-import java.util.Map;
-
 import com.liferay.calendar.CalendarBookingDurationException;
 import com.liferay.calendar.CalendarBookingTitleException;
 import com.liferay.calendar.model.Calendar;
@@ -50,6 +45,11 @@ import com.liferay.portal.model.User;
 import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.util.PortalUtil;
+
+import java.util.Date;
+import java.util.List;
+import java.util.Locale;
+import java.util.Map;
 
 /**
  * @author Eduardo Lundgren
@@ -129,7 +129,6 @@ public class CalendarBookingLocalServiceImpl
 		calendarBooking.setFirstReminderType(firstReminderType);
 		calendarBooking.setSecondReminder(secondReminder);
 		calendarBooking.setSecondReminderType(secondReminderType);
-		calendarBooking.setExpandoBridgeAttributes(serviceContext);
 
 		int status = CalendarBookingWorkflowConstants.STATUS_PENDING;
 
@@ -146,16 +145,18 @@ public class CalendarBookingLocalServiceImpl
 		addChildCalendarBookings(
 			calendarBooking, childCalendarIds, serviceContext);
 
-		// Asset
-
-		updateAsset(
-			userId, calendarBooking, serviceContext.getAssetCategoryIds(),
-			serviceContext.getAssetTagNames());
-
 		// Workflow
 
 		calendarBookingApprovalWorkflow.startWorkflow(
 			userId, calendarBookingId, serviceContext);
+
+		// Asset
+
+		calendarBooking = fetchCalendarBooking(calendarBookingId);
+
+		updateAsset(
+			userId, calendarBooking, serviceContext.getAssetCategoryIds(),
+			serviceContext.getAssetTagNames());
 
 		return calendarBooking;
 	}
@@ -404,7 +405,6 @@ public class CalendarBookingLocalServiceImpl
 			endDate, statuses, andOperator);
 	}
 
-
 	public void updateAsset(
 			long userId, CalendarBooking calendarBooking,
 			long[] assetCategoryIds, String[] assetTagNames)
@@ -415,9 +415,10 @@ public class CalendarBookingLocalServiceImpl
 		CalendarResource calendarResource =
 			calendarBooking.getCalendarResource();
 
-		if (calendarResource.getClassNameId() ==
-				PortalUtil.getClassNameId(Group.class)) {
+		long classNameId = calendarResource.getClassNameId();
+		long groupClassNameId = PortalUtil.getClassNameId(Group.class);
 
+		if (classNameId == groupClassNameId) {
 			Group group = GroupLocalServiceUtil.getGroup(
 				calendarResource.getClassPK());
 
@@ -436,8 +437,8 @@ public class CalendarBookingLocalServiceImpl
 		assetEntryLocalService.updateEntry(
 			userId, assetGroupId, calendarBooking.getCreateDate(),
 			calendarBooking.getModifiedDate(), CalendarBooking.class.getName(),
-			calendarBooking.getCalendarBookingId(), calendarBooking.getUuid(), 0,
-			assetCategoryIds, assetTagNames, visible, null, null, null,
+			calendarBooking.getCalendarBookingId(), calendarBooking.getUuid(),
+			0, assetCategoryIds, assetTagNames, visible, null, null, null,
 			ContentTypes.TEXT_HTML, calendarBooking.getTitle(),
 			calendarBooking.getDescription(), summary, null, null, 0, 0, null,
 			false);
@@ -496,24 +497,25 @@ public class CalendarBookingLocalServiceImpl
 		calendarBooking.setFirstReminderType(firstReminderType);
 		calendarBooking.setSecondReminder(secondReminder);
 		calendarBooking.setSecondReminderType(secondReminderType);
-		calendarBooking.setExpandoBridgeAttributes(serviceContext);
 
 		calendarBookingPersistence.update(calendarBooking);
 
 		addChildCalendarBookings(
 			calendarBooking, childCalendarIds, serviceContext);
 
-		// Asset
-
-		updateAsset(
-			userId, calendarBooking, serviceContext.getAssetCategoryIds(),
-			serviceContext.getAssetTagNames());
-
 		// Workflow
 
 		calendarBookingApprovalWorkflow.invokeTransition(
 			userId, calendarBookingId,
 			CalendarBookingWorkflowConstants.toLabel(status), serviceContext);
+
+		// Asset
+
+		calendarBooking = fetchCalendarBooking(calendarBookingId);
+
+		updateAsset(
+			userId, calendarBooking, serviceContext.getAssetCategoryIds(),
+			serviceContext.getAssetTagNames());
 
 		return calendarBooking;
 	}
