@@ -45,6 +45,8 @@ import com.liferay.portal.model.User;
 import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.util.PortalUtil;
+import com.liferay.portlet.asset.model.AssetEntry;
+import com.liferay.portlet.asset.model.AssetLinkConstants;
 
 import java.util.Date;
 import java.util.List;
@@ -156,7 +158,8 @@ public class CalendarBookingLocalServiceImpl
 
 		updateAsset(
 			userId, calendarBooking, serviceContext.getAssetCategoryIds(),
-			serviceContext.getAssetTagNames());
+			serviceContext.getAssetTagNames(),
+			serviceContext.getAssetLinkEntryIds());
 
 		return calendarBooking;
 	}
@@ -407,7 +410,8 @@ public class CalendarBookingLocalServiceImpl
 
 	public void updateAsset(
 			long userId, CalendarBooking calendarBooking,
-			long[] assetCategoryIds, String[] assetTagNames)
+			long[] assetCategoryIds, String[] assetTagNames,
+			long[] assetLinkEntryIds)
 		throws PortalException, SystemException {
 
 		long assetGroupId = calendarBooking.getGroupId();
@@ -434,7 +438,7 @@ public class CalendarBookingLocalServiceImpl
 		String summary = HtmlUtil.extractText(
 			StringUtil.shorten(calendarBooking.getDescription(), 500));
 
-		assetEntryLocalService.updateEntry(
+		AssetEntry assetEntry = assetEntryLocalService.updateEntry(
 			userId, assetGroupId, calendarBooking.getCreateDate(),
 			calendarBooking.getModifiedDate(), CalendarBooking.class.getName(),
 			calendarBooking.getCalendarBookingId(), calendarBooking.getUuid(),
@@ -442,6 +446,10 @@ public class CalendarBookingLocalServiceImpl
 			ContentTypes.TEXT_HTML, calendarBooking.getTitle(),
 			calendarBooking.getDescription(), summary, null, null, 0, 0, null,
 			false);
+
+		assetLinkLocalService.updateLinks(
+			userId, assetEntry.getEntryId(), assetLinkEntryIds,
+			AssetLinkConstants.TYPE_RELATED);
 	}
 
 	public CalendarBooking updateCalendarBooking(
@@ -515,7 +523,8 @@ public class CalendarBookingLocalServiceImpl
 
 		updateAsset(
 			userId, calendarBooking, serviceContext.getAssetCategoryIds(),
-			serviceContext.getAssetTagNames());
+			serviceContext.getAssetTagNames(),
+			serviceContext.getAssetLinkEntryIds());
 
 		return calendarBooking;
 	}
