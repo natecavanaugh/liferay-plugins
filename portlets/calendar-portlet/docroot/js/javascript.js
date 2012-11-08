@@ -88,7 +88,6 @@ AUI.add(
 			USER_TIMEZONE_OFFSET: 0,
 
 			availableCalendars: {},
-			manageableCalendars: {},
 			visibleCalendars: {},
 
 			addEvent: function(schedulerEvent) {
@@ -292,6 +291,16 @@ AUI.add(
 				);
 			},
 
+			getCalendarName: function(name, calendarResourceName) {
+				var instance = this;
+
+				if (name !== calendarResourceName) {
+					name = [calendarResourceName, STR_DASH, name].join(STR_SPACE);
+				}
+
+				return name;
+			},
+
 			getCalendarRenderingRules: function(calendarIds, startDate, endDate, ruleName, callback) {
 				var instance = this;
 
@@ -318,6 +327,12 @@ AUI.add(
 						}
 					}
 				);
+			},
+
+			getDefaultUserCalendar: function() {
+				var instance = this;
+
+				return instance.availableCalendars[CalendarUtil.DEFAULT_USER_CALENDAR_ID];
 			},
 
 			getEvent: function(calendarBookingId, success, failure) {
@@ -492,10 +507,10 @@ AUI.add(
 
 					if (oldCalendar !== newCalendar) {
 						oldCalendar.remove(schedulerEvent);
+					}
 
-						if (newCalendar) {
-							newCalendar.addEvent(schedulerEvent);
-						}
+					if (newCalendar) {
+						newCalendar.add(schedulerEvent);
 					}
 
 					schedulerEvent.setAttrs(
@@ -985,13 +1000,9 @@ AUI.add(
 						var instance = this;
 
 						var calendarResourceName = instance.get('calendarResourceName');
-						var displayName = instance.get('name');
+						var name = instance.get('name');
 
-						if (displayName !== calendarResourceName) {
-							displayName = [calendarResourceName, STR_DASH, displayName].join(STR_SPACE);
-						}
-
-						return displayName;
+						return CalendarUtil.getCalendarName(name, calendarResourceName);
 					},
 
 					_afterColorChange: function(event) {
@@ -1038,23 +1049,50 @@ AUI.add(
 			A.SchedulerEvents,
 			[Liferay.SchedulerModelSync],
 			{
+				getLoadEndDate: function(activeView) {
+					var instance = this;
+
+					var date = activeView.getNextDate();
+
+					var viewName = activeView.get('name');
+
+					if (viewName === 'agenda') {
+						date = DateMath.add(date, DateMath.MONTH, 1);
+					}
+					else if (viewName === 'month') {
+						date = DateMath.add(date, DateMath.WEEK, 1);
+					}
+
+					return CalendarUtil.toUTCTimeZone(date);
+				},
+
+				getLoadStartDate: function(activeView) {
+					var instance = this;
+
+					var scheduler = activeView.get('scheduler');
+					var viewName = activeView.get('name');
+
+					var date = scheduler.get('viewDate');
+
+					if (viewName === 'month') {
+						date = DateMath.subtract(date, DateMath.WEEK, 1);
+					}
+
+					return CalendarUtil.toUTCTimeZone(date);
+				},
+
 				_doRead: function(options, callback) {
 					var instance = this;
 
 					var scheduler = instance.get('scheduler');
-
-					var date = scheduler.get('date');
-					var firstDayOfWeek = scheduler.get('firstDayOfWeek');
+					var activeView = scheduler.get('activeView');
 					var filterCalendarBookings = scheduler.get('filterCalendarBookings');
 
 					CalendarUtil.message(Liferay.Language.get('loading'));
 
-					var endDate = DateMath.add(DateMath.getFirstDayOfWeek(DateMath.findMonthEnd(date), firstDayOfWeek), DateMath.DAY, 7);
-					var startDate = DateMath.subtract(DateMath.getFirstDayOfWeek(DateMath.findMonthStart(date), firstDayOfWeek), DateMath.DAY, 7);
-
 					CalendarUtil.getEvents(
-						startDate,
-						endDate,
+						instance.getLoadStartDate(activeView),
+						instance.getLoadEndDate(activeView),
 						[CalendarWorkflow.STATUS_APPROVED, CalendarWorkflow.STATUS_MAYBE, CalendarWorkflow.STATUS_PENDING],
 						function(calendarBookings) {
 							if (filterCalendarBookings) {
@@ -1072,15 +1110,6 @@ AUI.add(
 		var Scheduler = A.Component.create(
 			{
 				ATTRS: {
-					currentMonth: {
-						setter: toInt,
-						valueFn: function(val) {
-							var instance = this;
-
-							return instance.get('date').getMonth();
-						}
-					},
-
 					filterCalendarBookings: {
 						validator: isFunction
 					},
@@ -1089,14 +1118,17 @@ AUI.add(
 						setter: String,
 						validator: isValue,
 						value: STR_BLANK
+					},
+
+					preventPersistence: {
+						value: false,
+						validator: isBoolean
 					}
 				},
 
 				EXTENDS: A.Scheduler,
 
 				NAME: 'scheduler-base',
-
-				UI_ATTRS: ['currentMonth'],
 
 				prototype: {
 					calendarModel: Liferay.SchedulerCalendar,
@@ -1186,18 +1218,26 @@ AUI.add(
 						return events.sync.apply(events, arguments);
 					},
 
+					_afterActiveViewChange: function(event) {
+						var instance = this;
+
+						Scheduler.superclass._afterActiveViewChange.apply(this, arguments);
+
+						instance.load();
+					},
+
 					_afterDateChange: function(event) {
 						var instance = this;
 
-						var currentMonth = event.newVal.getMonth();
-
-						if (currentMonth !== instance.get('currentMonth')) {
-							instance.set('currentMonth', currentMonth);
-						}
+						instance.load();
 					},
 
 					_afterSchedulerEventChange: function(event) {
 						var instance = this;
+
+						if (instance.get('preventPersistence')) {
+							return;
+						}
 
 						var changed = event.changed;
 
@@ -1374,12 +1414,6 @@ AUI.add(
 						var instance = this;
 
 						CalendarUtil.addEvent(event.newSchedulerEvent);
-					},
-
-					_uiSetCurrentMonth: function(val) {
-						var instance = this;
-
-						instance.load();
 					}
 				}
 			}
@@ -1437,7 +1471,9 @@ AUI.add(
 							schedulerEvent = instance;
 						}
 
-						var calendar = CalendarUtil.availableCalendars[schedulerEvent.get('calendarId')];
+						var availableCalendars = CalendarUtil.availableCalendars;
+
+						var calendar = availableCalendars[schedulerEvent.get('calendarId')];
 
 						var permissions = calendar.get('permissions');
 
@@ -1445,7 +1481,9 @@ AUI.add(
 							SchedulerEventRecorder.superclass.getTemplateData.apply(this, arguments),
 							{
 								allDay: schedulerEvent.get('allDay'),
+								availableCalendars: availableCalendars,
 								calendar: calendar,
+								calendarIds: AObject.keys(availableCalendars),
 								editing: editing,
 								permissions: permissions,
 								status: CalendarUtil.getStatusLabel(schedulerEvent.get('status'))
@@ -1553,20 +1591,20 @@ AUI.add(
 
 						overlayBB.toggleClass('calendar-portlet-event-recorder-editing', !!schedulerEvent);
 
-						var defaultCalendar = CalendarUtil.DEFAULT_CALENDAR;
+						var defaultUserCalendar = CalendarUtil.getDefaultUserCalendar();
 
-						var calendarId = defaultCalendar.calendarId;
-						var color = defaultCalendar.color;
+						var calendarId = defaultUserCalendar.get('calendarId');
+						var color = defaultUserCalendar.get('color');
 
 						var eventInstance = instance;
 
 						if (schedulerEvent) {
 							calendarId = schedulerEvent.get('calendarId');
 
-							var calendar = CalendarUtil.manageableCalendars[calendarId];
+							var calendar = CalendarUtil.availableCalendars[calendarId];
 
 							if (calendar) {
-								color = calendar.color;
+								color = calendar.get('color');
 
 								eventInstance = schedulerEvent;
 							}
@@ -1611,12 +1649,12 @@ AUI.add(
 
 								var calendarId = toInt(event.currentTarget.val());
 
-								var selectedCalendar = CalendarUtil.manageableCalendars[calendarId];
+								var selectedCalendar = CalendarUtil.availableCalendars[calendarId];
 
 								if (selectedCalendar) {
 									schedulerEvent.set(
 										'color',
-										selectedCalendar.color,
+										selectedCalendar.get('color'),
 										{
 											silent: true
 										}
