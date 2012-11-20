@@ -4,9 +4,9 @@
 #set ($portlet_title = $portlet_display.getTitle())
 #set ($portlet_back_url = $htmlUtil.escapeAttribute($portlet_display.getURLBack()))
 
-<section class="portlet" id="portlet_$portlet_id">
+<section class="portlet portlet-container" id="portlet_$portlet_id">
 	<header class="portlet-topper">
-		<h1 class="portlet-title">
+		<h1 class="portlet-title"></h1>
 			$theme.iconPortlet() <span class="portlet-title-text">$portlet_title</span>
 		</h1>
 
@@ -14,7 +14,7 @@
 			#if ($portlet_display.isShowBackIcon())
 				<a class="portlet-icon-back" href="$portlet_back_url">#language ("return-to-full-page")</a>
 			#else
-				$theme.iconOptions()
+				$theme.iconOption()
 				$theme.iconMinimize()
 				$theme.iconMaximize()
 				$theme.iconClose()
@@ -22,7 +22,7 @@
 		</menu>
 	</header>
 
-	<div class="portlet-content">
+	<div class="portlet-content" id="${portlet_id}PortletContent">
 		$portlet_display.writeContent($writer)
 	</div>
 </section>
