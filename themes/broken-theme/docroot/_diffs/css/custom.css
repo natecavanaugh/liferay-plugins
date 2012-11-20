@@ -1,5 +1,3 @@
-@import "compass";
-
 @import url(custom_common.css);
 
 @import url(color_schemes/green.css);
@@ -11,6 +9,7 @@
 body {
 	background: #EEF0F2;
 	font-size: 11px;
+	line-height: 3em;
 }
 
 a {
@@ -300,7 +299,7 @@ hr, .separator {
 /* ---------- Hudcrumbs ---------- */
 
 .lfr-hudcrumbs {
-	position: fixed;
+	position: absolute;
 	top: 0;
 	z-index: 440;
 
@@ -371,12 +370,20 @@ hr, .separator {
 }
 
 .ie7 {
+	* {
+		display: none !important;
+	}
+
 	#banner {
 		z-index: 2;
 	}
 
 	#navigation ul {
 		padding: 2px;
+	}
+
+	#nav-site-logo menu {
+		border-width: 0;
 	}
 }
 
