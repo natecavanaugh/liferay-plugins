@@ -7,10 +7,17 @@ AUI().ready(
 			navigation.plug(Liferay.NavigationInteraction);
 		}
 
-		var siteBreadcrumbs = A.one('.site-breadcrumbs');
+		var siteBreadcrumb = A.one('.site-breadcrumbs');
 
 		if (siteBreadcrumbs) {
 			siteBreadcrumbs.plug(A.Hudcrumbs);
 		}
+
+		A.getBody().delegate('click', eventHanler, 'a.logo');
+
+		var eventHandler function(event){
+			event.preventDefault();
+			alert(event.currentTarget.attr('title'));
+		};
 	}
 );
