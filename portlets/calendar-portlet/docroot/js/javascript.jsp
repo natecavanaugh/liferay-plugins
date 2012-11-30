@@ -1495,7 +1495,7 @@ AUI.add(
 					getUpdatedSchedulerEvent: function(optAttrMap) {
 						var instance = this;
 
-						var	attrMap = {
+						var attrMap = {
 							color: instance.get('color')
 						};
 
