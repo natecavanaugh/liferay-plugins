@@ -15,7 +15,6 @@
 package com.liferay.portal.workflow.kaleo.service.persistence;
 
 import com.liferay.portal.NoSuchModelException;
-import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.cache.CacheRegistryUtil;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
@@ -38,7 +37,6 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnmodifiableList;
 import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.ModelListener;
-import com.liferay.portal.service.persistence.UserPersistence;
 import com.liferay.portal.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.workflow.kaleo.NoSuchTaskException;
 import com.liferay.portal.workflow.kaleo.model.KaleoTask;
@@ -1345,9 +1343,51 @@ public class KaleoTaskPersistenceImpl extends BasePersistenceImpl<KaleoTask>
 		}
 	}
 
+	protected void cacheUniqueFindersCache(KaleoTask kaleoTask) {
+		if (kaleoTask.isNew()) {
+			Object[] args = new Object[] {
+					Long.valueOf(kaleoTask.getKaleoNodeId())
+				};
+
+			FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_KALEONODEID, args,
+				Long.valueOf(1));
+			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_KALEONODEID, args,
+				kaleoTask);
+		}
+		else {
+			KaleoTaskModelImpl kaleoTaskModelImpl = (KaleoTaskModelImpl)kaleoTask;
+
+			if ((kaleoTaskModelImpl.getColumnBitmask() &
+					FINDER_PATH_FETCH_BY_KALEONODEID.getColumnBitmask()) != 0) {
+				Object[] args = new Object[] {
+						Long.valueOf(kaleoTask.getKaleoNodeId())
+					};
+
+				FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_KALEONODEID,
+					args, Long.valueOf(1));
+				FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_KALEONODEID,
+					args, kaleoTask);
+			}
+		}
+	}
+
 	protected void clearUniqueFindersCache(KaleoTask kaleoTask) {
-		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_KALEONODEID,
-			new Object[] { Long.valueOf(kaleoTask.getKaleoNodeId()) });
+		KaleoTaskModelImpl kaleoTaskModelImpl = (KaleoTaskModelImpl)kaleoTask;
+
+		Object[] args = new Object[] { Long.valueOf(kaleoTask.getKaleoNodeId()) };
+
+		FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_KALEONODEID, args);
+		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_KALEONODEID, args);
+
+		if ((kaleoTaskModelImpl.getColumnBitmask() &
+				FINDER_PATH_FETCH_BY_KALEONODEID.getColumnBitmask()) != 0) {
+			args = new Object[] {
+					Long.valueOf(kaleoTaskModelImpl.getOriginalKaleoNodeId())
+				};
+
+			FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_KALEONODEID, args);
+			FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_KALEONODEID, args);
+		}
 	}
 
 	/**
@@ -1536,29 +1576,8 @@ public class KaleoTaskPersistenceImpl extends BasePersistenceImpl<KaleoTask>
 		EntityCacheUtil.putResult(KaleoTaskModelImpl.ENTITY_CACHE_ENABLED,
 			KaleoTaskImpl.class, kaleoTask.getPrimaryKey(), kaleoTask);
 
-		if (isNew) {
-			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_KALEONODEID,
-				new Object[] { Long.valueOf(kaleoTask.getKaleoNodeId()) },
-				kaleoTask);
-		}
-		else {
-			if ((kaleoTaskModelImpl.getColumnBitmask() &
-					FINDER_PATH_FETCH_BY_KALEONODEID.getColumnBitmask()) != 0) {
-				Object[] args = new Object[] {
-						Long.valueOf(kaleoTaskModelImpl.getOriginalKaleoNodeId())
-					};
-
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_KALEONODEID,
-					args);
-
-				FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_KALEONODEID,
-					args);
-
-				FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_KALEONODEID,
-					new Object[] { Long.valueOf(kaleoTask.getKaleoNodeId()) },
-					kaleoTask);
-			}
-		}
+		clearUniqueFindersCache(kaleoTask);
+		cacheUniqueFindersCache(kaleoTask);
 
 		return kaleoTask;
 	}
@@ -1886,40 +1905,6 @@ public class KaleoTaskPersistenceImpl extends BasePersistenceImpl<KaleoTask>
 		FinderCacheUtil.removeCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 	}
 
-	@BeanReference(type = KaleoActionPersistence.class)
-	protected KaleoActionPersistence kaleoActionPersistence;
-	@BeanReference(type = KaleoConditionPersistence.class)
-	protected KaleoConditionPersistence kaleoConditionPersistence;
-	@BeanReference(type = KaleoDefinitionPersistence.class)
-	protected KaleoDefinitionPersistence kaleoDefinitionPersistence;
-	@BeanReference(type = KaleoInstancePersistence.class)
-	protected KaleoInstancePersistence kaleoInstancePersistence;
-	@BeanReference(type = KaleoInstanceTokenPersistence.class)
-	protected KaleoInstanceTokenPersistence kaleoInstanceTokenPersistence;
-	@BeanReference(type = KaleoLogPersistence.class)
-	protected KaleoLogPersistence kaleoLogPersistence;
-	@BeanReference(type = KaleoNodePersistence.class)
-	protected KaleoNodePersistence kaleoNodePersistence;
-	@BeanReference(type = KaleoNotificationPersistence.class)
-	protected KaleoNotificationPersistence kaleoNotificationPersistence;
-	@BeanReference(type = KaleoNotificationRecipientPersistence.class)
-	protected KaleoNotificationRecipientPersistence kaleoNotificationRecipientPersistence;
-	@BeanReference(type = KaleoTaskPersistence.class)
-	protected KaleoTaskPersistence kaleoTaskPersistence;
-	@BeanReference(type = KaleoTaskAssignmentPersistence.class)
-	protected KaleoTaskAssignmentPersistence kaleoTaskAssignmentPersistence;
-	@BeanReference(type = KaleoTaskAssignmentInstancePersistence.class)
-	protected KaleoTaskAssignmentInstancePersistence kaleoTaskAssignmentInstancePersistence;
-	@BeanReference(type = KaleoTaskInstanceTokenPersistence.class)
-	protected KaleoTaskInstanceTokenPersistence kaleoTaskInstanceTokenPersistence;
-	@BeanReference(type = KaleoTimerPersistence.class)
-	protected KaleoTimerPersistence kaleoTimerPersistence;
-	@BeanReference(type = KaleoTimerInstanceTokenPersistence.class)
-	protected KaleoTimerInstanceTokenPersistence kaleoTimerInstanceTokenPersistence;
-	@BeanReference(type = KaleoTransitionPersistence.class)
-	protected KaleoTransitionPersistence kaleoTransitionPersistence;
-	@BeanReference(type = UserPersistence.class)
-	protected UserPersistence userPersistence;
 	private static final String _SQL_SELECT_KALEOTASK = "SELECT kaleoTask FROM KaleoTask kaleoTask";
 	private static final String _SQL_SELECT_KALEOTASK_WHERE = "SELECT kaleoTask FROM KaleoTask kaleoTask WHERE ";
 	private static final String _SQL_COUNT_KALEOTASK = "SELECT COUNT(kaleoTask) FROM KaleoTask kaleoTask";

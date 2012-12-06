@@ -42,7 +42,6 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnmodifiableList;
 import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.ModelListener;
-import com.liferay.portal.service.persistence.UserPersistence;
 import com.liferay.portal.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.workflow.kaleo.NoSuchTaskInstanceTokenException;
 import com.liferay.portal.workflow.kaleo.model.KaleoTaskInstanceToken;
@@ -1892,13 +1891,59 @@ public class KaleoTaskInstanceTokenPersistenceImpl extends BasePersistenceImpl<K
 		}
 	}
 
+	protected void cacheUniqueFindersCache(
+		KaleoTaskInstanceToken kaleoTaskInstanceToken) {
+		if (kaleoTaskInstanceToken.isNew()) {
+			Object[] args = new Object[] {
+					Long.valueOf(kaleoTaskInstanceToken.getKaleoInstanceId()),
+					Long.valueOf(kaleoTaskInstanceToken.getKaleoTaskId())
+				};
+
+			FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_KII_KTI, args,
+				Long.valueOf(1));
+			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_KII_KTI, args,
+				kaleoTaskInstanceToken);
+		}
+		else {
+			KaleoTaskInstanceTokenModelImpl kaleoTaskInstanceTokenModelImpl = (KaleoTaskInstanceTokenModelImpl)kaleoTaskInstanceToken;
+
+			if ((kaleoTaskInstanceTokenModelImpl.getColumnBitmask() &
+					FINDER_PATH_FETCH_BY_KII_KTI.getColumnBitmask()) != 0) {
+				Object[] args = new Object[] {
+						Long.valueOf(kaleoTaskInstanceToken.getKaleoInstanceId()),
+						Long.valueOf(kaleoTaskInstanceToken.getKaleoTaskId())
+					};
+
+				FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_KII_KTI, args,
+					Long.valueOf(1));
+				FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_KII_KTI, args,
+					kaleoTaskInstanceToken);
+			}
+		}
+	}
+
 	protected void clearUniqueFindersCache(
 		KaleoTaskInstanceToken kaleoTaskInstanceToken) {
-		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_KII_KTI,
-			new Object[] {
+		KaleoTaskInstanceTokenModelImpl kaleoTaskInstanceTokenModelImpl = (KaleoTaskInstanceTokenModelImpl)kaleoTaskInstanceToken;
+
+		Object[] args = new Object[] {
 				Long.valueOf(kaleoTaskInstanceToken.getKaleoInstanceId()),
 				Long.valueOf(kaleoTaskInstanceToken.getKaleoTaskId())
-			});
+			};
+
+		FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_KII_KTI, args);
+		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_KII_KTI, args);
+
+		if ((kaleoTaskInstanceTokenModelImpl.getColumnBitmask() &
+				FINDER_PATH_FETCH_BY_KII_KTI.getColumnBitmask()) != 0) {
+			args = new Object[] {
+					Long.valueOf(kaleoTaskInstanceTokenModelImpl.getOriginalKaleoInstanceId()),
+					Long.valueOf(kaleoTaskInstanceTokenModelImpl.getOriginalKaleoTaskId())
+				};
+
+			FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_KII_KTI, args);
+			FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_KII_KTI, args);
+		}
 	}
 
 	/**
@@ -2110,33 +2155,8 @@ public class KaleoTaskInstanceTokenPersistenceImpl extends BasePersistenceImpl<K
 			KaleoTaskInstanceTokenImpl.class,
 			kaleoTaskInstanceToken.getPrimaryKey(), kaleoTaskInstanceToken);
 
-		if (isNew) {
-			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_KII_KTI,
-				new Object[] {
-					Long.valueOf(kaleoTaskInstanceToken.getKaleoInstanceId()),
-					Long.valueOf(kaleoTaskInstanceToken.getKaleoTaskId())
-				}, kaleoTaskInstanceToken);
-		}
-		else {
-			if ((kaleoTaskInstanceTokenModelImpl.getColumnBitmask() &
-					FINDER_PATH_FETCH_BY_KII_KTI.getColumnBitmask()) != 0) {
-				Object[] args = new Object[] {
-						Long.valueOf(kaleoTaskInstanceTokenModelImpl.getOriginalKaleoInstanceId()),
-						Long.valueOf(kaleoTaskInstanceTokenModelImpl.getOriginalKaleoTaskId())
-					};
-
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_KII_KTI, args);
-
-				FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_KII_KTI, args);
-
-				FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_KII_KTI,
-					new Object[] {
-						Long.valueOf(
-							kaleoTaskInstanceToken.getKaleoInstanceId()),
-						Long.valueOf(kaleoTaskInstanceToken.getKaleoTaskId())
-					}, kaleoTaskInstanceToken);
-			}
-		}
+		clearUniqueFindersCache(kaleoTaskInstanceToken);
+		cacheUniqueFindersCache(kaleoTaskInstanceToken);
 
 		return kaleoTaskInstanceToken;
 	}
@@ -2736,40 +2756,8 @@ public class KaleoTaskInstanceTokenPersistenceImpl extends BasePersistenceImpl<K
 		FinderCacheUtil.removeCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 	}
 
-	@BeanReference(type = KaleoActionPersistence.class)
-	protected KaleoActionPersistence kaleoActionPersistence;
-	@BeanReference(type = KaleoConditionPersistence.class)
-	protected KaleoConditionPersistence kaleoConditionPersistence;
-	@BeanReference(type = KaleoDefinitionPersistence.class)
-	protected KaleoDefinitionPersistence kaleoDefinitionPersistence;
-	@BeanReference(type = KaleoInstancePersistence.class)
-	protected KaleoInstancePersistence kaleoInstancePersistence;
-	@BeanReference(type = KaleoInstanceTokenPersistence.class)
-	protected KaleoInstanceTokenPersistence kaleoInstanceTokenPersistence;
-	@BeanReference(type = KaleoLogPersistence.class)
-	protected KaleoLogPersistence kaleoLogPersistence;
-	@BeanReference(type = KaleoNodePersistence.class)
-	protected KaleoNodePersistence kaleoNodePersistence;
-	@BeanReference(type = KaleoNotificationPersistence.class)
-	protected KaleoNotificationPersistence kaleoNotificationPersistence;
-	@BeanReference(type = KaleoNotificationRecipientPersistence.class)
-	protected KaleoNotificationRecipientPersistence kaleoNotificationRecipientPersistence;
-	@BeanReference(type = KaleoTaskPersistence.class)
-	protected KaleoTaskPersistence kaleoTaskPersistence;
-	@BeanReference(type = KaleoTaskAssignmentPersistence.class)
-	protected KaleoTaskAssignmentPersistence kaleoTaskAssignmentPersistence;
 	@BeanReference(type = KaleoTaskAssignmentInstancePersistence.class)
 	protected KaleoTaskAssignmentInstancePersistence kaleoTaskAssignmentInstancePersistence;
-	@BeanReference(type = KaleoTaskInstanceTokenPersistence.class)
-	protected KaleoTaskInstanceTokenPersistence kaleoTaskInstanceTokenPersistence;
-	@BeanReference(type = KaleoTimerPersistence.class)
-	protected KaleoTimerPersistence kaleoTimerPersistence;
-	@BeanReference(type = KaleoTimerInstanceTokenPersistence.class)
-	protected KaleoTimerInstanceTokenPersistence kaleoTimerInstanceTokenPersistence;
-	@BeanReference(type = KaleoTransitionPersistence.class)
-	protected KaleoTransitionPersistence kaleoTransitionPersistence;
-	@BeanReference(type = UserPersistence.class)
-	protected UserPersistence userPersistence;
 	protected ContainsKaleoTaskAssignmentInstance containsKaleoTaskAssignmentInstance;
 
 	protected class ContainsKaleoTaskAssignmentInstance {

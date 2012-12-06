@@ -20,7 +20,6 @@ import com.liferay.mail.model.impl.MessageImpl;
 import com.liferay.mail.model.impl.MessageModelImpl;
 
 import com.liferay.portal.NoSuchModelException;
-import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.cache.CacheRegistryUtil;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
@@ -43,7 +42,6 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnmodifiableList;
 import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.ModelListener;
-import com.liferay.portal.service.persistence.UserPersistence;
 import com.liferay.portal.service.persistence.impl.BasePersistenceImpl;
 
 import java.io.Serializable;
@@ -1358,12 +1356,56 @@ public class MessagePersistenceImpl extends BasePersistenceImpl<Message>
 		}
 	}
 
+	protected void cacheUniqueFindersCache(Message message) {
+		if (message.isNew()) {
+			Object[] args = new Object[] {
+					Long.valueOf(message.getFolderId()),
+					Long.valueOf(message.getRemoteMessageId())
+				};
+
+			FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_F_R, args,
+				Long.valueOf(1));
+			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_F_R, args, message);
+		}
+		else {
+			MessageModelImpl messageModelImpl = (MessageModelImpl)message;
+
+			if ((messageModelImpl.getColumnBitmask() &
+					FINDER_PATH_FETCH_BY_F_R.getColumnBitmask()) != 0) {
+				Object[] args = new Object[] {
+						Long.valueOf(message.getFolderId()),
+						Long.valueOf(message.getRemoteMessageId())
+					};
+
+				FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_F_R, args,
+					Long.valueOf(1));
+				FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_F_R, args,
+					message);
+			}
+		}
+	}
+
 	protected void clearUniqueFindersCache(Message message) {
-		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_F_R,
-			new Object[] {
+		MessageModelImpl messageModelImpl = (MessageModelImpl)message;
+
+		Object[] args = new Object[] {
 				Long.valueOf(message.getFolderId()),
 				Long.valueOf(message.getRemoteMessageId())
-			});
+			};
+
+		FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_F_R, args);
+		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_F_R, args);
+
+		if ((messageModelImpl.getColumnBitmask() &
+				FINDER_PATH_FETCH_BY_F_R.getColumnBitmask()) != 0) {
+			args = new Object[] {
+					Long.valueOf(messageModelImpl.getOriginalFolderId()),
+					Long.valueOf(messageModelImpl.getOriginalRemoteMessageId())
+				};
+
+			FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_F_R, args);
+			FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_F_R, args);
+		}
 	}
 
 	/**
@@ -1545,32 +1587,8 @@ public class MessagePersistenceImpl extends BasePersistenceImpl<Message>
 		EntityCacheUtil.putResult(MessageModelImpl.ENTITY_CACHE_ENABLED,
 			MessageImpl.class, message.getPrimaryKey(), message);
 
-		if (isNew) {
-			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_F_R,
-				new Object[] {
-					Long.valueOf(message.getFolderId()),
-					Long.valueOf(message.getRemoteMessageId())
-				}, message);
-		}
-		else {
-			if ((messageModelImpl.getColumnBitmask() &
-					FINDER_PATH_FETCH_BY_F_R.getColumnBitmask()) != 0) {
-				Object[] args = new Object[] {
-						Long.valueOf(messageModelImpl.getOriginalFolderId()),
-						Long.valueOf(messageModelImpl.getOriginalRemoteMessageId())
-					};
-
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_F_R, args);
-
-				FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_F_R, args);
-
-				FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_F_R,
-					new Object[] {
-						Long.valueOf(message.getFolderId()),
-						Long.valueOf(message.getRemoteMessageId())
-					}, message);
-			}
-		}
+		clearUniqueFindersCache(message);
+		cacheUniqueFindersCache(message);
 
 		return message;
 	}
@@ -1904,16 +1922,6 @@ public class MessagePersistenceImpl extends BasePersistenceImpl<Message>
 		FinderCacheUtil.removeCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 	}
 
-	@BeanReference(type = AccountPersistence.class)
-	protected AccountPersistence accountPersistence;
-	@BeanReference(type = AttachmentPersistence.class)
-	protected AttachmentPersistence attachmentPersistence;
-	@BeanReference(type = FolderPersistence.class)
-	protected FolderPersistence folderPersistence;
-	@BeanReference(type = MessagePersistence.class)
-	protected MessagePersistence messagePersistence;
-	@BeanReference(type = UserPersistence.class)
-	protected UserPersistence userPersistence;
 	private static final String _SQL_SELECT_MESSAGE = "SELECT message FROM Message message";
 	private static final String _SQL_SELECT_MESSAGE_WHERE = "SELECT message FROM Message message WHERE ";
 	private static final String _SQL_COUNT_MESSAGE = "SELECT COUNT(message) FROM Message message";

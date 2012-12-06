@@ -20,7 +20,6 @@ import com.liferay.chat.model.impl.StatusImpl;
 import com.liferay.chat.model.impl.StatusModelImpl;
 
 import com.liferay.portal.NoSuchModelException;
-import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.cache.CacheRegistryUtil;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
@@ -43,7 +42,6 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnmodifiableList;
 import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.ModelListener;
-import com.liferay.portal.service.persistence.UserPersistence;
 import com.liferay.portal.service.persistence.impl.BasePersistenceImpl;
 
 import java.io.Serializable;
@@ -1839,9 +1837,46 @@ public class StatusPersistenceImpl extends BasePersistenceImpl<Status>
 		}
 	}
 
+	protected void cacheUniqueFindersCache(Status status) {
+		if (status.isNew()) {
+			Object[] args = new Object[] { Long.valueOf(status.getUserId()) };
+
+			FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_USERID, args,
+				Long.valueOf(1));
+			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_USERID, args, status);
+		}
+		else {
+			StatusModelImpl statusModelImpl = (StatusModelImpl)status;
+
+			if ((statusModelImpl.getColumnBitmask() &
+					FINDER_PATH_FETCH_BY_USERID.getColumnBitmask()) != 0) {
+				Object[] args = new Object[] { Long.valueOf(status.getUserId()) };
+
+				FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_USERID, args,
+					Long.valueOf(1));
+				FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_USERID, args,
+					status);
+			}
+		}
+	}
+
 	protected void clearUniqueFindersCache(Status status) {
-		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_USERID,
-			new Object[] { Long.valueOf(status.getUserId()) });
+		StatusModelImpl statusModelImpl = (StatusModelImpl)status;
+
+		Object[] args = new Object[] { Long.valueOf(status.getUserId()) };
+
+		FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_USERID, args);
+		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_USERID, args);
+
+		if ((statusModelImpl.getColumnBitmask() &
+				FINDER_PATH_FETCH_BY_USERID.getColumnBitmask()) != 0) {
+			args = new Object[] {
+					Long.valueOf(statusModelImpl.getOriginalUserId())
+				};
+
+			FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_USERID, args);
+			FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_USERID, args);
+		}
 	}
 
 	/**
@@ -2044,25 +2079,8 @@ public class StatusPersistenceImpl extends BasePersistenceImpl<Status>
 		EntityCacheUtil.putResult(StatusModelImpl.ENTITY_CACHE_ENABLED,
 			StatusImpl.class, status.getPrimaryKey(), status);
 
-		if (isNew) {
-			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_USERID,
-				new Object[] { Long.valueOf(status.getUserId()) }, status);
-		}
-		else {
-			if ((statusModelImpl.getColumnBitmask() &
-					FINDER_PATH_FETCH_BY_USERID.getColumnBitmask()) != 0) {
-				Object[] args = new Object[] {
-						Long.valueOf(statusModelImpl.getOriginalUserId())
-					};
-
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_USERID, args);
-
-				FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_USERID, args);
-
-				FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_USERID,
-					new Object[] { Long.valueOf(status.getUserId()) }, status);
-			}
-		}
+		clearUniqueFindersCache(status);
+		cacheUniqueFindersCache(status);
 
 		return status;
 	}
@@ -2385,12 +2403,6 @@ public class StatusPersistenceImpl extends BasePersistenceImpl<Status>
 		FinderCacheUtil.removeCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 	}
 
-	@BeanReference(type = EntryPersistence.class)
-	protected EntryPersistence entryPersistence;
-	@BeanReference(type = StatusPersistence.class)
-	protected StatusPersistence statusPersistence;
-	@BeanReference(type = UserPersistence.class)
-	protected UserPersistence userPersistence;
 	private static final String _SQL_SELECT_STATUS = "SELECT status FROM Status status";
 	private static final String _SQL_SELECT_STATUS_WHERE = "SELECT status FROM Status status WHERE ";
 	private static final String _SQL_COUNT_STATUS = "SELECT COUNT(status) FROM Status status";

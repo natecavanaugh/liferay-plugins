@@ -20,7 +20,6 @@ import com.liferay.opensocial.model.impl.GadgetImpl;
 import com.liferay.opensocial.model.impl.GadgetModelImpl;
 
 import com.liferay.portal.NoSuchModelException;
-import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.cache.CacheRegistryUtil;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
@@ -47,7 +46,6 @@ import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
 import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.ModelListener;
 import com.liferay.portal.security.permission.InlineSQLHelperUtil;
-import com.liferay.portal.service.persistence.UserPersistence;
 import com.liferay.portal.service.persistence.impl.BasePersistenceImpl;
 
 import java.io.Serializable;
@@ -3115,9 +3113,59 @@ public class GadgetPersistenceImpl extends BasePersistenceImpl<Gadget>
 		}
 	}
 
+	protected void cacheUniqueFindersCache(Gadget gadget) {
+		if (gadget.isNew()) {
+			Object[] args = new Object[] {
+					Long.valueOf(gadget.getCompanyId()),
+					
+					gadget.getUrl()
+				};
+
+			FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_C_U, args,
+				Long.valueOf(1));
+			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_C_U, args, gadget);
+		}
+		else {
+			GadgetModelImpl gadgetModelImpl = (GadgetModelImpl)gadget;
+
+			if ((gadgetModelImpl.getColumnBitmask() &
+					FINDER_PATH_FETCH_BY_C_U.getColumnBitmask()) != 0) {
+				Object[] args = new Object[] {
+						Long.valueOf(gadget.getCompanyId()),
+						
+						gadget.getUrl()
+					};
+
+				FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_C_U, args,
+					Long.valueOf(1));
+				FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_C_U, args, gadget);
+			}
+		}
+	}
+
 	protected void clearUniqueFindersCache(Gadget gadget) {
-		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_C_U,
-			new Object[] { Long.valueOf(gadget.getCompanyId()), gadget.getUrl() });
+		GadgetModelImpl gadgetModelImpl = (GadgetModelImpl)gadget;
+
+		Object[] args = new Object[] {
+				Long.valueOf(gadget.getCompanyId()),
+				
+				gadget.getUrl()
+			};
+
+		FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_C_U, args);
+		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_C_U, args);
+
+		if ((gadgetModelImpl.getColumnBitmask() &
+				FINDER_PATH_FETCH_BY_C_U.getColumnBitmask()) != 0) {
+			args = new Object[] {
+					Long.valueOf(gadgetModelImpl.getOriginalCompanyId()),
+					
+					gadgetModelImpl.getOriginalUrl()
+				};
+
+			FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_C_U, args);
+			FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_C_U, args);
+		}
 	}
 
 	/**
@@ -3326,35 +3374,8 @@ public class GadgetPersistenceImpl extends BasePersistenceImpl<Gadget>
 		EntityCacheUtil.putResult(GadgetModelImpl.ENTITY_CACHE_ENABLED,
 			GadgetImpl.class, gadget.getPrimaryKey(), gadget);
 
-		if (isNew) {
-			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_C_U,
-				new Object[] {
-					Long.valueOf(gadget.getCompanyId()),
-					
-				gadget.getUrl()
-				}, gadget);
-		}
-		else {
-			if ((gadgetModelImpl.getColumnBitmask() &
-					FINDER_PATH_FETCH_BY_C_U.getColumnBitmask()) != 0) {
-				Object[] args = new Object[] {
-						Long.valueOf(gadgetModelImpl.getOriginalCompanyId()),
-						
-						gadgetModelImpl.getOriginalUrl()
-					};
-
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_C_U, args);
-
-				FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_C_U, args);
-
-				FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_C_U,
-					new Object[] {
-						Long.valueOf(gadget.getCompanyId()),
-						
-					gadget.getUrl()
-					}, gadget);
-			}
-		}
+		clearUniqueFindersCache(gadget);
+		cacheUniqueFindersCache(gadget);
 
 		return gadget;
 	}
@@ -3677,14 +3698,6 @@ public class GadgetPersistenceImpl extends BasePersistenceImpl<Gadget>
 		FinderCacheUtil.removeCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 	}
 
-	@BeanReference(type = GadgetPersistence.class)
-	protected GadgetPersistence gadgetPersistence;
-	@BeanReference(type = OAuthConsumerPersistence.class)
-	protected OAuthConsumerPersistence oAuthConsumerPersistence;
-	@BeanReference(type = OAuthTokenPersistence.class)
-	protected OAuthTokenPersistence oAuthTokenPersistence;
-	@BeanReference(type = UserPersistence.class)
-	protected UserPersistence userPersistence;
 	private static final String _SQL_SELECT_GADGET = "SELECT gadget FROM Gadget gadget";
 	private static final String _SQL_SELECT_GADGET_WHERE = "SELECT gadget FROM Gadget gadget WHERE ";
 	private static final String _SQL_COUNT_GADGET = "SELECT COUNT(gadget) FROM Gadget gadget";

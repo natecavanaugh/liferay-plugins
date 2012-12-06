@@ -20,7 +20,6 @@ import com.liferay.marketplace.model.impl.ModuleImpl;
 import com.liferay.marketplace.model.impl.ModuleModelImpl;
 
 import com.liferay.portal.NoSuchModelException;
-import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.cache.CacheRegistryUtil;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
@@ -45,7 +44,6 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
 import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.ModelListener;
-import com.liferay.portal.service.persistence.UserPersistence;
 import com.liferay.portal.service.persistence.impl.BasePersistenceImpl;
 
 import java.io.Serializable;
@@ -1929,13 +1927,59 @@ public class ModulePersistenceImpl extends BasePersistenceImpl<Module>
 		}
 	}
 
+	protected void cacheUniqueFindersCache(Module module) {
+		if (module.isNew()) {
+			Object[] args = new Object[] {
+					Long.valueOf(module.getAppId()),
+					
+					module.getContextName()
+				};
+
+			FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_A_C, args,
+				Long.valueOf(1));
+			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_A_C, args, module);
+		}
+		else {
+			ModuleModelImpl moduleModelImpl = (ModuleModelImpl)module;
+
+			if ((moduleModelImpl.getColumnBitmask() &
+					FINDER_PATH_FETCH_BY_A_C.getColumnBitmask()) != 0) {
+				Object[] args = new Object[] {
+						Long.valueOf(module.getAppId()),
+						
+						module.getContextName()
+					};
+
+				FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_A_C, args,
+					Long.valueOf(1));
+				FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_A_C, args, module);
+			}
+		}
+	}
+
 	protected void clearUniqueFindersCache(Module module) {
-		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_A_C,
-			new Object[] {
+		ModuleModelImpl moduleModelImpl = (ModuleModelImpl)module;
+
+		Object[] args = new Object[] {
 				Long.valueOf(module.getAppId()),
 				
-			module.getContextName()
-			});
+				module.getContextName()
+			};
+
+		FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_A_C, args);
+		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_A_C, args);
+
+		if ((moduleModelImpl.getColumnBitmask() &
+				FINDER_PATH_FETCH_BY_A_C.getColumnBitmask()) != 0) {
+			args = new Object[] {
+					Long.valueOf(moduleModelImpl.getOriginalAppId()),
+					
+					moduleModelImpl.getOriginalContextName()
+				};
+
+			FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_A_C, args);
+			FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_A_C, args);
+		}
 	}
 
 	/**
@@ -2140,35 +2184,8 @@ public class ModulePersistenceImpl extends BasePersistenceImpl<Module>
 		EntityCacheUtil.putResult(ModuleModelImpl.ENTITY_CACHE_ENABLED,
 			ModuleImpl.class, module.getPrimaryKey(), module);
 
-		if (isNew) {
-			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_A_C,
-				new Object[] {
-					Long.valueOf(module.getAppId()),
-					
-				module.getContextName()
-				}, module);
-		}
-		else {
-			if ((moduleModelImpl.getColumnBitmask() &
-					FINDER_PATH_FETCH_BY_A_C.getColumnBitmask()) != 0) {
-				Object[] args = new Object[] {
-						Long.valueOf(moduleModelImpl.getOriginalAppId()),
-						
-						moduleModelImpl.getOriginalContextName()
-					};
-
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_A_C, args);
-
-				FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_A_C, args);
-
-				FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_A_C,
-					new Object[] {
-						Long.valueOf(module.getAppId()),
-						
-					module.getContextName()
-					}, module);
-			}
-		}
+		clearUniqueFindersCache(module);
+		cacheUniqueFindersCache(module);
 
 		return module;
 	}
@@ -2487,12 +2504,6 @@ public class ModulePersistenceImpl extends BasePersistenceImpl<Module>
 		FinderCacheUtil.removeCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 	}
 
-	@BeanReference(type = AppPersistence.class)
-	protected AppPersistence appPersistence;
-	@BeanReference(type = ModulePersistence.class)
-	protected ModulePersistence modulePersistence;
-	@BeanReference(type = UserPersistence.class)
-	protected UserPersistence userPersistence;
 	private static final String _SQL_SELECT_MODULE = "SELECT module FROM Module module";
 	private static final String _SQL_SELECT_MODULE_WHERE = "SELECT module FROM Module module WHERE ";
 	private static final String _SQL_COUNT_MODULE = "SELECT COUNT(module) FROM Module module";

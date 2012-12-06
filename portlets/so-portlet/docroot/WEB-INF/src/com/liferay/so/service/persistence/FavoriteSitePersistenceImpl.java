@@ -15,7 +15,6 @@
 package com.liferay.so.service.persistence;
 
 import com.liferay.portal.NoSuchModelException;
-import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.cache.CacheRegistryUtil;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
@@ -38,9 +37,6 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnmodifiableList;
 import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.ModelListener;
-import com.liferay.portal.service.persistence.CompanyPersistence;
-import com.liferay.portal.service.persistence.GroupPersistence;
-import com.liferay.portal.service.persistence.UserPersistence;
 import com.liferay.portal.service.persistence.impl.BasePersistenceImpl;
 
 import com.liferay.so.NoSuchFavoriteSiteException;
@@ -875,12 +871,57 @@ public class FavoriteSitePersistenceImpl extends BasePersistenceImpl<FavoriteSit
 		}
 	}
 
+	protected void cacheUniqueFindersCache(FavoriteSite favoriteSite) {
+		if (favoriteSite.isNew()) {
+			Object[] args = new Object[] {
+					Long.valueOf(favoriteSite.getGroupId()),
+					Long.valueOf(favoriteSite.getUserId())
+				};
+
+			FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_G_U, args,
+				Long.valueOf(1));
+			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_G_U, args,
+				favoriteSite);
+		}
+		else {
+			FavoriteSiteModelImpl favoriteSiteModelImpl = (FavoriteSiteModelImpl)favoriteSite;
+
+			if ((favoriteSiteModelImpl.getColumnBitmask() &
+					FINDER_PATH_FETCH_BY_G_U.getColumnBitmask()) != 0) {
+				Object[] args = new Object[] {
+						Long.valueOf(favoriteSite.getGroupId()),
+						Long.valueOf(favoriteSite.getUserId())
+					};
+
+				FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_G_U, args,
+					Long.valueOf(1));
+				FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_G_U, args,
+					favoriteSite);
+			}
+		}
+	}
+
 	protected void clearUniqueFindersCache(FavoriteSite favoriteSite) {
-		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_G_U,
-			new Object[] {
+		FavoriteSiteModelImpl favoriteSiteModelImpl = (FavoriteSiteModelImpl)favoriteSite;
+
+		Object[] args = new Object[] {
 				Long.valueOf(favoriteSite.getGroupId()),
 				Long.valueOf(favoriteSite.getUserId())
-			});
+			};
+
+		FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_G_U, args);
+		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_G_U, args);
+
+		if ((favoriteSiteModelImpl.getColumnBitmask() &
+				FINDER_PATH_FETCH_BY_G_U.getColumnBitmask()) != 0) {
+			args = new Object[] {
+					Long.valueOf(favoriteSiteModelImpl.getOriginalGroupId()),
+					Long.valueOf(favoriteSiteModelImpl.getOriginalUserId())
+				};
+
+			FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_G_U, args);
+			FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_G_U, args);
+		}
 	}
 
 	/**
@@ -1046,32 +1087,8 @@ public class FavoriteSitePersistenceImpl extends BasePersistenceImpl<FavoriteSit
 		EntityCacheUtil.putResult(FavoriteSiteModelImpl.ENTITY_CACHE_ENABLED,
 			FavoriteSiteImpl.class, favoriteSite.getPrimaryKey(), favoriteSite);
 
-		if (isNew) {
-			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_G_U,
-				new Object[] {
-					Long.valueOf(favoriteSite.getGroupId()),
-					Long.valueOf(favoriteSite.getUserId())
-				}, favoriteSite);
-		}
-		else {
-			if ((favoriteSiteModelImpl.getColumnBitmask() &
-					FINDER_PATH_FETCH_BY_G_U.getColumnBitmask()) != 0) {
-				Object[] args = new Object[] {
-						Long.valueOf(favoriteSiteModelImpl.getOriginalGroupId()),
-						Long.valueOf(favoriteSiteModelImpl.getOriginalUserId())
-					};
-
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_G_U, args);
-
-				FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_G_U, args);
-
-				FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_G_U,
-					new Object[] {
-						Long.valueOf(favoriteSite.getGroupId()),
-						Long.valueOf(favoriteSite.getUserId())
-					}, favoriteSite);
-			}
-		}
+		clearUniqueFindersCache(favoriteSite);
+		cacheUniqueFindersCache(favoriteSite);
 
 		return favoriteSite;
 	}
@@ -1393,18 +1410,6 @@ public class FavoriteSitePersistenceImpl extends BasePersistenceImpl<FavoriteSit
 		FinderCacheUtil.removeCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 	}
 
-	@BeanReference(type = FavoriteSitePersistence.class)
-	protected FavoriteSitePersistence favoriteSitePersistence;
-	@BeanReference(type = MemberRequestPersistence.class)
-	protected MemberRequestPersistence memberRequestPersistence;
-	@BeanReference(type = ProjectsEntryPersistence.class)
-	protected ProjectsEntryPersistence projectsEntryPersistence;
-	@BeanReference(type = CompanyPersistence.class)
-	protected CompanyPersistence companyPersistence;
-	@BeanReference(type = GroupPersistence.class)
-	protected GroupPersistence groupPersistence;
-	@BeanReference(type = UserPersistence.class)
-	protected UserPersistence userPersistence;
 	private static final String _SQL_SELECT_FAVORITESITE = "SELECT favoriteSite FROM FavoriteSite favoriteSite";
 	private static final String _SQL_SELECT_FAVORITESITE_WHERE = "SELECT favoriteSite FROM FavoriteSite favoriteSite WHERE ";
 	private static final String _SQL_COUNT_FAVORITESITE = "SELECT COUNT(favoriteSite) FROM FavoriteSite favoriteSite";

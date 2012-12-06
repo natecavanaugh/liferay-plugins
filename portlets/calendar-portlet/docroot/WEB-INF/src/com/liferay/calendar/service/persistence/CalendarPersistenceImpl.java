@@ -20,7 +20,6 @@ import com.liferay.calendar.model.impl.CalendarImpl;
 import com.liferay.calendar.model.impl.CalendarModelImpl;
 
 import com.liferay.portal.NoSuchModelException;
-import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.cache.CacheRegistryUtil;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
@@ -46,7 +45,6 @@ import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
 import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.ModelListener;
 import com.liferay.portal.security.permission.InlineSQLHelperUtil;
-import com.liferay.portal.service.persistence.UserPersistence;
 import com.liferay.portal.service.persistence.impl.BasePersistenceImpl;
 
 import java.io.Serializable;
@@ -3716,10 +3714,54 @@ public class CalendarPersistenceImpl extends BasePersistenceImpl<Calendar>
 		}
 	}
 
+	protected void cacheUniqueFindersCache(Calendar calendar) {
+		if (calendar.isNew()) {
+			Object[] args = new Object[] {
+					calendar.getUuid(), Long.valueOf(calendar.getGroupId())
+				};
+
+			FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_UUID_G, args,
+				Long.valueOf(1));
+			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_UUID_G, args,
+				calendar);
+		}
+		else {
+			CalendarModelImpl calendarModelImpl = (CalendarModelImpl)calendar;
+
+			if ((calendarModelImpl.getColumnBitmask() &
+					FINDER_PATH_FETCH_BY_UUID_G.getColumnBitmask()) != 0) {
+				Object[] args = new Object[] {
+						calendar.getUuid(), Long.valueOf(calendar.getGroupId())
+					};
+
+				FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_UUID_G, args,
+					Long.valueOf(1));
+				FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_UUID_G, args,
+					calendar);
+			}
+		}
+	}
+
 	protected void clearUniqueFindersCache(Calendar calendar) {
-		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_UUID_G,
-			new Object[] { calendar.getUuid(), Long.valueOf(
-					calendar.getGroupId()) });
+		CalendarModelImpl calendarModelImpl = (CalendarModelImpl)calendar;
+
+		Object[] args = new Object[] {
+				calendar.getUuid(), Long.valueOf(calendar.getGroupId())
+			};
+
+		FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_UUID_G, args);
+		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_UUID_G, args);
+
+		if ((calendarModelImpl.getColumnBitmask() &
+				FINDER_PATH_FETCH_BY_UUID_G.getColumnBitmask()) != 0) {
+			args = new Object[] {
+					calendarModelImpl.getOriginalUuid(),
+					Long.valueOf(calendarModelImpl.getOriginalGroupId())
+				};
+
+			FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_UUID_G, args);
+			FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_UUID_G, args);
+		}
 	}
 
 	/**
@@ -3975,30 +4017,8 @@ public class CalendarPersistenceImpl extends BasePersistenceImpl<Calendar>
 		EntityCacheUtil.putResult(CalendarModelImpl.ENTITY_CACHE_ENABLED,
 			CalendarImpl.class, calendar.getPrimaryKey(), calendar);
 
-		if (isNew) {
-			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_UUID_G,
-				new Object[] {
-					calendar.getUuid(), Long.valueOf(calendar.getGroupId())
-				}, calendar);
-		}
-		else {
-			if ((calendarModelImpl.getColumnBitmask() &
-					FINDER_PATH_FETCH_BY_UUID_G.getColumnBitmask()) != 0) {
-				Object[] args = new Object[] {
-						calendarModelImpl.getOriginalUuid(),
-						Long.valueOf(calendarModelImpl.getOriginalGroupId())
-					};
-
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_UUID_G, args);
-
-				FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_UUID_G, args);
-
-				FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_UUID_G,
-					new Object[] {
-						calendar.getUuid(), Long.valueOf(calendar.getGroupId())
-					}, calendar);
-			}
-		}
+		clearUniqueFindersCache(calendar);
+		cacheUniqueFindersCache(calendar);
 
 		return calendar;
 	}
@@ -4328,14 +4348,6 @@ public class CalendarPersistenceImpl extends BasePersistenceImpl<Calendar>
 		FinderCacheUtil.removeCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 	}
 
-	@BeanReference(type = CalendarPersistence.class)
-	protected CalendarPersistence calendarPersistence;
-	@BeanReference(type = CalendarBookingPersistence.class)
-	protected CalendarBookingPersistence calendarBookingPersistence;
-	@BeanReference(type = CalendarResourcePersistence.class)
-	protected CalendarResourcePersistence calendarResourcePersistence;
-	@BeanReference(type = UserPersistence.class)
-	protected UserPersistence userPersistence;
 	private static final String _SQL_SELECT_CALENDAR = "SELECT calendar FROM Calendar calendar";
 	private static final String _SQL_SELECT_CALENDAR_WHERE = "SELECT calendar FROM Calendar calendar WHERE ";
 	private static final String _SQL_COUNT_CALENDAR = "SELECT COUNT(calendar) FROM Calendar calendar";

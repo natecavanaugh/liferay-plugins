@@ -15,7 +15,6 @@
 package com.liferay.socialcoding.service.persistence;
 
 import com.liferay.portal.NoSuchModelException;
-import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.cache.CacheRegistryUtil;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
@@ -39,7 +38,6 @@ import com.liferay.portal.kernel.util.UnmodifiableList;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.ModelListener;
-import com.liferay.portal.service.persistence.UserPersistence;
 import com.liferay.portal.service.persistence.impl.BasePersistenceImpl;
 
 import com.liferay.socialcoding.NoSuchSVNRepositoryException;
@@ -413,9 +411,45 @@ public class SVNRepositoryPersistenceImpl extends BasePersistenceImpl<SVNReposit
 		}
 	}
 
+	protected void cacheUniqueFindersCache(SVNRepository svnRepository) {
+		if (svnRepository.isNew()) {
+			Object[] args = new Object[] { svnRepository.getUrl() };
+
+			FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_URL, args,
+				Long.valueOf(1));
+			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_URL, args,
+				svnRepository);
+		}
+		else {
+			SVNRepositoryModelImpl svnRepositoryModelImpl = (SVNRepositoryModelImpl)svnRepository;
+
+			if ((svnRepositoryModelImpl.getColumnBitmask() &
+					FINDER_PATH_FETCH_BY_URL.getColumnBitmask()) != 0) {
+				Object[] args = new Object[] { svnRepository.getUrl() };
+
+				FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_URL, args,
+					Long.valueOf(1));
+				FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_URL, args,
+					svnRepository);
+			}
+		}
+	}
+
 	protected void clearUniqueFindersCache(SVNRepository svnRepository) {
-		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_URL,
-			new Object[] { svnRepository.getUrl() });
+		SVNRepositoryModelImpl svnRepositoryModelImpl = (SVNRepositoryModelImpl)svnRepository;
+
+		Object[] args = new Object[] { svnRepository.getUrl() };
+
+		FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_URL, args);
+		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_URL, args);
+
+		if ((svnRepositoryModelImpl.getColumnBitmask() &
+				FINDER_PATH_FETCH_BY_URL.getColumnBitmask()) != 0) {
+			args = new Object[] { svnRepositoryModelImpl.getOriginalUrl() };
+
+			FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_URL, args);
+			FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_URL, args);
+		}
 	}
 
 	/**
@@ -528,8 +562,6 @@ public class SVNRepositoryPersistenceImpl extends BasePersistenceImpl<SVNReposit
 
 		boolean isNew = svnRepository.isNew();
 
-		SVNRepositoryModelImpl svnRepositoryModelImpl = (SVNRepositoryModelImpl)svnRepository;
-
 		Session session = null;
 
 		try {
@@ -561,25 +593,8 @@ public class SVNRepositoryPersistenceImpl extends BasePersistenceImpl<SVNReposit
 			SVNRepositoryImpl.class, svnRepository.getPrimaryKey(),
 			svnRepository);
 
-		if (isNew) {
-			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_URL,
-				new Object[] { svnRepository.getUrl() }, svnRepository);
-		}
-		else {
-			if ((svnRepositoryModelImpl.getColumnBitmask() &
-					FINDER_PATH_FETCH_BY_URL.getColumnBitmask()) != 0) {
-				Object[] args = new Object[] {
-						svnRepositoryModelImpl.getOriginalUrl()
-					};
-
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_URL, args);
-
-				FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_URL, args);
-
-				FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_URL,
-					new Object[] { svnRepository.getUrl() }, svnRepository);
-			}
-		}
+		clearUniqueFindersCache(svnRepository);
+		cacheUniqueFindersCache(svnRepository);
 
 		return svnRepository;
 	}
@@ -900,20 +915,6 @@ public class SVNRepositoryPersistenceImpl extends BasePersistenceImpl<SVNReposit
 		FinderCacheUtil.removeCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 	}
 
-	@BeanReference(type = JIRAActionPersistence.class)
-	protected JIRAActionPersistence jiraActionPersistence;
-	@BeanReference(type = JIRAChangeGroupPersistence.class)
-	protected JIRAChangeGroupPersistence jiraChangeGroupPersistence;
-	@BeanReference(type = JIRAChangeItemPersistence.class)
-	protected JIRAChangeItemPersistence jiraChangeItemPersistence;
-	@BeanReference(type = JIRAIssuePersistence.class)
-	protected JIRAIssuePersistence jiraIssuePersistence;
-	@BeanReference(type = SVNRepositoryPersistence.class)
-	protected SVNRepositoryPersistence svnRepositoryPersistence;
-	@BeanReference(type = SVNRevisionPersistence.class)
-	protected SVNRevisionPersistence svnRevisionPersistence;
-	@BeanReference(type = UserPersistence.class)
-	protected UserPersistence userPersistence;
 	private static final String _SQL_SELECT_SVNREPOSITORY = "SELECT svnRepository FROM SVNRepository svnRepository";
 	private static final String _SQL_SELECT_SVNREPOSITORY_WHERE = "SELECT svnRepository FROM SVNRepository svnRepository WHERE ";
 	private static final String _SQL_COUNT_SVNREPOSITORY = "SELECT COUNT(svnRepository) FROM SVNRepository svnRepository";

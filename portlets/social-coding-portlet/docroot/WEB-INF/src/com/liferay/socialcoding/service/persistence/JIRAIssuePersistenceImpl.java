@@ -15,7 +15,6 @@
 package com.liferay.socialcoding.service.persistence;
 
 import com.liferay.portal.NoSuchModelException;
-import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.cache.CacheRegistryUtil;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
@@ -40,7 +39,6 @@ import com.liferay.portal.kernel.util.UnmodifiableList;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.ModelListener;
-import com.liferay.portal.service.persistence.UserPersistence;
 import com.liferay.portal.service.persistence.impl.BasePersistenceImpl;
 
 import com.liferay.socialcoding.NoSuchJIRAIssueException;
@@ -6082,9 +6080,44 @@ public class JIRAIssuePersistenceImpl extends BasePersistenceImpl<JIRAIssue>
 		}
 	}
 
+	protected void cacheUniqueFindersCache(JIRAIssue jiraIssue) {
+		if (jiraIssue.isNew()) {
+			Object[] args = new Object[] { jiraIssue.getKey() };
+
+			FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_KEY, args,
+				Long.valueOf(1));
+			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_KEY, args, jiraIssue);
+		}
+		else {
+			JIRAIssueModelImpl jiraIssueModelImpl = (JIRAIssueModelImpl)jiraIssue;
+
+			if ((jiraIssueModelImpl.getColumnBitmask() &
+					FINDER_PATH_FETCH_BY_KEY.getColumnBitmask()) != 0) {
+				Object[] args = new Object[] { jiraIssue.getKey() };
+
+				FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_KEY, args,
+					Long.valueOf(1));
+				FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_KEY, args,
+					jiraIssue);
+			}
+		}
+	}
+
 	protected void clearUniqueFindersCache(JIRAIssue jiraIssue) {
-		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_KEY,
-			new Object[] { jiraIssue.getKey() });
+		JIRAIssueModelImpl jiraIssueModelImpl = (JIRAIssueModelImpl)jiraIssue;
+
+		Object[] args = new Object[] { jiraIssue.getKey() };
+
+		FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_KEY, args);
+		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_KEY, args);
+
+		if ((jiraIssueModelImpl.getColumnBitmask() &
+				FINDER_PATH_FETCH_BY_KEY.getColumnBitmask()) != 0) {
+			args = new Object[] { jiraIssueModelImpl.getOriginalKey() };
+
+			FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_KEY, args);
+			FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_KEY, args);
+		}
 	}
 
 	/**
@@ -6390,23 +6423,8 @@ public class JIRAIssuePersistenceImpl extends BasePersistenceImpl<JIRAIssue>
 		EntityCacheUtil.putResult(JIRAIssueModelImpl.ENTITY_CACHE_ENABLED,
 			JIRAIssueImpl.class, jiraIssue.getPrimaryKey(), jiraIssue);
 
-		if (isNew) {
-			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_KEY,
-				new Object[] { jiraIssue.getKey() }, jiraIssue);
-		}
-		else {
-			if ((jiraIssueModelImpl.getColumnBitmask() &
-					FINDER_PATH_FETCH_BY_KEY.getColumnBitmask()) != 0) {
-				Object[] args = new Object[] { jiraIssueModelImpl.getOriginalKey() };
-
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_KEY, args);
-
-				FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_KEY, args);
-
-				FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_KEY,
-					new Object[] { jiraIssue.getKey() }, jiraIssue);
-			}
-		}
+		clearUniqueFindersCache(jiraIssue);
+		cacheUniqueFindersCache(jiraIssue);
 
 		return jiraIssue;
 	}
@@ -6734,20 +6752,6 @@ public class JIRAIssuePersistenceImpl extends BasePersistenceImpl<JIRAIssue>
 		FinderCacheUtil.removeCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 	}
 
-	@BeanReference(type = JIRAActionPersistence.class)
-	protected JIRAActionPersistence jiraActionPersistence;
-	@BeanReference(type = JIRAChangeGroupPersistence.class)
-	protected JIRAChangeGroupPersistence jiraChangeGroupPersistence;
-	@BeanReference(type = JIRAChangeItemPersistence.class)
-	protected JIRAChangeItemPersistence jiraChangeItemPersistence;
-	@BeanReference(type = JIRAIssuePersistence.class)
-	protected JIRAIssuePersistence jiraIssuePersistence;
-	@BeanReference(type = SVNRepositoryPersistence.class)
-	protected SVNRepositoryPersistence svnRepositoryPersistence;
-	@BeanReference(type = SVNRevisionPersistence.class)
-	protected SVNRevisionPersistence svnRevisionPersistence;
-	@BeanReference(type = UserPersistence.class)
-	protected UserPersistence userPersistence;
 	private static final String _SQL_SELECT_JIRAISSUE = "SELECT jiraIssue FROM JIRAIssue jiraIssue";
 	private static final String _SQL_SELECT_JIRAISSUE_WHERE = "SELECT jiraIssue FROM JIRAIssue jiraIssue WHERE ";
 	private static final String _SQL_COUNT_JIRAISSUE = "SELECT COUNT(jiraIssue) FROM JIRAIssue jiraIssue";

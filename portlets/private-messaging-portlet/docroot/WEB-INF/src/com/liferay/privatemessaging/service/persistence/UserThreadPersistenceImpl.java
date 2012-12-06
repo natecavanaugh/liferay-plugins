@@ -15,7 +15,6 @@
 package com.liferay.privatemessaging.service.persistence;
 
 import com.liferay.portal.NoSuchModelException;
-import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.cache.CacheRegistryUtil;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
@@ -38,7 +37,6 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnmodifiableList;
 import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.ModelListener;
-import com.liferay.portal.service.persistence.UserPersistence;
 import com.liferay.portal.service.persistence.impl.BasePersistenceImpl;
 
 import com.liferay.privatemessaging.NoSuchUserThreadException;
@@ -2428,12 +2426,56 @@ public class UserThreadPersistenceImpl extends BasePersistenceImpl<UserThread>
 		}
 	}
 
+	protected void cacheUniqueFindersCache(UserThread userThread) {
+		if (userThread.isNew()) {
+			Object[] args = new Object[] {
+					Long.valueOf(userThread.getUserId()),
+					Long.valueOf(userThread.getMbThreadId())
+				};
+
+			FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_U_M, args,
+				Long.valueOf(1));
+			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_U_M, args, userThread);
+		}
+		else {
+			UserThreadModelImpl userThreadModelImpl = (UserThreadModelImpl)userThread;
+
+			if ((userThreadModelImpl.getColumnBitmask() &
+					FINDER_PATH_FETCH_BY_U_M.getColumnBitmask()) != 0) {
+				Object[] args = new Object[] {
+						Long.valueOf(userThread.getUserId()),
+						Long.valueOf(userThread.getMbThreadId())
+					};
+
+				FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_U_M, args,
+					Long.valueOf(1));
+				FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_U_M, args,
+					userThread);
+			}
+		}
+	}
+
 	protected void clearUniqueFindersCache(UserThread userThread) {
-		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_U_M,
-			new Object[] {
+		UserThreadModelImpl userThreadModelImpl = (UserThreadModelImpl)userThread;
+
+		Object[] args = new Object[] {
 				Long.valueOf(userThread.getUserId()),
 				Long.valueOf(userThread.getMbThreadId())
-			});
+			};
+
+		FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_U_M, args);
+		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_U_M, args);
+
+		if ((userThreadModelImpl.getColumnBitmask() &
+				FINDER_PATH_FETCH_BY_U_M.getColumnBitmask()) != 0) {
+			args = new Object[] {
+					Long.valueOf(userThreadModelImpl.getOriginalUserId()),
+					Long.valueOf(userThreadModelImpl.getOriginalMbThreadId())
+				};
+
+			FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_U_M, args);
+			FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_U_M, args);
+		}
 	}
 
 	/**
@@ -2664,32 +2706,8 @@ public class UserThreadPersistenceImpl extends BasePersistenceImpl<UserThread>
 		EntityCacheUtil.putResult(UserThreadModelImpl.ENTITY_CACHE_ENABLED,
 			UserThreadImpl.class, userThread.getPrimaryKey(), userThread);
 
-		if (isNew) {
-			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_U_M,
-				new Object[] {
-					Long.valueOf(userThread.getUserId()),
-					Long.valueOf(userThread.getMbThreadId())
-				}, userThread);
-		}
-		else {
-			if ((userThreadModelImpl.getColumnBitmask() &
-					FINDER_PATH_FETCH_BY_U_M.getColumnBitmask()) != 0) {
-				Object[] args = new Object[] {
-						Long.valueOf(userThreadModelImpl.getOriginalUserId()),
-						Long.valueOf(userThreadModelImpl.getOriginalMbThreadId())
-					};
-
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_U_M, args);
-
-				FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_U_M, args);
-
-				FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_U_M,
-					new Object[] {
-						Long.valueOf(userThread.getUserId()),
-						Long.valueOf(userThread.getMbThreadId())
-					}, userThread);
-			}
-		}
+		clearUniqueFindersCache(userThread);
+		cacheUniqueFindersCache(userThread);
 
 		return userThread;
 	}
@@ -3016,10 +3034,6 @@ public class UserThreadPersistenceImpl extends BasePersistenceImpl<UserThread>
 		FinderCacheUtil.removeCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 	}
 
-	@BeanReference(type = UserThreadPersistence.class)
-	protected UserThreadPersistence userThreadPersistence;
-	@BeanReference(type = UserPersistence.class)
-	protected UserPersistence userPersistence;
 	private static final String _SQL_SELECT_USERTHREAD = "SELECT userThread FROM UserThread userThread";
 	private static final String _SQL_SELECT_USERTHREAD_WHERE = "SELECT userThread FROM UserThread userThread WHERE ";
 	private static final String _SQL_COUNT_USERTHREAD = "SELECT COUNT(userThread) FROM UserThread userThread";

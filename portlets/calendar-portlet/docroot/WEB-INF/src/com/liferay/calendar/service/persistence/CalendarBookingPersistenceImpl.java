@@ -20,7 +20,6 @@ import com.liferay.calendar.model.impl.CalendarBookingImpl;
 import com.liferay.calendar.model.impl.CalendarBookingModelImpl;
 
 import com.liferay.portal.NoSuchModelException;
-import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.cache.CacheRegistryUtil;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
@@ -45,11 +44,7 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
 import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.ModelListener;
-import com.liferay.portal.service.persistence.UserPersistence;
 import com.liferay.portal.service.persistence.impl.BasePersistenceImpl;
-
-import com.liferay.portlet.asset.service.persistence.AssetEntryPersistence;
-import com.liferay.portlet.asset.service.persistence.AssetLinkPersistence;
 
 import java.io.Serializable;
 
@@ -4823,18 +4818,99 @@ public class CalendarBookingPersistenceImpl extends BasePersistenceImpl<Calendar
 		}
 	}
 
+	protected void cacheUniqueFindersCache(CalendarBooking calendarBooking) {
+		if (calendarBooking.isNew()) {
+			Object[] args = new Object[] {
+					calendarBooking.getUuid(),
+					Long.valueOf(calendarBooking.getGroupId())
+				};
+
+			FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_UUID_G, args,
+				Long.valueOf(1));
+			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_UUID_G, args,
+				calendarBooking);
+
+			args = new Object[] {
+					Long.valueOf(calendarBooking.getCalendarId()),
+					Long.valueOf(calendarBooking.getParentCalendarBookingId())
+				};
+
+			FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_C_P, args,
+				Long.valueOf(1));
+			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_C_P, args,
+				calendarBooking);
+		}
+		else {
+			CalendarBookingModelImpl calendarBookingModelImpl = (CalendarBookingModelImpl)calendarBooking;
+
+			if ((calendarBookingModelImpl.getColumnBitmask() &
+					FINDER_PATH_FETCH_BY_UUID_G.getColumnBitmask()) != 0) {
+				Object[] args = new Object[] {
+						calendarBooking.getUuid(),
+						Long.valueOf(calendarBooking.getGroupId())
+					};
+
+				FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_UUID_G, args,
+					Long.valueOf(1));
+				FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_UUID_G, args,
+					calendarBooking);
+			}
+
+			if ((calendarBookingModelImpl.getColumnBitmask() &
+					FINDER_PATH_FETCH_BY_C_P.getColumnBitmask()) != 0) {
+				Object[] args = new Object[] {
+						Long.valueOf(calendarBooking.getCalendarId()),
+						Long.valueOf(calendarBooking.getParentCalendarBookingId())
+					};
+
+				FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_C_P, args,
+					Long.valueOf(1));
+				FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_C_P, args,
+					calendarBooking);
+			}
+		}
+	}
+
 	protected void clearUniqueFindersCache(CalendarBooking calendarBooking) {
-		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_UUID_G,
-			new Object[] {
+		CalendarBookingModelImpl calendarBookingModelImpl = (CalendarBookingModelImpl)calendarBooking;
+
+		Object[] args = new Object[] {
 				calendarBooking.getUuid(),
 				Long.valueOf(calendarBooking.getGroupId())
-			});
+			};
 
-		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_C_P,
-			new Object[] {
+		FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_UUID_G, args);
+		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_UUID_G, args);
+
+		if ((calendarBookingModelImpl.getColumnBitmask() &
+				FINDER_PATH_FETCH_BY_UUID_G.getColumnBitmask()) != 0) {
+			args = new Object[] {
+					calendarBookingModelImpl.getOriginalUuid(),
+					Long.valueOf(calendarBookingModelImpl.getOriginalGroupId())
+				};
+
+			FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_UUID_G, args);
+			FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_UUID_G, args);
+		}
+
+		args = new Object[] {
 				Long.valueOf(calendarBooking.getCalendarId()),
 				Long.valueOf(calendarBooking.getParentCalendarBookingId())
-			});
+			};
+
+		FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_C_P, args);
+		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_C_P, args);
+
+		if ((calendarBookingModelImpl.getColumnBitmask() &
+				FINDER_PATH_FETCH_BY_C_P.getColumnBitmask()) != 0) {
+			args = new Object[] {
+					Long.valueOf(calendarBookingModelImpl.getOriginalCalendarId()),
+					Long.valueOf(calendarBookingModelImpl.getOriginalParentCalendarBookingId())
+				};
+
+			FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_C_P, args);
+			FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_C_P, args);
+		}
 	}
 
 	/**
@@ -5158,57 +5234,8 @@ public class CalendarBookingPersistenceImpl extends BasePersistenceImpl<Calendar
 			CalendarBookingImpl.class, calendarBooking.getPrimaryKey(),
 			calendarBooking);
 
-		if (isNew) {
-			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_UUID_G,
-				new Object[] {
-					calendarBooking.getUuid(),
-					Long.valueOf(calendarBooking.getGroupId())
-				}, calendarBooking);
-
-			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_C_P,
-				new Object[] {
-					Long.valueOf(calendarBooking.getCalendarId()),
-					Long.valueOf(calendarBooking.getParentCalendarBookingId())
-				}, calendarBooking);
-		}
-		else {
-			if ((calendarBookingModelImpl.getColumnBitmask() &
-					FINDER_PATH_FETCH_BY_UUID_G.getColumnBitmask()) != 0) {
-				Object[] args = new Object[] {
-						calendarBookingModelImpl.getOriginalUuid(),
-						Long.valueOf(calendarBookingModelImpl.getOriginalGroupId())
-					};
-
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_UUID_G, args);
-
-				FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_UUID_G, args);
-
-				FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_UUID_G,
-					new Object[] {
-						calendarBooking.getUuid(),
-						Long.valueOf(calendarBooking.getGroupId())
-					}, calendarBooking);
-			}
-
-			if ((calendarBookingModelImpl.getColumnBitmask() &
-					FINDER_PATH_FETCH_BY_C_P.getColumnBitmask()) != 0) {
-				Object[] args = new Object[] {
-						Long.valueOf(calendarBookingModelImpl.getOriginalCalendarId()),
-						Long.valueOf(calendarBookingModelImpl.getOriginalParentCalendarBookingId())
-					};
-
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_C_P, args);
-
-				FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_C_P, args);
-
-				FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_C_P,
-					new Object[] {
-						Long.valueOf(calendarBooking.getCalendarId()),
-						Long.valueOf(
-							calendarBooking.getParentCalendarBookingId())
-					}, calendarBooking);
-			}
-		}
+		clearUniqueFindersCache(calendarBooking);
+		cacheUniqueFindersCache(calendarBooking);
 
 		return calendarBooking;
 	}
@@ -5552,18 +5579,6 @@ public class CalendarBookingPersistenceImpl extends BasePersistenceImpl<Calendar
 		FinderCacheUtil.removeCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 	}
 
-	@BeanReference(type = CalendarPersistence.class)
-	protected CalendarPersistence calendarPersistence;
-	@BeanReference(type = CalendarBookingPersistence.class)
-	protected CalendarBookingPersistence calendarBookingPersistence;
-	@BeanReference(type = CalendarResourcePersistence.class)
-	protected CalendarResourcePersistence calendarResourcePersistence;
-	@BeanReference(type = UserPersistence.class)
-	protected UserPersistence userPersistence;
-	@BeanReference(type = AssetEntryPersistence.class)
-	protected AssetEntryPersistence assetEntryPersistence;
-	@BeanReference(type = AssetLinkPersistence.class)
-	protected AssetLinkPersistence assetLinkPersistence;
 	private static final String _SQL_SELECT_CALENDARBOOKING = "SELECT calendarBooking FROM CalendarBooking calendarBooking";
 	private static final String _SQL_SELECT_CALENDARBOOKING_WHERE = "SELECT calendarBooking FROM CalendarBooking calendarBooking WHERE ";
 	private static final String _SQL_COUNT_CALENDARBOOKING = "SELECT COUNT(calendarBooking) FROM CalendarBooking calendarBooking";

@@ -20,7 +20,6 @@ import com.liferay.knowledgebase.model.impl.KBArticleImpl;
 import com.liferay.knowledgebase.model.impl.KBArticleModelImpl;
 
 import com.liferay.portal.NoSuchModelException;
-import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.cache.CacheRegistryUtil;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
@@ -48,19 +47,7 @@ import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
 import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.ModelListener;
 import com.liferay.portal.security.permission.InlineSQLHelperUtil;
-import com.liferay.portal.service.persistence.CompanyPersistence;
-import com.liferay.portal.service.persistence.GroupPersistence;
-import com.liferay.portal.service.persistence.LayoutPersistence;
-import com.liferay.portal.service.persistence.PortletPreferencesPersistence;
-import com.liferay.portal.service.persistence.SubscriptionPersistence;
-import com.liferay.portal.service.persistence.TicketPersistence;
-import com.liferay.portal.service.persistence.UserPersistence;
-import com.liferay.portal.service.persistence.WorkflowInstanceLinkPersistence;
 import com.liferay.portal.service.persistence.impl.BasePersistenceImpl;
-
-import com.liferay.portlet.asset.service.persistence.AssetEntryPersistence;
-import com.liferay.portlet.ratings.service.persistence.RatingsStatsPersistence;
-import com.liferay.portlet.social.service.persistence.SocialActivityPersistence;
 
 import java.io.Serializable;
 
@@ -26581,17 +26568,96 @@ public class KBArticlePersistenceImpl extends BasePersistenceImpl<KBArticle>
 		}
 	}
 
-	protected void clearUniqueFindersCache(KBArticle kbArticle) {
-		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_UUID_G,
-			new Object[] {
-				kbArticle.getUuid(), Long.valueOf(kbArticle.getGroupId())
-			});
+	protected void cacheUniqueFindersCache(KBArticle kbArticle) {
+		if (kbArticle.isNew()) {
+			Object[] args = new Object[] {
+					kbArticle.getUuid(), Long.valueOf(kbArticle.getGroupId())
+				};
 
-		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_R_V,
-			new Object[] {
+			FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_UUID_G, args,
+				Long.valueOf(1));
+			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_UUID_G, args,
+				kbArticle);
+
+			args = new Object[] {
+					Long.valueOf(kbArticle.getResourcePrimKey()),
+					Integer.valueOf(kbArticle.getVersion())
+				};
+
+			FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_R_V, args,
+				Long.valueOf(1));
+			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_R_V, args, kbArticle);
+		}
+		else {
+			KBArticleModelImpl kbArticleModelImpl = (KBArticleModelImpl)kbArticle;
+
+			if ((kbArticleModelImpl.getColumnBitmask() &
+					FINDER_PATH_FETCH_BY_UUID_G.getColumnBitmask()) != 0) {
+				Object[] args = new Object[] {
+						kbArticle.getUuid(),
+						Long.valueOf(kbArticle.getGroupId())
+					};
+
+				FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_UUID_G, args,
+					Long.valueOf(1));
+				FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_UUID_G, args,
+					kbArticle);
+			}
+
+			if ((kbArticleModelImpl.getColumnBitmask() &
+					FINDER_PATH_FETCH_BY_R_V.getColumnBitmask()) != 0) {
+				Object[] args = new Object[] {
+						Long.valueOf(kbArticle.getResourcePrimKey()),
+						Integer.valueOf(kbArticle.getVersion())
+					};
+
+				FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_R_V, args,
+					Long.valueOf(1));
+				FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_R_V, args,
+					kbArticle);
+			}
+		}
+	}
+
+	protected void clearUniqueFindersCache(KBArticle kbArticle) {
+		KBArticleModelImpl kbArticleModelImpl = (KBArticleModelImpl)kbArticle;
+
+		Object[] args = new Object[] {
+				kbArticle.getUuid(), Long.valueOf(kbArticle.getGroupId())
+			};
+
+		FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_UUID_G, args);
+		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_UUID_G, args);
+
+		if ((kbArticleModelImpl.getColumnBitmask() &
+				FINDER_PATH_FETCH_BY_UUID_G.getColumnBitmask()) != 0) {
+			args = new Object[] {
+					kbArticleModelImpl.getOriginalUuid(),
+					Long.valueOf(kbArticleModelImpl.getOriginalGroupId())
+				};
+
+			FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_UUID_G, args);
+			FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_UUID_G, args);
+		}
+
+		args = new Object[] {
 				Long.valueOf(kbArticle.getResourcePrimKey()),
 				Integer.valueOf(kbArticle.getVersion())
-			});
+			};
+
+		FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_R_V, args);
+		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_R_V, args);
+
+		if ((kbArticleModelImpl.getColumnBitmask() &
+				FINDER_PATH_FETCH_BY_R_V.getColumnBitmask()) != 0) {
+			args = new Object[] {
+					Long.valueOf(kbArticleModelImpl.getOriginalResourcePrimKey()),
+					Integer.valueOf(kbArticleModelImpl.getOriginalVersion())
+				};
+
+			FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_R_V, args);
+			FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_R_V, args);
+		}
 	}
 
 	/**
@@ -27218,55 +27284,8 @@ public class KBArticlePersistenceImpl extends BasePersistenceImpl<KBArticle>
 		EntityCacheUtil.putResult(KBArticleModelImpl.ENTITY_CACHE_ENABLED,
 			KBArticleImpl.class, kbArticle.getPrimaryKey(), kbArticle);
 
-		if (isNew) {
-			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_UUID_G,
-				new Object[] {
-					kbArticle.getUuid(), Long.valueOf(kbArticle.getGroupId())
-				}, kbArticle);
-
-			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_R_V,
-				new Object[] {
-					Long.valueOf(kbArticle.getResourcePrimKey()),
-					Integer.valueOf(kbArticle.getVersion())
-				}, kbArticle);
-		}
-		else {
-			if ((kbArticleModelImpl.getColumnBitmask() &
-					FINDER_PATH_FETCH_BY_UUID_G.getColumnBitmask()) != 0) {
-				Object[] args = new Object[] {
-						kbArticleModelImpl.getOriginalUuid(),
-						Long.valueOf(kbArticleModelImpl.getOriginalGroupId())
-					};
-
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_UUID_G, args);
-
-				FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_UUID_G, args);
-
-				FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_UUID_G,
-					new Object[] {
-						kbArticle.getUuid(),
-						Long.valueOf(kbArticle.getGroupId())
-					}, kbArticle);
-			}
-
-			if ((kbArticleModelImpl.getColumnBitmask() &
-					FINDER_PATH_FETCH_BY_R_V.getColumnBitmask()) != 0) {
-				Object[] args = new Object[] {
-						Long.valueOf(kbArticleModelImpl.getOriginalResourcePrimKey()),
-						Integer.valueOf(kbArticleModelImpl.getOriginalVersion())
-					};
-
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_R_V, args);
-
-				FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_R_V, args);
-
-				FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_R_V,
-					new Object[] {
-						Long.valueOf(kbArticle.getResourcePrimKey()),
-						Integer.valueOf(kbArticle.getVersion())
-					}, kbArticle);
-			}
-		}
+		clearUniqueFindersCache(kbArticle);
+		cacheUniqueFindersCache(kbArticle);
 
 		return kbArticle;
 	}
@@ -27607,34 +27626,6 @@ public class KBArticlePersistenceImpl extends BasePersistenceImpl<KBArticle>
 		FinderCacheUtil.removeCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 	}
 
-	@BeanReference(type = KBArticlePersistence.class)
-	protected KBArticlePersistence kbArticlePersistence;
-	@BeanReference(type = KBCommentPersistence.class)
-	protected KBCommentPersistence kbCommentPersistence;
-	@BeanReference(type = KBTemplatePersistence.class)
-	protected KBTemplatePersistence kbTemplatePersistence;
-	@BeanReference(type = CompanyPersistence.class)
-	protected CompanyPersistence companyPersistence;
-	@BeanReference(type = GroupPersistence.class)
-	protected GroupPersistence groupPersistence;
-	@BeanReference(type = LayoutPersistence.class)
-	protected LayoutPersistence layoutPersistence;
-	@BeanReference(type = PortletPreferencesPersistence.class)
-	protected PortletPreferencesPersistence portletPreferencesPersistence;
-	@BeanReference(type = SubscriptionPersistence.class)
-	protected SubscriptionPersistence subscriptionPersistence;
-	@BeanReference(type = TicketPersistence.class)
-	protected TicketPersistence ticketPersistence;
-	@BeanReference(type = UserPersistence.class)
-	protected UserPersistence userPersistence;
-	@BeanReference(type = WorkflowInstanceLinkPersistence.class)
-	protected WorkflowInstanceLinkPersistence workflowInstanceLinkPersistence;
-	@BeanReference(type = AssetEntryPersistence.class)
-	protected AssetEntryPersistence assetEntryPersistence;
-	@BeanReference(type = RatingsStatsPersistence.class)
-	protected RatingsStatsPersistence ratingsStatsPersistence;
-	@BeanReference(type = SocialActivityPersistence.class)
-	protected SocialActivityPersistence socialActivityPersistence;
 	private static final String _SQL_SELECT_KBARTICLE = "SELECT kbArticle FROM KBArticle kbArticle";
 	private static final String _SQL_SELECT_KBARTICLE_WHERE = "SELECT kbArticle FROM KBArticle kbArticle WHERE ";
 	private static final String _SQL_COUNT_KBARTICLE = "SELECT COUNT(kbArticle) FROM KBArticle kbArticle";
