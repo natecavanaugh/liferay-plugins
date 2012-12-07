@@ -35,7 +35,7 @@ boolean readOnly = ParamUtil.getBoolean(request, "readOnly");
 	<%@ include file="/event_recorder.jspf" %>
 </script>
 
-<aui:script use="aui-toggler,liferay-calendar-list,liferay-scheduler,liferay-store,json">
+<aui:script use="aui-toggler,cookie,liferay-calendar-list,liferay-scheduler,liferay-store,json">
 	Liferay.CalendarUtil.PORTLET_NAMESPACE = '<portlet:namespace />';
 	Liferay.CalendarUtil.USER_TIMEZONE_OFFSET = <%= JCalendarUtil.getTimeZoneOffset(userTimeZone) %>;
 
@@ -96,9 +96,22 @@ boolean readOnly = ParamUtil.getBoolean(request, "readOnly");
 		);
 	</c:if>
 
+	var activeView = window.<portlet:namespace /><%= activeView %>View;
+
+	var activeViewCookie = A.Cookie.get('calendar-portlet-calendar-activeView');
+
+	if (activeViewCookie) {
+		activeView = window['<portlet:namespace />' + activeViewCookie + 'View'];
+	}
+
 	window.<portlet:namespace />scheduler = new Liferay.Scheduler(
 		{
-			activeView: window.<portlet:namespace /><%= activeView %>View,
+			activeView: activeView,
+			after: {
+				activeViewChange: function(event) {
+					A.Cookie.set('calendar-portlet-calendar-activeView', event.newVal.get('name'));
+				}
+			},
 			boundingBox: '#<portlet:namespace />scheduler',
 			date: new Date(<%= date %>),
 			eventRecorder: window.<portlet:namespace />eventRecorder,
