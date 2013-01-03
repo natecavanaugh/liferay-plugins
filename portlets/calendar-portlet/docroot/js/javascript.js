@@ -1227,6 +1227,8 @@ AUI.add(
 					_afterActiveViewChange: function(event) {
 						var instance = this;
 
+						var activeView = instance.get('activeView');
+
 						Scheduler.superclass._afterActiveViewChange.apply(this, arguments);
 
 						instance.load();
