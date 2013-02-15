@@ -1,7 +1,7 @@
 #if (($company.getLogoId() == 0) && !$layout.layoutSet.isLogo())
-	#set ($site_logo = $images_folder + "/custom/so_logo.png")
-	#set ($site_logo_height = "64px")
-	#set ($site_logo_width = "186px")
+	#set ($site_logo = "${images_folder}/custom/so_logo.png")
+	#set ($site_logo_height = 64)
+	#set ($site_logo_width = 186)
 #end
 
 #if ($is_signed_in)
