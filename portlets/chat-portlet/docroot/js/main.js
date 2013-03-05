@@ -1032,16 +1032,6 @@ AUI().use(
 				}
 			},
 
-			_isMessageNew: function(entry, userId) {
-				var instance = this;
-
-				var createDate = entry.createDate;
-				var initDate = instance._created;
-				var closedDate = instance._closedChats[userId] || 0;
-
-				return (createDate > initDate && createDate > closedDate);
-			},
-
 			_onPanelClose: function(event) {
 				var instance = this;
 
@@ -1224,7 +1214,7 @@ AUI().use(
 						if (buddy && incoming) {
 							var chat = instance._chatSessions[userId];
 
-							if (!chat && entry.content && instance._isMessageNew(entry, userId)) {
+							if (!chat && entry.content) {
 								chat = instance._createChatSession(
 									{
 										portraitId: buddy.portraitId,
