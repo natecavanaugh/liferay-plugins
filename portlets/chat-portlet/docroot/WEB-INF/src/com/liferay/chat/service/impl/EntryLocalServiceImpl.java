@@ -77,6 +77,12 @@ public class EntryLocalServiceImpl extends EntryLocalServiceBaseImpl {
 		entryPersistence.removeByToUserId(userId);
 	}
 
+	public List<Entry> getConversationEntries(long fromUserId, long toUserId)
+		throws SystemException {
+
+		return entryPersistence.findByF_T(fromUserId, toUserId);
+	}
+
 	public List<Entry> getNewEntries(
 			long userId, long createDate, int start, int end)
 		throws SystemException {

@@ -14,6 +14,7 @@
 
 package com.liferay.chat.poller;
 
+import com.liferay.chat.model.ChatEntryConstants;
 import com.liferay.chat.model.Entry;
 import com.liferay.chat.model.Status;
 import com.liferay.chat.service.EntryLocalServiceUtil;
@@ -27,6 +28,7 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.poller.BasePollerProcessor;
 import com.liferay.portal.kernel.poller.PollerRequest;
 import com.liferay.portal.kernel.poller.PollerResponse;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.Time;
@@ -116,10 +118,10 @@ public class ChatPollerProcessor extends BasePollerProcessor {
 		Status status = StatusLocalServiceUtil.getUserStatus(
 			pollerRequest.getUserId());
 
-		long createDate = status.getModifiedDate();
+		long createDate = -1;
 
 		if (pollerRequest.isInitialRequest()) {
-			createDate = createDate - Time.DAY;
+			createDate = status.getModifiedDate() - Time.DAY;
 		}
 
 		List<Entry> entries = EntryLocalServiceUtil.getNewEntries(
@@ -203,6 +205,19 @@ public class ChatPollerProcessor extends BasePollerProcessor {
 			StatusLocalServiceUtil.updateStatus(
 				pollerRequest.getUserId(), timestamp, online, awake,
 				activePanelId, statusMessage, playSound);
+		}
+
+		if (activePanelId == null) {
+			return;
+		}
+
+		List<Entry> entries = EntryLocalServiceUtil.getConversationEntries(
+			GetterUtil.getLong(activePanelId), pollerRequest.getUserId());
+
+		for (Entry entry : entries) {
+			entry.setFlag(ChatEntryConstants.READ);
+
+			EntryLocalServiceUtil.updateEntry(entry);
 		}
 	}
 
