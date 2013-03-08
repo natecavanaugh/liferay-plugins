@@ -4,6 +4,8 @@
 <project name="build-common" xmlns:ivy="antlib:org.apache.ivy.ant">
 	<property environment="env" />
 
+	<property location="${project.dir}" name="project.location.absolute" />
+
 	<property file="${project.dir}/build.${user.name}.properties" />
 	<property file="${project.dir}/build.${env.COMPUTERNAME}.properties" />
 	<property file="${project.dir}/build.${env.HOST}.properties" />
@@ -11,13 +13,9 @@
 	<property file="${project.dir}/build.properties" />
 
 	<property name="app.server.classes.portal.dir" value="${app.server.portal.dir}/WEB-INF/classes" />
-	<property name="app.server.lib.portal.dir" location="${app.server.portal.dir}/WEB-INF/lib" />
+	<property location="${app.server.portal.dir}/WEB-INF/lib" name="app.server.lib.portal.dir" />
 
-	<condition property="ivy.home" value="${env.IVY_HOME}">
-		<isset property="env.IVY_HOME" />
-	</condition>
-
-	<property name="ivy.home" value="${user.home}/.ivy" />
+	<property name="ivy.home" value="${project.location.absolute}/.ivy" />
 	<property name="ivy.install.version" value="2.2.0" />
 	<property name="ivy.jar.dir" value="${ivy.home}/lib" />
 
@@ -87,6 +85,12 @@
 
 	<taskdef classpathref="ivy.lib.classpath" resource="net/sf/antcontrib/antlib.xml" />
 	<taskdef classpathref="ivy.lib.classpath" resource="ise/antelope/tasks/antlib.xml" uri="antlib:ise.antelope.tasks" />
+
+	<propertycopy
+		from="project.location.absolute"
+		name="project.dir"
+		override="true"
+	/>
 
 	<condition property="correct.ant.version">
 		<antversion atleast="1.7.0" />
