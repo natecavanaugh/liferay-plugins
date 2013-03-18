@@ -4,6 +4,7 @@ AUI().use(
 	'aui-base',
 	'aui-live-search',
 	'liferay-poller',
+	'liferay-store',
 	'stylesheet',
 	'swfobject',
 	function(A) {
@@ -181,10 +182,21 @@ AUI().use(
 			hide: function() {
 				var instance = this;
 
-				instance.set('selected', false);
-				instance._panel.removeClass('selected');
+				instance._hidePanel();
 
 				instance.fire('hide');
+			},
+
+			minimize: function() {
+				var instance = this;
+
+				instance._hidePanel();
+			},
+
+			restore: function() {
+				var instance = this;
+
+				instance._showPanel();
 			},
 
 			resumeEvents: function() {
@@ -203,8 +215,9 @@ AUI().use(
 			show: function() {
 				var instance = this;
 
-				instance.set('selected', true);
-				instance._panel.addClass('selected');
+				instance._unregisterPanelMinimized();
+
+				instance._showPanel();
 
 				instance.fire('show');
 			},
@@ -264,6 +277,49 @@ AUI().use(
 				instance._tabsContainer.append(panel);
 			},
 
+			_hidePanel: function() {
+				var instance = this;
+
+				instance._registerPanelMinimized();
+
+				instance.set('selected', false);
+
+				instance._panel.removeClass('selected');
+			},
+
+			_registerPanelMinimized: function() {
+				var instance = this;
+
+				var panelId = instance._panel.attr('panelid');
+
+				if (panelId) {
+					var id = parseInt(panelId, 10);
+
+					Liferay.Store(
+						'minimized-panels',
+						function(panels) {
+							if (!(panels && A.Lang.isArray(panels))) {
+								panels = [];
+							}
+
+							if (panels.indexOf(id) < 0) {
+								panels.push(id);
+
+								Liferay.Store('minimized-panels', panels);
+							}
+						}
+					);
+				}
+			},
+
+			_showPanel: function() {
+				var instance = this;
+
+				instance.set('selected', true);
+
+				instance._panel.addClass('selected');
+			},
+
 			_setPanelHTML: function(html) {
 				var instance = this;
 
@@ -282,6 +338,27 @@ AUI().use(
 				}
 
 				return html;
+			},
+
+			_unregisterPanelMinimized: function() {
+				var instance = this;
+
+				var panelId = instance._panel.attr('panelid');
+
+				if (panelId) {
+					var id = parseInt(panelId, 10);
+
+					Liferay.Store(
+						'minimized-panels',
+						function(panels) {
+							if (panels && (panels.indexOf(id) > -1)) {
+								A.Array.removeItem(panels, id);
+
+								Liferay.Store('minimized-panels', panels);
+							}
+						}
+					);
+				}
 			}
 		};
 
@@ -866,8 +943,6 @@ AUI().use(
 			_createChatFromUser: function(user) {
 				var instance = this;
 
-				var buddy;
-				var buddies = instance._buddies;
 				var userId = user;
 
 				user = A.one(user);
@@ -877,7 +952,7 @@ AUI().use(
 				}
 
 				if (!isNaN(Number(userId))) {
-					buddy = buddies[userId];
+					var buddy = instance._buddies[userId];
 
 					if (buddy) {
 						var chat = instance._chatSessions[userId];
@@ -1027,6 +1102,10 @@ AUI().use(
 						userEntryCache[entry.entryId] = entry;
 
 						instance._entryIds.push(entry.entryId);
+
+						if (entry.fromUserId == currentUserId) {
+							entry.flag = 1;
+						}
 					}
 				}
 			},
@@ -1240,7 +1319,51 @@ AUI().use(
 
 				instance._loadCache(entries);
 
-				instance._initialRequest = false;
+				if (instance._initialRequest) {
+					instance._restoreMinimizedChats();
+
+					instance._initialRequest = false;
+				}
+			},
+
+			_restoreMinimizedChats: function() {
+				var instance = this;
+
+				var buddies = instance._buddies;
+
+				if (buddies) {
+					Liferay.Store(
+						'minimized-panels',
+						function(panels) {
+							A.Array.map(
+								panels,
+								function(item, index, collection) {
+									var buddy = buddies[item];
+
+									if (buddy)	{
+										var buddyUserId = buddy.userId;
+
+										if (buddyUserId != instance._activePanelId) {
+											var chat = instance._chatSessions[buddyUserId];
+
+											if (!chat) {
+												chat = instance._createChatSession(buddy);
+
+												chat.restore();
+
+												chat.minimize();
+
+												var panel = chat.getPanel();
+
+												panel.one('.unread').hide();
+											}
+										}
+									}
+								}
+							);
+						}
+					);
+				}
 			},
 
 			_updatePresence: function() {
