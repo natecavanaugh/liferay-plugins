@@ -2,7 +2,7 @@
 	#if ($browserSniffer.isIe($request) && $browserSniffer.getMajorVersion($request) < 8)
 		<table class="portlet-layout">
 		<tr>
-			<td class="portlet-column portlet-column-only" id="column-1">
+			<td class="aui-w100 portlet-column portlet-column-only" id="column-1">
 				$processor.processColumn("column-1", "portlet-column-content portlet-column-content-only")
 			</td>
 		</tr>
@@ -24,14 +24,14 @@
 
 		<table class="portlet-layout">
 		<tr>
-			<td class="portlet-column portlet-column-only" id="column-5">
+			<td class="aui-w100 portlet-column portlet-column-only" id="column-5">
 				$processor.processColumn("column-5", "portlet-column-content portlet-column-content-only")
 			</td>
 		</tr>
 		</table>
 	#else
 		<div class="portlet-layout">
-			<div class="portlet-column portlet-column-only" id="column-1">
+			<div class="aui-w100 portlet-column portlet-column-only" id="column-1">
 				$processor.processColumn("column-1", "portlet-column-content portlet-column-content-only")
 			</div>
 		</div>
@@ -51,7 +51,7 @@
 		</div>
 
 		<div class="portlet-layout">
-			<div class="portlet-column portlet-column-only" id="column-5">
+			<div class="aui-w100 portlet-column portlet-column-only" id="column-5">
 				$processor.processColumn("column-5", "portlet-column-content portlet-column-content-only")
 			</div>
 		</div>
