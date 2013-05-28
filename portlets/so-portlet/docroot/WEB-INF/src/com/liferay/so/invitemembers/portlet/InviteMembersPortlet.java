@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2000-2012 Liferay, Inc. All rights reserved.
+ * Copyright (c) 2000-2013 Liferay, Inc. All rights reserved.
  *
  * This file is part of Liferay Social Office. Liferay Social Office is free
  * software: you can redistribute it and/or modify it under the terms of the GNU
@@ -25,10 +25,12 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.GroupConstants;
+import com.liferay.portal.model.Layout;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.security.permission.PermissionCheckerFactoryUtil;
 import com.liferay.portal.service.GroupLocalServiceUtil;
+import com.liferay.portal.service.LayoutLocalServiceUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceContextFactory;
 import com.liferay.portal.service.UserLocalServiceUtil;
@@ -91,12 +93,23 @@ public class InviteMembersPortlet extends MVCPortlet {
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
 			actionRequest);
 
+		long plid = themeDisplay.getPlid();
+
+		Layout layout = LayoutLocalServiceUtil.getLayout(plid);
+
+		if (layout.isPrivateLayout()) {
+			Group guestGroup = GroupLocalServiceUtil.getGroup(
+				themeDisplay.getCompanyId(), GroupConstants.GUEST);
+
+			plid = guestGroup.getDefaultPublicPlid();
+		}
+
 		PortletURL portletURL = PortletURLFactoryUtil.create(
-			actionRequest, PortletKeys.SO_NOTIFICATION, themeDisplay.getPlid(),
+			actionRequest, PortletKeys.SO_NOTIFICATION, plid,
 			PortletRequest.RENDER_PHASE);
 
 		portletURL.setParameter("mvcPath", "/notifications/view.jsp");
-		portletURL.setParameter("p_p_state", WindowState.MAXIMIZED.toString());
+		portletURL.setWindowState(WindowState.MAXIMIZED);
 
 		serviceContext.setAttribute("redirectURL", portletURL.toString());
 

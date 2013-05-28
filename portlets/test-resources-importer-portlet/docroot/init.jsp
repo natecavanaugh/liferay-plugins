@@ -1,6 +1,6 @@
 <%--
 /**
- * Copyright (c) 2000-2012 Liferay, Inc. All rights reserved.
+ * Copyright (c) 2000-2013 Liferay, Inc. All rights reserved.
  *
  * This library is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Lesser General Public License as published by the Free
@@ -21,7 +21,8 @@
 <%@ taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %>
 <%@ taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
 
-<%@ page import="com.liferay.portal.kernel.messaging.DestinationNames" %><%@
+<%@ page import="com.liferay.portal.kernel.lar.PortletDataHandlerKeys" %><%@
+page import="com.liferay.portal.kernel.messaging.DestinationNames" %><%@
 page import="com.liferay.portal.kernel.messaging.Message" %><%@
 page import="com.liferay.portal.kernel.messaging.MessageBusUtil" %><%@
 page import="com.liferay.portal.kernel.util.ArrayUtil" %><%@
@@ -45,7 +46,11 @@ page import="com.liferay.portlet.journal.service.JournalArticleLocalServiceUtil"
 page import="com.liferay.portlet.journal.service.JournalStructureLocalServiceUtil" %><%@
 page import="com.liferay.portlet.journal.service.JournalTemplateLocalServiceUtil" %>
 
-<%@ page import="java.util.Map" %>
+<%@ page import="java.io.File" %>
+
+<%@ page import="java.util.HashMap" %><%@
+page import="java.util.Locale" %><%@
+page import="java.util.Map" %>
 
 <portlet:defineObjects />
 

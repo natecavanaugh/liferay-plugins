@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2000-2012 Liferay, Inc. All rights reserved.
+ * Copyright (c) 2000-2013 Liferay, Inc. All rights reserved.
  *
  * This library is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Lesser General Public License as published by the Free
@@ -271,13 +271,13 @@ public class TasksEntryLocalServiceWrapper implements TasksEntryLocalService,
 	public com.liferay.tasks.model.TasksEntry addTasksEntry(long userId,
 		java.lang.String title, int priority, long assigneeUserId,
 		int dueDateMonth, int dueDateDay, int dueDateYear, int dueDateHour,
-		int dueDateMinute, boolean neverDue,
+		int dueDateMinute, boolean addDueDate,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		return _tasksEntryLocalService.addTasksEntry(userId, title, priority,
 			assigneeUserId, dueDateMonth, dueDateDay, dueDateYear, dueDateHour,
-			dueDateMinute, neverDue, serviceContext);
+			dueDateMinute, addDueDate, serviceContext);
 	}
 
 	public java.util.List<com.liferay.tasks.model.TasksEntry> getAssigneeTasksEntries(
@@ -396,13 +396,13 @@ public class TasksEntryLocalServiceWrapper implements TasksEntryLocalService,
 		long tasksEntryId, java.lang.String title, int priority,
 		long assigneeUserId, long resolverUserId, int dueDateMonth,
 		int dueDateDay, int dueDateYear, int dueDateHour, int dueDateMinute,
-		boolean neverDue, int status,
+		boolean addDueDate, int status,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		return _tasksEntryLocalService.updateTasksEntry(tasksEntryId, title,
 			priority, assigneeUserId, resolverUserId, dueDateMonth, dueDateDay,
-			dueDateYear, dueDateHour, dueDateMinute, neverDue, status,
+			dueDateYear, dueDateHour, dueDateMinute, addDueDate, status,
 			serviceContext);
 	}
 
