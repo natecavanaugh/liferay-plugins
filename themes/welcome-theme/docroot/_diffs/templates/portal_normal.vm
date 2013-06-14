@@ -2,7 +2,7 @@
 
 #parse ($init)
 
-<html class="#language ("lang.dir")" dir="#language ("lang.dir")" lang="$w3c_language_id">
+<html class="$root_css_class" dir="#language ("lang.dir")" lang="$w3c_language_id">
 
 <head>
 	<title>$the_title - $company_name</title>
@@ -20,80 +20,94 @@ $theme.include($body_top_include)
 	#dockbar()
 #end
 
-<div id="wrapper">
+<div class="container-fluid" id="wrapper">
 	<header id="banner" role="banner">
-		<div id="heading">
-			<h1 class="site-title">
-				<a class="$logo_css_class" href="$site_default_url" title="#language ("go-to") $site_name">
-					<img alt="$logo_description" height="$site_logo_height" src="$site_logo" width="$site_logo_width" />
-				</a>
+		<div class="row-fluid">
+			<div class="span12">
+				<div id="heading">
+					<h1 class="site-title">
+						<a class="$logo_css_class" href="$site_default_url" title="#language ("go-to") $site_name">
+							<img alt="$logo_description" height="$site_logo_height" src="$site_logo" width="$site_logo_width" />
+						</a>
 
-				#if ($show_site_name)
-					<span class="site-name" title="#language ("go-to") $site_name">
-						$site_name
-					</span>
+						#if ($show_site_name)
+							<span class="site-name" title="#language ("go-to") $site_name">
+								$site_name
+							</span>
+						#end
+					</h1>
+
+					<h2 class="page-title">
+						<span>Welcome to Liferay Portal</span>
+					</h2>
+				</div>
+
+				#if (!$is_signed_in)
+					<a href="$sign_in_url" id="sign-in" rel="nofollow">$sign_in_text</a>
 				#end
-			</h1>
-
-			<h2 class="page-title">
-				<span>Welcome to Liferay Portal</span>
-			</h2>
+			</div>
 		</div>
 
-		#if (!$is_signed_in)
-			<a href="$sign_in_url" id="sign-in" rel="nofollow">$sign_in_text</a>
-		#end
-
 		#if ($has_navigation || $is_signed_in)
-			#parse ("$full_templates_path/navigation.vm")
+			<div class="row-fluid">
+				<div class="span12">
+					#parse ("$full_templates_path/navigation.vm")
+				</div>
+			</div>
 		#end
 	</header>
 
-	<div id="content">
-		#if ($selectable)
-			$theme.include($content_include)
-		#else
-			$portletDisplay.recycle()
+	<div class="row-fluid">
+		<div class="span12">
+			<div id="content">
+				#if ($selectable)
+					$theme.include($content_include)
+				#else
+					$portletDisplay.recycle()
 
-			$portletDisplay.setTitle($the_title)
+					$portletDisplay.setTitle($the_title)
 
-			$theme.wrapPortlet("portlet.vm", $content_include)
-		#end
+					$theme.wrapPortlet("portlet.vm", $content_include)
+				#end
+			</div>
+		</div>
 	</div>
 
 	<footer id="footer" role="contentinfo">
-		<div class="column-1" id="social-office">
-			<div class="footer-column-content">
-				<span class="footer-logo"></span>
+		<div class="row-fluid">
+			<div class="span4" id="social-office">
+				<div class="footer-column-content">
+					<span class="footer-logo"></span>
 
-				<div class="footer-box">
-					<h3>Want Easy Social Collaboration?</h3>
+					<div class="footer-content">
+						<h3>Want Easy Social Collaboration?</h3>
 
-					<a href="//www.liferay.com/socialoffice?wh=14">Get Social Office &#9658;</a>
+						<a href="//www.liferay.com/socialoffice?wh=14">Get Social Office &#9658;</a>
+					</div>
 				</div>
 			</div>
-		</div>
 
-		<div class="column-2" id="getting-started">
-			<div class="footer-column-content">
-				<span class="footer-logo"></span>
+			<div class="span4" id="getting-started">
+				<div class="footer-column-content">
+					<span class="footer-logo"></span>
 
-				<div class="footer-box">
-					<h3>Need Help Getting Started?</h3>
+					<div class="footer-content">
+						<h3>Need Help Getting Started?</h3>
 
-					<a href="//www.liferay.com/start?wh=15">Click here &#9658;</a>
+						<a href="//www.liferay.com/start?wh=15">Click here &#9658;</a>
+					</div>
 				</div>
 			</div>
-		</div>
 
-		<div class="column-3" id="ide">
-			<div class="footer-column-content">
-				<span class="footer-logo"></span>
+			<div class="span4" id="ide">
+				<div class="footer-column-content">
+					<span class="footer-logo"></span>
 
-				<div class="footer-box">
-					<h3>Develop Faster.</h3>
+					<div class="footer-content">
+						<h3>Develop Faster.</h3>
 
-					<a href="//www.liferay.com/ide?wh=16">Click here &#9658;</a>
+						<a href="//www.liferay.com/ide?wh=16">Click here &#9658;</a>
+					</div>
 				</div>
 			</div>
 		</div>
