@@ -46,7 +46,7 @@
 
 <script charset="utf-8" type="text/javascript">
 	AUI().ready(
-		'aui-base',
+		'node-event-delegate',
 		function(A) {
 			var hash = null;
 
