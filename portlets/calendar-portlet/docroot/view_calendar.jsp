@@ -63,11 +63,13 @@ if ((userCalendars != null) && (userCalendars.size() > 0)) {
 JSONArray groupCalendarsJSONArray = CalendarUtil.toCalendarsJSONArray(themeDisplay, groupCalendars);
 JSONArray userCalendarsJSONArray = CalendarUtil.toCalendarsJSONArray(themeDisplay, userCalendars);
 JSONArray otherCalendarsJSONArray = CalendarUtil.toCalendarsJSONArray(themeDisplay, otherCalendars);
+
+boolean columnCollapsed = GetterUtil.getBoolean(SessionClicks.get(request, "calendar-portlet-column-options-collapsed", "false"));
 %>
 
-<aui:container cssClass="calendar-portlet-column-parent">
+<aui:container cssClass='<%= "calendar-portlet-column-parent" + (columnCollapsed ? " calendar-child-column-collapsed" : "") %>'>
 	<aui:row>
-		<aui:col cssClass="calendar-portlet-column-options" span="<%= 3 %>">
+		<aui:col cssClass='<%= "calendar-portlet-column-options" + (columnCollapsed ? " calendar-column-collapsed" : "") %>' span="<%= 3 %>">
 			<c:if test="<%= (userDefaultCalendar != null) && CalendarPermission.contains(permissionChecker, userDefaultCalendar, ActionKeys.MANAGE_BOOKINGS) %>">
 				<aui:button-row cssClass="calendar-create-event-btn-row">
 					<aui:button onClick='<%= renderResponse.getNamespace() + \"onCreateEventClick();\" %>' primary="true" value="add-calendar-booking" />
@@ -121,7 +123,7 @@ JSONArray otherCalendarsJSONArray = CalendarUtil.toCalendarsJSONArray(themeDispl
 			<div id="<portlet:namespace />message"></div>
 		</aui:col>
 
-		<aui:col cssClass="calendar-portlet-column-grid" span="<%= 9 %>">
+		<aui:col cssClass="calendar-portlet-column-grid" span="<%= (columnCollapsed ? 12 : 9) %>">
 			<liferay-util:include page="/scheduler.jsp" servletContext="<%= application %>">
 				<liferay-util:param name="activeView" value="<%= activeView %>" />
 				<liferay-util:param name="date" value="<%= String.valueOf(date) %>" />
@@ -162,6 +164,11 @@ JSONArray otherCalendarsJSONArray = CalendarUtil.toCalendarsJSONArray(themeDispl
 				<liferay-util:param name="viewCalendarBookingURL" value="<%= viewCalendarBookingURL %>" />
 			</liferay-util:include>
 		</aui:col>
+
+		<div class="calendar-collapse-button">
+			<i class="<%= columnCollapsed ? "icon-caret-right" : "icon-caret-left"  %>"></i>
+		</div>
+
 	</aui:row>
 </aui:container>
 
@@ -317,6 +324,28 @@ JSONArray otherCalendarsJSONArray = CalendarUtil.toCalendarsJSONArray(themeDispl
 			}
 		);
 	</c:if>
+
+	A.one('.calendar-collapse-button').on(
+		'click',
+		function(event) {
+			var parentColumn = A.one('.calendar-portlet-column-parent');
+
+			parentColumn.toggleClass('calendar-child-column-collapsed');
+
+			var collapsed = parentColumn.hasClass('calendar-child-column-collapsed');
+
+			if (collapsed) {
+				A.one('.calendar-portlet-column-grid').replaceClass('span9', 'span12');
+				A.one('.calendar-collapse-button i').replaceClass('icon-caret-left', 'icon-caret-right');
+			}
+			else {
+				A.one('.calendar-portlet-column-grid').replaceClass('span12', 'span9');
+				A.one('.calendar-collapse-button i').replaceClass('icon-caret-right', 'icon-caret-left');
+			}
+
+			Liferay.Store('calendar-portlet-column-options-collapsed', collapsed);
+		}
+	);
 </aui:script>
 
 <aui:script use="aui-base,aui-datatype,calendar">
