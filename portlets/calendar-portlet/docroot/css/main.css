@@ -498,3 +498,32 @@
 .simple-color-picker-item:hover, .simple-color-picker-item-selected {
 	@include transition(border-color 0s);
 }
+
+.calendar-collapse-button {
+	position: absolute;
+	padding: 33% 0.3em;
+	right: 74%;
+	cursor: pointer;
+}
+
+.calendar-portlet-column-parent {
+	position: relative;
+
+	&.calendar-child-column-collapsed {
+
+		.calendar-portlet-column-options {
+			overflow: hidden;
+			width: 0;
+		}
+
+		.calendar-portlet-column-grid {
+			float: right;
+			margin-left: 0;
+		}
+
+		.calendar-collapse-button {
+			right: auto;
+			left: 0%;
+		}
+	}
+}
