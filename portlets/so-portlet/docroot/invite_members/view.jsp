@@ -1,6 +1,6 @@
 <%--
 /**
- * Copyright (c) 2000-2012 Liferay, Inc. All rights reserved.
+ * Copyright (c) 2000-2013 Liferay, Inc. All rights reserved.
  *
  * This file is part of Liferay Social Office. Liferay Social Office is free
  * software: you can redistribute it and/or modify it under the terms of the GNU
@@ -34,7 +34,7 @@ Group group = GroupLocalServiceUtil.getGroup(scopeGroupId);
 
 		<a class="invite-members" href="javascript:;" onClick="<portlet:namespace />openInviteMembers('<%= inviteURL %>');"><liferay-ui:message key="invite-members-to-this-site" /></a>
 
-		<aui:script use="aui-base,aui-dialog,aui-io-plugin,liferay-soffice-invitemembers">
+		<aui:script position="inline" use="aui-base,aui-dialog,aui-io-plugin,liferay-soffice-invitemembers">
 			Liferay.provide(
 				window,
 				'<portlet:namespace />openInviteMembers',

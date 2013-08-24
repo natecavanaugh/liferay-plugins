@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2000-2012 Liferay, Inc. All rights reserved.
+ * Copyright (c) 2000-2013 Liferay, Inc. All rights reserved.
  *
  * This library is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Lesser General Public License as published by the Free
@@ -14,6 +14,7 @@
 
 package com.liferay.opensocial.shindig.service;
 
+import com.liferay.compat.portal.util.PortalUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -30,7 +31,6 @@ import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.service.OrganizationLocalServiceUtil;
 import com.liferay.portal.service.PhoneServiceUtil;
 import com.liferay.portal.service.UserLocalServiceUtil;
-import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.webserver.WebServerServletTokenUtil;
 import com.liferay.portlet.social.model.SocialRelationConstants;
 
@@ -50,11 +50,11 @@ import org.apache.shindig.protocol.RestfulCollection;
 import org.apache.shindig.social.core.model.ListFieldImpl;
 import org.apache.shindig.social.core.model.NameImpl;
 import org.apache.shindig.social.core.model.PersonImpl;
-import org.apache.shindig.social.opensocial.model.ListField.Field;
 import org.apache.shindig.social.opensocial.model.ListField;
+import org.apache.shindig.social.opensocial.model.ListField.Field;
 import org.apache.shindig.social.opensocial.model.Name;
-import org.apache.shindig.social.opensocial.model.Person.Gender;
 import org.apache.shindig.social.opensocial.model.Person;
+import org.apache.shindig.social.opensocial.model.Person.Gender;
 import org.apache.shindig.social.opensocial.spi.CollectionOptions;
 import org.apache.shindig.social.opensocial.spi.GroupId;
 import org.apache.shindig.social.opensocial.spi.PersonService;
@@ -211,8 +211,8 @@ public class LiferayPersonService implements PersonService {
 				OrganizationLocalServiceUtil.getOrganization(
 					group.getClassPK());
 
-			Name name =
-				new NameImpl(organization.getName() + " (Organization)");
+			Name name = new NameImpl(
+				organization.getName() + " (Organization)");
 
 			person = new PersonImpl(groupId, name.getFormatted(), name);
 
@@ -314,7 +314,8 @@ public class LiferayPersonService implements PersonService {
 		if (fields.contains(Person.Field.GENDER.toString())) {
 			if (user.isFemale()) {
 				person.setGender(Gender.female);
-			} else {
+			}
+			else {
 				person.setGender(Gender.male);
 			}
 		}

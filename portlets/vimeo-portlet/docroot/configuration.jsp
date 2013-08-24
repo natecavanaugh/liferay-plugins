@@ -1,6 +1,6 @@
 <%--
 /**
- * Copyright (c) 2000-2012 Liferay, Inc. All rights reserved.
+ * Copyright (c) 2000-2013 Liferay, Inc. All rights reserved.
  *
  * This library is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Lesser General Public License as published by the Free
@@ -81,8 +81,8 @@
 </aui:form>
 
 <aui:script use="aui-color-picker,aui-datatype,aui-swf">
-	var swfURL = '<%= _SWF_URL %>';
-	var watchURL = '<%= _WATCH_URL %>';
+	var swfURL = '<%= HttpUtil.getProtocol(request) + _SWF_URL %>';
+	var watchURL = '<%= HttpUtil.getProtocol(request) + _WATCH_URL %>';
 
 	var allInputsNode = A.all('#<portlet:namespace />fm input');
 
@@ -181,7 +181,7 @@
 
 	A.on(
 		'change',
-		function (e) {
+		function(e) {
 			createPlayer();
 		},
 		allInputsNode
@@ -196,7 +196,7 @@
 
 	A.on(
 		'change',
-		function (e) {
+		function(e) {
 			presetSizeNode.val('');
 
 			presetSizeNode.val(widthNode.val() + 'x' + heightNode.val());
@@ -206,7 +206,7 @@
 
 	A.on(
 		'change',
-		function (e) {
+		function(e) {
 			presetSizeNode.val('');
 
 			presetSizeNode.val(widthNode.val() + 'x' + heightNode.val());
@@ -216,7 +216,7 @@
 
 	A.on(
 		'click',
-		function (e) {
+		function(e) {
 			e.preventDefault();
 
 			submitForm(document['<portlet:namespace />fm']);
@@ -226,7 +226,7 @@
 
 	A.on(
 		'windowresize',
-		function (e) {
+		function(e) {
 			createPlayer();
 		}
 	);
@@ -234,7 +234,7 @@
 	new A.ColorPicker(
 		{
 			after: {
-				colorChange: function (e) {
+				colorChange: function(e) {
 					playerColorNode.val('#' + this.get('hex'));
 
 					createPlayer();

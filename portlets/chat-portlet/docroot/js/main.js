@@ -8,21 +8,23 @@ AUI().use(
 	'swfobject',
 	function(A) {
 		var Lang = A.Lang;
+		var Notification = A.config.win.Notification;
 
 		var now = Lang.now;
 
 		var DOC = A.config.doc;
 
-		var NOTIFICATIONS = A.config.win.webkitNotifications;
+		var NOTIFICATIONS_PERMISSION_DEFAULT = 'default';
 
-		var NOTIFICATIONS_ALLOWED = 0;
-		var NOTIFICATIONS_NOT_ALLOWED = 1;
+		var NOTIFICATIONS_PERMISSION_GRANTED = 'granted';
+
+		var NOTIFICATIONS_LIST = [];
 
 		var STR_NEW_MESSAGE = Liferay.Language.get('new-message-from-x');
 
 		Liferay.namespace('Chat');
 
-		A.one(DOC.documentElement).toggleClass('desktop-notifications', !!NOTIFICATIONS);
+		A.one(DOC.documentElement).toggleClass('desktop-notifications', !!Notification);
 
 		Liferay.Chat.Util = {
 			getDefaultColor: function() {
@@ -36,7 +38,7 @@ AUI().use(
 					if (bgColorNode) {
 						defaultColor = bgColorNode.getStyle('backgroundColor');
 
-						while (defaultColor == 'transparent') {
+						while (defaultColor.toLowerCase() == 'transparent') {
 							defaultColor = bgColorNode.getStyle('backgroundColor');
 
 							bgColorNode = bgColorNode.ancestor();
@@ -70,7 +72,8 @@ AUI().use(
 			formatTime: function(time) {
 				var instance = this;
 
-				time = Number(time);
+				time = instance._convertToClientTimestamp(time);
+
 				time = new Date(time);
 
 				var meridian = 'am';
@@ -108,13 +111,23 @@ AUI().use(
 				return themeDisplay.getPathImage() + '/user_portrait?img_id=' + userId;
 			},
 
+			_convertToClientTimestamp: function(time) {
+				var instance = this;
+
+				time = Number(time);
+
+				time += instance._getOffset();
+
+				return time;
+			},
+
 			_getOffset: function() {
 				var instance = this;
 
 				var offset = instance._offset;
 
 				if (Lang.isUndefined(offset)) {
-					var currentChatServerTime = A.one('#currentChatServerTime').val() || 0;
+					var currentChatServerTime = A.one('#currentChatServerTime').val() || now();
 
 					offset = now() - currentChatServerTime;
 
@@ -143,8 +156,6 @@ AUI().use(
 			instance._panelId = options.panelId;
 			instance._panelTitle = options.panelTitle;
 			instance._panelIcon = options.panelIcon;
-
-			instance._created = Liferay.Chat.Util.getCurrentTimestamp();
 
 			var panelHTML = instance._setPanelHTML(options.panelHTML);
 
@@ -298,7 +309,6 @@ AUI().use(
 			instance._chatOutput = instance._panel.one('.panel-output');
 			instance._statusMessage = instance._panel.one('.panel-profile');
 
-			instance._created = Liferay.Chat.Util.getCurrentTimestamp();
 			instance._lastMessageTime = 0;
 			instance._lastTypedTime = 0;
 			instance._typingDelay = 5000;
@@ -650,19 +660,15 @@ AUI().use(
 			init: function() {
 				var instance = this;
 
-				instance._closedChats = {};
-				instance._notificationTimeout = 8000;
 				instance._initialRequest = true;
+				instance._notificationTimeout = 8000;
 
 				instance._chatContainer = A.one('#chatBar');
-				instance._activePanelId = A.one('#activePanelId').val() || '';
 				instance._portletId = A.one('#chatPortletId').val();
 
 				instance._myStatus = instance._chatContainer.one('.status-message');
 				instance._soundContainer = instance._chatContainer.one('.chat-sound');
 				instance._tabsContainer = instance._chatContainer.one('.chat-tabs');
-
-				instance._created = Liferay.Chat.Util.getCurrentTimestamp();
 
 				instance._sendTask = A.debounce(instance.send, 100, instance);
 
@@ -671,6 +677,8 @@ AUI().use(
 				instance._updatePresenceTask = A.debounce(instance._updatePresence, 30000, instance);
 
 				instance._updatePresenceTask.delay(0);
+
+				instance._notifyPermission = instance._getNotifyPermission();
 
 				Liferay.Poller.addListener(instance._portletId, instance._onPollerUpdate, instance);
 
@@ -683,20 +691,10 @@ AUI().use(
 					}
 				);
 
+				instance._initializeActivePanels();
+
 				instance._createBuddyListPanel();
 				instance._createSettingsPanel();
-			},
-
-			close: function(panelName) {
-				var instance = this;
-
-				if ((panelName != 'buddylist') && (panelName != 'settings')) {
-					var panel = instance._panels[panelName];
-
-					if (panel) {
-						panel.close();
-					}
-				}
 			},
 
 			getContainer: function() {
@@ -708,14 +706,43 @@ AUI().use(
 			notify: function(iconUrl, title, body) {
 				var instance = this;
 
-				if (NOTIFICATIONS && NOTIFICATIONS.checkPermission() === NOTIFICATIONS_ALLOWED) {
-					var notification = NOTIFICATIONS.createNotification(iconUrl, title, body);
+				if (instance._notifyPermission === NOTIFICATIONS_PERMISSION_GRANTED) {
+					var notification = new Notification(
+						title,
+						{
+							icon: iconUrl,
+							body: body
+						}
+					);
 
-					notification.show();
+					if (!NOTIFICATIONS_LIST.length) {
+						instance._notificationHandle = A.getWin().on(
+							'beforeunload',
+							function(event) {
+								A.Array.invoke(NOTIFICATIONS_LIST, 'close');
+
+								NOTIFICATIONS_LIST.length = 0;
+
+								instance._notificationHandle.detach();
+
+								instance._notificationHandle = null;
+							}
+						);
+					}
+
+					NOTIFICATIONS_LIST.push(notification);
 
 					setTimeout(
 						function() {
-							notification.cancel();
+							notification.close();
+
+							NOTIFICATIONS_LIST.shift();
+
+							if (!NOTIFICATIONS_LIST.length && instance._notificationHandle) {
+								instance._notificationHandle.detach();
+
+								instance._notificationHandle = null;
+							}
 						},
 						instance._notificationTimeout
 					);
@@ -920,19 +947,26 @@ AUI().use(
 					for (var i in entryCache) {
 						var entry = entryCache[i];
 
-						chat.update(
-							{
-								cache: true,
-								content: entry.content,
-								createDate: entry.createDate,
-								incoming: (entry.fromUserId == userId)
-							}
-						);
+						var incomingEntry = (entry.fromUserId == userId);
+
+						if (entry.flag || !incomingEntry) {
+							chat.update(
+								{
+									cache: true,
+									content: entry.content,
+									createDate: entry.createDate,
+									incoming: incomingEntry
+								}
+							);
+						}
 					}
 				}
 
 				if (options.open) {
 					chat.show();
+				}
+				else {
+					chat.setAsRead();
 				}
 
 				return chat;
@@ -962,16 +996,16 @@ AUI().use(
 				instance._online = instance._onlineObj.get('checked') ? 1 : 0;
 				instance._playSound = instance._playSoundObj.get('checked') ? 1 : 0;
 
-				if (NOTIFICATIONS) {
+				if (Notification) {
 					var showNotificationsObj = instance._showNotificationsObj;
 
-					var notifyPermission = NOTIFICATIONS.checkPermission();
+					var notifyPermission = instance._notifyPermission;
 
 					var attrs = {
-						checked: (notifyPermission === NOTIFICATIONS_ALLOWED)
+						checked: (notifyPermission === NOTIFICATIONS_PERMISSION_GRANTED)
 					};
 
-					if (notifyPermission === NOTIFICATIONS_NOT_ALLOWED) {
+					if (notifyPermission === NOTIFICATIONS_PERMISSION_DEFAULT) {
 						attrs.disabled = false;
 					}
 
@@ -981,15 +1015,65 @@ AUI().use(
 				saveSettings.on('click', instance._updateSettings, instance);
 			},
 
+			_getNotifyPermission: function() {
+				var notifyPermission;
+
+				if (Notification) {
+					if (Notification.permissionLevel) {
+						notifyPermission = Notification.permissionLevel();
+					}
+					else if (Notification.permission) {
+						notifyPermission = Notification.permission;
+					}
+					else if (A.config.win.webkitNotifications) {
+						var webkitNotifyPermission = A.config.win.webkitNotifications.checkPermission();
+
+						if (webkitNotifyPermission === 0) {
+							notifyPermission = NOTIFICATIONS_PERMISSION_GRANTED;
+						}
+						else if (webkitNotifyPermission === 1) {
+							notifyPermission = NOTIFICATIONS_PERMISSION_DEFAULT;
+						}
+					}
+				}
+
+				return notifyPermission;
+			},
+
 			_getSettings: function() {
 				var instance = this;
 
+				var activePanelIds = {
+					open: instance._openPanelId,
+					minimized: A.Object.keys(instance._minimizedPanelIds)
+				};
+
 				return {
-					activePanelId: instance._activePanelId,
+					activePanelIds: A.JSON.stringify(activePanelIds),
 					online: instance._online,
 					statusMessage: instance._statusMessage,
 					playSound: instance._playSound
 				};
+			},
+
+			_initializeActivePanels: function() {
+				var instance = this;
+
+				var activePanelIds = A.one('#activePanelIds').val() || '';
+
+				try {
+					activePanelIds = A.JSON.parse(activePanelIds);
+				}
+				catch (e) {
+					activePanelIds = {
+						open: null,
+						minimized: []
+					};
+				}
+
+				instance._activePanelIds = activePanelIds;
+
+				instance._openPanelId = activePanelIds.open || '';
 			},
 
 			_loadCache: function(entries) {
@@ -1004,7 +1088,7 @@ AUI().use(
 				}
 
 				var entryCache = instance._entryCache;
-				var entryIds = instance._entryIds;
+				var entryIds = instance._entryIds.join('|');
 
 				var currentUserId = themeDisplay.getUserId();
 
@@ -1025,21 +1109,14 @@ AUI().use(
 
 					var userEntryCache = entryCache[userId];
 
-					if (entry.content !== '') {
+					var entryProcessed = (entryIds.indexOf('|' + entry.entryId) > -1);
+
+					if (!entryProcessed) {
 						userEntryCache[entry.entryId] = entry;
-						entryIds.push(entry.entryId);
+
+						instance._entryIds.push(entry.entryId);
 					}
 				}
-			},
-
-			_isMessageNew: function(entry, userId) {
-				var instance = this;
-
-				var createDate = entry.createDate;
-				var initDate = instance._created;
-				var closedDate = instance._closedChats[userId] || 0;
-
-				return (createDate > initDate && createDate > closedDate);
 			},
 
 			_onPanelClose: function(event) {
@@ -1055,16 +1132,20 @@ AUI().use(
 					delete instance._chatSessions[userId];
 				}
 
-				instance._closedChats[userId] = Liferay.Chat.Util.getCurrentTimestamp();
-
-				instance._activePanelId = '';
+				instance._openPanelId = '';
 				instance._saveSettings();
 			},
 
 			_onPanelHide: function(event) {
 				var instance = this;
 
-				instance._activePanelId = '';
+				var userId = event.target._panelId;
+
+				if (Lang.toInt(userId)) {
+					Liferay.Chat.Manager._minimizedPanelIds[userId] = true;
+				}
+
+				instance._openPanelId = '';
 				instance._saveSettings();
 			},
 
@@ -1083,7 +1164,11 @@ AUI().use(
 					panel._chatInput.focus();
 				}
 
-				instance._activePanelId = panel._panelId;
+				var userId = panel._panelId;
+
+				delete Liferay.Chat.Manager._minimizedPanelIds[userId];
+
+				instance._openPanelId = panel._panelId;
 				instance._saveSettings();
 			},
 
@@ -1092,24 +1177,58 @@ AUI().use(
 
 				instance._updateBuddies(response.buddies);
 
-				if (instance._cacheLoaded) {
-					instance._updateConversations(response.entries);
-				}
+				var entries = response.entries;
 
-				if (instance._initialRequest) {
-					instance._loadCache(response.entries);
+				var initialRequest = instance._initialRequest;
 
-					if (instance._activePanelId.length) {
-						var activePanelId = parseInt(instance._activePanelId, 10);
+				if (initialRequest) {
+					instance._loadCache(entries);
 
-						if (!isNaN(activePanelId)) {
-							instance._createChatFromUser(instance._activePanelId);
+					if (instance._openPanelId.length) {
+						var openPanelId = parseInt(instance._openPanelId, 10);
+
+						if (!isNaN(openPanelId)) {
+							instance._createChatFromUser(instance._openPanelId);
 						}
 					}
 
-					instance._cacheLoaded = true;
-					instance._initialRequest = false;
+					instance._restoreMinimizedPanels();
+
+					instance._chatContainer.one('.chat-tabs > .buddy-list').removeClass('loading');
 				}
+
+				instance._updateConversations(entries);
+			},
+
+			_restoreMinimizedPanels: function() {
+				var instance = this;
+
+				var buddies = instance._buddies;
+
+				var minimized = instance._activePanelIds.minimized;
+
+				var minimizedPanelIds = instance._minimizedPanelIds;
+
+				A.Array.each(
+					minimized,
+					function(item, index, collection) {
+						minimizedPanelIds[item] = true;
+
+						var buddy = buddies[item];
+
+						if (buddy) {
+							instance._createChatSession(
+								{
+									fullName: buddy.fullName,
+									open: false,
+									portraitId: buddy.portraitId,
+									statusMessage: buddy.statusMessage,
+									userId: item
+								}
+							);
+						}
+					}
+				);
 			},
 
 			_saveSettings: function() {
@@ -1208,7 +1327,7 @@ AUI().use(
 
 					var entryProcessed = (entryIds.indexOf('|' + entry.entryId) > -1);
 
-					if (!entryProcessed) {
+					if (!entryProcessed || (instance._initialRequest && !entry.flag)) {
 						var userId = entry.toUserId;
 						var incoming = false;
 
@@ -1222,7 +1341,7 @@ AUI().use(
 						if (buddy && incoming) {
 							var chat = instance._chatSessions[userId];
 
-							if (!chat && entry.content && instance._isMessageNew(entry, userId)) {
+							if (!chat && entry.content) {
 								chat = instance._createChatSession(
 									{
 										portraitId: buddy.portraitId,
@@ -1244,11 +1363,15 @@ AUI().use(
 									}
 								);
 							}
+
+							entry.flag = 1;
 						}
 					}
 				}
 
 				instance._loadCache(entries);
+
+				instance._initialRequest = false;
 			},
 
 			_updatePresence: function() {
@@ -1273,10 +1396,12 @@ AUI().use(
 
 				var showNotificationsObj = instance._showNotificationsObj;
 
-				if (showNotificationsObj.attr('checked') && NOTIFICATIONS && NOTIFICATIONS.checkPermission() === NOTIFICATIONS_NOT_ALLOWED) {
-					NOTIFICATIONS.requestPermission(
-						function() {
-							var allowed = NOTIFICATIONS.checkPermission() == NOTIFICATIONS_ALLOWED;
+				if (showNotificationsObj.attr('checked') && (instance._notifyPermission === NOTIFICATIONS_PERMISSION_DEFAULT)) {
+					var notification = A.config.win.webkitNotifications || Notification;
+
+					notification.requestPermission(
+						function(notifyPermission) {
+							var allowed = (notifyPermission == NOTIFICATIONS_PERMISSION_GRANTED);
 
 							showNotificationsObj.attr(
 								{
@@ -1284,11 +1409,13 @@ AUI().use(
 									disabled: allowed
 								}
 							);
+
+							instance._notifyPermission = notifyPermission;
 						}
 					);
 				}
 
-				instance._activePanelId = '';
+				instance._openPanelId = '';
 
 				settings.hide();
 				instance._saveSettings();
@@ -1310,6 +1437,7 @@ AUI().use(
 			_chatSessions: {},
 			_entries: [],
 			_panels: {},
+			_minimizedPanelIds: {},
 			_settings: {},
 			_styleSheet: null
 		};

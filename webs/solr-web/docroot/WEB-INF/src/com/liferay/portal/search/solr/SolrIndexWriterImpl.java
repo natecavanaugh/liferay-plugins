@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2000-2012 Liferay, Inc. All rights reserved.
+ * Copyright (c) 2000-2013 Liferay, Inc. All rights reserved.
  *
  * This library is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Lesser General Public License as published by the Free
@@ -14,10 +14,10 @@
 
 package com.liferay.portal.search.solr;
 
+import com.liferay.compat.portal.kernel.search.DocumentImpl;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.search.Document;
-import com.liferay.portal.kernel.search.DocumentImpl;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.IndexWriter;
 import com.liferay.portal.kernel.search.SearchContext;
@@ -41,6 +41,7 @@ import org.apache.solr.common.SolrInputDocument;
  */
 public class SolrIndexWriterImpl implements IndexWriter {
 
+	@Override
 	public void addDocument(SearchContext searchContext, Document document)
 		throws SearchException {
 
@@ -58,6 +59,7 @@ public class SolrIndexWriterImpl implements IndexWriter {
 		}
 	}
 
+	@Override
 	public void addDocuments(
 			SearchContext searchContext, Collection<Document> documents)
 		throws SearchException {
@@ -83,6 +85,7 @@ public class SolrIndexWriterImpl implements IndexWriter {
 		}
 	}
 
+	@Override
 	public void deleteDocument(SearchContext searchContext, String uid)
 		throws SearchException {
 
@@ -100,6 +103,7 @@ public class SolrIndexWriterImpl implements IndexWriter {
 		}
 	}
 
+	@Override
 	public void deleteDocuments(
 			SearchContext searchContext, Collection<String> uids)
 		throws SearchException {
@@ -109,6 +113,7 @@ public class SolrIndexWriterImpl implements IndexWriter {
 		}
 	}
 
+	@Override
 	public void deletePortletDocuments(
 			SearchContext searchContext, String portletId)
 		throws SearchException {
@@ -158,6 +163,7 @@ public class SolrIndexWriterImpl implements IndexWriter {
 		_solrServer = solrServer;
 	}
 
+	@Override
 	public void updateDocument(SearchContext searchContext, Document document)
 		throws SearchException {
 
@@ -166,6 +172,7 @@ public class SolrIndexWriterImpl implements IndexWriter {
 		addDocument(searchContext, document);
 	}
 
+	@Override
 	public void updateDocuments(
 			SearchContext searchContext, Collection<Document> documents)
 		throws SearchException {

@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2000-2012 Liferay, Inc. All rights reserved.
+ * Copyright (c) 2000-2013 Liferay, Inc. All rights reserved.
  *
  * This library is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Lesser General Public License as published by the Free
@@ -51,7 +51,7 @@ public class MarketplaceUtil {
 		}
 
 		String clientId = ExpandoValueLocalServiceUtil.getData(
-			companyId, User.class.getName(), "MP", "client-id", userId,
+			companyId, User.class.getName(), "MP", "clientId", userId,
 			"default-client-id");
 
 		byte[] encodedClientIdBytes = xor(
@@ -64,7 +64,7 @@ public class MarketplaceUtil {
 		throws SystemException {
 
 		int count = ExpandoValueLocalServiceUtil.getColumnValuesCount(
-			companyId, User.class.getName(), "MP", "client-id");
+			companyId, User.class.getName(), "MP", "clientId");
 
 		if (count <= 0) {
 			return false;
@@ -77,7 +77,7 @@ public class MarketplaceUtil {
 		throws PortalException, SystemException {
 
 		String clientId = ExpandoValueLocalServiceUtil.getData(
-			user.getCompanyId(), User.class.getName(), "MP", "client-id",
+			user.getCompanyId(), User.class.getName(), "MP", "clientId",
 			user.getUserId(), StringPool.BLANK);
 
 		if (Validator.isNull(clientId)) {

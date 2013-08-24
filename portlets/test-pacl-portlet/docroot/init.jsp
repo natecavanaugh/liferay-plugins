@@ -1,6 +1,6 @@
 <%--
 /**
- * Copyright (c) 2000-2012 Liferay, Inc. All rights reserved.
+ * Copyright (c) 2000-2013 Liferay, Inc. All rights reserved.
  *
  * This library is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Lesser General Public License as published by the Free
@@ -28,6 +28,7 @@ page import="com.liferay.chat.model.EntryClp" %><%@
 page import="com.liferay.chat.service.EntryLocalService" %><%@
 page import="com.liferay.chat.service.EntryLocalServiceUtil" %><%@
 page import="com.liferay.chat.service.StatusLocalServiceUtil" %><%@
+page import="com.liferay.compat.portal.util.PortalUtil" %><%@
 page import="com.liferay.portal.kernel.dao.db.DB" %><%@
 page import="com.liferay.portal.kernel.dao.db.DBFactoryUtil" %><%@
 page import="com.liferay.portal.kernel.dao.jdbc.DataAccess" %><%@
@@ -63,7 +64,6 @@ page import="com.liferay.portal.service.ServiceContext" %><%@
 page import="com.liferay.portal.service.UserLocalServiceUtil" %><%@
 page import="com.liferay.portal.theme.ThemeDisplay" %><%@
 page import="com.liferay.portal.util.Portal" %><%@
-page import="com.liferay.portal.util.PortalUtil" %><%@
 page import="com.liferay.portlet.blogs.service.BlogsEntryLocalService" %><%@
 page import="com.liferay.portlet.blogs.service.BlogsEntryLocalServiceUtil" %><%@
 page import="com.liferay.portlet.blogs.service.BlogsStatsUserLocalServiceUtil" %><%@
@@ -100,6 +100,12 @@ page import="java.sql.Statement" %>
 page import="java.util.List" %><%@
 page import="java.util.Locale" %><%@
 page import="java.util.Map" %>
+
+<%@ page import="javax.crypto.Cipher" %><%@
+page import="javax.crypto.KeyGenerator" %><%@
+page import="javax.crypto.Mac" %><%@
+page import="javax.crypto.SecretKey" %><%@
+page import="javax.crypto.spec.SecretKeySpec" %>
 
 <%@ page import="javax.naming.Context" %><%@
 page import="javax.naming.InitialContext" %>

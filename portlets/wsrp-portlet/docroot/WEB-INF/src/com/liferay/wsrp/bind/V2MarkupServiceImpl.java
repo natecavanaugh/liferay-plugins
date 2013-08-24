@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2000-2012 Liferay, Inc. All rights reserved.
+ * Copyright (c) 2000-2013 Liferay, Inc. All rights reserved.
  *
  * This library is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Lesser General Public License as published by the Free
@@ -14,6 +14,7 @@
 
 package com.liferay.wsrp.bind;
 
+import com.liferay.compat.portal.util.PortalUtil;
 import com.liferay.portal.NoSuchLayoutException;
 import com.liferay.portal.kernel.dao.shard.ShardUtil;
 import com.liferay.portal.kernel.exception.SystemException;
@@ -27,6 +28,7 @@ import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -34,7 +36,6 @@ import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.LayoutConstants;
 import com.liferay.portal.model.LayoutTypePortlet;
 import com.liferay.portal.service.LayoutLocalServiceUtil;
-import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.util.Encryptor;
 import com.liferay.util.axis.ServletUtil;
@@ -692,7 +693,7 @@ public class V2MarkupServiceImpl
 			PortletContext portletContext, WSRPProducer wsrpProducer)
 		throws Exception {
 
-		StringBuilder sb = new StringBuilder();
+		StringBundler sb = new StringBundler();
 
 		String[] locales = mimeRequest.getLocales();
 
@@ -803,16 +804,16 @@ public class V2MarkupServiceImpl
 
 		String portalURL = PortalUtil.getPortalURL(request);
 
-		StringBuilder sb = new StringBuilder();
+		StringBundler sb = new StringBundler(5);
 
 		sb.append(portalURL);
+		sb.append(PortalUtil.getPathContext());
 
 		if (Validator.isNotNull(languageId)) {
 			sb.append(StringPool.SLASH);
 			sb.append(languageId);
 		}
 
-		sb.append(PortalUtil.getPathContext());
 		sb.append(_PATH_WIDGET);
 
 		return sb.toString();

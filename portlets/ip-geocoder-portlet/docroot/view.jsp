@@ -1,6 +1,6 @@
 <%--
 /**
- * Copyright (c) 2000-2012 Liferay, Inc. All rights reserved.
+ * Copyright (c) 2000-2013 Liferay, Inc. All rights reserved.
  *
  * This library is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Lesser General Public License as published by the Free
@@ -18,9 +18,9 @@
 
 <%@ taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
 
+<%@ page import="com.liferay.compat.portal.util.PortalUtil" %>
 <%@ page import="com.liferay.ipgeocoder.model.IPInfo" %>
 <%@ page import="com.liferay.ipgeocoder.util.IPGeocoderUtil" %>
-<%@ page import="com.liferay.portal.util.PortalUtil" %>
 
 <%
 HttpServletRequest originalRequest = PortalUtil.getOriginalServletRequest(request);
@@ -30,9 +30,14 @@ IPInfo ipInfo = IPGeocoderUtil.getIPInfo(originalRequest.getRemoteAddr());
 
 <c:choose>
 	<c:when test="<%= ipInfo != null %>">
+		City: <%= ipInfo.getCity() %><br />
+		Country Code: <%= ipInfo.getCountryCode() %><br />
+		Country Name: <%= ipInfo.getCountryName() %><br />
 		IP: <%= ipInfo.getIpAddress() %><br />
 		Latitude: <%= ipInfo.getLatitude() %><br />
-		Longitude: <%= ipInfo.getLongitude() %>
+		Longitude: <%= ipInfo.getLongitude() %><br />
+		Postal Code: <%= ipInfo.getPostalCode() %><br />
+		Region: <%= ipInfo.getRegion() %>
 	</c:when>
 	<c:otherwise>
 		<div class="portlet-msg-error">

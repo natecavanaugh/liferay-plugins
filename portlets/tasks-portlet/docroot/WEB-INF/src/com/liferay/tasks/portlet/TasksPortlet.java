@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2000-2012 Liferay, Inc. All rights reserved.
+ * Copyright (c) 2000-2013 Liferay, Inc. All rights reserved.
  *
  * This file is part of Liferay Social Office. Liferay Social Office is free
  * software: you can redistribute it and/or modify it under the terms of the GNU
@@ -17,6 +17,8 @@
 
 package com.liferay.tasks.portlet;
 
+import com.liferay.compat.portal.util.PortalUtil;
+import com.liferay.compat.util.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
@@ -31,7 +33,6 @@ import com.liferay.portal.model.Layout;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceContextFactory;
 import com.liferay.portal.theme.ThemeDisplay;
-import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.PortletURLFactoryUtil;
 import com.liferay.portlet.asset.AssetTagException;
 import com.liferay.portlet.messageboards.model.MBMessage;
@@ -40,7 +41,6 @@ import com.liferay.tasks.model.TasksEntry;
 import com.liferay.tasks.service.TasksEntryLocalServiceUtil;
 import com.liferay.tasks.service.TasksEntryServiceUtil;
 import com.liferay.tasks.util.PortletKeys;
-import com.liferay.util.bridges.mvc.MVCPortlet;
 
 import java.io.IOException;
 
@@ -75,7 +75,7 @@ public class TasksPortlet extends MVCPortlet {
 		else {
 			JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 
-			jsonObject.put("success", true);
+			jsonObject.put("success", Boolean.TRUE);
 
 			HttpServletResponse response = PortalUtil.getHttpServletResponse(
 				actionResponse);
@@ -98,7 +98,7 @@ public class TasksPortlet extends MVCPortlet {
 		}
 
 		if (SessionErrors.isEmpty(actionRequest)) {
-			SessionMessages.add(actionRequest, "requestProcessed");
+			SessionMessages.add(actionRequest, "request_processed");
 		}
 
 		String actionName = ParamUtil.getString(
@@ -184,7 +184,7 @@ public class TasksPortlet extends MVCPortlet {
 			dueDateHour += 12;
 		}
 
-		boolean neverDue = ParamUtil.getBoolean(actionRequest, "neverDue");
+		boolean addDueDate = ParamUtil.getBoolean(actionRequest, "addDueDate");
 		int status = ParamUtil.getInteger(actionRequest, "status");
 
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
@@ -196,14 +196,14 @@ public class TasksPortlet extends MVCPortlet {
 			if (tasksEntryId <= 0) {
 				taskEntry = TasksEntryServiceUtil.addTasksEntry(
 					title, priority, assigneeUserId, dueDateMonth, dueDateDay,
-					dueDateYear, dueDateHour, dueDateMinute, neverDue,
+					dueDateYear, dueDateHour, dueDateMinute, addDueDate,
 					serviceContext);
 			}
 			else {
 				taskEntry = TasksEntryServiceUtil.updateTasksEntry(
 					tasksEntryId, title, priority, assigneeUserId,
 					resolverUserId, dueDateMonth, dueDateDay, dueDateYear,
-					dueDateHour, dueDateMinute, neverDue, status,
+					dueDateHour, dueDateMinute, addDueDate, status,
 					serviceContext);
 			}
 

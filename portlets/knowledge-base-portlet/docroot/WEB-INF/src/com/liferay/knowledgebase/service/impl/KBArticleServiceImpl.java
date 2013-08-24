@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2000-2012 Liferay, Inc. All rights reserved.
+ * Copyright (c) 2000-2013 Liferay, Inc. All rights reserved.
  *
  * This library is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Lesser General Public License as published by the Free
@@ -14,6 +14,7 @@
 
 package com.liferay.knowledgebase.service.impl;
 
+import com.liferay.compat.portal.kernel.util.ArrayUtil;
 import com.liferay.compat.portal.util.PortalUtil;
 import com.liferay.knowledgebase.admin.util.AdminUtil;
 import com.liferay.knowledgebase.model.KBArticle;
@@ -31,7 +32,6 @@ import com.liferay.knowledgebase.util.comparator.KBArticleModifiedDateComparator
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
-import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
@@ -278,8 +278,8 @@ public class KBArticleServiceImpl extends KBArticleServiceBaseImpl {
 		KBArticle kbArticle = kbArticleLocalService.getLatestKBArticle(
 			resourcePrimKey, status);
 
-		String name = HtmlUtil.escape(kbArticle.getTitle());
-		String description = HtmlUtil.escape(kbArticle.getTitle());
+		String name = kbArticle.getTitle();
+		String description = kbArticle.getTitle();
 
 		String feedURL = KnowledgeBaseUtil.getKBArticleURL(
 			themeDisplay.getPlid(), resourcePrimKey, status,

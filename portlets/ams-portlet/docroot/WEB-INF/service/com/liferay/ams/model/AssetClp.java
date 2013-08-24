@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2000-2012 Liferay, Inc. All rights reserved.
+ * Copyright (c) 2000-2013 Liferay, Inc. All rights reserved.
  *
  * This library is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Lesser General Public License as published by the Free
@@ -15,6 +15,7 @@
 package com.liferay.ams.model;
 
 import com.liferay.ams.service.AssetLocalServiceUtil;
+import com.liferay.ams.service.ClpSerializer;
 
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
 import com.liferay.portal.kernel.exception.SystemException;
@@ -25,6 +26,8 @@ import com.liferay.portal.model.impl.BaseModelImpl;
 import com.liferay.portal.util.PortalUtil;
 
 import java.io.Serializable;
+
+import java.lang.reflect.Method;
 
 import java.util.Date;
 import java.util.HashMap;
@@ -37,10 +40,12 @@ public class AssetClp extends BaseModelImpl<Asset> implements Asset {
 	public AssetClp() {
 	}
 
+	@Override
 	public Class<?> getModelClass() {
 		return Asset.class;
 	}
 
+	@Override
 	public String getModelClassName() {
 		return Asset.class.getName();
 	}
@@ -53,10 +58,12 @@ public class AssetClp extends BaseModelImpl<Asset> implements Asset {
 		setAssetId(primaryKey);
 	}
 
+	@Override
 	public Serializable getPrimaryKeyObj() {
 		return new Long(_assetId);
 	}
 
+	@Override
 	public void setPrimaryKeyObj(Serializable primaryKeyObj) {
 		setPrimaryKey(((Long)primaryKeyObj).longValue());
 	}
@@ -148,6 +155,19 @@ public class AssetClp extends BaseModelImpl<Asset> implements Asset {
 
 	public void setAssetId(long assetId) {
 		_assetId = assetId;
+
+		if (_assetRemoteModel != null) {
+			try {
+				Class<?> clazz = _assetRemoteModel.getClass();
+
+				Method method = clazz.getMethod("setAssetId", long.class);
+
+				method.invoke(_assetRemoteModel, assetId);
+			}
+			catch (Exception e) {
+				throw new UnsupportedOperationException(e);
+			}
+		}
 	}
 
 	public long getCompanyId() {
@@ -156,6 +176,19 @@ public class AssetClp extends BaseModelImpl<Asset> implements Asset {
 
 	public void setCompanyId(long companyId) {
 		_companyId = companyId;
+
+		if (_assetRemoteModel != null) {
+			try {
+				Class<?> clazz = _assetRemoteModel.getClass();
+
+				Method method = clazz.getMethod("setCompanyId", long.class);
+
+				method.invoke(_assetRemoteModel, companyId);
+			}
+			catch (Exception e) {
+				throw new UnsupportedOperationException(e);
+			}
+		}
 	}
 
 	public long getUserId() {
@@ -164,6 +197,19 @@ public class AssetClp extends BaseModelImpl<Asset> implements Asset {
 
 	public void setUserId(long userId) {
 		_userId = userId;
+
+		if (_assetRemoteModel != null) {
+			try {
+				Class<?> clazz = _assetRemoteModel.getClass();
+
+				Method method = clazz.getMethod("setUserId", long.class);
+
+				method.invoke(_assetRemoteModel, userId);
+			}
+			catch (Exception e) {
+				throw new UnsupportedOperationException(e);
+			}
+		}
 	}
 
 	public String getUserUuid() throws SystemException {
@@ -180,6 +226,19 @@ public class AssetClp extends BaseModelImpl<Asset> implements Asset {
 
 	public void setUserName(String userName) {
 		_userName = userName;
+
+		if (_assetRemoteModel != null) {
+			try {
+				Class<?> clazz = _assetRemoteModel.getClass();
+
+				Method method = clazz.getMethod("setUserName", String.class);
+
+				method.invoke(_assetRemoteModel, userName);
+			}
+			catch (Exception e) {
+				throw new UnsupportedOperationException(e);
+			}
+		}
 	}
 
 	public Date getCreateDate() {
@@ -188,6 +247,19 @@ public class AssetClp extends BaseModelImpl<Asset> implements Asset {
 
 	public void setCreateDate(Date createDate) {
 		_createDate = createDate;
+
+		if (_assetRemoteModel != null) {
+			try {
+				Class<?> clazz = _assetRemoteModel.getClass();
+
+				Method method = clazz.getMethod("setCreateDate", Date.class);
+
+				method.invoke(_assetRemoteModel, createDate);
+			}
+			catch (Exception e) {
+				throw new UnsupportedOperationException(e);
+			}
+		}
 	}
 
 	public Date getModifiedDate() {
@@ -196,6 +268,19 @@ public class AssetClp extends BaseModelImpl<Asset> implements Asset {
 
 	public void setModifiedDate(Date modifiedDate) {
 		_modifiedDate = modifiedDate;
+
+		if (_assetRemoteModel != null) {
+			try {
+				Class<?> clazz = _assetRemoteModel.getClass();
+
+				Method method = clazz.getMethod("setModifiedDate", Date.class);
+
+				method.invoke(_assetRemoteModel, modifiedDate);
+			}
+			catch (Exception e) {
+				throw new UnsupportedOperationException(e);
+			}
+		}
 	}
 
 	public long getDefinitionId() {
@@ -204,6 +289,19 @@ public class AssetClp extends BaseModelImpl<Asset> implements Asset {
 
 	public void setDefinitionId(long definitionId) {
 		_definitionId = definitionId;
+
+		if (_assetRemoteModel != null) {
+			try {
+				Class<?> clazz = _assetRemoteModel.getClass();
+
+				Method method = clazz.getMethod("setDefinitionId", long.class);
+
+				method.invoke(_assetRemoteModel, definitionId);
+			}
+			catch (Exception e) {
+				throw new UnsupportedOperationException(e);
+			}
+		}
 	}
 
 	public String getSerialNumber() {
@@ -212,6 +310,19 @@ public class AssetClp extends BaseModelImpl<Asset> implements Asset {
 
 	public void setSerialNumber(String serialNumber) {
 		_serialNumber = serialNumber;
+
+		if (_assetRemoteModel != null) {
+			try {
+				Class<?> clazz = _assetRemoteModel.getClass();
+
+				Method method = clazz.getMethod("setSerialNumber", String.class);
+
+				method.invoke(_assetRemoteModel, serialNumber);
+			}
+			catch (Exception e) {
+				throw new UnsupportedOperationException(e);
+			}
+		}
 	}
 
 	public Date getInactiveDate() {
@@ -220,6 +331,19 @@ public class AssetClp extends BaseModelImpl<Asset> implements Asset {
 
 	public void setInactiveDate(Date inactiveDate) {
 		_inactiveDate = inactiveDate;
+
+		if (_assetRemoteModel != null) {
+			try {
+				Class<?> clazz = _assetRemoteModel.getClass();
+
+				Method method = clazz.getMethod("setInactiveDate", Date.class);
+
+				method.invoke(_assetRemoteModel, inactiveDate);
+			}
+			catch (Exception e) {
+				throw new UnsupportedOperationException(e);
+			}
+		}
 	}
 
 	public boolean getActive() {
@@ -232,6 +356,19 @@ public class AssetClp extends BaseModelImpl<Asset> implements Asset {
 
 	public void setActive(boolean active) {
 		_active = active;
+
+		if (_assetRemoteModel != null) {
+			try {
+				Class<?> clazz = _assetRemoteModel.getClass();
+
+				Method method = clazz.getMethod("setActive", boolean.class);
+
+				method.invoke(_assetRemoteModel, active);
+			}
+			catch (Exception e) {
+				throw new UnsupportedOperationException(e);
+			}
+		}
 	}
 
 	public BaseModel<?> getAssetRemoteModel() {
@@ -240,6 +377,47 @@ public class AssetClp extends BaseModelImpl<Asset> implements Asset {
 
 	public void setAssetRemoteModel(BaseModel<?> assetRemoteModel) {
 		_assetRemoteModel = assetRemoteModel;
+	}
+
+	public Object invokeOnRemoteModel(String methodName,
+		Class<?>[] parameterTypes, Object[] parameterValues)
+		throws Exception {
+		Object[] remoteParameterValues = new Object[parameterValues.length];
+
+		for (int i = 0; i < parameterValues.length; i++) {
+			if (parameterValues[i] != null) {
+				remoteParameterValues[i] = ClpSerializer.translateInput(parameterValues[i]);
+			}
+		}
+
+		Class<?> remoteModelClass = _assetRemoteModel.getClass();
+
+		ClassLoader remoteModelClassLoader = remoteModelClass.getClassLoader();
+
+		Class<?>[] remoteParameterTypes = new Class[parameterTypes.length];
+
+		for (int i = 0; i < parameterTypes.length; i++) {
+			if (parameterTypes[i].isPrimitive()) {
+				remoteParameterTypes[i] = parameterTypes[i];
+			}
+			else {
+				String parameterTypeName = parameterTypes[i].getName();
+
+				remoteParameterTypes[i] = remoteModelClassLoader.loadClass(parameterTypeName);
+			}
+		}
+
+		Method method = remoteModelClass.getMethod(methodName,
+				remoteParameterTypes);
+
+		Object returnValue = method.invoke(_assetRemoteModel,
+				remoteParameterValues);
+
+		if (returnValue != null) {
+			returnValue = ClpSerializer.translateOutput(returnValue);
+		}
+
+		return returnValue;
 	}
 
 	public void persist() throws SystemException {
@@ -257,6 +435,7 @@ public class AssetClp extends BaseModelImpl<Asset> implements Asset {
 			new Class[] { Asset.class }, new AutoEscapeBeanHandler(this));
 	}
 
+	@Override
 	public Asset toUnescapedModel() {
 		return this;
 	}
@@ -295,18 +474,15 @@ public class AssetClp extends BaseModelImpl<Asset> implements Asset {
 
 	@Override
 	public boolean equals(Object obj) {
-		if (obj == null) {
+		if (this == obj) {
+			return true;
+		}
+
+		if (!(obj instanceof AssetClp)) {
 			return false;
 		}
 
-		AssetClp asset = null;
-
-		try {
-			asset = (AssetClp)obj;
-		}
-		catch (ClassCastException cce) {
-			return false;
-		}
+		AssetClp asset = (AssetClp)obj;
 
 		long primaryKey = asset.getPrimaryKey();
 
@@ -352,6 +528,7 @@ public class AssetClp extends BaseModelImpl<Asset> implements Asset {
 		return sb.toString();
 	}
 
+	@Override
 	public String toXmlString() {
 		StringBundler sb = new StringBundler(34);
 

@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2000-2012 Liferay, Inc. All rights reserved.
+ * Copyright (c) 2000-2013 Liferay, Inc. All rights reserved.
  *
  * This library is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Lesser General Public License as published by the Free
@@ -14,10 +14,10 @@
 
 package com.liferay.stocks.util;
 
+import com.liferay.compat.portal.kernel.util.Time;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.kernel.webcache.WebCacheException;
 import com.liferay.portal.kernel.webcache.WebCacheItem;
 import com.liferay.stocks.model.Stocks;
@@ -33,6 +33,7 @@ public class StocksWebCacheItem implements WebCacheItem {
 		_symbol = symbol;
 	}
 
+	@Override
 	public Object convert(String key) throws WebCacheException {
 		String symbol = _symbol;
 		double lastTrade = 0.0;
@@ -132,6 +133,7 @@ public class StocksWebCacheItem implements WebCacheItem {
 		return stocks;
 	}
 
+	@Override
 	public long getRefreshTime() {
 		return _REFRESH_TIME;
 	}

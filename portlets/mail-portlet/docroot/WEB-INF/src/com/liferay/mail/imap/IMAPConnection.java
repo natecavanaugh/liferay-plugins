@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2000-2012 Liferay, Inc. All rights reserved.
+ * Copyright (c) 2000-2013 Liferay, Inc. All rights reserved.
  *
  * This library is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Lesser General Public License as published by the Free
@@ -122,7 +122,6 @@ public class IMAPConnection {
 					store = session.getStore("imap");
 				}
 
-				store.addConnectionListener(new ConnectionListener(storeKey));
 				store.connect(
 					_incomingHostName, _incomingPort, _login, _password);
 
@@ -151,12 +150,6 @@ public class IMAPConnection {
 			else {
 				transport = session.getTransport("smtp");
 			}
-
-			String transportKey = _login.concat(_TRANSPORT).concat(
-				_incomingHostName);
-
-			transport.addConnectionListener(
-				new ConnectionListener(transportKey));
 
 			transport.connect(
 				_outgoingHostName, _outgoingPort, _login, _password);

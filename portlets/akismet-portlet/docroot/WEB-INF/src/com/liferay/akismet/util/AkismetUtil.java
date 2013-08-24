@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2000-2012 Liferay, Inc. All rights reserved.
+ * Copyright (c) 2000-2013 Liferay, Inc. All rights reserved.
  *
  * This library is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Lesser General Public License as published by the Free
@@ -16,6 +16,13 @@ package com.liferay.akismet.util;
 
 import com.liferay.akismet.model.AkismetData;
 import com.liferay.akismet.service.AkismetDataLocalServiceUtil;
+import com.liferay.compat.portal.kernel.util.Time;
+import com.liferay.compat.portal.util.PortalUtil;
+import com.liferay.portal.kernel.dao.orm.DynamicQuery;
+import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
+import com.liferay.portal.kernel.dao.orm.OrderFactoryUtil;
+import com.liferay.portal.kernel.dao.orm.Property;
+import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
@@ -25,24 +32,28 @@ import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.model.Company;
 import com.liferay.portal.model.User;
 import com.liferay.portal.service.CompanyLocalServiceUtil;
+import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.UserLocalServiceUtil;
-import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.messageboards.model.MBMessage;
-import com.liferay.portlet.messageboards.service.MBMessageLocalServiceUtil;
+import com.liferay.portlet.wiki.model.WikiPage;
+import com.liferay.portlet.wiki.service.WikiPageLocalServiceUtil;
+import com.liferay.portlet.wiki.util.comparator.PageVersionComparator;
 
 import java.io.IOException;
 
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
  * @author Amos Fong
+ * @author Peter Shin
  */
 public class AkismetUtil {
 
@@ -60,6 +71,76 @@ public class AkismetUtil {
 		return new Date(
 			System.currentTimeMillis() -
 				(PortletPropsValues.AKISMET_RETAIN_SPAM_TIME * Time.DAY));
+	}
+
+	public static WikiPage getWikiPage(
+			long nodeId, String title, double version, boolean previous)
+		throws SystemException {
+
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
+			WikiPage.class);
+
+		Property summaryProperty = PropertyFactoryUtil.forName("summary");
+
+		dynamicQuery.add(
+			summaryProperty.ne(AkismetConstants.WIKI_PAGE_MARKED_AS_SPAM));
+		dynamicQuery.add(
+			summaryProperty.ne(AkismetConstants.WIKI_PAGE_PENDING_APPROVAL));
+
+		Property nodeIdProperty = PropertyFactoryUtil.forName("nodeId");
+
+		dynamicQuery.add(nodeIdProperty.eq(nodeId));
+
+		Property titleProperty = PropertyFactoryUtil.forName("title");
+
+		dynamicQuery.add(titleProperty.eq(title));
+
+		Property statusProperty = PropertyFactoryUtil.forName("status");
+
+		dynamicQuery.add(statusProperty.eq(WorkflowConstants.STATUS_APPROVED));
+
+		Property versionProperty = PropertyFactoryUtil.forName("version");
+
+		if (previous) {
+			dynamicQuery.add(versionProperty.lt(version));
+		}
+		else {
+			dynamicQuery.add(versionProperty.ge(version));
+		}
+
+		OrderFactoryUtil.addOrderByComparator(
+			dynamicQuery, new PageVersionComparator());
+
+		List<WikiPage> wikiPages = WikiPageLocalServiceUtil.dynamicQuery(
+			dynamicQuery, 0, 1);
+
+		if (wikiPages.isEmpty()) {
+			return null;
+		}
+
+		return wikiPages.get(0);
+	}
+
+	public static boolean hasRequiredInfo(ServiceContext serviceContext) {
+		Map<String, String> headers = serviceContext.getHeaders();
+
+		if (headers == null) {
+			return false;
+		}
+
+		String userAgent = headers.get(HttpHeaders.USER_AGENT.toLowerCase());
+
+		if (Validator.isNull(userAgent)) {
+			return false;
+		}
+
+		String userIP = serviceContext.getRemoteAddr();
+
+		if (Validator.isNull(userIP)) {
+			return false;
+		}
+
+		return true;
 	}
 
 	public static boolean isDiscussionsEnabled(long companyId)
@@ -91,17 +172,17 @@ public class AkismetUtil {
 	}
 
 	public static boolean isSpam(
-			long companyId, String ipAddress, String userAgent, String referrer,
-			String permalink, String commentType, String userName,
-			String emailAddress, String content)
+			long userId, String content, AkismetData akismetData)
 		throws PortalException, SystemException {
+
+		User user = UserLocalServiceUtil.getUser(userId);
 
 		StringBundler sb = new StringBundler(5);
 
 		sb.append(Http.HTTP_WITH_SLASH);
 		sb.append(
 			PrefsPortletPropsUtil.getString(
-				companyId, PortletPropsKeys.AKISMET_API_KEY));
+				user.getCompanyId(), PortletPropsKeys.AKISMET_API_KEY));
 		sb.append(StringPool.PERIOD);
 		sb.append(AkismetConstants.URL_REST);
 		sb.append(AkismetConstants.PATH_CHECK_SPAM);
@@ -109,8 +190,10 @@ public class AkismetUtil {
 		String location = sb.toString();
 
 		String response = _sendRequest(
-			location, companyId, ipAddress, userAgent, referrer, permalink,
-			commentType, userName, emailAddress, content);
+			location, user.getCompanyId(), akismetData.getUserIP(),
+			akismetData.getUserAgent(), akismetData.getReferrer(),
+			akismetData.getPermalink(), akismetData.getType(),
+			user.getFullName(), user.getEmailAddress(), content);
 
 		if (Validator.isNull(response) || response.equals("invalid")) {
 			_log.error("There was an issue with Akismet comment validation");
@@ -119,40 +202,29 @@ public class AkismetUtil {
 		}
 		else if (response.equals("true")) {
 			if (_log.isDebugEnabled()) {
-				_log.debug("Spam detected: " + permalink);
+				_log.debug("Spam detected: " + akismetData.getPermalink());
 			}
 
 			return true;
 		}
 
 		if (_log.isDebugEnabled()) {
-			_log.debug("Passed: " + permalink);
+			_log.debug("Passed: " + akismetData.getPermalink());
 		}
 
 		return false;
 	}
 
-	public static void submitHam(long mbMessageId)
-		throws PortalException, SystemException {
+	public static boolean isWikiEnabled(long companyId) throws SystemException {
+		String apiKey = PrefsPortletPropsUtil.getString(
+			companyId, PortletPropsKeys.AKISMET_API_KEY);
 
-		AkismetData akismetData =
-			AkismetDataLocalServiceUtil.fetchMBMessageAkismetData(mbMessageId);
-
-		if (akismetData == null) {
-			return;
+		if (Validator.isNull(apiKey)) {
+			return false;
 		}
 
-		MBMessage message = MBMessageLocalServiceUtil.getMBMessage(mbMessageId);
-
-		User user = UserLocalServiceUtil.getUser(message.getUserId());
-
-		String content = message.getSubject() + "\n\n" + message.getBody();
-
-		submitHam(
-			message.getCompanyId(), akismetData.getUserIP(),
-			akismetData.getUserAgent(), akismetData.getReferrer(),
-			akismetData.getPermalink(), akismetData.getType(),
-			user.getFullName(), user.getEmailAddress(), content);
+		return PrefsPortletPropsUtil.getBoolean(
+			companyId, PortletPropsKeys.AKISMET_WIKI_CHECK_ENABLED);
 	}
 
 	public static void submitHam(
@@ -186,24 +258,43 @@ public class AkismetUtil {
 		}
 	}
 
-	public static void submitSpam(long mbMessageId)
+	public static void submitHam(MBMessage mbMessage)
 		throws PortalException, SystemException {
 
-		AkismetData akismetData =
-			AkismetDataLocalServiceUtil.fetchMBMessageAkismetData(mbMessageId);
+		AkismetData akismetData = AkismetDataLocalServiceUtil.fetchAkismetData(
+			MBMessage.class.getName(), mbMessage.getMessageId());
 
 		if (akismetData == null) {
 			return;
 		}
 
-		MBMessage message = MBMessageLocalServiceUtil.getMBMessage(mbMessageId);
+		User user = UserLocalServiceUtil.getUser(mbMessage.getUserId());
 
-		User user = UserLocalServiceUtil.getUser(message.getUserId());
+		String content = mbMessage.getSubject() + "\n\n" + mbMessage.getBody();
 
-		String content = message.getSubject() + "\n\n" + message.getBody();
+		submitHam(
+			mbMessage.getCompanyId(), akismetData.getUserIP(),
+			akismetData.getUserAgent(), akismetData.getReferrer(),
+			akismetData.getPermalink(), akismetData.getType(),
+			user.getFullName(), user.getEmailAddress(), content);
+	}
 
-		submitSpam(
-			message.getCompanyId(), akismetData.getUserIP(),
+	public static void submitHam(WikiPage wikiPage)
+		throws PortalException, SystemException {
+
+		AkismetData akismetData = AkismetDataLocalServiceUtil.fetchAkismetData(
+			WikiPage.class.getName(), wikiPage.getPageId());
+
+		if (akismetData == null) {
+			return;
+		}
+
+		User user = UserLocalServiceUtil.getUser(wikiPage.getUserId());
+
+		String content = wikiPage.getTitle() + "\n\n" + wikiPage.getContent();
+
+		submitHam(
+			wikiPage.getCompanyId(), akismetData.getUserIP(),
 			akismetData.getUserAgent(), akismetData.getReferrer(),
 			akismetData.getPermalink(), akismetData.getType(),
 			user.getFullName(), user.getEmailAddress(), content);
@@ -238,6 +329,48 @@ public class AkismetUtil {
 		if (Validator.isNull(response)) {
 			_log.error("There was an issue submitting message as spam");
 		}
+	}
+
+	public static void submitSpam(MBMessage mbMessage)
+		throws PortalException, SystemException {
+
+		AkismetData akismetData = AkismetDataLocalServiceUtil.fetchAkismetData(
+			MBMessage.class.getName(), mbMessage.getMessageId());
+
+		if (akismetData == null) {
+			return;
+		}
+
+		User user = UserLocalServiceUtil.getUser(mbMessage.getUserId());
+
+		String content = mbMessage.getSubject() + "\n\n" + mbMessage.getBody();
+
+		submitSpam(
+			mbMessage.getCompanyId(), akismetData.getUserIP(),
+			akismetData.getUserAgent(), akismetData.getReferrer(),
+			akismetData.getPermalink(), akismetData.getType(),
+			user.getFullName(), user.getEmailAddress(), content);
+	}
+
+	public static void submitSpam(WikiPage wikiPage)
+		throws PortalException, SystemException {
+
+		AkismetData akismetData = AkismetDataLocalServiceUtil.fetchAkismetData(
+			WikiPage.class.getName(), wikiPage.getPageId());
+
+		if (akismetData == null) {
+			return;
+		}
+
+		User user = UserLocalServiceUtil.getUser(wikiPage.getUserId());
+
+		String content = wikiPage.getTitle() + "\n\n" + wikiPage.getContent();
+
+		submitSpam(
+			wikiPage.getCompanyId(), akismetData.getUserIP(),
+			akismetData.getUserAgent(), akismetData.getReferrer(),
+			akismetData.getPermalink(), akismetData.getType(),
+			user.getFullName(), user.getEmailAddress(), content);
 	}
 
 	public static boolean verifyApiKey(long companyId, String apiKey)

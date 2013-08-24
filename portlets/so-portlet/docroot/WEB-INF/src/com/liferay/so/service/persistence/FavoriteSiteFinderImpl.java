@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2000-2012 Liferay, Inc. All rights reserved.
+ * Copyright (c) 2000-2013 Liferay, Inc. All rights reserved.
  *
  * This file is part of Liferay Social Office. Liferay Social Office is free
  * software: you can redistribute it and/or modify it under the terms of the GNU
@@ -23,8 +23,6 @@ import com.liferay.portal.kernel.dao.orm.SQLQuery;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.dao.orm.Type;
 import com.liferay.portal.kernel.exception.SystemException;
-import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.so.model.FavoriteSite;
 import com.liferay.util.dao.orm.CustomSQLUtil;
@@ -48,6 +46,8 @@ public class FavoriteSiteFinderImpl
 	public int countByU_N(long userId, String name, String groupRealName)
 		throws SystemException {
 
+		name = CustomSQLUtil.keywords(name)[0];
+
 		Session session = null;
 
 		try {
@@ -62,7 +62,7 @@ public class FavoriteSiteFinderImpl
 			QueryPos qPos = QueryPos.getInstance(q);
 
 			qPos.add(userId);
-			qPos.add(StringPool.PERCENT + name + StringPool.PERCENT);
+			qPos.add(name);
 			qPos.add(groupRealName);
 			qPos.add(name);
 
@@ -90,7 +90,7 @@ public class FavoriteSiteFinderImpl
 			long userId, String name, String groupRealName, int start, int end)
 		throws SystemException {
 
-		name = StringUtil.lowerCase(name);
+		name = CustomSQLUtil.keywords(name)[0];
 
 		Session session = null;
 
@@ -107,7 +107,7 @@ public class FavoriteSiteFinderImpl
 			QueryPos qPos = QueryPos.getInstance(q);
 
 			qPos.add(userId);
-			qPos.add(StringPool.PERCENT + name + StringPool.PERCENT);
+			qPos.add(name);
 			qPos.add(groupRealName);
 			qPos.add(name);
 

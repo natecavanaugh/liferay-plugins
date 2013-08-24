@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2000-2012 Liferay, Inc. All rights reserved.
+ * Copyright (c) 2000-2013 Liferay, Inc. All rights reserved.
  *
  * This library is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Lesser General Public License as published by the Free
@@ -55,8 +55,8 @@ import javax.mail.BodyPart;
 import javax.mail.FetchProfile;
 import javax.mail.Flags;
 import javax.mail.Folder;
-import javax.mail.Message.RecipientType;
 import javax.mail.Message;
+import javax.mail.Message.RecipientType;
 import javax.mail.MessagingException;
 import javax.mail.Multipart;
 import javax.mail.Part;
@@ -872,7 +872,7 @@ public class IMAPAccessor {
 		throws MailException {
 
 		int pageCount =
-			(int)(Math.ceil(messageCount / (double) messagesPerPage));
+			(int)(Math.ceil(messageCount / (double)messagesPerPage));
 
 		if (messageCount == 0) {
 			return new int[] {0, 0};

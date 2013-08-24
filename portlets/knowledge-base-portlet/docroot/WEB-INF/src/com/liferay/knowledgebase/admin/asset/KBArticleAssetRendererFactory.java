@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2000-2012 Liferay, Inc. All rights reserved.
+ * Copyright (c) 2000-2013 Liferay, Inc. All rights reserved.
  *
  * This library is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Lesser General Public License as published by the Free
@@ -36,8 +36,6 @@ import com.liferay.portlet.asset.model.BaseAssetRendererFactory;
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;
 
-import javax.servlet.http.HttpServletRequest;
-
 /**
  * @author Peter Shin
  */
@@ -47,6 +45,7 @@ public class KBArticleAssetRendererFactory extends BaseAssetRendererFactory {
 
 	public static final String TYPE = "article";
 
+	@Override
 	public AssetRenderer getAssetRenderer(long classPK, int type)
 		throws PortalException, SystemException {
 
@@ -70,6 +69,7 @@ public class KBArticleAssetRendererFactory extends BaseAssetRendererFactory {
 		return new KBArticleAssetRenderer(kbArticle);
 	}
 
+	@Override
 	public String getClassName() {
 		return CLASS_NAME;
 	}
@@ -79,6 +79,7 @@ public class KBArticleAssetRendererFactory extends BaseAssetRendererFactory {
 		return PortletKeys.KNOWLEDGE_BASE_DISPLAY;
 	}
 
+	@Override
 	public String getType() {
 		return TYPE;
 	}
@@ -89,11 +90,9 @@ public class KBArticleAssetRendererFactory extends BaseAssetRendererFactory {
 			LiferayPortletResponse liferayPortletResponse)
 		throws PortalException, SystemException {
 
-		HttpServletRequest request =
-			liferayPortletRequest.getHttpServletRequest();
-
-		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-			WebKeys.THEME_DISPLAY);
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)liferayPortletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
 		if (!AdminPermission.contains(
 				themeDisplay.getPermissionChecker(),
@@ -103,7 +102,7 @@ public class KBArticleAssetRendererFactory extends BaseAssetRendererFactory {
 		}
 
 		PortletURL portletURL = PortletURLFactoryUtil.create(
-			request, PortletKeys.KNOWLEDGE_BASE_ADMIN,
+			liferayPortletRequest, PortletKeys.KNOWLEDGE_BASE_ADMIN,
 			getControlPanelPlid(themeDisplay), PortletRequest.RENDER_PHASE);
 
 		portletURL.setParameter("mvcPath", "/admin/edit_article.jsp");

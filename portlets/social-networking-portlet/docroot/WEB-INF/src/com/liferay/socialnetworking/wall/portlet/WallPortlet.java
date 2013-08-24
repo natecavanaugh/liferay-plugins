@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2000-2012 Liferay, Inc. All rights reserved.
+ * Copyright (c) 2000-2013 Liferay, Inc. All rights reserved.
  *
  * This library is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Lesser General Public License as published by the Free
@@ -14,6 +14,7 @@
 
 package com.liferay.socialnetworking.wall.portlet;
 
+import com.liferay.compat.util.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.model.Group;
@@ -27,7 +28,6 @@ import com.liferay.portlet.social.model.SocialRelationConstants;
 import com.liferay.portlet.social.service.SocialRelationLocalServiceUtil;
 import com.liferay.socialnetworking.model.WallEntry;
 import com.liferay.socialnetworking.service.WallEntryLocalServiceUtil;
-import com.liferay.util.bridges.mvc.MVCPortlet;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -61,9 +61,9 @@ public class WallPortlet extends MVCPortlet {
 		}
 
 		if ((themeDisplay.getUserId() != user.getUserId()) &&
-			(!SocialRelationLocalServiceUtil.hasRelation(
+			!SocialRelationLocalServiceUtil.hasRelation(
 				themeDisplay.getUserId(), user.getUserId(),
-				SocialRelationConstants.TYPE_BI_FRIEND))) {
+				SocialRelationConstants.TYPE_BI_FRIEND)) {
 
 			return;
 		}

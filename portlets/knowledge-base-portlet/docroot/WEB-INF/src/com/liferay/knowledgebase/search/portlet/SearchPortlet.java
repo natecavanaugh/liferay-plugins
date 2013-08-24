@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2000-2012 Liferay, Inc. All rights reserved.
+ * Copyright (c) 2000-2013 Liferay, Inc. All rights reserved.
  *
  * This library is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Lesser General Public License as published by the Free
@@ -14,6 +14,7 @@
 
 package com.liferay.knowledgebase.search.portlet;
 
+import com.liferay.compat.portal.kernel.portlet.PortletResponseUtil;
 import com.liferay.compat.portal.util.PortalUtil;
 import com.liferay.compat.util.bridges.mvc.MVCPortlet;
 import com.liferay.knowledgebase.KBArticleContentException;
@@ -32,7 +33,6 @@ import com.liferay.knowledgebase.util.ActionKeys;
 import com.liferay.knowledgebase.util.PortletKeys;
 import com.liferay.knowledgebase.util.WebKeys;
 import com.liferay.portal.NoSuchSubscriptionException;
-import com.liferay.portal.kernel.portlet.PortletResponseUtil;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.upload.UploadPortletRequest;
 import com.liferay.portal.kernel.util.Constants;
@@ -44,6 +44,7 @@ import com.liferay.portal.kernel.util.MimeTypesUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StreamUtil;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.model.CompanyConstants;
 import com.liferay.portal.security.auth.PrincipalException;
@@ -444,14 +445,29 @@ public class SearchPortlet extends MVCPortlet {
 			RenderRequest renderRequest, RenderResponse renderResponse)
 		throws IOException, PortletException {
 
-		if (SessionErrors.contains(
-				renderRequest, NoSuchArticleException.class.getName()) ||
-			SessionErrors.contains(
-				renderRequest, NoSuchCommentException.class.getName()) ||
-			SessionErrors.contains(
-				renderRequest, NoSuchSubscriptionException.class.getName()) ||
-			SessionErrors.contains(
-				renderRequest, PrincipalException.class.getName())) {
+		String mvcPath = ParamUtil.getString(
+			renderRequest, "mvcPath", viewTemplate);
+
+		long assetCategoryId = ParamUtil.getLong(renderRequest, "categoryId");
+		String assetTagName = ParamUtil.getString(renderRequest, "tag");
+
+		if ((mvcPath.equals(viewTemplate) && (assetCategoryId > 0)) ||
+			(mvcPath.equals(viewTemplate) &&
+			 Validator.isNotNull(assetTagName))) {
+
+			String path = templatePath + "view_prp_articles.jsp";
+
+			include(path, renderRequest, renderResponse);
+		}
+		else if (SessionErrors.contains(
+					renderRequest, NoSuchArticleException.class.getName()) ||
+				 SessionErrors.contains(
+					 renderRequest, NoSuchCommentException.class.getName()) ||
+				 SessionErrors.contains(
+					 renderRequest,
+					 NoSuchSubscriptionException.class.getName()) ||
+				 SessionErrors.contains(
+					 renderRequest, PrincipalException.class.getName())) {
 
 			include(templatePath + "error.jsp", renderRequest, renderResponse);
 		}

@@ -2,32 +2,40 @@
 
 <javadocs>
 	<javadoc>
-		<name>SampleUserImpl</name>
-		<type>com.liferay.samplewrapper.hook.model.impl.SampleUserImpl</type>
+		<name>SampleWrapperUserImpl</name>
+		<type>com.liferay.samplewrapper.hook.model.impl.SampleWrapperUserImpl</type>
 		<author><![CDATA[Brian Wing Shun Chan]]></author>
 		<method>
-			<name>SampleUserImpl</name>
+			<name>SampleWrapperUserImpl</name>
 			<param>
 				<name>user</name>
 				<type>com.liferay.portal.model.User</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 		</method>
 		<method>
 			<name>getFavoriteColor</name>
+			<return>
+				<comment><![CDATA[]]></comment>
+			</return>
 		</method>
 		<method>
 			<name>getFirstName</name>
+			<return>
+				<comment><![CDATA[]]></comment>
+			</return>
 		</method>
 	</javadoc>
 	<javadoc>
-		<name>SampleUserLocalServiceImpl</name>
-		<type>com.liferay.samplewrapper.hook.service.impl.SampleUserLocalServiceImpl</type>
+		<name>SampleWrapperUserLocalServiceImpl</name>
+		<type>com.liferay.samplewrapper.hook.service.impl.SampleWrapperUserLocalServiceImpl</type>
 		<author><![CDATA[Brian Wing Shun Chan]]></author>
 		<method>
-			<name>SampleUserLocalServiceImpl</name>
+			<name>SampleWrapperUserLocalServiceImpl</name>
 			<param>
 				<name>userLocalService</name>
 				<type>com.liferay.portal.service.UserLocalService</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 		</method>
 		<method>
@@ -35,14 +43,20 @@
 			<param>
 				<name>userId</name>
 				<type>long</type>
+				<comment><![CDATA[]]></comment>
 			</param>
+			<return>
+				<comment><![CDATA[]]></comment>
+			</return>
 			<throws>
 				<name>PortalException</name>
 				<type>com.liferay.portal.kernel.exception.PortalException</type>
+				<comment><![CDATA[]]></comment>
 			</throws>
 			<throws>
 				<name>SystemException</name>
 				<type>com.liferay.portal.kernel.exception.SystemException</type>
+				<comment><![CDATA[]]></comment>
 			</throws>
 		</method>
 	</javadoc>

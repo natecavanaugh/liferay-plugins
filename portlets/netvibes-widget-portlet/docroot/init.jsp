@@ -1,6 +1,6 @@
 <%--
 /**
- * Copyright (c) 2000-2012 Liferay, Inc. All rights reserved.
+ * Copyright (c) 2000-2013 Liferay, Inc. All rights reserved.
  *
  * This library is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Lesser General Public License as published by the Free
@@ -24,17 +24,16 @@
 <%@ taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
 <%@ taglib uri="http://liferay.com/tld/util" prefix="liferay-util" %>
 
-<%@ page import="com.liferay.netvibeswidget.util.NetvibesWidgetUtil" %><%@
-page import="com.liferay.portal.kernel.language.LanguageUtil" %><%@
+<%@ page import="com.liferay.compat.portal.util.PortalUtil" %><%@
+page import="com.liferay.netvibeswidget.util.NetvibesWidgetUtil" %><%@
 page import="com.liferay.portal.kernel.util.Constants" %><%@
 page import="com.liferay.portal.kernel.util.GetterUtil" %><%@
 page import="com.liferay.portal.kernel.util.HttpUtil" %><%@
 page import="com.liferay.portal.kernel.util.ParamUtil" %><%@
+page import="com.liferay.portal.kernel.util.StringBundler" %><%@
 page import="com.liferay.portal.kernel.util.UnicodeFormatter" %><%@
 page import="com.liferay.portal.kernel.util.Validator" %><%@
-page import="com.liferay.portal.kernel.util.WebKeys" %><%@
-page import="com.liferay.portal.util.PortalUtil" %><%@
-page import="com.liferay.portlet.PortletPreferencesFactoryUtil" %>
+page import="com.liferay.portal.kernel.util.WebKeys" %>
 
 <%@ page import="java.util.List" %>
 
@@ -48,21 +47,13 @@ page import="javax.portlet.WindowState" %>
 <%
 WindowState windowState = renderRequest.getWindowState();
 
-PortletPreferences preferences = renderRequest.getPreferences();
+String link = portletPreferences.getValue("link", "");
+String title = portletPreferences.getValue("title", "");
+String description = portletPreferences.getValue("description", "");
+String thumbnail = portletPreferences.getValue("thumbnail", "");
 
-String portletResource = ParamUtil.getString(request, "portletResource");
-
-if (Validator.isNotNull(portletResource)) {
-	preferences = PortletPreferencesFactoryUtil.getPortletSetup(request, portletResource);
-}
-
-String link = preferences.getValue("link", "");
-String title = preferences.getValue("title", "");
-String description = preferences.getValue("description", "");
-String thumbnail = preferences.getValue("thumbnail", "");
-
-String alt = preferences.getValue("alt", "Netvibes Widget");
-String heightMaximized = preferences.getValue("height-maximized", "600");
-String heightNormal = preferences.getValue("height-normal", "300");
-String width = preferences.getValue("width", "100%");
+String alt = portletPreferences.getValue("alt", "Netvibes Widget");
+String heightMaximized = portletPreferences.getValue("height-maximized", "600");
+String heightNormal = portletPreferences.getValue("height-normal", "300");
+String width = portletPreferences.getValue("width", "100%");
 %>

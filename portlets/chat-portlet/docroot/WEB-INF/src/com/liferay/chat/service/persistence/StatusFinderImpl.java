@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2000-2012 Liferay, Inc. All rights reserved.
+ * Copyright (c) 2000-2013 Liferay, Inc. All rights reserved.
  *
  * This library is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Lesser General Public License as published by the Free
@@ -21,6 +21,9 @@ import com.liferay.portal.kernel.dao.orm.SQLQuery;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.dao.orm.Type;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.util.dao.orm.CustomSQLUtil;
 
@@ -117,7 +120,8 @@ public class StatusFinderImpl
 	}
 
 	public List<Object[]> findByUsersGroups(
-			long userId, long modifiedDate, int start, int end)
+			long userId, long modifiedDate, String[] groupNames, int start,
+			int end)
 		throws SystemException {
 
 		Session session = null;
@@ -125,7 +129,7 @@ public class StatusFinderImpl
 		try {
 			session = openSession();
 
-			String sql = CustomSQLUtil.get(FIND_BY_USERS_GROUPS);
+			String sql = getFindByUsersGroups_SQL(groupNames);
 
 			SQLQuery q = session.createSQLQuery(sql);
 
@@ -140,6 +144,11 @@ public class StatusFinderImpl
 			QueryPos qPos = QueryPos.getInstance(q);
 
 			qPos.add(userId);
+
+			if (groupNames.length > 0) {
+				qPos.add(groupNames);
+			}
+
 			qPos.add(modifiedDate);
 			qPos.add(userId);
 
@@ -151,6 +160,37 @@ public class StatusFinderImpl
 		finally {
 			closeSession(session);
 		}
+	}
+
+	protected String getFindByUsersGroups_SQL(String[] groupNames) {
+		String sql = CustomSQLUtil.get(FIND_BY_USERS_GROUPS);
+
+		if (groupNames.length == 0) {
+			return StringUtil.replace(
+				sql,
+				new String[] {
+					"[$USERS_GROUPS_JOIN$]", "[$USERS_GROUPS_WHERE$]"
+				},
+				new String[] {StringPool.BLANK, StringPool.BLANK});
+		}
+
+		StringBundler sb = new StringBundler(groupNames.length * 2 - 1);
+
+		for (int i = 0; i < groupNames.length; i++) {
+			sb.append(StringPool.QUESTION);
+
+			if ((i + 1) < groupNames.length) {
+				sb.append(StringPool.COMMA);
+			}
+		}
+
+		return StringUtil.replace(
+			sql,
+			new String[] {"[$USERS_GROUPS_JOIN$]", "[$USERS_GROUPS_WHERE$]"},
+			new String[] {
+				"INNER JOIN Group_ ON Group_.groupId = Users_Groups.groupId",
+				"AND Group_.name NOT IN (" + sb.toString() + ")"
+			});
 	}
 
 }

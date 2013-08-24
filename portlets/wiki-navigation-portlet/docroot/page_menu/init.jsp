@@ -1,6 +1,6 @@
 <%--
 /**
- * Copyright (c) 2000-2012 Liferay, Inc. All rights reserved.
+ * Copyright (c) 2000-2013 Liferay, Inc. All rights reserved.
  *
  * This library is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Lesser General Public License as published by the Free
@@ -17,16 +17,8 @@
 <%@ include file="/init.jsp" %>
 
 <%
-PortletPreferences preferences = renderRequest.getPreferences();
-
-String portletResource = ParamUtil.getString(request, "portletResource");
-
-if (Validator.isNotNull(portletResource)) {
-	preferences = PortletPreferencesFactoryUtil.getPortletSetup(request, portletResource);
-}
-
-long selNodeId = PrefsParamUtil.getLong(preferences, request, "selNodeId");
-String selTitle = PrefsParamUtil.getString(preferences, request, "selTitle");
+long selNodeId = PrefsParamUtil.getLong(portletPreferences, request, "selNodeId");
+String selTitle = PrefsParamUtil.getString(portletPreferences, request, "selTitle");
 
 WikiPage wikiPage = null;
 

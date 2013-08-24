@@ -35,17 +35,12 @@ a:hover {
 
 #content {
 	width: 760px;
+	z-index: 1;
 	zoom: 1;
 }
 
 #so-sidebar .search input[type=image], .aui-dialog .sidebar {
 	display: none;
-}
-
-#content div#column-1.portlet-column-only .portlet-column-content {
-	background-color: #FFF;
-	margin-bottom: -1px;
-	margin-right: -1px;
 }
 
 /* ---------- Heading ---------- */
@@ -124,34 +119,31 @@ a:hover {
 #content {
 	#so-context {
 		border: 1px solid $gray-dark;
-		border-width: 0 1px 1px 0;
+		border-width: 0 1px 1px;
 		position: relative;
-		zoom: 1;
 		z-index: 3;
+		zoom: 1;
 	}
 
 	.portlet-layout {
+		border-collapse: separate;
+
 		.portlet-column-only {
 			background: #FFF;
-			border-right: 1px solid $gray-dark;
 			position: relative;
 			z-index: 2;
-
-			.portlet-column-content {
-				border-bottom: 1px solid $gray-dark;
-			}
-		}
-
-		.portlet-column:before {
-			border-right: 1px solid $gray-dark;
-			bottom: 0;
-			content: "";
-			position: absolute;
-			top: 0;
 		}
 
 		.portlet-column-content {
+			border: 1px solid $gray-dark;
+			border-width: 0 1px;
+			margin-right: -1px;
 			padding: 0;
+			position: relative;
+		}
+
+		.portlet-column-content-first, .portlet-column-content-only {
+			margin-left: -1px;
 		}
 	}
 
@@ -453,7 +445,6 @@ a:hover {
 }
 
 .user-sites, .user-tags {
-	border-bottom: 1px solid $gray-dark;
 	margin: 0 -10px;
 	padding: 0 10px 6px;
 }
@@ -477,8 +468,6 @@ a:hover {
 }
 
 .profile-header {
-	border: 1px solid $gray-dark;
-	border-width: 0 0 1px 1px;
 	padding: 10px;
 
 	h1 {
@@ -559,6 +548,10 @@ input[type=button], input[type=reset], input[type=submit], .aui-button button, .
 
 .aui-button-input-checkbox {
 	padding: 0;
+}
+
+.aui-inputmoveboxes .aui-field-select {
+	display: inline-block;
 }
 
 .lfr-label {
@@ -839,6 +832,16 @@ input[type=button], input[type=reset], input[type=submit], .aui-button button, .
 
 /* ---------- Portlet ---------- */
 
+.so-announcements-portlet, .so-portlet-activities {
+	.portlet-title {
+		color: $red;
+		font-size: 1.55em;
+		font-weight: normal;
+		margin-top: .5em;
+		padding: 0 .25em .70em;
+	}
+}
+
 /* Dockbar */
 
 .dockbar {
@@ -868,31 +871,9 @@ input[type=button], input[type=reset], input[type=submit], .aui-button button, .
 /*  Activities Portlet  */
 
 .so-portlet-activities {
-	.portlet-title {
-		color: $red;
-		font-size: 1.55em;
-		font-weight: normal;
-		margin-top: .5em;
-		padding: 0 .25em .70em;
-	}
-
 	h3 {
 		font-weight: normal;
 		margin: 1em 0 0;
-	}
-
-	.activity-item {
-		border-bottom: 1px solid #E7E7E7;
-		padding: 1em;
-	}
-
-	.activity-body {
-		font-size: .95em;
-	}
-
-	.user-portrait .icon {
-		bottom: -4px;
-		left: -4px;
 	}
 
 	a.group {
@@ -901,6 +882,10 @@ input[type=button], input[type=reset], input[type=submit], .aui-button button, .
 
 	.taglib-page-iterator {
 		word-break: break-all;
+	}
+
+	.search-results .journal-article-page-number {
+		display: inline-block;
 	}
 }
 
@@ -923,12 +908,44 @@ input[type=button], input[type=reset], input[type=submit], .aui-button button, .
 		width: 110px;
 	}
 
-	.user-portrait {
-		left: 65px;
+	.activity-item {
+		margin: 0 55px;
+	}
+}
+
+/* Announcements */
+
+.so-announcements-portlet {
+	.entry-header .scope {
+		color: #8D071F;
 	}
 
-	.activity-data {
-		margin-left: 110px;
+	.entry-body, .entry-footer {
+		border-color: #F4A425;
+	}
+
+	.entry .title {
+		background: #F4A425;
+		color: #FFF;
+
+		a {
+			color: #FFF;
+			text-decoration: underline;
+		}
+	}
+
+	.entry-footer-toolbar {
+		background: #E7E7E7;
+	}
+
+	.important-entry {
+		.entry-body, .entry-footer {
+			border-color: #B20000;
+		}
+
+		.title {
+			background: #B20000;
+		}
 	}
 }
 
@@ -1166,7 +1183,7 @@ input[type=button], input[type=reset], input[type=submit], .aui-button button, .
 
 	.aui-tabview-list {
 		border-left-color: $gray-dark;
-		border-width: 0 0 1px 1px;
+		border-width: 0 0 1px 0;
 		margin-bottom: 0;
 	}
 
@@ -1180,8 +1197,7 @@ input[type=button], input[type=reset], input[type=submit], .aui-button button, .
 	}
 
 	.calendar-container {
-		border: 1px solid $gray-dark;
-		border-width: 0 1px;
+		border-right: 1px solid $gray-dark;
 		width: auto;
 
 		.calendar-day {
@@ -1213,6 +1229,7 @@ input[type=button], input[type=reset], input[type=submit], .aui-button button, .
 
 		.half-hour {
 			border-bottom-style: solid;
+			height: 24px;
 		}
 
 		.half-hour, .night-hour {
@@ -1222,6 +1239,8 @@ input[type=button], input[type=reset], input[type=submit], .aui-button button, .
 		.event-box {
 			background: $gray-medium;
 			border: 1px solid #CCC;
+			margin-top: 1px;
+			padding-top: 6px;
 		}
 	}
 
@@ -1251,7 +1270,6 @@ input[type=button], input[type=reset], input[type=submit], .aui-button button, .
 .contacts-portlet {
 	.contacts-profile {
 		border-bottom: 1px solid $gray-dark;
-		margin-bottom: -1px;
 
 		.lfr-contact-name a {
 			color: $red;
@@ -1264,11 +1282,19 @@ input[type=button], input[type=reset], input[type=submit], .aui-button button, .
 
 	.lfr-app-column-view {
 		border-width: 1px 0 0;
-		margin-left: 1px;
-	}
 
-	.contact-group-filter .contact-group-filter-content {
-		min-height: 30px;
+		.contacts-list {
+			border-right: 1px solid $gray-dark;
+		}
+
+		.aui-column:before {
+			border-right-width: 0;
+			margin-left: 0;
+		}
+
+		.aui-column-content {
+			border-right-width: 0;
+		}
 	}
 
 	.social-relations a {
@@ -1293,24 +1319,19 @@ input[type=button], input[type=reset], input[type=submit], .aui-button button, .
 		padding: 10px;
 	}
 
-	.members-container {
-		border: 1px solid $gray-dark;
-		border-width: 1px 0;
+	.members-container .lfr-members-grid-item {
+		.lfr-user-data-extra, .lfr-user-data-name, .lfr-user-data-job-title {
+			overflow: hidden;
+			text-overflow: ellipsis;
+			white-space: nowrap;
+		}
 
-		.lfr-members-grid-item {
-			.lfr-user-data-extra, .lfr-user-data-name, .lfr-user-data-job-title {
-				overflow: hidden;
-				text-overflow: ellipsis;
-				white-space: nowrap;
-			}
+		.lfr-members-thumb {
+			margin: 0;
+		}
 
-			.lfr-members-thumb {
-				margin: 0;
-			}
-
-			&:hover {
-				background: $gray-medium;
-			}
+		&:hover {
+			background: $gray-medium;
 		}
 	}
 
@@ -1363,8 +1384,6 @@ input[type=button], input[type=reset], input[type=submit], .aui-button button, .
 /* Documents and Images Library */
 
 .portlet-document-library {
-	border-left: 1px solid $gray-dark;
-
 	.lfr-app-column-view {
 		.results-row td {
 			background: transparent;
@@ -1408,13 +1427,13 @@ input[type=button], input[type=reset], input[type=submit], .aui-button button, .
 	}
 
 	.lfr-header-row-content {
-		height: 28px;
 		padding: 4px;
 	}
 
 	.lfr-search-combobox {
+		margin: 0 0 0 2px;
+
 		.aui-w30, .aui-w70 {
-			padding: 2px 0;
 			width: auto;
 		}
 
@@ -1451,14 +1470,6 @@ input[type=button], input[type=reset], input[type=submit], .aui-button button, .
 		width: 30%;
 	}
 
-	.asset-details:before {
-		border-right: 1px solid $gray-dark;
-		bottom: 0;
-		content: "";
-		position: absolute;
-		top: 0;
-	}
-
 	.edit-permissions .header-title {
 		display: block;
 	}
@@ -1490,6 +1501,8 @@ input[type=button], input[type=reset], input[type=submit], .aui-button button, .
 }
 
 .portlet-document-library-display {
+	zoom: 1;
+
 	.top-links-container {
 		margin: 0;
 	}
@@ -1522,6 +1535,7 @@ input[type=button], input[type=reset], input[type=submit], .aui-button button, .
 
 	.taglib-header {
 		position: relative;
+		z-index: 1;
 	}
 
 	.header-back-to {
@@ -1551,6 +1565,10 @@ input[type=button], input[type=reset], input[type=submit], .aui-button button, .
 	.lfr-header-row-content .parent-folder-title {
 		color: $button-text-color;
 		text-shadow: none;
+	}
+
+	.view .context-pane .context-pane-content {
+		border-left: 1px solid $gray-dark;
 	}
 
 	.context-pane .context-pane-content {
@@ -1653,14 +1671,24 @@ input[type=button], input[type=reset], input[type=submit], .aui-button button, .
 
 	.menu {
 		border-right: 1px solid $gray-dark;
+		margin-right: -1px;
+	}
+
+	.result {
+		margin-left: 0;
+	}
+
+	.result-content {
+		padding: 0;
 	}
 
 	.results-grid {
 		border-width: 0;
 	}
 
-	.result-content {
-		margin: 0 -5px 0 -2px;
+	td, th {
+		border-color: $gray-dark;
+		border-right-width: 0;
 	}
 }
 
@@ -1735,12 +1763,6 @@ input[type=button], input[type=reset], input[type=submit], .aui-button button, .
 			border-bottom-width: 0;
 			padding: 1.75em 0 0;
 			position: relative;
-
-			.edit-controls {
-				position: absolute;
-				right: -5px;
-				top: 0;
-			}
 		}
 
 		.results-row {
@@ -1764,6 +1786,10 @@ input[type=button], input[type=reset], input[type=submit], .aui-button button, .
 		.thread-bottom {
 			.taglib-flags, .taglib-ratings.thumbs {
 				margin-top: 1.5em;
+			}
+
+			.edit-controls {
+				margin-right: 5px;
 			}
 		}
 	}
@@ -1919,8 +1945,6 @@ input[type=button], input[type=reset], input[type=submit], .aui-button button, .
 }
 
 .portlet-message-boards, .portlet-wiki {
-	border-left: 1px solid $gray-dark;
-
 	.top-links-container .top-link{
 		vertical-align: middle;
 	}
@@ -2038,7 +2062,9 @@ input[type=button], input[type=reset], input[type=submit], .aui-button button, .
 /*  Private Messaging  */
 
 .private-messaging-portlet {
-	margin-left: 1px;
+	.thread-content .controls {
+		margin-bottom: -1px;
+	}
 
 	.controls, .portlet-msg-info, .portlet-msg-success {
 		border-width: 0 0 1px;
@@ -2330,10 +2356,15 @@ input[type=button], input[type=reset], input[type=submit], .aui-button button, .
 		}
 	}
 
+	.wiki-body:after {
+		clear: both;
+		content: "";
+		display: block;
+		width: 100%;
+	}
+
 	.toc {
-		float: right;
-		margin-left: 1em;
-		max-width: 25%;
+		margin-bottom: 1.5em;
 
 		ol ol {
 			margin: 0 0 0 1em;
@@ -2352,22 +2383,6 @@ input[type=button], input[type=reset], input[type=submit], .aui-button button, .
 /* ---------- Internet Explorer ---------- */
 
 .ie7 {
-	#content td {
-		&.portlet-column {
-			border-left: 1px solid $gray-dark;
-		}
-
-		&.portlet-column-only {
-			&, .portlet-column-content {
-				border-width: 0 0 0 1px;
-			}
-
-			.portlet-boundary {
-				border-width: 0;
-			}
-		}
-	}
-
 	#so-sidebar {
 		.profile-image {
 			float: left;
@@ -2379,10 +2394,6 @@ input[type=button], input[type=reset], input[type=submit], .aui-button button, .
 
 		#navigation {
 			clear: both;
-
-			ul li {
-				margin-top: -2px;
-			}
 
 			a {
 				zoom: 1;
@@ -2420,6 +2431,10 @@ input[type=button], input[type=reset], input[type=submit], .aui-button button, .
 		}
 	}
 
+	#so-context #column-1 {
+		overflow: visible;
+	}
+
 	.aui-button-input-checkbox {
 		height: 13px;
 		width: 13px;
@@ -2430,13 +2445,8 @@ input[type=button], input[type=reset], input[type=submit], .aui-button button, .
 			margin-bottom: 0;
 		}
 
-		.contacts-list {
-			border-right: 1px solid $gray-dark;
-			margin-left: -1px;
-
-			.contacts-list-content {
-				border-right-width: 0;
-			}
+		.contacts-list .contacts-list-content {
+			border-right-width: 0;
 		}
 	}
 
@@ -2452,12 +2462,12 @@ input[type=button], input[type=reset], input[type=submit], .aui-button button, .
 		}
 	}
 
-	.portlet-calendar {
-		margin-left: -1px;
-	}
-
 	.portlet-document-library, .portlet-document-library-display {
 		margin-right: 1px;
+
+		.view .aui-column-last {
+			margin-right: 0;
+		}
 
 		.navigation-pane-content {
 			border-right-width: 0;
@@ -2521,6 +2531,10 @@ input[type=button], input[type=reset], input[type=submit], .aui-button button, .
 }
 
 .ie {
+	#content .portlet-layout {
+		border-collapse: collapse;
+	}
+
 	.aui-form-validator-error {
 		padding-left: 20px;
 		text-indent: 0;
@@ -2530,25 +2544,8 @@ input[type=button], input[type=reset], input[type=submit], .aui-button button, .
 		zoom: 1;
 	}
 
-	&.rtl {
-		#navigation {
-			margin-right: 1px;
-		}
-
-		#content .portlet-layout {
-			.portlet-column-first:before {
-				border-right-width: 0;
-			}
-
-			.portlet-column-only:after {
-				border-right: 1px solid $gray-dark;
-				bottom: 0;
-				content: "";
-				position: absolute;
-				right: -1px;
-				top: 0;
-			}
-		}
+	&.rtl #navigation {
+		margin-right: 1px;
 	}
 }
 

@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2000-2012 Liferay, Inc. All rights reserved.
+ * Copyright (c) 2000-2013 Liferay, Inc. All rights reserved.
  *
  * This library is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Lesser General Public License as published by the Free
@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.portlet.LiferayPortletConfig;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.servlet.SessionMessages;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portlet.PortletPreferencesFactoryUtil;
 
 import java.util.Map;
 
@@ -121,9 +120,7 @@ public class ConfigurationActionImpl extends BaseConfigurationAction {
 		String portletResource = ParamUtil.getString(
 			portletRequest, "portletResource");
 
-		PortletPreferences portletPreferences =
-			PortletPreferencesFactoryUtil.getPortletSetup(
-				portletRequest, portletResource);
+		PortletPreferences portletPreferences = portletRequest.getPreferences();
 
 		return ShindigUtil.getGadget(portletPreferences);
 	}

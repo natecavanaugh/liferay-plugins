@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2000-2012 Liferay, Inc. All rights reserved.
+ * Copyright (c) 2000-2013 Liferay, Inc. All rights reserved.
  *
  * This file is part of Liferay Social Office. Liferay Social Office is free
  * software: you can redistribute it and/or modify it under the terms of the GNU
@@ -17,6 +17,7 @@
 
 package com.liferay.so.sites.portlet;
 
+import com.liferay.compat.util.bridges.mvc.MVCPortlet;
 import com.liferay.portal.DuplicateGroupException;
 import com.liferay.portal.GroupNameException;
 import com.liferay.portal.kernel.dao.search.DAOParamUtil;
@@ -60,7 +61,6 @@ import com.liferay.so.service.FavoriteSiteLocalServiceUtil;
 import com.liferay.so.service.SocialOfficeServiceUtil;
 import com.liferay.so.sites.util.SitesUtil;
 import com.liferay.so.util.GroupConstants;
-import com.liferay.util.bridges.mvc.MVCPortlet;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -247,7 +247,10 @@ public class SitesPortlet extends MVCPortlet {
 			groupJSONObject.put(
 				"name", group.getDescriptiveName(themeDisplay.getLocale()));
 
-			if (group.hasPrivateLayouts() || group.hasPublicLayouts()) {
+			boolean member = GroupLocalServiceUtil.hasUserGroup(
+				themeDisplay.getUserId(), group.getGroupId());
+
+			if (group.hasPrivateLayouts() && member) {
 				PortletURL portletURL = liferayPortletResponse.createActionURL(
 					PortletKeys.SITE_REDIRECTOR);
 
@@ -255,10 +258,24 @@ public class SitesPortlet extends MVCPortlet {
 				portletURL.setParameter(
 					"groupId", String.valueOf(group.getGroupId()));
 				portletURL.setParameter(
-					"privateLayout", String.valueOf(!group.hasPublicLayouts()));
+					"privateLayout", Boolean.TRUE.toString());
 				portletURL.setWindowState(WindowState.NORMAL);
 
-				groupJSONObject.put("url", portletURL.toString());
+				groupJSONObject.put("privateLayoutsURL", portletURL.toString());
+			}
+
+			if (group.hasPublicLayouts()) {
+				PortletURL portletURL = liferayPortletResponse.createActionURL(
+					PortletKeys.SITE_REDIRECTOR);
+
+				portletURL.setParameter("struts_action", "/my_sites/view");
+				portletURL.setParameter(
+					"groupId", String.valueOf(group.getGroupId()));
+				portletURL.setParameter(
+					"privateLayout", Boolean.FALSE.toString());
+				portletURL.setWindowState(WindowState.NORMAL);
+
+				groupJSONObject.put("publicLayoutsURL", portletURL.toString());
 			}
 
 			boolean socialOfficeGroup =
@@ -279,9 +296,6 @@ public class SitesPortlet extends MVCPortlet {
 			siteAssignmentsPortletURL.setParameter(
 				"groupId", String.valueOf(group.getGroupId()));
 			siteAssignmentsPortletURL.setWindowState(WindowState.NORMAL);
-
-			boolean member = GroupLocalServiceUtil.hasUserGroup(
-				themeDisplay.getUserId(), group.getGroupId());
 
 			PermissionChecker permissionChecker =
 				themeDisplay.getPermissionChecker();
@@ -556,7 +570,7 @@ public class SitesPortlet extends MVCPortlet {
 				group.getGroupId(), privateLayout);
 
 		PortalClassInvoker.invoke(
-			true, _mergeLayoutSetProtypeLayoutsMethodKey, group, layoutSet);
+			true, _mergeLayoutSetPrototypeLayoutsMethodKey, group, layoutSet);
 
 		long[] deleteLayoutIds = getLongArray(actionRequest, "deleteLayoutIds");
 
@@ -602,7 +616,7 @@ public class SitesPortlet extends MVCPortlet {
 	private static final String _CLASS_NAME =
 		"com.liferay.portlet.sites.util.SitesUtil";
 
-	private static MethodKey _mergeLayoutSetProtypeLayoutsMethodKey =
+	private static MethodKey _mergeLayoutSetPrototypeLayoutsMethodKey =
 		new MethodKey(
 			_CLASS_NAME, "mergeLayoutSetProtypeLayouts", Group.class,
 			LayoutSet.class);

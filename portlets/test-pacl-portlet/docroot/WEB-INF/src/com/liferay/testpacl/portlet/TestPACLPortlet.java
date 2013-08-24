@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2000-2012 Liferay, Inc. All rights reserved.
+ * Copyright (c) 2000-2013 Liferay, Inc. All rights reserved.
  *
  * This library is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Lesser General Public License as published by the Free
@@ -17,15 +17,15 @@ package com.liferay.testpacl.portlet;
 import com.liferay.chat.service.EntryLocalService;
 import com.liferay.chat.service.EntryLocalServiceClp;
 import com.liferay.chat.service.EntryLocalServiceUtil;
+import com.liferay.compat.portal.util.PortalUtil;
+import com.liferay.compat.util.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.util.Portal;
-import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.blogs.service.BlogsEntryLocalService;
 import com.liferay.portlet.blogs.service.BlogsEntryLocalServiceUtil;
 import com.liferay.testpacl.service.FooLocalService;
 import com.liferay.testpacl.service.FooLocalServiceUtil;
 import com.liferay.testpacl.util.TestPACLUtil;
-import com.liferay.util.bridges.mvc.MVCPortlet;
 
 import java.io.IOException;
 
@@ -166,13 +166,7 @@ public class TestPACLPortlet extends MVCPortlet {
 
 		Field field = clazz.getField("TEST_FIELD");
 
-		try {
-			field.setAccessible(false);
-
-			throw new RuntimeException("Reflection is not protected");
-		}
-		catch (SecurityException se) {
-		}
+		field.setAccessible(false);
 	}
 
 }

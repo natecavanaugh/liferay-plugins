@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2000-2012 Liferay, Inc. All rights reserved.
+ * Copyright (c) 2000-2013 Liferay, Inc. All rights reserved.
  *
  * This library is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Lesser General Public License as published by the Free
@@ -14,6 +14,7 @@
 
 package com.liferay.chat.model;
 
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.ModelWrapper;
 
 import java.util.HashMap;
@@ -49,6 +50,7 @@ public class EntryWrapper implements Entry, ModelWrapper<Entry> {
 		attributes.put("fromUserId", getFromUserId());
 		attributes.put("toUserId", getToUserId());
 		attributes.put("content", getContent());
+		attributes.put("flag", getFlag());
 
 		return attributes;
 	}
@@ -82,6 +84,12 @@ public class EntryWrapper implements Entry, ModelWrapper<Entry> {
 
 		if (content != null) {
 			setContent(content);
+		}
+
+		Integer flag = (Integer)attributes.get("flag");
+
+		if (flag != null) {
+			setFlag(flag);
 		}
 	}
 
@@ -233,6 +241,24 @@ public class EntryWrapper implements Entry, ModelWrapper<Entry> {
 		_entry.setContent(content);
 	}
 
+	/**
+	* Returns the flag of this entry.
+	*
+	* @return the flag of this entry
+	*/
+	public int getFlag() {
+		return _entry.getFlag();
+	}
+
+	/**
+	* Sets the flag of this entry.
+	*
+	* @param flag the flag of this entry
+	*/
+	public void setFlag(int flag) {
+		_entry.setFlag(flag);
+	}
+
 	public boolean isNew() {
 		return _entry.isNew();
 	}
@@ -308,6 +334,25 @@ public class EntryWrapper implements Entry, ModelWrapper<Entry> {
 	public void persist()
 		throws com.liferay.portal.kernel.exception.SystemException {
 		_entry.persist();
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj) {
+			return true;
+		}
+
+		if (!(obj instanceof EntryWrapper)) {
+			return false;
+		}
+
+		EntryWrapper entryWrapper = (EntryWrapper)obj;
+
+		if (Validator.equals(_entry, entryWrapper._entry)) {
+			return true;
+		}
+
+		return false;
 	}
 
 	/**

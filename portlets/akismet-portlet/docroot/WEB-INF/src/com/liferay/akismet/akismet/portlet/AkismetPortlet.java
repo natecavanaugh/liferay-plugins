@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2000-2012 Liferay, Inc. All rights reserved.
+ * Copyright (c) 2000-2013 Liferay, Inc. All rights reserved.
  *
  * This library is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Lesser General Public License as published by the Free
@@ -17,13 +17,13 @@ package com.liferay.akismet.akismet.portlet;
 import com.liferay.akismet.util.AkismetUtil;
 import com.liferay.akismet.util.PortletPropsKeys;
 import com.liferay.akismet.util.PrefsPortletPropsUtil;
+import com.liferay.compat.util.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.model.RoleConstants;
 import com.liferay.portal.service.RoleLocalServiceUtil;
 import com.liferay.portal.theme.ThemeDisplay;
-import com.liferay.util.bridges.mvc.MVCPortlet;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -51,6 +51,8 @@ public class AkismetPortlet extends MVCPortlet {
 			actionRequest, "messageBoardsEnabled");
 		int reportableTime = ParamUtil.getInteger(
 			actionRequest, "reportableTime");
+		boolean wikiEnabled = ParamUtil.getBoolean(
+			actionRequest, "wikiEnabled");
 
 		PortletPreferences preferences =
 			PrefsPortletPropsUtil.getPortletPreferences(
@@ -69,6 +71,9 @@ public class AkismetPortlet extends MVCPortlet {
 		preferences.setValue(
 			PortletPropsKeys.AKISMET_REPORTABLE_TIME,
 			String.valueOf(reportableTime));
+		preferences.setValue(
+			PortletPropsKeys.AKISMET_WIKI_CHECK_ENABLED,
+			String.valueOf(wikiEnabled));
 
 		preferences.store();
 

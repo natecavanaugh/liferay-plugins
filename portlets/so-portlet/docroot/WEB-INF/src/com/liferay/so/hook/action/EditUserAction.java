@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2000-2012 Liferay, Inc. All rights reserved.
+ * Copyright (c) 2000-2013 Liferay, Inc. All rights reserved.
  *
  * This file is part of Liferay Social Office. Liferay Social Office is free
  * software: you can redistribute it and/or modify it under the terms of the GNU
@@ -17,14 +17,15 @@
 
 package com.liferay.so.hook.action;
 
+import com.liferay.compat.portal.kernel.portlet.DynamicActionRequest;
+import com.liferay.compat.portal.kernel.util.ArrayUtil;
+import com.liferay.compat.portal.util.PortalUtil;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.LanguageUtil;
-import com.liferay.portal.kernel.portlet.DynamicActionRequest;
 import com.liferay.portal.kernel.servlet.ServletResponseUtil;
 import com.liferay.portal.kernel.struts.BaseStrutsPortletAction;
 import com.liferay.portal.kernel.struts.StrutsPortletAction;
-import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -38,7 +39,6 @@ import com.liferay.portal.model.Role;
 import com.liferay.portal.model.User;
 import com.liferay.portal.service.RoleLocalServiceUtil;
 import com.liferay.portal.theme.ThemeDisplay;
-import com.liferay.portal.util.PortalUtil;
 import com.liferay.so.model.ProjectsEntry;
 import com.liferay.so.service.ProjectsEntryLocalServiceUtil;
 import com.liferay.so.util.LayoutSetPrototypeUtil;
@@ -130,7 +130,7 @@ public class EditUserAction extends BaseStrutsPortletAction {
 			String redirect = ParamUtil.getString(actionRequest, "redirect");
 
 			jsonObject.put("redirect", redirect);
-			jsonObject.put("success", true);
+			jsonObject.put("success", Boolean.TRUE);
 		}
 		catch (Exception e) {
 			ThemeDisplay themeDisplay =
@@ -140,7 +140,7 @@ public class EditUserAction extends BaseStrutsPortletAction {
 				themeDisplay.getLocale(), "your-request-failed-to-complete");
 
 			jsonObject.put("message", message);
-			jsonObject.put("success", false);
+			jsonObject.put("success", Boolean.FALSE);
 		}
 
 		HttpServletResponse response = PortalUtil.getHttpServletResponse(
@@ -253,8 +253,8 @@ public class EditUserAction extends BaseStrutsPortletAction {
 			return;
 		}
 
-		DynamicActionRequest dynamicActionRequest =
-			new DynamicActionRequest(actionRequest);
+		DynamicActionRequest dynamicActionRequest = new DynamicActionRequest(
+			actionRequest);
 
 		User user = PortalUtil.getSelectedUser(actionRequest);
 

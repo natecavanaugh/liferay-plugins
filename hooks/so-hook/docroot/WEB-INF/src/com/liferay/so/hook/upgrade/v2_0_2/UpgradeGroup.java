@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2000-2012 Liferay, Inc. All rights reserved.
+ * Copyright (c) 2000-2013 Liferay, Inc. All rights reserved.
  *
  * This file is part of Liferay Social Office. Liferay Social Office is free
  * software: you can redistribute it and/or modify it under the terms of the GNU
@@ -81,7 +81,8 @@ public class UpgradeGroup extends UpgradeProcess {
 				group.getGroupId(), privateLayout);
 
 			PortalClassInvoker.invoke(
-				true, _mergeLayoutSetProtypeLayoutsMethodKey, group, layoutSet);
+				true, _mergeLayoutSetPrototypeLayoutsMethodKey, group,
+				layoutSet);
 
 			updatePortletPreferences(
 				group.getGroupId(), privateLayout, portletPreferences);
@@ -138,7 +139,7 @@ public class UpgradeGroup extends UpgradeProcess {
 	private static final String _OLD_WELCOME_PORTLET_ID =
 		"1_WAR_wysiwygportlet";
 
-	private static MethodKey _mergeLayoutSetProtypeLayoutsMethodKey =
+	private static MethodKey _mergeLayoutSetPrototypeLayoutsMethodKey =
 		new MethodKey(
 			"com.liferay.portlet.sites.util.SitesUtil",
 			"mergeLayoutSetProtypeLayouts", Group.class, LayoutSet.class);

@@ -1,6 +1,6 @@
 <%--
 /**
- * Copyright (c) 2000-2012 Liferay, Inc. All rights reserved.
+ * Copyright (c) 2000-2013 Liferay, Inc. All rights reserved.
  *
  * This file is part of Liferay Social Office. Liferay Social Office is free
  * software: you can redistribute it and/or modify it under the terms of the GNU
@@ -19,19 +19,10 @@
 
 <%@ include file="/init.jsp" %>
 
-<%@ page import="com.liferay.portal.model.MembershipRequestConstants" %><%@
-page import="com.liferay.portal.service.MembershipRequestLocalServiceUtil" %><%@
-page import="com.liferay.so.service.FavoriteSiteLocalServiceUtil" %><%@
-page import="com.liferay.so.util.SocialOfficeConstants" %>
+<%@ page import="com.liferay.so.util.SocialOfficeConstants" %>
 
 <%
-PortletPreferences preferences = renderRequest.getPreferences();
-
 String portletResource = ParamUtil.getString(request, "portletResource");
 
-if (Validator.isNotNull(portletResource)) {
-	preferences = PortletPreferencesFactoryUtil.getPortletSetup(request, portletResource);
-}
-
-int maxResultSize = GetterUtil.getInteger(preferences.getValue("maxResultSize", null), 10);
+int maxResultSize = GetterUtil.getInteger(portletPreferences.getValue("maxResultSize", null), 10);
 %>

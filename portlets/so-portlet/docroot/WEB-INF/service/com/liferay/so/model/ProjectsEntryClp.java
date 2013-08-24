@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2000-2012 Liferay, Inc. All rights reserved.
+ * Copyright (c) 2000-2013 Liferay, Inc. All rights reserved.
  *
  * This library is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Lesser General Public License as published by the Free
@@ -23,9 +23,12 @@ import com.liferay.portal.model.BaseModel;
 import com.liferay.portal.model.impl.BaseModelImpl;
 import com.liferay.portal.util.PortalUtil;
 
+import com.liferay.so.service.ClpSerializer;
 import com.liferay.so.service.ProjectsEntryLocalServiceUtil;
 
 import java.io.Serializable;
+
+import java.lang.reflect.Method;
 
 import java.util.Date;
 import java.util.HashMap;
@@ -39,10 +42,12 @@ public class ProjectsEntryClp extends BaseModelImpl<ProjectsEntry>
 	public ProjectsEntryClp() {
 	}
 
+	@Override
 	public Class<?> getModelClass() {
 		return ProjectsEntry.class;
 	}
 
+	@Override
 	public String getModelClassName() {
 		return ProjectsEntry.class.getName();
 	}
@@ -55,10 +60,12 @@ public class ProjectsEntryClp extends BaseModelImpl<ProjectsEntry>
 		setProjectsEntryId(primaryKey);
 	}
 
+	@Override
 	public Serializable getPrimaryKeyObj() {
 		return new Long(_projectsEntryId);
 	}
 
+	@Override
 	public void setPrimaryKeyObj(Serializable primaryKeyObj) {
 		setPrimaryKey(((Long)primaryKeyObj).longValue());
 	}
@@ -157,6 +164,19 @@ public class ProjectsEntryClp extends BaseModelImpl<ProjectsEntry>
 
 	public void setProjectsEntryId(long projectsEntryId) {
 		_projectsEntryId = projectsEntryId;
+
+		if (_projectsEntryRemoteModel != null) {
+			try {
+				Class<?> clazz = _projectsEntryRemoteModel.getClass();
+
+				Method method = clazz.getMethod("setProjectsEntryId", long.class);
+
+				method.invoke(_projectsEntryRemoteModel, projectsEntryId);
+			}
+			catch (Exception e) {
+				throw new UnsupportedOperationException(e);
+			}
+		}
 	}
 
 	public long getCompanyId() {
@@ -165,6 +185,19 @@ public class ProjectsEntryClp extends BaseModelImpl<ProjectsEntry>
 
 	public void setCompanyId(long companyId) {
 		_companyId = companyId;
+
+		if (_projectsEntryRemoteModel != null) {
+			try {
+				Class<?> clazz = _projectsEntryRemoteModel.getClass();
+
+				Method method = clazz.getMethod("setCompanyId", long.class);
+
+				method.invoke(_projectsEntryRemoteModel, companyId);
+			}
+			catch (Exception e) {
+				throw new UnsupportedOperationException(e);
+			}
+		}
 	}
 
 	public long getUserId() {
@@ -173,6 +206,19 @@ public class ProjectsEntryClp extends BaseModelImpl<ProjectsEntry>
 
 	public void setUserId(long userId) {
 		_userId = userId;
+
+		if (_projectsEntryRemoteModel != null) {
+			try {
+				Class<?> clazz = _projectsEntryRemoteModel.getClass();
+
+				Method method = clazz.getMethod("setUserId", long.class);
+
+				method.invoke(_projectsEntryRemoteModel, userId);
+			}
+			catch (Exception e) {
+				throw new UnsupportedOperationException(e);
+			}
+		}
 	}
 
 	public String getUserUuid() throws SystemException {
@@ -189,6 +235,19 @@ public class ProjectsEntryClp extends BaseModelImpl<ProjectsEntry>
 
 	public void setUserName(String userName) {
 		_userName = userName;
+
+		if (_projectsEntryRemoteModel != null) {
+			try {
+				Class<?> clazz = _projectsEntryRemoteModel.getClass();
+
+				Method method = clazz.getMethod("setUserName", String.class);
+
+				method.invoke(_projectsEntryRemoteModel, userName);
+			}
+			catch (Exception e) {
+				throw new UnsupportedOperationException(e);
+			}
+		}
 	}
 
 	public Date getCreateDate() {
@@ -197,6 +256,19 @@ public class ProjectsEntryClp extends BaseModelImpl<ProjectsEntry>
 
 	public void setCreateDate(Date createDate) {
 		_createDate = createDate;
+
+		if (_projectsEntryRemoteModel != null) {
+			try {
+				Class<?> clazz = _projectsEntryRemoteModel.getClass();
+
+				Method method = clazz.getMethod("setCreateDate", Date.class);
+
+				method.invoke(_projectsEntryRemoteModel, createDate);
+			}
+			catch (Exception e) {
+				throw new UnsupportedOperationException(e);
+			}
+		}
 	}
 
 	public Date getModifiedDate() {
@@ -205,6 +277,19 @@ public class ProjectsEntryClp extends BaseModelImpl<ProjectsEntry>
 
 	public void setModifiedDate(Date modifiedDate) {
 		_modifiedDate = modifiedDate;
+
+		if (_projectsEntryRemoteModel != null) {
+			try {
+				Class<?> clazz = _projectsEntryRemoteModel.getClass();
+
+				Method method = clazz.getMethod("setModifiedDate", Date.class);
+
+				method.invoke(_projectsEntryRemoteModel, modifiedDate);
+			}
+			catch (Exception e) {
+				throw new UnsupportedOperationException(e);
+			}
+		}
 	}
 
 	public String getTitle() {
@@ -213,6 +298,19 @@ public class ProjectsEntryClp extends BaseModelImpl<ProjectsEntry>
 
 	public void setTitle(String title) {
 		_title = title;
+
+		if (_projectsEntryRemoteModel != null) {
+			try {
+				Class<?> clazz = _projectsEntryRemoteModel.getClass();
+
+				Method method = clazz.getMethod("setTitle", String.class);
+
+				method.invoke(_projectsEntryRemoteModel, title);
+			}
+			catch (Exception e) {
+				throw new UnsupportedOperationException(e);
+			}
+		}
 	}
 
 	public String getDescription() {
@@ -221,6 +319,19 @@ public class ProjectsEntryClp extends BaseModelImpl<ProjectsEntry>
 
 	public void setDescription(String description) {
 		_description = description;
+
+		if (_projectsEntryRemoteModel != null) {
+			try {
+				Class<?> clazz = _projectsEntryRemoteModel.getClass();
+
+				Method method = clazz.getMethod("setDescription", String.class);
+
+				method.invoke(_projectsEntryRemoteModel, description);
+			}
+			catch (Exception e) {
+				throw new UnsupportedOperationException(e);
+			}
+		}
 	}
 
 	public Date getStartDate() {
@@ -229,6 +340,19 @@ public class ProjectsEntryClp extends BaseModelImpl<ProjectsEntry>
 
 	public void setStartDate(Date startDate) {
 		_startDate = startDate;
+
+		if (_projectsEntryRemoteModel != null) {
+			try {
+				Class<?> clazz = _projectsEntryRemoteModel.getClass();
+
+				Method method = clazz.getMethod("setStartDate", Date.class);
+
+				method.invoke(_projectsEntryRemoteModel, startDate);
+			}
+			catch (Exception e) {
+				throw new UnsupportedOperationException(e);
+			}
+		}
 	}
 
 	public Date getEndDate() {
@@ -237,6 +361,19 @@ public class ProjectsEntryClp extends BaseModelImpl<ProjectsEntry>
 
 	public void setEndDate(Date endDate) {
 		_endDate = endDate;
+
+		if (_projectsEntryRemoteModel != null) {
+			try {
+				Class<?> clazz = _projectsEntryRemoteModel.getClass();
+
+				Method method = clazz.getMethod("setEndDate", Date.class);
+
+				method.invoke(_projectsEntryRemoteModel, endDate);
+			}
+			catch (Exception e) {
+				throw new UnsupportedOperationException(e);
+			}
+		}
 	}
 
 	public String getData() {
@@ -245,6 +382,19 @@ public class ProjectsEntryClp extends BaseModelImpl<ProjectsEntry>
 
 	public void setData(String data) {
 		_data = data;
+
+		if (_projectsEntryRemoteModel != null) {
+			try {
+				Class<?> clazz = _projectsEntryRemoteModel.getClass();
+
+				Method method = clazz.getMethod("setData", String.class);
+
+				method.invoke(_projectsEntryRemoteModel, data);
+			}
+			catch (Exception e) {
+				throw new UnsupportedOperationException(e);
+			}
+		}
 	}
 
 	public BaseModel<?> getProjectsEntryRemoteModel() {
@@ -254,6 +404,47 @@ public class ProjectsEntryClp extends BaseModelImpl<ProjectsEntry>
 	public void setProjectsEntryRemoteModel(
 		BaseModel<?> projectsEntryRemoteModel) {
 		_projectsEntryRemoteModel = projectsEntryRemoteModel;
+	}
+
+	public Object invokeOnRemoteModel(String methodName,
+		Class<?>[] parameterTypes, Object[] parameterValues)
+		throws Exception {
+		Object[] remoteParameterValues = new Object[parameterValues.length];
+
+		for (int i = 0; i < parameterValues.length; i++) {
+			if (parameterValues[i] != null) {
+				remoteParameterValues[i] = ClpSerializer.translateInput(parameterValues[i]);
+			}
+		}
+
+		Class<?> remoteModelClass = _projectsEntryRemoteModel.getClass();
+
+		ClassLoader remoteModelClassLoader = remoteModelClass.getClassLoader();
+
+		Class<?>[] remoteParameterTypes = new Class[parameterTypes.length];
+
+		for (int i = 0; i < parameterTypes.length; i++) {
+			if (parameterTypes[i].isPrimitive()) {
+				remoteParameterTypes[i] = parameterTypes[i];
+			}
+			else {
+				String parameterTypeName = parameterTypes[i].getName();
+
+				remoteParameterTypes[i] = remoteModelClassLoader.loadClass(parameterTypeName);
+			}
+		}
+
+		Method method = remoteModelClass.getMethod(methodName,
+				remoteParameterTypes);
+
+		Object returnValue = method.invoke(_projectsEntryRemoteModel,
+				remoteParameterValues);
+
+		if (returnValue != null) {
+			returnValue = ClpSerializer.translateOutput(returnValue);
+		}
+
+		return returnValue;
 	}
 
 	public void persist() throws SystemException {
@@ -271,6 +462,7 @@ public class ProjectsEntryClp extends BaseModelImpl<ProjectsEntry>
 			new Class[] { ProjectsEntry.class }, new AutoEscapeBeanHandler(this));
 	}
 
+	@Override
 	public ProjectsEntry toUnescapedModel() {
 		return this;
 	}
@@ -308,18 +500,15 @@ public class ProjectsEntryClp extends BaseModelImpl<ProjectsEntry>
 
 	@Override
 	public boolean equals(Object obj) {
-		if (obj == null) {
+		if (this == obj) {
+			return true;
+		}
+
+		if (!(obj instanceof ProjectsEntryClp)) {
 			return false;
 		}
 
-		ProjectsEntryClp projectsEntry = null;
-
-		try {
-			projectsEntry = (ProjectsEntryClp)obj;
-		}
-		catch (ClassCastException cce) {
-			return false;
-		}
+		ProjectsEntryClp projectsEntry = (ProjectsEntryClp)obj;
 
 		long primaryKey = projectsEntry.getPrimaryKey();
 
@@ -367,6 +556,7 @@ public class ProjectsEntryClp extends BaseModelImpl<ProjectsEntry>
 		return sb.toString();
 	}
 
+	@Override
 	public String toXmlString() {
 		StringBundler sb = new StringBundler(37);
 

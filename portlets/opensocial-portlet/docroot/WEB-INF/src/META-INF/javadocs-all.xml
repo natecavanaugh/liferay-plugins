@@ -11,18 +11,22 @@
 			<param>
 				<name>portletConfig</name>
 				<type>javax.portlet.PortletConfig</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>actionRequest</name>
 				<type>javax.portlet.ActionRequest</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>actionResponse</name>
 				<type>javax.portlet.ActionResponse</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<throws>
 				<name>Exception</name>
 				<type>java.lang.Exception</type>
+				<comment><![CDATA[]]></comment>
 			</throws>
 		</method>
 		<method>
@@ -30,18 +34,25 @@
 			<param>
 				<name>portletConfig</name>
 				<type>javax.portlet.PortletConfig</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>renderRequest</name>
 				<type>javax.portlet.RenderRequest</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>renderResponse</name>
 				<type>javax.portlet.RenderResponse</type>
+				<comment><![CDATA[]]></comment>
 			</param>
+			<return>
+				<comment><![CDATA[]]></comment>
+			</return>
 			<throws>
 				<name>Exception</name>
 				<type>java.lang.Exception</type>
+				<comment><![CDATA[]]></comment>
 			</throws>
 		</method>
 		<method>
@@ -49,14 +60,20 @@
 			<param>
 				<name>portletConfig</name>
 				<type>javax.portlet.PortletConfig</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>portletRequest</name>
 				<type>javax.portlet.PortletRequest</type>
+				<comment><![CDATA[]]></comment>
 			</param>
+			<return>
+				<comment><![CDATA[]]></comment>
+			</return>
 			<throws>
 				<name>Exception</name>
 				<type>java.lang.Exception</type>
+				<comment><![CDATA[]]></comment>
 			</throws>
 		</method>
 	</javadoc>
@@ -69,37 +86,49 @@
 			<param>
 				<name>renderRequest</name>
 				<type>javax.portlet.RenderRequest</type>
+				<comment><![CDATA[]]></comment>
 			</param>
+			<return>
+				<comment><![CDATA[]]></comment>
+			</return>
 			<throws>
 				<name>Exception</name>
 				<type>java.lang.Exception</type>
+				<comment><![CDATA[]]></comment>
 			</throws>
 		</method>
 	</javadoc>
 	<javadoc>
-		<name>AdminPortletDataHandlerImpl</name>
-		<type>com.liferay.opensocial.admin.lar.AdminPortletDataHandlerImpl</type>
+		<name>AdminPortletDataHandler</name>
+		<type>com.liferay.opensocial.admin.lar.AdminPortletDataHandler</type>
 		<author><![CDATA[Michael C. Han]]></author>
 		<method>
-			<name>isPublishToLiveByDefault</name>
+			<name>AdminPortletDataHandler</name>
 		</method>
 		<method>
 			<name>doDeleteData</name>
 			<param>
 				<name>portletDataContext</name>
 				<type>com.liferay.portal.kernel.lar.PortletDataContext</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>portletId</name>
 				<type>java.lang.String</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>portletPreferences</name>
 				<type>javax.portlet.PortletPreferences</type>
+				<comment><![CDATA[]]></comment>
 			</param>
+			<return>
+				<comment><![CDATA[]]></comment>
+			</return>
 			<throws>
 				<name>Exception</name>
 				<type>java.lang.Exception</type>
+				<comment><![CDATA[]]></comment>
 			</throws>
 		</method>
 		<method>
@@ -107,18 +136,25 @@
 			<param>
 				<name>portletDataContext</name>
 				<type>com.liferay.portal.kernel.lar.PortletDataContext</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>portletId</name>
 				<type>java.lang.String</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>portletPreferences</name>
 				<type>javax.portlet.PortletPreferences</type>
+				<comment><![CDATA[]]></comment>
 			</param>
+			<return>
+				<comment><![CDATA[]]></comment>
+			</return>
 			<throws>
 				<name>Exception</name>
 				<type>java.lang.Exception</type>
+				<comment><![CDATA[]]></comment>
 			</throws>
 		</method>
 		<method>
@@ -126,22 +162,30 @@
 			<param>
 				<name>portletDataContext</name>
 				<type>com.liferay.portal.kernel.lar.PortletDataContext</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>portletId</name>
 				<type>java.lang.String</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>portletPreferences</name>
 				<type>javax.portlet.PortletPreferences</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>data</name>
 				<type>java.lang.String</type>
+				<comment><![CDATA[]]></comment>
 			</param>
+			<return>
+				<comment><![CDATA[]]></comment>
+			</return>
 			<throws>
 				<name>Exception</name>
 				<type>java.lang.Exception</type>
+				<comment><![CDATA[]]></comment>
 			</throws>
 		</method>
 		<method>
@@ -149,18 +193,22 @@
 			<param>
 				<name>portletDataContext</name>
 				<type>com.liferay.portal.kernel.lar.PortletDataContext</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>gadgetsElement</name>
 				<type>com.liferay.portal.kernel.xml.Element</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>gadget</name>
 				<type>com.liferay.opensocial.model.Gadget</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<throws>
 				<name>Exception</name>
 				<type>java.lang.Exception</type>
+				<comment><![CDATA[]]></comment>
 			</throws>
 		</method>
 		<method>
@@ -168,39 +216,45 @@
 			<param>
 				<name>portletDataContext</name>
 				<type>com.liferay.portal.kernel.lar.PortletDataContext</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>gadget</name>
 				<type>com.liferay.opensocial.model.Gadget</type>
+				<comment><![CDATA[]]></comment>
 			</param>
+			<return>
+				<comment><![CDATA[]]></comment>
+			</return>
 		</method>
 		<method>
 			<name>importGadget</name>
 			<param>
 				<name>portletDataContext</name>
 				<type>com.liferay.portal.kernel.lar.PortletDataContext</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>gadgetElement</name>
 				<type>com.liferay.portal.kernel.xml.Element</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>gadget</name>
 				<type>com.liferay.opensocial.model.Gadget</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<throws>
 				<name>Exception</name>
 				<type>java.lang.Exception</type>
+				<comment><![CDATA[]]></comment>
 			</throws>
 		</method>
 		<field>
-			<name>_NAMESPACE</name>
+			<name>NAMESPACE</name>
 		</field>
 		<field>
-			<name>_PORTLET_KEY</name>
-		</field>
-		<field>
-			<name>_PUBLISH_TO_LIVE_BY_DEFAULT</name>
+			<name>_PORTLET_ID</name>
 		</field>
 	</javadoc>
 	<javadoc>
@@ -213,14 +267,17 @@
 			<param>
 				<name>actionRequest</name>
 				<type>javax.portlet.ActionRequest</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>actionResponse</name>
 				<type>javax.portlet.ActionResponse</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<throws>
 				<name>Exception</name>
 				<type>java.lang.Exception</type>
+				<comment><![CDATA[]]></comment>
 			</throws>
 		</method>
 		<method>
@@ -228,14 +285,17 @@
 			<param>
 				<name>actionRequest</name>
 				<type>javax.portlet.ActionRequest</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>actionResponse</name>
 				<type>javax.portlet.ActionResponse</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<throws>
 				<name>Exception</name>
 				<type>java.lang.Exception</type>
+				<comment><![CDATA[]]></comment>
 			</throws>
 		</method>
 		<method>
@@ -243,14 +303,17 @@
 			<param>
 				<name>actionRequest</name>
 				<type>javax.portlet.ActionRequest</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>actionResponse</name>
 				<type>javax.portlet.ActionResponse</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<throws>
 				<name>Exception</name>
 				<type>java.lang.Exception</type>
+				<comment><![CDATA[]]></comment>
 			</throws>
 		</method>
 		<method>
@@ -258,14 +321,17 @@
 			<param>
 				<name>actionRequest</name>
 				<type>javax.portlet.ActionRequest</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>actionResponse</name>
 				<type>javax.portlet.ActionResponse</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<throws>
 				<name>Exception</name>
 				<type>java.lang.Exception</type>
+				<comment><![CDATA[]]></comment>
 			</throws>
 		</method>
 		<method>
@@ -273,14 +339,20 @@
 			<param>
 				<name>actionRequest</name>
 				<type>javax.portlet.ActionRequest</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>actionResponse</name>
 				<type>javax.portlet.ActionResponse</type>
+				<comment><![CDATA[]]></comment>
 			</param>
+			<return>
+				<comment><![CDATA[]]></comment>
+			</return>
 			<throws>
 				<name>Exception</name>
 				<type>java.lang.Exception</type>
+				<comment><![CDATA[]]></comment>
 			</throws>
 		</method>
 		<method>
@@ -288,14 +360,17 @@
 			<param>
 				<name>actionRequest</name>
 				<type>javax.portlet.ActionRequest</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>actionResponse</name>
 				<type>javax.portlet.ActionResponse</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<throws>
 				<name>Exception</name>
 				<type>java.lang.Exception</type>
+				<comment><![CDATA[]]></comment>
 			</throws>
 		</method>
 	</javadoc>
@@ -308,18 +383,22 @@
 			<param>
 				<name>resourceRequest</name>
 				<type>javax.portlet.ResourceRequest</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>resourceResponse</name>
 				<type>javax.portlet.ResourceResponse</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<throws>
 				<name>IOException</name>
 				<type>java.io.IOException</type>
+				<comment><![CDATA[]]></comment>
 			</throws>
 			<throws>
 				<name>PortletException</name>
 				<type>javax.portlet.PortletException</type>
+				<comment><![CDATA[]]></comment>
 			</throws>
 		</method>
 		<method>
@@ -327,14 +406,17 @@
 			<param>
 				<name>actionRequest</name>
 				<type>javax.portlet.ActionRequest</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>actionResponse</name>
 				<type>javax.portlet.ActionResponse</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<throws>
 				<name>Exception</name>
 				<type>java.lang.Exception</type>
+				<comment><![CDATA[]]></comment>
 			</throws>
 		</method>
 		<method>
@@ -342,14 +424,17 @@
 			<param>
 				<name>resourceRequest</name>
 				<type>javax.portlet.ResourceRequest</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>resourceResponse</name>
 				<type>javax.portlet.ResourceResponse</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<throws>
 				<name>Exception</name>
 				<type>java.lang.Exception</type>
+				<comment><![CDATA[]]></comment>
 			</throws>
 		</method>
 		<method>
@@ -357,14 +442,17 @@
 			<param>
 				<name>resourceRequest</name>
 				<type>javax.portlet.ResourceRequest</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>resourceResponse</name>
 				<type>javax.portlet.ResourceResponse</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<throws>
 				<name>Exception</name>
 				<type>java.lang.Exception</type>
+				<comment><![CDATA[]]></comment>
 			</throws>
 		</method>
 		<method>
@@ -372,14 +460,17 @@
 			<param>
 				<name>resourceRequest</name>
 				<type>javax.portlet.ResourceRequest</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>resourceResponse</name>
 				<type>javax.portlet.ResourceResponse</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<throws>
 				<name>Exception</name>
 				<type>java.lang.Exception</type>
+				<comment><![CDATA[]]></comment>
 			</throws>
 		</method>
 		<method>
@@ -387,14 +478,17 @@
 			<param>
 				<name>resourceRequest</name>
 				<type>javax.portlet.ResourceRequest</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>resourceResponse</name>
 				<type>javax.portlet.ResourceResponse</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<throws>
 				<name>Exception</name>
 				<type>java.lang.Exception</type>
+				<comment><![CDATA[]]></comment>
 			</throws>
 		</method>
 		<method>
@@ -402,18 +496,22 @@
 			<param>
 				<name>exception</name>
 				<type>java.lang.Exception</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>resourceRequest</name>
 				<type>javax.portlet.ResourceRequest</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>resourceResponse</name>
 				<type>javax.portlet.ResourceResponse</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<throws>
 				<name>IOException</name>
 				<type>java.io.IOException</type>
+				<comment><![CDATA[]]></comment>
 			</throws>
 		</method>
 		<method>
@@ -421,14 +519,17 @@
 			<param>
 				<name>resourceRequest</name>
 				<type>javax.portlet.ResourceRequest</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>resourceResponse</name>
 				<type>javax.portlet.ResourceResponse</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<throws>
 				<name>Exception</name>
 				<type>java.lang.Exception</type>
+				<comment><![CDATA[]]></comment>
 			</throws>
 		</method>
 		<method>
@@ -436,14 +537,17 @@
 			<param>
 				<name>resourceRequest</name>
 				<type>javax.portlet.ResourceRequest</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>resourceResponse</name>
 				<type>javax.portlet.ResourceResponse</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<throws>
 				<name>Exception</name>
 				<type>java.lang.Exception</type>
+				<comment><![CDATA[]]></comment>
 			</throws>
 		</method>
 		<method>
@@ -451,14 +555,17 @@
 			<param>
 				<name>resourceRequest</name>
 				<type>javax.portlet.ResourceRequest</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>resourceResponse</name>
 				<type>javax.portlet.ResourceResponse</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<throws>
 				<name>Exception</name>
 				<type>java.lang.Exception</type>
+				<comment><![CDATA[]]></comment>
 			</throws>
 		</method>
 		<method>
@@ -466,14 +573,17 @@
 			<param>
 				<name>resourceRequest</name>
 				<type>javax.portlet.ResourceRequest</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>resourceResponse</name>
 				<type>javax.portlet.ResourceResponse</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<throws>
 				<name>Exception</name>
 				<type>java.lang.Exception</type>
+				<comment><![CDATA[]]></comment>
 			</throws>
 		</method>
 		<method>
@@ -481,14 +591,17 @@
 			<param>
 				<name>resourceRequest</name>
 				<type>javax.portlet.ResourceRequest</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>resourceResponse</name>
 				<type>javax.portlet.ResourceResponse</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<throws>
 				<name>Exception</name>
 				<type>java.lang.Exception</type>
+				<comment><![CDATA[]]></comment>
 			</throws>
 		</method>
 		<method>
@@ -496,14 +609,17 @@
 			<param>
 				<name>resourceRequest</name>
 				<type>javax.portlet.ResourceRequest</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>resourceResponse</name>
 				<type>javax.portlet.ResourceResponse</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<throws>
 				<name>Exception</name>
 				<type>java.lang.Exception</type>
+				<comment><![CDATA[]]></comment>
 			</throws>
 		</method>
 	</javadoc>
@@ -516,18 +632,22 @@
 			<param>
 				<name>portletConfig</name>
 				<type>javax.portlet.PortletConfig</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>actionRequest</name>
 				<type>javax.portlet.ActionRequest</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>actionResponse</name>
 				<type>javax.portlet.ActionResponse</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<throws>
 				<name>Exception</name>
 				<type>java.lang.Exception</type>
+				<comment><![CDATA[]]></comment>
 			</throws>
 		</method>
 		<method>
@@ -535,18 +655,22 @@
 			<param>
 				<name>portletConfig</name>
 				<type>javax.portlet.PortletConfig</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>renderRequest</name>
 				<type>javax.portlet.RenderRequest</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>renderResponse</name>
 				<type>javax.portlet.RenderResponse</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<throws>
 				<name>Exception</name>
 				<type>java.lang.Exception</type>
+				<comment><![CDATA[]]></comment>
 			</throws>
 		</method>
 		<method>
@@ -554,14 +678,20 @@
 			<param>
 				<name>portletConfig</name>
 				<type>javax.portlet.PortletConfig</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>portletRequest</name>
 				<type>javax.portlet.PortletRequest</type>
+				<comment><![CDATA[]]></comment>
 			</param>
+			<return>
+				<comment><![CDATA[]]></comment>
+			</return>
 			<throws>
 				<name>Exception</name>
 				<type>java.lang.Exception</type>
+				<comment><![CDATA[]]></comment>
 			</throws>
 		</method>
 		<method>
@@ -569,14 +699,20 @@
 			<param>
 				<name>portletConfig</name>
 				<type>javax.portlet.PortletConfig</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>portletRequest</name>
 				<type>javax.portlet.PortletRequest</type>
+				<comment><![CDATA[]]></comment>
 			</param>
+			<return>
+				<comment><![CDATA[]]></comment>
+			</return>
 			<throws>
 				<name>Exception</name>
 				<type>java.lang.Exception</type>
+				<comment><![CDATA[]]></comment>
 			</throws>
 		</method>
 		<method>
@@ -584,11 +720,16 @@
 			<param>
 				<name>portletConfig</name>
 				<type>javax.portlet.PortletConfig</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>portletRequest</name>
 				<type>javax.portlet.PortletRequest</type>
+				<comment><![CDATA[]]></comment>
 			</param>
+			<return>
+				<comment><![CDATA[]]></comment>
+			</return>
 		</method>
 	</javadoc>
 	<javadoc>
@@ -600,18 +741,22 @@
 			<param>
 				<name>portletConfig</name>
 				<type>javax.portlet.PortletConfig</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>actionRequest</name>
 				<type>javax.portlet.ActionRequest</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>actionResponse</name>
 				<type>javax.portlet.ActionResponse</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<throws>
 				<name>Exception</name>
 				<type>java.lang.Exception</type>
+				<comment><![CDATA[]]></comment>
 			</throws>
 		</method>
 		<method>
@@ -619,18 +764,25 @@
 			<param>
 				<name>portletConfig</name>
 				<type>javax.portlet.PortletConfig</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>renderRequest</name>
 				<type>javax.portlet.RenderRequest</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>renderResponse</name>
 				<type>javax.portlet.RenderResponse</type>
+				<comment><![CDATA[]]></comment>
 			</param>
+			<return>
+				<comment><![CDATA[]]></comment>
+			</return>
 			<throws>
 				<name>Exception</name>
 				<type>java.lang.Exception</type>
+				<comment><![CDATA[]]></comment>
 			</throws>
 		</method>
 		<method>
@@ -638,14 +790,20 @@
 			<param>
 				<name>portletConfig</name>
 				<type>javax.portlet.PortletConfig</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>portletRequest</name>
 				<type>javax.portlet.PortletRequest</type>
+				<comment><![CDATA[]]></comment>
 			</param>
+			<return>
+				<comment><![CDATA[]]></comment>
+			</return>
 			<throws>
 				<name>Exception</name>
 				<type>java.lang.Exception</type>
+				<comment><![CDATA[]]></comment>
 			</throws>
 		</method>
 	</javadoc>
@@ -658,18 +816,22 @@
 			<param>
 				<name>renderRequest</name>
 				<type>javax.portlet.RenderRequest</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>renderResponse</name>
 				<type>javax.portlet.RenderResponse</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<throws>
 				<name>IOException</name>
 				<type>java.io.IOException</type>
+				<comment><![CDATA[]]></comment>
 			</throws>
 			<throws>
 				<name>PortletException</name>
 				<type>javax.portlet.PortletException</type>
+				<comment><![CDATA[]]></comment>
 			</throws>
 		</method>
 		<method>
@@ -677,14 +839,17 @@
 			<param>
 				<name>renderRequest</name>
 				<type>javax.portlet.RenderRequest</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>renderResponse</name>
 				<type>javax.portlet.RenderResponse</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<throws>
 				<name>Exception</name>
 				<type>java.lang.Exception</type>
+				<comment><![CDATA[]]></comment>
 			</throws>
 		</method>
 		<method>
@@ -692,14 +857,17 @@
 			<param>
 				<name>renderRequest</name>
 				<type>javax.portlet.RenderRequest</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>renderResponse</name>
 				<type>javax.portlet.RenderResponse</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<throws>
 				<name>Exception</name>
 				<type>java.lang.Exception</type>
+				<comment><![CDATA[]]></comment>
 			</throws>
 		</method>
 		<method>
@@ -707,10 +875,15 @@
 			<param>
 				<name>renderRequest</name>
 				<type>javax.portlet.RenderRequest</type>
+				<comment><![CDATA[]]></comment>
 			</param>
+			<return>
+				<comment><![CDATA[]]></comment>
+			</return>
 			<throws>
 				<name>Exception</name>
 				<type>java.lang.Exception</type>
+				<comment><![CDATA[]]></comment>
 			</throws>
 		</method>
 		<method>
@@ -718,36 +891,49 @@
 			<param>
 				<name>renderRequest</name>
 				<type>javax.portlet.RenderRequest</type>
+				<comment><![CDATA[]]></comment>
 			</param>
+			<return>
+				<comment><![CDATA[]]></comment>
+			</return>
 		</method>
 		<method>
 			<name>getView</name>
 			<param>
 				<name>renderRequest</name>
 				<type>javax.portlet.RenderRequest</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>gadgetSpec</name>
 				<type>org.apache.shindig.gadgets.spec.GadgetSpec</type>
+				<comment><![CDATA[]]></comment>
 			</param>
+			<return>
+				<comment><![CDATA[]]></comment>
+			</return>
 		</method>
 		<method>
 			<name>overrideConfiguration</name>
 			<param>
 				<name>gadgetSpec</name>
 				<type>org.apache.shindig.gadgets.spec.GadgetSpec</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>portlet</name>
 				<type>com.liferay.portal.model.Portlet</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>portletDisplay</name>
 				<type>com.liferay.portal.theme.PortletDisplay</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<throws>
 				<name>Exception</name>
 				<type>java.lang.Exception</type>
+				<comment><![CDATA[]]></comment>
 			</throws>
 		</method>
 		<field>
@@ -763,10 +949,15 @@
 			<param>
 				<name>renderRequest</name>
 				<type>javax.portlet.RenderRequest</type>
+				<comment><![CDATA[]]></comment>
 			</param>
+			<return>
+				<comment><![CDATA[]]></comment>
+			</return>
 			<throws>
 				<name>Exception</name>
 				<type>java.lang.Exception</type>
+				<comment><![CDATA[]]></comment>
 			</throws>
 		</method>
 		<method>
@@ -774,20 +965,61 @@
 			<param>
 				<name>gadgetSpec</name>
 				<type>org.apache.shindig.gadgets.spec.GadgetSpec</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>portlet</name>
 				<type>com.liferay.portal.model.Portlet</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>portletDisplay</name>
 				<type>com.liferay.portal.theme.PortletDisplay</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<throws>
 				<name>Exception</name>
 				<type>java.lang.Exception</type>
+				<comment><![CDATA[]]></comment>
 			</throws>
 		</method>
+	</javadoc>
+	<javadoc>
+		<name>HotDeployMessageListener</name>
+		<type>com.liferay.opensocial.messaging.HotDeployMessageListener</type>
+		<author><![CDATA[Michael Young]]></author>
+		<method>
+			<name>checkExpando</name>
+			<throws>
+				<name>Exception</name>
+				<type>java.lang.Exception</type>
+				<comment><![CDATA[]]></comment>
+			</throws>
+		</method>
+		<method>
+			<name>doReceive</name>
+			<param>
+				<name>message</name>
+				<type>com.liferay.portal.kernel.messaging.Message</type>
+				<comment><![CDATA[]]></comment>
+			</param>
+			<throws>
+				<name>Exception</name>
+				<type>java.lang.Exception</type>
+				<comment><![CDATA[]]></comment>
+			</throws>
+		</method>
+		<method>
+			<name>verifyGadgets</name>
+			<throws>
+				<name>Exception</name>
+				<type>java.lang.Exception</type>
+				<comment><![CDATA[]]></comment>
+			</throws>
+		</method>
+		<field>
+			<name>_GADGETS_CATEGORY</name>
+		</field>
 	</javadoc>
 	<javadoc>
 		<name>GadgetConstants</name>
@@ -798,42 +1030,66 @@
 			<param>
 				<name>gadgetKey</name>
 				<type>java.lang.String</type>
+				<comment><![CDATA[]]></comment>
 			</param>
+			<return>
+				<comment><![CDATA[]]></comment>
+			</return>
 		</method>
 		<method>
 			<name>isPublishedGadget</name>
 			<param>
 				<name>gadgetKey</name>
 				<type>java.lang.String</type>
+				<comment><![CDATA[]]></comment>
 			</param>
+			<return>
+				<comment><![CDATA[]]></comment>
+			</return>
 		</method>
 		<method>
 			<name>toAdhocGadgetId</name>
 			<param>
 				<name>gadgetKey</name>
 				<type>java.lang.String</type>
+				<comment><![CDATA[]]></comment>
 			</param>
+			<return>
+				<comment><![CDATA[]]></comment>
+			</return>
 		</method>
 		<method>
 			<name>toAdhocGadgetKey</name>
 			<param>
 				<name>moduleId</name>
 				<type>long</type>
+				<comment><![CDATA[]]></comment>
 			</param>
+			<return>
+				<comment><![CDATA[]]></comment>
+			</return>
 		</method>
 		<method>
 			<name>toPublishedGadgetId</name>
 			<param>
 				<name>gadgetKey</name>
 				<type>java.lang.String</type>
+				<comment><![CDATA[]]></comment>
 			</param>
+			<return>
+				<comment><![CDATA[]]></comment>
+			</return>
 		</method>
 		<method>
 			<name>toPublishedGadgetKey</name>
 			<param>
 				<name>gadgetId</name>
 				<type>long</type>
+				<comment><![CDATA[]]></comment>
 			</param>
+			<return>
+				<comment><![CDATA[]]></comment>
+			</return>
 		</method>
 		<field>
 			<name>ADHOC_PREFIX</name>
@@ -859,12 +1115,16 @@
 		</method>
 		<method>
 			<name>getKeyName</name>
+			<return>
+				<comment><![CDATA[]]></comment>
+			</return>
 		</method>
 		<method>
 			<name>setKeyName</name>
 			<param>
 				<name>keyName</name>
 				<type>java.lang.String</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 		</method>
 		<field>
@@ -891,18 +1151,25 @@
 			<param>
 				<name>name</name>
 				<type>java.lang.String</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>parameterTypes</name>
 				<type>java.lang.String[]</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>arguments</name>
 				<type>java.lang.Object[]</type>
+				<comment><![CDATA[]]></comment>
 			</param>
+			<return>
+				<comment><![CDATA[]]></comment>
+			</return>
 			<throws>
 				<name>Throwable</name>
 				<type>java.lang.Throwable</type>
+				<comment><![CDATA[]]></comment>
 			</throws>
 		</method>
 		<field>
@@ -1104,18 +1371,25 @@
 			<param>
 				<name>name</name>
 				<type>java.lang.String</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>parameterTypes</name>
 				<type>java.lang.String[]</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>arguments</name>
 				<type>java.lang.Object[]</type>
+				<comment><![CDATA[]]></comment>
 			</param>
+			<return>
+				<comment><![CDATA[]]></comment>
+			</return>
 			<throws>
 				<name>Throwable</name>
 				<type>java.lang.Throwable</type>
+				<comment><![CDATA[]]></comment>
 			</throws>
 		</method>
 		<field>
@@ -1161,18 +1435,25 @@
 			<param>
 				<name>name</name>
 				<type>java.lang.String</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>parameterTypes</name>
 				<type>java.lang.String[]</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>arguments</name>
 				<type>java.lang.Object[]</type>
+				<comment><![CDATA[]]></comment>
 			</param>
+			<return>
+				<comment><![CDATA[]]></comment>
+			</return>
 			<throws>
 				<name>Throwable</name>
 				<type>java.lang.Throwable</type>
+				<comment><![CDATA[]]></comment>
 			</throws>
 		</method>
 		<field>
@@ -1356,18 +1637,25 @@
 			<param>
 				<name>name</name>
 				<type>java.lang.String</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>parameterTypes</name>
 				<type>java.lang.String[]</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>arguments</name>
 				<type>java.lang.Object[]</type>
+				<comment><![CDATA[]]></comment>
 			</param>
+			<return>
+				<comment><![CDATA[]]></comment>
+			</return>
 			<throws>
 				<name>Throwable</name>
 				<type>java.lang.Throwable</type>
+				<comment><![CDATA[]]></comment>
 			</throws>
 		</method>
 		<field>
@@ -1526,26 +1814,35 @@
 			<param>
 				<name>companyId</name>
 				<type>long</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>url</name>
 				<type>java.lang.String</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>portletCategoryNames</name>
 				<type>java.lang.String</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>serviceContext</name>
 				<type>com.liferay.portal.service.ServiceContext</type>
+				<comment><![CDATA[]]></comment>
 			</param>
+			<return>
+				<comment><![CDATA[]]></comment>
+			</return>
 			<throws>
 				<name>PortalException</name>
 				<type>com.liferay.portal.kernel.exception.PortalException</type>
+				<comment><![CDATA[]]></comment>
 			</throws>
 			<throws>
 				<name>SystemException</name>
 				<type>com.liferay.portal.kernel.exception.SystemException</type>
+				<comment><![CDATA[]]></comment>
 			</throws>
 		</method>
 		<method>
@@ -1553,14 +1850,15 @@
 			<param>
 				<name>gadget</name>
 				<type>com.liferay.opensocial.model.Gadget</type>
+				<comment><![CDATA[]]></comment>
 			</param>
-			<throws>
-				<name>PortalException</name>
-				<type>com.liferay.portal.kernel.exception.PortalException</type>
-			</throws>
+			<return>
+				<comment><![CDATA[]]></comment>
+			</return>
 			<throws>
 				<name>SystemException</name>
 				<type>com.liferay.portal.kernel.exception.SystemException</type>
+				<comment><![CDATA[]]></comment>
 			</throws>
 		</method>
 		<method>
@@ -1568,14 +1866,20 @@
 			<param>
 				<name>gadgetId</name>
 				<type>long</type>
+				<comment><![CDATA[]]></comment>
 			</param>
+			<return>
+				<comment><![CDATA[]]></comment>
+			</return>
 			<throws>
 				<name>PortalException</name>
 				<type>com.liferay.portal.kernel.exception.PortalException</type>
+				<comment><![CDATA[]]></comment>
 			</throws>
 			<throws>
 				<name>SystemException</name>
 				<type>com.liferay.portal.kernel.exception.SystemException</type>
+				<comment><![CDATA[]]></comment>
 			</throws>
 		</method>
 		<method>
@@ -1583,33 +1887,25 @@
 			<param>
 				<name>uuid</name>
 				<type>java.lang.String</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>companyId</name>
 				<type>long</type>
+				<comment><![CDATA[]]></comment>
 			</param>
-			<param>
-				<name>name</name>
-				<type>java.lang.String</type>
-			</param>
-			<throws>
-				<name>PortalException</name>
-				<type>com.liferay.portal.kernel.exception.PortalException</type>
-			</throws>
 			<throws>
 				<name>SystemException</name>
 				<type>com.liferay.portal.kernel.exception.SystemException</type>
+				<comment><![CDATA[]]></comment>
 			</throws>
 		</method>
 		<method>
 			<name>destroyGadgets</name>
 			<throws>
-				<name>PortalException</name>
-				<type>com.liferay.portal.kernel.exception.PortalException</type>
-			</throws>
-			<throws>
 				<name>SystemException</name>
 				<type>com.liferay.portal.kernel.exception.SystemException</type>
+				<comment><![CDATA[]]></comment>
 			</throws>
 		</method>
 		<method>
@@ -1617,14 +1913,20 @@
 			<param>
 				<name>companyId</name>
 				<type>long</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>url</name>
 				<type>java.lang.String</type>
+				<comment><![CDATA[]]></comment>
 			</param>
+			<return>
+				<comment><![CDATA[]]></comment>
+			</return>
 			<throws>
 				<name>SystemException</name>
 				<type>com.liferay.portal.kernel.exception.SystemException</type>
+				<comment><![CDATA[]]></comment>
 			</throws>
 		</method>
 		<method>
@@ -1632,18 +1934,25 @@
 			<param>
 				<name>companyId</name>
 				<type>long</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>url</name>
 				<type>java.lang.String</type>
+				<comment><![CDATA[]]></comment>
 			</param>
+			<return>
+				<comment><![CDATA[]]></comment>
+			</return>
 			<throws>
 				<name>PortalException</name>
 				<type>com.liferay.portal.kernel.exception.PortalException</type>
+				<comment><![CDATA[]]></comment>
 			</throws>
 			<throws>
 				<name>SystemException</name>
 				<type>com.liferay.portal.kernel.exception.SystemException</type>
+				<comment><![CDATA[]]></comment>
 			</throws>
 		</method>
 		<method>
@@ -1651,14 +1960,20 @@
 			<param>
 				<name>uuid</name>
 				<type>java.lang.String</type>
+				<comment><![CDATA[]]></comment>
 			</param>
+			<return>
+				<comment><![CDATA[]]></comment>
+			</return>
 			<throws>
 				<name>PortalException</name>
 				<type>com.liferay.portal.kernel.exception.PortalException</type>
+				<comment><![CDATA[]]></comment>
 			</throws>
 			<throws>
 				<name>SystemException</name>
 				<type>com.liferay.portal.kernel.exception.SystemException</type>
+				<comment><![CDATA[]]></comment>
 			</throws>
 		</method>
 		<method>
@@ -1666,18 +1981,25 @@
 			<param>
 				<name>companyId</name>
 				<type>long</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>start</name>
 				<type>int</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>end</name>
 				<type>int</type>
+				<comment><![CDATA[]]></comment>
 			</param>
+			<return>
+				<comment><![CDATA[]]></comment>
+			</return>
 			<throws>
 				<name>SystemException</name>
 				<type>com.liferay.portal.kernel.exception.SystemException</type>
+				<comment><![CDATA[]]></comment>
 			</throws>
 		</method>
 		<method>
@@ -1685,10 +2007,15 @@
 			<param>
 				<name>companyId</name>
 				<type>long</type>
+				<comment><![CDATA[]]></comment>
 			</param>
+			<return>
+				<comment><![CDATA[]]></comment>
+			</return>
 			<throws>
 				<name>SystemException</name>
 				<type>com.liferay.portal.kernel.exception.SystemException</type>
+				<comment><![CDATA[]]></comment>
 			</throws>
 		</method>
 		<method>
@@ -1696,30 +2023,37 @@
 			<param>
 				<name>uuid</name>
 				<type>java.lang.String</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>companyId</name>
 				<type>long</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>gadgetId</name>
 				<type>long</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>name</name>
 				<type>java.lang.String</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>portletCategoryNames</name>
 				<type>java.lang.String</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<throws>
 				<name>PortalException</name>
 				<type>com.liferay.portal.kernel.exception.PortalException</type>
+				<comment><![CDATA[]]></comment>
 			</throws>
 			<throws>
 				<name>SystemException</name>
 				<type>com.liferay.portal.kernel.exception.SystemException</type>
+				<comment><![CDATA[]]></comment>
 			</throws>
 		</method>
 		<method>
@@ -1727,10 +2061,12 @@
 			<throws>
 				<name>PortalException</name>
 				<type>com.liferay.portal.kernel.exception.PortalException</type>
+				<comment><![CDATA[]]></comment>
 			</throws>
 			<throws>
 				<name>SystemException</name>
 				<type>com.liferay.portal.kernel.exception.SystemException</type>
+				<comment><![CDATA[]]></comment>
 			</throws>
 		</method>
 		<method>
@@ -1738,18 +2074,25 @@
 			<param>
 				<name>gadgetId</name>
 				<type>long</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>portletCategoryNames</name>
 				<type>java.lang.String</type>
+				<comment><![CDATA[]]></comment>
 			</param>
+			<return>
+				<comment><![CDATA[]]></comment>
+			</return>
 			<throws>
 				<name>PortalException</name>
 				<type>com.liferay.portal.kernel.exception.PortalException</type>
+				<comment><![CDATA[]]></comment>
 			</throws>
 			<throws>
 				<name>SystemException</name>
 				<type>com.liferay.portal.kernel.exception.SystemException</type>
+				<comment><![CDATA[]]></comment>
 			</throws>
 		</method>
 		<method>
@@ -1757,14 +2100,17 @@
 			<param>
 				<name>portlet</name>
 				<type>com.liferay.portal.model.Portlet</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>portletApp</name>
 				<type>com.liferay.portal.model.PortletApp</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>title</name>
 				<type>java.lang.String</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 		</method>
 		<method>
@@ -1772,41 +2118,64 @@
 			<param>
 				<name>uuid</name>
 				<type>java.lang.String</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>companyId</name>
 				<type>long</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>name</name>
 				<type>java.lang.String</type>
+				<comment><![CDATA[]]></comment>
 			</param>
+			<return>
+				<comment><![CDATA[]]></comment>
+			</return>
 			<throws>
 				<name>Exception</name>
 				<type>java.lang.Exception</type>
+				<comment><![CDATA[]]></comment>
 			</throws>
+		</method>
+		<method>
+			<name>getPortletId</name>
+			<param>
+				<name>uuid</name>
+				<type>java.lang.String</type>
+				<comment><![CDATA[]]></comment>
+			</param>
+			<return>
+				<comment><![CDATA[]]></comment>
+			</return>
 		</method>
 		<method>
 			<name>validate</name>
 			<param>
 				<name>companyId</name>
 				<type>long</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>url</name>
 				<type>java.lang.String</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>portletCategoryNames</name>
 				<type>java.lang.String</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<throws>
 				<name>PortalException</name>
 				<type>com.liferay.portal.kernel.exception.PortalException</type>
+				<comment><![CDATA[]]></comment>
 			</throws>
 			<throws>
 				<name>SystemException</name>
 				<type>com.liferay.portal.kernel.exception.SystemException</type>
+				<comment><![CDATA[]]></comment>
 			</throws>
 		</method>
 		<method>
@@ -1814,10 +2183,12 @@
 			<param>
 				<name>portletCategoryNames</name>
 				<type>java.lang.String</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<throws>
 				<name>PortalException</name>
 				<type>com.liferay.portal.kernel.exception.PortalException</type>
+				<comment><![CDATA[]]></comment>
 			</throws>
 		</method>
 		<field>
@@ -1840,26 +2211,35 @@
 			<param>
 				<name>companyId</name>
 				<type>long</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>url</name>
 				<type>java.lang.String</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>portletCategoryNames</name>
 				<type>java.lang.String</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>serviceContext</name>
 				<type>com.liferay.portal.service.ServiceContext</type>
+				<comment><![CDATA[]]></comment>
 			</param>
+			<return>
+				<comment><![CDATA[]]></comment>
+			</return>
 			<throws>
 				<name>PortalException</name>
 				<type>com.liferay.portal.kernel.exception.PortalException</type>
+				<comment><![CDATA[]]></comment>
 			</throws>
 			<throws>
 				<name>SystemException</name>
 				<type>com.liferay.portal.kernel.exception.SystemException</type>
+				<comment><![CDATA[]]></comment>
 			</throws>
 		</method>
 		<method>
@@ -1867,18 +2247,25 @@
 			<param>
 				<name>gadgetId</name>
 				<type>long</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>serviceContext</name>
 				<type>com.liferay.portal.service.ServiceContext</type>
+				<comment><![CDATA[]]></comment>
 			</param>
+			<return>
+				<comment><![CDATA[]]></comment>
+			</return>
 			<throws>
 				<name>PortalException</name>
 				<type>com.liferay.portal.kernel.exception.PortalException</type>
+				<comment><![CDATA[]]></comment>
 			</throws>
 			<throws>
 				<name>SystemException</name>
 				<type>com.liferay.portal.kernel.exception.SystemException</type>
+				<comment><![CDATA[]]></comment>
 			</throws>
 		</method>
 		<method>
@@ -1886,22 +2273,27 @@
 			<param>
 				<name>gadgetId</name>
 				<type>long</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>portletCategoryNames</name>
 				<type>java.lang.String</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>serviceContext</name>
 				<type>com.liferay.portal.service.ServiceContext</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<throws>
 				<name>PortalException</name>
 				<type>com.liferay.portal.kernel.exception.PortalException</type>
+				<comment><![CDATA[]]></comment>
 			</throws>
 			<throws>
 				<name>SystemException</name>
 				<type>com.liferay.portal.kernel.exception.SystemException</type>
+				<comment><![CDATA[]]></comment>
 			</throws>
 		</method>
 	</javadoc>
@@ -1914,30 +2306,40 @@
 			<param>
 				<name>companyId</name>
 				<type>long</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>gadgetKey</name>
 				<type>java.lang.String</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>serviceName</name>
 				<type>java.lang.String</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>consumerKey</name>
 				<type>java.lang.String</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>consumerSecret</name>
 				<type>java.lang.String</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>keyType</name>
 				<type>java.lang.String</type>
+				<comment><![CDATA[]]></comment>
 			</param>
+			<return>
+				<comment><![CDATA[]]></comment>
+			</return>
 			<throws>
 				<name>SystemException</name>
 				<type>com.liferay.portal.kernel.exception.SystemException</type>
+				<comment><![CDATA[]]></comment>
 			</throws>
 		</method>
 		<method>
@@ -1945,14 +2347,20 @@
 			<param>
 				<name>oAuthConsumerId</name>
 				<type>long</type>
+				<comment><![CDATA[]]></comment>
 			</param>
+			<return>
+				<comment><![CDATA[]]></comment>
+			</return>
 			<throws>
 				<name>PortalException</name>
 				<type>com.liferay.portal.kernel.exception.PortalException</type>
+				<comment><![CDATA[]]></comment>
 			</throws>
 			<throws>
 				<name>SystemException</name>
 				<type>com.liferay.portal.kernel.exception.SystemException</type>
+				<comment><![CDATA[]]></comment>
 			</throws>
 		</method>
 		<method>
@@ -1960,10 +2368,15 @@
 			<param>
 				<name>oAuthConsumer</name>
 				<type>com.liferay.opensocial.model.OAuthConsumer</type>
+				<comment><![CDATA[]]></comment>
 			</param>
+			<return>
+				<comment><![CDATA[]]></comment>
+			</return>
 			<throws>
 				<name>SystemException</name>
 				<type>com.liferay.portal.kernel.exception.SystemException</type>
+				<comment><![CDATA[]]></comment>
 			</throws>
 		</method>
 		<method>
@@ -1971,10 +2384,12 @@
 			<param>
 				<name>gadgetKey</name>
 				<type>java.lang.String</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<throws>
 				<name>SystemException</name>
 				<type>com.liferay.portal.kernel.exception.SystemException</type>
+				<comment><![CDATA[]]></comment>
 			</throws>
 		</method>
 		<method>
@@ -1982,14 +2397,20 @@
 			<param>
 				<name>gadgetKey</name>
 				<type>java.lang.String</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>serviceName</name>
 				<type>java.lang.String</type>
+				<comment><![CDATA[]]></comment>
 			</param>
+			<return>
+				<comment><![CDATA[]]></comment>
+			</return>
 			<throws>
 				<name>SystemException</name>
 				<type>com.liferay.portal.kernel.exception.SystemException</type>
+				<comment><![CDATA[]]></comment>
 			</throws>
 		</method>
 		<method>
@@ -1997,18 +2418,25 @@
 			<param>
 				<name>gadgetKey</name>
 				<type>java.lang.String</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>serviceName</name>
 				<type>java.lang.String</type>
+				<comment><![CDATA[]]></comment>
 			</param>
+			<return>
+				<comment><![CDATA[]]></comment>
+			</return>
 			<throws>
 				<name>PortalException</name>
 				<type>com.liferay.portal.kernel.exception.PortalException</type>
+				<comment><![CDATA[]]></comment>
 			</throws>
 			<throws>
 				<name>SystemException</name>
 				<type>com.liferay.portal.kernel.exception.SystemException</type>
+				<comment><![CDATA[]]></comment>
 			</throws>
 		</method>
 		<method>
@@ -2016,10 +2444,15 @@
 			<param>
 				<name>gadgetKey</name>
 				<type>java.lang.String</type>
+				<comment><![CDATA[]]></comment>
 			</param>
+			<return>
+				<comment><![CDATA[]]></comment>
+			</return>
 			<throws>
 				<name>SystemException</name>
 				<type>com.liferay.portal.kernel.exception.SystemException</type>
+				<comment><![CDATA[]]></comment>
 			</throws>
 		</method>
 		<method>
@@ -2027,18 +2460,25 @@
 			<param>
 				<name>gadgetKey</name>
 				<type>java.lang.String</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>start</name>
 				<type>int</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>end</name>
 				<type>int</type>
+				<comment><![CDATA[]]></comment>
 			</param>
+			<return>
+				<comment><![CDATA[]]></comment>
+			</return>
 			<throws>
 				<name>SystemException</name>
 				<type>com.liferay.portal.kernel.exception.SystemException</type>
+				<comment><![CDATA[]]></comment>
 			</throws>
 		</method>
 		<method>
@@ -2046,10 +2486,15 @@
 			<param>
 				<name>gadgetKey</name>
 				<type>java.lang.String</type>
+				<comment><![CDATA[]]></comment>
 			</param>
+			<return>
+				<comment><![CDATA[]]></comment>
+			</return>
 			<throws>
 				<name>SystemException</name>
 				<type>com.liferay.portal.kernel.exception.SystemException</type>
+				<comment><![CDATA[]]></comment>
 			</throws>
 		</method>
 		<method>
@@ -2057,34 +2502,45 @@
 			<param>
 				<name>oAuthConsumerId</name>
 				<type>long</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>consumerKey</name>
 				<type>java.lang.String</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>consumerSecret</name>
 				<type>java.lang.String</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>keyType</name>
 				<type>java.lang.String</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>keyName</name>
 				<type>java.lang.String</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>callbackURL</name>
 				<type>java.lang.String</type>
+				<comment><![CDATA[]]></comment>
 			</param>
+			<return>
+				<comment><![CDATA[]]></comment>
+			</return>
 			<throws>
 				<name>PortalException</name>
 				<type>com.liferay.portal.kernel.exception.PortalException</type>
+				<comment><![CDATA[]]></comment>
 			</throws>
 			<throws>
 				<name>SystemException</name>
 				<type>com.liferay.portal.kernel.exception.SystemException</type>
+				<comment><![CDATA[]]></comment>
 			</throws>
 		</method>
 	</javadoc>
@@ -2097,46 +2553,60 @@
 			<param>
 				<name>userId</name>
 				<type>long</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>gadgetKey</name>
 				<type>java.lang.String</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>serviceName</name>
 				<type>java.lang.String</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>moduleId</name>
 				<type>long</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>accessToken</name>
 				<type>java.lang.String</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>tokenName</name>
 				<type>java.lang.String</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>tokenSecret</name>
 				<type>java.lang.String</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>sessionHandle</name>
 				<type>java.lang.String</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>expiration</name>
 				<type>long</type>
+				<comment><![CDATA[]]></comment>
 			</param>
+			<return>
+				<comment><![CDATA[]]></comment>
+			</return>
 			<throws>
 				<name>PortalException</name>
 				<type>com.liferay.portal.kernel.exception.PortalException</type>
+				<comment><![CDATA[]]></comment>
 			</throws>
 			<throws>
 				<name>SystemException</name>
 				<type>com.liferay.portal.kernel.exception.SystemException</type>
+				<comment><![CDATA[]]></comment>
 			</throws>
 		</method>
 		<method>
@@ -2144,30 +2614,37 @@
 			<param>
 				<name>userId</name>
 				<type>long</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>gadgetKey</name>
 				<type>java.lang.String</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>serviceName</name>
 				<type>java.lang.String</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>moduleId</name>
 				<type>long</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>tokenName</name>
 				<type>java.lang.String</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<throws>
 				<name>PortalException</name>
 				<type>com.liferay.portal.kernel.exception.PortalException</type>
+				<comment><![CDATA[]]></comment>
 			</throws>
 			<throws>
 				<name>SystemException</name>
 				<type>com.liferay.portal.kernel.exception.SystemException</type>
+				<comment><![CDATA[]]></comment>
 			</throws>
 		</method>
 		<method>
@@ -2175,14 +2652,17 @@
 			<param>
 				<name>gadgetKey</name>
 				<type>java.lang.String</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>serviceName</name>
 				<type>java.lang.String</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<throws>
 				<name>SystemException</name>
 				<type>com.liferay.portal.kernel.exception.SystemException</type>
+				<comment><![CDATA[]]></comment>
 			</throws>
 		</method>
 		<method>
@@ -2190,26 +2670,35 @@
 			<param>
 				<name>userId</name>
 				<type>long</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>gadgetKey</name>
 				<type>java.lang.String</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>serviceName</name>
 				<type>java.lang.String</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>moduleId</name>
 				<type>long</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>tokenName</name>
 				<type>java.lang.String</type>
+				<comment><![CDATA[]]></comment>
 			</param>
+			<return>
+				<comment><![CDATA[]]></comment>
+			</return>
 			<throws>
 				<name>SystemException</name>
 				<type>com.liferay.portal.kernel.exception.SystemException</type>
+				<comment><![CDATA[]]></comment>
 			</throws>
 		</method>
 		<method>
@@ -2217,30 +2706,40 @@
 			<param>
 				<name>userId</name>
 				<type>long</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>gadgetKey</name>
 				<type>java.lang.String</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>serviceName</name>
 				<type>java.lang.String</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>moduleId</name>
 				<type>long</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>tokenName</name>
 				<type>java.lang.String</type>
+				<comment><![CDATA[]]></comment>
 			</param>
+			<return>
+				<comment><![CDATA[]]></comment>
+			</return>
 			<throws>
 				<name>PortalException</name>
 				<type>com.liferay.portal.kernel.exception.PortalException</type>
+				<comment><![CDATA[]]></comment>
 			</throws>
 			<throws>
 				<name>SystemException</name>
 				<type>com.liferay.portal.kernel.exception.SystemException</type>
+				<comment><![CDATA[]]></comment>
 			</throws>
 		</method>
 		<method>
@@ -2248,66 +2747,22 @@
 			<param>
 				<name>gadgetKey</name>
 				<type>java.lang.String</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>serviceName</name>
 				<type>java.lang.String</type>
+				<comment><![CDATA[]]></comment>
 			</param>
+			<return>
+				<comment><![CDATA[]]></comment>
+			</return>
 			<throws>
 				<name>SystemException</name>
 				<type>com.liferay.portal.kernel.exception.SystemException</type>
+				<comment><![CDATA[]]></comment>
 			</throws>
 		</method>
-	</javadoc>
-	<javadoc>
-		<name>OpenSocialServletContextListener</name>
-		<type>com.liferay.opensocial.servlet.OpenSocialServletContextListener</type>
-		<author><![CDATA[Michael Young]]></author>
-		<method>
-			<name>contextDestroyed</name>
-			<param>
-				<name>servletContextEvent</name>
-				<type>javax.servlet.ServletContextEvent</type>
-			</param>
-		</method>
-		<method>
-			<name>contextInitialized</name>
-			<param>
-				<name>servletContextEvent</name>
-				<type>javax.servlet.ServletContextEvent</type>
-			</param>
-		</method>
-		<method>
-			<name>checkExpando</name>
-			<throws>
-				<name>Exception</name>
-				<type>java.lang.Exception</type>
-			</throws>
-		</method>
-		<method>
-			<name>doPortalDestroy</name>
-			<throws>
-				<name>Exception</name>
-				<type>java.lang.Exception</type>
-			</throws>
-		</method>
-		<method>
-			<name>doPortalInit</name>
-			<throws>
-				<name>Exception</name>
-				<type>java.lang.Exception</type>
-			</throws>
-		</method>
-		<method>
-			<name>verifyGadgets</name>
-			<throws>
-				<name>Exception</name>
-				<type>java.lang.Exception</type>
-			</throws>
-		</method>
-		<field>
-			<name>_GADGETS_CATEGORY</name>
-		</field>
 	</javadoc>
 	<javadoc>
 		<name>LiferayJsonContainerConfig</name>
@@ -2318,14 +2773,17 @@
 			<param>
 				<name>containers</name>
 				<type>java.lang.String</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>expressions</name>
 				<type>org.apache.shindig.expressions.Expressions</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<throws>
 				<name>org.apache.shindig.config.ContainerConfigException</name>
 				<type>org.apache.shindig.config.ContainerConfigException</type>
+				<comment><![CDATA[]]></comment>
 			</throws>
 		</method>
 		<method>
@@ -2333,11 +2791,16 @@
 			<param>
 				<name>container</name>
 				<type>java.lang.String</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>property</name>
 				<type>java.lang.String</type>
+				<comment><![CDATA[]]></comment>
 			</param>
+			<return>
+				<comment><![CDATA[]]></comment>
+			</return>
 		</method>
 	</javadoc>
 	<javadoc>
@@ -2365,6 +2828,7 @@
 			<param>
 				<name>oAuthConsumer</name>
 				<type>com.liferay.opensocial.model.OAuthConsumer</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 		</method>
 		<method>
@@ -2372,18 +2836,25 @@
 			<param>
 				<name>securityToken</name>
 				<type>org.apache.shindig.auth.SecurityToken</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>serviceName</name>
 				<type>java.lang.String</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>oAuthServiceProvider</name>
 				<type>net.oauth.OAuthServiceProvider</type>
+				<comment><![CDATA[]]></comment>
 			</param>
+			<return>
+				<comment><![CDATA[]]></comment>
+			</return>
 			<throws>
 				<name>org.apache.shindig.gadgets.GadgetException</name>
 				<type>org.apache.shindig.gadgets.GadgetException</type>
+				<comment><![CDATA[]]></comment>
 			</throws>
 		</method>
 		<method>
@@ -2391,22 +2862,30 @@
 			<param>
 				<name>securityToken</name>
 				<type>org.apache.shindig.auth.SecurityToken</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>consumerInfo</name>
 				<type>ConsumerInfo</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>serviceName</name>
 				<type>java.lang.String</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>tokenName</name>
 				<type>java.lang.String</type>
+				<comment><![CDATA[]]></comment>
 			</param>
+			<return>
+				<comment><![CDATA[]]></comment>
+			</return>
 			<throws>
 				<name>org.apache.shindig.gadgets.GadgetException</name>
 				<type>org.apache.shindig.gadgets.GadgetException</type>
+				<comment><![CDATA[]]></comment>
 			</throws>
 		</method>
 		<method>
@@ -2414,22 +2893,27 @@
 			<param>
 				<name>securityToken</name>
 				<type>org.apache.shindig.auth.SecurityToken</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>consumerInfo</name>
 				<type>ConsumerInfo</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>serviceName</name>
 				<type>java.lang.String</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>tokenName</name>
 				<type>java.lang.String</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<throws>
 				<name>org.apache.shindig.gadgets.GadgetException</name>
 				<type>org.apache.shindig.gadgets.GadgetException</type>
+				<comment><![CDATA[]]></comment>
 			</throws>
 		</method>
 		<method>
@@ -2437,26 +2921,32 @@
 			<param>
 				<name>securityToken</name>
 				<type>org.apache.shindig.auth.SecurityToken</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>consumerInfo</name>
 				<type>ConsumerInfo</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>serviceName</name>
 				<type>java.lang.String</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>tokenName</name>
 				<type>java.lang.String</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>tokenInfo</name>
 				<type>TokenInfo</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<throws>
 				<name>org.apache.shindig.gadgets.GadgetException</name>
 				<type>org.apache.shindig.gadgets.GadgetException</type>
+				<comment><![CDATA[]]></comment>
 			</throws>
 		</method>
 		<method>
@@ -2464,14 +2954,20 @@
 			<param>
 				<name>securityToken</name>
 				<type>org.apache.shindig.auth.SecurityToken</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>serviceName</name>
 				<type>java.lang.String</type>
+				<comment><![CDATA[]]></comment>
 			</param>
+			<return>
+				<comment><![CDATA[]]></comment>
+			</return>
 			<throws>
 				<name>org.apache.shindig.gadgets.GadgetException</name>
 				<type>org.apache.shindig.gadgets.GadgetException</type>
+				<comment><![CDATA[]]></comment>
 			</throws>
 		</method>
 		<method>
@@ -2479,18 +2975,25 @@
 			<param>
 				<name>securityToken</name>
 				<type>org.apache.shindig.auth.SecurityToken</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>serviceName</name>
 				<type>java.lang.String</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>tokenName</name>
 				<type>java.lang.String</type>
+				<comment><![CDATA[]]></comment>
 			</param>
+			<return>
+				<comment><![CDATA[]]></comment>
+			</return>
 			<throws>
 				<name>org.apache.shindig.gadgets.GadgetException</name>
 				<type>org.apache.shindig.gadgets.GadgetException</type>
+				<comment><![CDATA[]]></comment>
 			</throws>
 		</method>
 		<field>
@@ -2509,24 +3012,36 @@
 		</method>
 		<method>
 			<name>get</name>
+			<return>
+				<comment><![CDATA[]]></comment>
+			</return>
 		</method>
 		<method>
 			<name>_convertFromOpenSsl</name>
 			<param>
 				<name>key</name>
 				<type>java.lang.String</type>
+				<comment><![CDATA[]]></comment>
 			</param>
+			<return>
+				<comment><![CDATA[]]></comment>
+			</return>
 		</method>
 		<method>
 			<name>_getOAuthConsumer</name>
 			<param>
 				<name>keyFileName</name>
 				<type>java.lang.String</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>keyName</name>
 				<type>java.lang.String</type>
+				<comment><![CDATA[]]></comment>
 			</param>
+			<return>
+				<comment><![CDATA[]]></comment>
+			</return>
 		</method>
 		<field>
 			<name>_DEFAULT_CONSUMER_KEY</name>
@@ -2556,30 +3071,40 @@
 			<param>
 				<name>userId</name>
 				<type>org.apache.shindig.social.opensocial.spi.UserId</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>groupId</name>
 				<type>org.apache.shindig.social.opensocial.spi.GroupId</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>appId</name>
 				<type>java.lang.String</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>fields</name>
 				<type>java.util.Set</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>activity</name>
 				<type>org.apache.shindig.social.opensocial.model.Activity</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>securityToken</name>
 				<type>org.apache.shindig.auth.SecurityToken</type>
+				<comment><![CDATA[]]></comment>
 			</param>
+			<return>
+				<comment><![CDATA[]]></comment>
+			</return>
 			<throws>
 				<name>org.apache.shindig.protocol.ProtocolException</name>
 				<type>org.apache.shindig.protocol.ProtocolException</type>
+				<comment><![CDATA[]]></comment>
 			</throws>
 		</method>
 		<method>
@@ -2587,26 +3112,35 @@
 			<param>
 				<name>userId</name>
 				<type>org.apache.shindig.social.opensocial.spi.UserId</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>groupId</name>
 				<type>org.apache.shindig.social.opensocial.spi.GroupId</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>appId</name>
 				<type>java.lang.String</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>activityIds</name>
 				<type>java.util.Set</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>securityToken</name>
 				<type>org.apache.shindig.auth.SecurityToken</type>
+				<comment><![CDATA[]]></comment>
 			</param>
+			<return>
+				<comment><![CDATA[]]></comment>
+			</return>
 			<throws>
 				<name>org.apache.shindig.protocol.ProtocolException</name>
 				<type>org.apache.shindig.protocol.ProtocolException</type>
+				<comment><![CDATA[]]></comment>
 			</throws>
 		</method>
 		<method>
@@ -2614,30 +3148,37 @@
 			<param>
 				<name>userId</name>
 				<type>org.apache.shindig.social.opensocial.spi.UserId</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>groupId</name>
 				<type>org.apache.shindig.social.opensocial.spi.GroupId</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>appId</name>
 				<type>java.lang.String</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>fields</name>
 				<type>java.util.Set</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>activity</name>
 				<type>org.apache.shindig.social.opensocial.model.Activity</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>securityToken</name>
 				<type>org.apache.shindig.auth.SecurityToken</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<throws>
 				<name>Exception</name>
 				<type>java.lang.Exception</type>
+				<comment><![CDATA[]]></comment>
 			</throws>
 		</method>
 		<method>
@@ -2645,26 +3186,32 @@
 			<param>
 				<name>userId</name>
 				<type>org.apache.shindig.social.opensocial.spi.UserId</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>groupId</name>
 				<type>org.apache.shindig.social.opensocial.spi.GroupId</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>appId</name>
 				<type>java.lang.String</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>activityIds</name>
 				<type>java.util.Set</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>securityToken</name>
 				<type>org.apache.shindig.auth.SecurityToken</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<throws>
 				<name>Exception</name>
 				<type>java.lang.Exception</type>
+				<comment><![CDATA[]]></comment>
 			</throws>
 		</method>
 		<method>
@@ -2672,30 +3219,40 @@
 			<param>
 				<name>userIds</name>
 				<type>java.util.Set</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>groupId</name>
 				<type>org.apache.shindig.social.opensocial.spi.GroupId</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>appId</name>
 				<type>java.lang.String</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>fields</name>
 				<type>java.util.Set</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>collectionOptions</name>
 				<type>org.apache.shindig.social.opensocial.spi.CollectionOptions</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>securityToken</name>
 				<type>org.apache.shindig.auth.SecurityToken</type>
+				<comment><![CDATA[]]></comment>
 			</param>
+			<return>
+				<comment><![CDATA[]]></comment>
+			</return>
 			<throws>
 				<name>Exception</name>
 				<type>java.lang.Exception</type>
+				<comment><![CDATA[]]></comment>
 			</throws>
 		</method>
 		<method>
@@ -2703,34 +3260,45 @@
 			<param>
 				<name>userId</name>
 				<type>org.apache.shindig.social.opensocial.spi.UserId</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>groupId</name>
 				<type>org.apache.shindig.social.opensocial.spi.GroupId</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>appId</name>
 				<type>java.lang.String</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>fields</name>
 				<type>java.util.Set</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>collectionOptions</name>
 				<type>org.apache.shindig.social.opensocial.spi.CollectionOptions</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>activityIds</name>
 				<type>java.util.Set</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>securityToken</name>
 				<type>org.apache.shindig.auth.SecurityToken</type>
+				<comment><![CDATA[]]></comment>
 			</param>
+			<return>
+				<comment><![CDATA[]]></comment>
+			</return>
 			<throws>
 				<name>Exception</name>
 				<type>java.lang.Exception</type>
+				<comment><![CDATA[]]></comment>
 			</throws>
 		</method>
 		<method>
@@ -2738,30 +3306,40 @@
 			<param>
 				<name>userId</name>
 				<type>org.apache.shindig.social.opensocial.spi.UserId</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>groupId</name>
 				<type>org.apache.shindig.social.opensocial.spi.GroupId</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>appId</name>
 				<type>java.lang.String</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>fields</name>
 				<type>java.util.Set</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>activityId</name>
 				<type>java.lang.String</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>securityToken</name>
 				<type>org.apache.shindig.auth.SecurityToken</type>
+				<comment><![CDATA[]]></comment>
 			</param>
+			<return>
+				<comment><![CDATA[]]></comment>
+			</return>
 			<throws>
 				<name>Exception</name>
 				<type>java.lang.Exception</type>
+				<comment><![CDATA[]]></comment>
 			</throws>
 		</method>
 		<method>
@@ -2769,30 +3347,40 @@
 			<param>
 				<name>userIds</name>
 				<type>java.util.Set</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>groupId</name>
 				<type>org.apache.shindig.social.opensocial.spi.GroupId</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>appId</name>
 				<type>java.lang.String</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>fields</name>
 				<type>java.util.Set</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>collectionOptions</name>
 				<type>org.apache.shindig.social.opensocial.spi.CollectionOptions</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>securityToken</name>
 				<type>org.apache.shindig.auth.SecurityToken</type>
+				<comment><![CDATA[]]></comment>
 			</param>
+			<return>
+				<comment><![CDATA[]]></comment>
+			</return>
 			<throws>
 				<name>org.apache.shindig.protocol.ProtocolException</name>
 				<type>org.apache.shindig.protocol.ProtocolException</type>
+				<comment><![CDATA[]]></comment>
 			</throws>
 		</method>
 		<method>
@@ -2800,34 +3388,45 @@
 			<param>
 				<name>userId</name>
 				<type>org.apache.shindig.social.opensocial.spi.UserId</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>groupId</name>
 				<type>org.apache.shindig.social.opensocial.spi.GroupId</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>appId</name>
 				<type>java.lang.String</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>fields</name>
 				<type>java.util.Set</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>collectionOptions</name>
 				<type>org.apache.shindig.social.opensocial.spi.CollectionOptions</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>activityIds</name>
 				<type>java.util.Set</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>securityToken</name>
 				<type>org.apache.shindig.auth.SecurityToken</type>
+				<comment><![CDATA[]]></comment>
 			</param>
+			<return>
+				<comment><![CDATA[]]></comment>
+			</return>
 			<throws>
 				<name>org.apache.shindig.protocol.ProtocolException</name>
 				<type>org.apache.shindig.protocol.ProtocolException</type>
+				<comment><![CDATA[]]></comment>
 			</throws>
 		</method>
 		<method>
@@ -2835,30 +3434,40 @@
 			<param>
 				<name>userId</name>
 				<type>org.apache.shindig.social.opensocial.spi.UserId</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>groupId</name>
 				<type>org.apache.shindig.social.opensocial.spi.GroupId</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>appId</name>
 				<type>java.lang.String</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>fields</name>
 				<type>java.util.Set</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>activityId</name>
 				<type>java.lang.String</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>securityToken</name>
 				<type>org.apache.shindig.auth.SecurityToken</type>
+				<comment><![CDATA[]]></comment>
 			</param>
+			<return>
+				<comment><![CDATA[]]></comment>
+			</return>
 			<throws>
 				<name>org.apache.shindig.protocol.ProtocolException</name>
 				<type>org.apache.shindig.protocol.ProtocolException</type>
+				<comment><![CDATA[]]></comment>
 			</throws>
 		</method>
 		<method>
@@ -2866,14 +3475,20 @@
 			<param>
 				<name>themeDisplay</name>
 				<type>com.liferay.portal.theme.ThemeDisplay</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>userId</name>
 				<type>long</type>
+				<comment><![CDATA[]]></comment>
 			</param>
+			<return>
+				<comment><![CDATA[]]></comment>
+			</return>
 			<throws>
 				<name>Exception</name>
 				<type>java.lang.Exception</type>
+				<comment><![CDATA[]]></comment>
 			</throws>
 		</method>
 		<method>
@@ -2881,14 +3496,20 @@
 			<param>
 				<name>themeDisplay</name>
 				<type>com.liferay.portal.theme.ThemeDisplay</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>socialActivity</name>
 				<type>com.liferay.portlet.social.model.SocialActivity</type>
+				<comment><![CDATA[]]></comment>
 			</param>
+			<return>
+				<comment><![CDATA[]]></comment>
+			</return>
 			<throws>
 				<name>Exception</name>
 				<type>java.lang.Exception</type>
+				<comment><![CDATA[]]></comment>
 			</throws>
 		</method>
 		<method>
@@ -2896,10 +3517,15 @@
 			<param>
 				<name>socialActivity</name>
 				<type>com.liferay.portlet.social.model.SocialActivity</type>
+				<comment><![CDATA[]]></comment>
 			</param>
+			<return>
+				<comment><![CDATA[]]></comment>
+			</return>
 			<throws>
 				<name>Exception</name>
 				<type>java.lang.Exception</type>
+				<comment><![CDATA[]]></comment>
 			</throws>
 		</method>
 		<method>
@@ -2907,38 +3533,59 @@
 			<param>
 				<name>mediaItemsJSONArray</name>
 				<type>com.liferay.portal.kernel.json.JSONArray</type>
+				<comment><![CDATA[]]></comment>
 			</param>
+			<return>
+				<comment><![CDATA[]]></comment>
+			</return>
 		</method>
 		<method>
 			<name>getMediaItems</name>
 			<param>
 				<name>mediaItems</name>
 				<type>java.util.List</type>
+				<comment><![CDATA[]]></comment>
 			</param>
+			<return>
+				<comment><![CDATA[]]></comment>
+			</return>
 		</method>
 		<method>
 			<name>getTemplateParams</name>
 			<param>
 				<name>templateParamsJSONArray</name>
 				<type>com.liferay.portal.kernel.json.JSONArray</type>
+				<comment><![CDATA[]]></comment>
 			</param>
+			<return>
+				<comment><![CDATA[]]></comment>
+			</return>
 		</method>
 		<method>
 			<name>getTemplateParams</name>
 			<param>
 				<name>map</name>
 				<type>java.util.Map</type>
+				<comment><![CDATA[]]></comment>
 			</param>
+			<return>
+				<comment><![CDATA[]]></comment>
+			</return>
 		</method>
 		<method>
 			<name>getThemeDisplay</name>
 			<param>
 				<name>securityToken</name>
 				<type>org.apache.shindig.auth.SecurityToken</type>
+				<comment><![CDATA[]]></comment>
 			</param>
+			<return>
+				<comment><![CDATA[]]></comment>
+			</return>
 			<throws>
 				<name>Exception</name>
 				<type>java.lang.Exception</type>
+				<comment><![CDATA[]]></comment>
 			</throws>
 		</method>
 		<field>
@@ -2957,22 +3604,30 @@
 			<param>
 				<name>userId</name>
 				<type>org.apache.shindig.social.opensocial.spi.UserId</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>appId</name>
 				<type>java.lang.String</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>album</name>
 				<type>org.apache.shindig.social.opensocial.model.Album</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>securityToken</name>
 				<type>org.apache.shindig.auth.SecurityToken</type>
+				<comment><![CDATA[]]></comment>
 			</param>
+			<return>
+				<comment><![CDATA[]]></comment>
+			</return>
 			<throws>
 				<name>org.apache.shindig.protocol.ProtocolException</name>
 				<type>org.apache.shindig.protocol.ProtocolException</type>
+				<comment><![CDATA[]]></comment>
 			</throws>
 		</method>
 		<method>
@@ -2980,22 +3635,30 @@
 			<param>
 				<name>userId</name>
 				<type>org.apache.shindig.social.opensocial.spi.UserId</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>appId</name>
 				<type>java.lang.String</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>albumId</name>
 				<type>java.lang.String</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>securityToken</name>
 				<type>org.apache.shindig.auth.SecurityToken</type>
+				<comment><![CDATA[]]></comment>
 			</param>
+			<return>
+				<comment><![CDATA[]]></comment>
+			</return>
 			<throws>
 				<name>org.apache.shindig.protocol.ProtocolException</name>
 				<type>org.apache.shindig.protocol.ProtocolException</type>
+				<comment><![CDATA[]]></comment>
 			</throws>
 		</method>
 		<method>
@@ -3003,26 +3666,35 @@
 			<param>
 				<name>userId</name>
 				<type>org.apache.shindig.social.opensocial.spi.UserId</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>appId</name>
 				<type>java.lang.String</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>fields</name>
 				<type>java.util.Set</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>albumId</name>
 				<type>java.lang.String</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>securityToken</name>
 				<type>org.apache.shindig.auth.SecurityToken</type>
+				<comment><![CDATA[]]></comment>
 			</param>
+			<return>
+				<comment><![CDATA[]]></comment>
+			</return>
 			<throws>
 				<name>org.apache.shindig.protocol.ProtocolException</name>
 				<type>org.apache.shindig.protocol.ProtocolException</type>
+				<comment><![CDATA[]]></comment>
 			</throws>
 		</method>
 		<method>
@@ -3030,30 +3702,40 @@
 			<param>
 				<name>userIds</name>
 				<type>java.util.Set</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>groupId</name>
 				<type>org.apache.shindig.social.opensocial.spi.GroupId</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>appId</name>
 				<type>java.lang.String</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>fields</name>
 				<type>java.util.Set</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>collectionOptions</name>
 				<type>org.apache.shindig.social.opensocial.spi.CollectionOptions</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>securityToken</name>
 				<type>org.apache.shindig.auth.SecurityToken</type>
+				<comment><![CDATA[]]></comment>
 			</param>
+			<return>
+				<comment><![CDATA[]]></comment>
+			</return>
 			<throws>
 				<name>org.apache.shindig.protocol.ProtocolException</name>
 				<type>org.apache.shindig.protocol.ProtocolException</type>
+				<comment><![CDATA[]]></comment>
 			</throws>
 		</method>
 		<method>
@@ -3061,30 +3743,40 @@
 			<param>
 				<name>userId</name>
 				<type>org.apache.shindig.social.opensocial.spi.UserId</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>appId</name>
 				<type>java.lang.String</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>fields</name>
 				<type>java.util.Set</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>collectionOptions</name>
 				<type>org.apache.shindig.social.opensocial.spi.CollectionOptions</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>albumIds</name>
 				<type>java.util.Set</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>securityToken</name>
 				<type>org.apache.shindig.auth.SecurityToken</type>
+				<comment><![CDATA[]]></comment>
 			</param>
+			<return>
+				<comment><![CDATA[]]></comment>
+			</return>
 			<throws>
 				<name>org.apache.shindig.protocol.ProtocolException</name>
 				<type>org.apache.shindig.protocol.ProtocolException</type>
+				<comment><![CDATA[]]></comment>
 			</throws>
 		</method>
 		<method>
@@ -3092,26 +3784,35 @@
 			<param>
 				<name>userId</name>
 				<type>org.apache.shindig.social.opensocial.spi.UserId</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>appId</name>
 				<type>java.lang.String</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>album</name>
 				<type>org.apache.shindig.social.opensocial.model.Album</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>albumId</name>
 				<type>java.lang.String</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>securityToken</name>
 				<type>org.apache.shindig.auth.SecurityToken</type>
+				<comment><![CDATA[]]></comment>
 			</param>
+			<return>
+				<comment><![CDATA[]]></comment>
+			</return>
 			<throws>
 				<name>org.apache.shindig.protocol.ProtocolException</name>
 				<type>org.apache.shindig.protocol.ProtocolException</type>
+				<comment><![CDATA[]]></comment>
 			</throws>
 		</method>
 		<method>
@@ -3119,22 +3820,27 @@
 			<param>
 				<name>userId</name>
 				<type>org.apache.shindig.social.opensocial.spi.UserId</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>appId</name>
 				<type>java.lang.String</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>album</name>
 				<type>org.apache.shindig.social.opensocial.model.Album</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>securityToken</name>
 				<type>org.apache.shindig.auth.SecurityToken</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<throws>
 				<name>Exception</name>
 				<type>java.lang.Exception</type>
+				<comment><![CDATA[]]></comment>
 			</throws>
 		</method>
 		<method>
@@ -3142,22 +3848,27 @@
 			<param>
 				<name>userId</name>
 				<type>org.apache.shindig.social.opensocial.spi.UserId</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>appId</name>
 				<type>java.lang.String</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>albumId</name>
 				<type>java.lang.String</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>securityToken</name>
 				<type>org.apache.shindig.auth.SecurityToken</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<throws>
 				<name>Exception</name>
 				<type>java.lang.Exception</type>
+				<comment><![CDATA[]]></comment>
 			</throws>
 		</method>
 		<method>
@@ -3165,26 +3876,35 @@
 			<param>
 				<name>userId</name>
 				<type>org.apache.shindig.social.opensocial.spi.UserId</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>appId</name>
 				<type>java.lang.String</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>fields</name>
 				<type>java.util.Set</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>albumId</name>
 				<type>java.lang.String</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>securityToken</name>
 				<type>org.apache.shindig.auth.SecurityToken</type>
+				<comment><![CDATA[]]></comment>
 			</param>
+			<return>
+				<comment><![CDATA[]]></comment>
+			</return>
 			<throws>
 				<name>Exception</name>
 				<type>java.lang.Exception</type>
+				<comment><![CDATA[]]></comment>
 			</throws>
 		</method>
 		<method>
@@ -3192,30 +3912,40 @@
 			<param>
 				<name>userIds</name>
 				<type>java.util.Set</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>groupId</name>
 				<type>org.apache.shindig.social.opensocial.spi.GroupId</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>appId</name>
 				<type>java.lang.String</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>fields</name>
 				<type>java.util.Set</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>collectionOptions</name>
 				<type>org.apache.shindig.social.opensocial.spi.CollectionOptions</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>securityToken</name>
 				<type>org.apache.shindig.auth.SecurityToken</type>
+				<comment><![CDATA[]]></comment>
 			</param>
+			<return>
+				<comment><![CDATA[]]></comment>
+			</return>
 			<throws>
 				<name>Exception</name>
 				<type>java.lang.Exception</type>
+				<comment><![CDATA[]]></comment>
 			</throws>
 		</method>
 		<method>
@@ -3223,30 +3953,40 @@
 			<param>
 				<name>userId</name>
 				<type>org.apache.shindig.social.opensocial.spi.UserId</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>appId</name>
 				<type>java.lang.String</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>fields</name>
 				<type>java.util.Set</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>collectionOptions</name>
 				<type>org.apache.shindig.social.opensocial.spi.CollectionOptions</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>albumIds</name>
 				<type>java.util.Set</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>securityToken</name>
 				<type>org.apache.shindig.auth.SecurityToken</type>
+				<comment><![CDATA[]]></comment>
 			</param>
+			<return>
+				<comment><![CDATA[]]></comment>
+			</return>
 			<throws>
 				<name>Exception</name>
 				<type>java.lang.Exception</type>
+				<comment><![CDATA[]]></comment>
 			</throws>
 		</method>
 		<method>
@@ -3254,26 +3994,32 @@
 			<param>
 				<name>userId</name>
 				<type>org.apache.shindig.social.opensocial.spi.UserId</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>appId</name>
 				<type>java.lang.String</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>album</name>
 				<type>org.apache.shindig.social.opensocial.model.Album</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>albumId</name>
 				<type>java.lang.String</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>securityToken</name>
 				<type>org.apache.shindig.auth.SecurityToken</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<throws>
 				<name>Exception</name>
 				<type>java.lang.Exception</type>
+				<comment><![CDATA[]]></comment>
 			</throws>
 		</method>
 		<method>
@@ -3281,18 +4027,25 @@
 			<param>
 				<name>folder</name>
 				<type>com.liferay.portal.kernel.repository.model.Folder</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>fields</name>
 				<type>java.util.Set</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>securityToken</name>
 				<type>org.apache.shindig.auth.SecurityToken</type>
+				<comment><![CDATA[]]></comment>
 			</param>
+			<return>
+				<comment><![CDATA[]]></comment>
+			</return>
 			<throws>
 				<name>JSONException</name>
 				<type>com.liferay.portal.kernel.json.JSONException</type>
+				<comment><![CDATA[]]></comment>
 			</throws>
 		</method>
 		<field>
@@ -3311,26 +4064,35 @@
 			<param>
 				<name>userId</name>
 				<type>org.apache.shindig.social.opensocial.spi.UserId</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>groupId</name>
 				<type>org.apache.shindig.social.opensocial.spi.GroupId</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>appId</name>
 				<type>java.lang.String</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>fields</name>
 				<type>java.util.Set</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>securityToken</name>
 				<type>org.apache.shindig.auth.SecurityToken</type>
+				<comment><![CDATA[]]></comment>
 			</param>
+			<return>
+				<comment><![CDATA[]]></comment>
+			</return>
 			<throws>
 				<name>org.apache.shindig.protocol.ProtocolException</name>
 				<type>org.apache.shindig.protocol.ProtocolException</type>
+				<comment><![CDATA[]]></comment>
 			</throws>
 		</method>
 		<method>
@@ -3338,26 +4100,35 @@
 			<param>
 				<name>userIds</name>
 				<type>java.util.Set</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>groupId</name>
 				<type>org.apache.shindig.social.opensocial.spi.GroupId</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>appId</name>
 				<type>java.lang.String</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>fields</name>
 				<type>java.util.Set</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>securityToken</name>
 				<type>org.apache.shindig.auth.SecurityToken</type>
+				<comment><![CDATA[]]></comment>
 			</param>
+			<return>
+				<comment><![CDATA[]]></comment>
+			</return>
 			<throws>
 				<name>org.apache.shindig.protocol.ProtocolException</name>
 				<type>org.apache.shindig.protocol.ProtocolException</type>
+				<comment><![CDATA[]]></comment>
 			</throws>
 		</method>
 		<method>
@@ -3365,30 +4136,40 @@
 			<param>
 				<name>userId</name>
 				<type>org.apache.shindig.social.opensocial.spi.UserId</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>groupId</name>
 				<type>org.apache.shindig.social.opensocial.spi.GroupId</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>appId</name>
 				<type>java.lang.String</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>fields</name>
 				<type>java.util.Set</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>values</name>
 				<type>java.util.Map</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>securityToken</name>
 				<type>org.apache.shindig.auth.SecurityToken</type>
+				<comment><![CDATA[]]></comment>
 			</param>
+			<return>
+				<comment><![CDATA[]]></comment>
+			</return>
 			<throws>
 				<name>org.apache.shindig.protocol.ProtocolException</name>
 				<type>org.apache.shindig.protocol.ProtocolException</type>
+				<comment><![CDATA[]]></comment>
 			</throws>
 		</method>
 		<method>
@@ -3396,26 +4177,32 @@
 			<param>
 				<name>userId</name>
 				<type>org.apache.shindig.social.opensocial.spi.UserId</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>groupId</name>
 				<type>org.apache.shindig.social.opensocial.spi.GroupId</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>appId</name>
 				<type>java.lang.String</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>fields</name>
 				<type>java.util.Set</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>securityToken</name>
 				<type>org.apache.shindig.auth.SecurityToken</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<throws>
 				<name>Exception</name>
 				<type>java.lang.Exception</type>
+				<comment><![CDATA[]]></comment>
 			</throws>
 		</method>
 		<method>
@@ -3423,26 +4210,35 @@
 			<param>
 				<name>userIds</name>
 				<type>java.util.Set</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>groupId</name>
 				<type>org.apache.shindig.social.opensocial.spi.GroupId</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>appId</name>
 				<type>java.lang.String</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>fields</name>
 				<type>java.util.Set</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>securityToken</name>
 				<type>org.apache.shindig.auth.SecurityToken</type>
+				<comment><![CDATA[]]></comment>
 			</param>
+			<return>
+				<comment><![CDATA[]]></comment>
+			</return>
 			<throws>
 				<name>Exception</name>
 				<type>java.lang.Exception</type>
+				<comment><![CDATA[]]></comment>
 			</throws>
 		</method>
 		<method>
@@ -3450,30 +4246,37 @@
 			<param>
 				<name>userId</name>
 				<type>org.apache.shindig.social.opensocial.spi.UserId</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>groupId</name>
 				<type>org.apache.shindig.social.opensocial.spi.GroupId</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>appId</name>
 				<type>java.lang.String</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>fields</name>
 				<type>java.util.Set</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>values</name>
 				<type>java.util.Map</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>securityToken</name>
 				<type>org.apache.shindig.auth.SecurityToken</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<throws>
 				<name>Exception</name>
 				<type>java.lang.Exception</type>
+				<comment><![CDATA[]]></comment>
 			</throws>
 		</method>
 		<method>
@@ -3481,21 +4284,31 @@
 			<param>
 				<name>appId</name>
 				<type>java.lang.String</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>field</name>
 				<type>java.lang.String</type>
+				<comment><![CDATA[]]></comment>
 			</param>
+			<return>
+				<comment><![CDATA[]]></comment>
+			</return>
 		</method>
 		<method>
 			<name>getCompanyId</name>
 			<param>
 				<name>securityToken</name>
 				<type>org.apache.shindig.auth.SecurityToken</type>
+				<comment><![CDATA[]]></comment>
 			</param>
+			<return>
+				<comment><![CDATA[]]></comment>
+			</return>
 			<throws>
 				<name>Exception</name>
 				<type>java.lang.Exception</type>
+				<comment><![CDATA[]]></comment>
 			</throws>
 		</method>
 		<method>
@@ -3503,14 +4316,20 @@
 			<param>
 				<name>companyId</name>
 				<type>long</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>columnName</name>
 				<type>java.lang.String</type>
+				<comment><![CDATA[]]></comment>
 			</param>
+			<return>
+				<comment><![CDATA[]]></comment>
+			</return>
 			<throws>
 				<name>Exception</name>
 				<type>java.lang.Exception</type>
+				<comment><![CDATA[]]></comment>
 			</throws>
 		</method>
 		<method>
@@ -3518,30 +4337,42 @@
 			<param>
 				<name>companyId</name>
 				<type>long</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>appId</name>
 				<type>java.lang.String</type>
+				<comment><![CDATA[]]></comment>
 			</param>
+			<return>
+				<comment><![CDATA[]]></comment>
+			</return>
 		</method>
 		<method>
 			<name>getExpandoValue</name>
 			<param>
 				<name>companyId</name>
 				<type>long</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>appId</name>
 				<type>java.lang.String</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>userId</name>
 				<type>long</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>columnName</name>
 				<type>java.lang.String</type>
+				<comment><![CDATA[]]></comment>
 			</param>
+			<return>
+				<comment><![CDATA[]]></comment>
+			</return>
 		</method>
 		<field>
 			<name>_log</name>
@@ -3556,26 +4387,35 @@
 			<param>
 				<name>userId</name>
 				<type>org.apache.shindig.social.opensocial.spi.UserId</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>appId</name>
 				<type>java.lang.String</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>albumId</name>
 				<type>java.lang.String</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>mediaItem</name>
 				<type>org.apache.shindig.social.opensocial.model.MediaItem</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>securityToken</name>
 				<type>org.apache.shindig.auth.SecurityToken</type>
+				<comment><![CDATA[]]></comment>
 			</param>
+			<return>
+				<comment><![CDATA[]]></comment>
+			</return>
 			<throws>
 				<name>org.apache.shindig.protocol.ProtocolException</name>
 				<type>org.apache.shindig.protocol.ProtocolException</type>
+				<comment><![CDATA[]]></comment>
 			</throws>
 		</method>
 		<method>
@@ -3583,26 +4423,35 @@
 			<param>
 				<name>userId</name>
 				<type>org.apache.shindig.social.opensocial.spi.UserId</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>appId</name>
 				<type>java.lang.String</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>albumId</name>
 				<type>java.lang.String</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>mediaItemId</name>
 				<type>java.lang.String</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>securityToken</name>
 				<type>org.apache.shindig.auth.SecurityToken</type>
+				<comment><![CDATA[]]></comment>
 			</param>
+			<return>
+				<comment><![CDATA[]]></comment>
+			</return>
 			<throws>
 				<name>org.apache.shindig.protocol.ProtocolException</name>
 				<type>org.apache.shindig.protocol.ProtocolException</type>
+				<comment><![CDATA[]]></comment>
 			</throws>
 		</method>
 		<method>
@@ -3610,30 +4459,40 @@
 			<param>
 				<name>userId</name>
 				<type>org.apache.shindig.social.opensocial.spi.UserId</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>appId</name>
 				<type>java.lang.String</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>albumId</name>
 				<type>java.lang.String</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>mediaItemId</name>
 				<type>java.lang.String</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>fields</name>
 				<type>java.util.Set</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>securityToken</name>
 				<type>org.apache.shindig.auth.SecurityToken</type>
+				<comment><![CDATA[]]></comment>
 			</param>
+			<return>
+				<comment><![CDATA[]]></comment>
+			</return>
 			<throws>
 				<name>org.apache.shindig.protocol.ProtocolException</name>
 				<type>org.apache.shindig.protocol.ProtocolException</type>
+				<comment><![CDATA[]]></comment>
 			</throws>
 		</method>
 		<method>
@@ -3641,30 +4500,40 @@
 			<param>
 				<name>userIds</name>
 				<type>java.util.Set</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>groupId</name>
 				<type>org.apache.shindig.social.opensocial.spi.GroupId</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>appId</name>
 				<type>java.lang.String</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>fields</name>
 				<type>java.util.Set</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>collectionOptions</name>
 				<type>org.apache.shindig.social.opensocial.spi.CollectionOptions</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>securityToken</name>
 				<type>org.apache.shindig.auth.SecurityToken</type>
+				<comment><![CDATA[]]></comment>
 			</param>
+			<return>
+				<comment><![CDATA[]]></comment>
+			</return>
 			<throws>
 				<name>org.apache.shindig.protocol.ProtocolException</name>
 				<type>org.apache.shindig.protocol.ProtocolException</type>
+				<comment><![CDATA[]]></comment>
 			</throws>
 		</method>
 		<method>
@@ -3672,30 +4541,40 @@
 			<param>
 				<name>userId</name>
 				<type>org.apache.shindig.social.opensocial.spi.UserId</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>appId</name>
 				<type>java.lang.String</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>albumId</name>
 				<type>java.lang.String</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>fields</name>
 				<type>java.util.Set</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>collectionOptions</name>
 				<type>org.apache.shindig.social.opensocial.spi.CollectionOptions</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>securityToken</name>
 				<type>org.apache.shindig.auth.SecurityToken</type>
+				<comment><![CDATA[]]></comment>
 			</param>
+			<return>
+				<comment><![CDATA[]]></comment>
+			</return>
 			<throws>
 				<name>org.apache.shindig.protocol.ProtocolException</name>
 				<type>org.apache.shindig.protocol.ProtocolException</type>
+				<comment><![CDATA[]]></comment>
 			</throws>
 		</method>
 		<method>
@@ -3703,34 +4582,45 @@
 			<param>
 				<name>userId</name>
 				<type>org.apache.shindig.social.opensocial.spi.UserId</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>appId</name>
 				<type>java.lang.String</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>albumId</name>
 				<type>java.lang.String</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>mediaItemIds</name>
 				<type>java.util.Set</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>fields</name>
 				<type>java.util.Set</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>collectionOptions</name>
 				<type>org.apache.shindig.social.opensocial.spi.CollectionOptions</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>securityToken</name>
 				<type>org.apache.shindig.auth.SecurityToken</type>
+				<comment><![CDATA[]]></comment>
 			</param>
+			<return>
+				<comment><![CDATA[]]></comment>
+			</return>
 			<throws>
 				<name>org.apache.shindig.protocol.ProtocolException</name>
 				<type>org.apache.shindig.protocol.ProtocolException</type>
+				<comment><![CDATA[]]></comment>
 			</throws>
 		</method>
 		<method>
@@ -3738,30 +4628,40 @@
 			<param>
 				<name>userId</name>
 				<type>org.apache.shindig.social.opensocial.spi.UserId</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>appId</name>
 				<type>java.lang.String</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>albumId</name>
 				<type>java.lang.String</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>mediaItemId</name>
 				<type>java.lang.String</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>mediaItem</name>
 				<type>org.apache.shindig.social.opensocial.model.MediaItem</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>securityToken</name>
 				<type>org.apache.shindig.auth.SecurityToken</type>
+				<comment><![CDATA[]]></comment>
 			</param>
+			<return>
+				<comment><![CDATA[]]></comment>
+			</return>
 			<throws>
 				<name>org.apache.shindig.protocol.ProtocolException</name>
 				<type>org.apache.shindig.protocol.ProtocolException</type>
+				<comment><![CDATA[]]></comment>
 			</throws>
 		</method>
 		<method>
@@ -3769,26 +4669,32 @@
 			<param>
 				<name>userId</name>
 				<type>org.apache.shindig.social.opensocial.spi.UserId</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>appId</name>
 				<type>java.lang.String</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>albumId</name>
 				<type>java.lang.String</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>mediaItem</name>
 				<type>org.apache.shindig.social.opensocial.model.MediaItem</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>securityToken</name>
 				<type>org.apache.shindig.auth.SecurityToken</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<throws>
 				<name>Exception</name>
 				<type>java.lang.Exception</type>
+				<comment><![CDATA[]]></comment>
 			</throws>
 		</method>
 		<method>
@@ -3796,26 +4702,32 @@
 			<param>
 				<name>userId</name>
 				<type>org.apache.shindig.social.opensocial.spi.UserId</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>appId</name>
 				<type>java.lang.String</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>albumId</name>
 				<type>java.lang.String</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>mediaItemId</name>
 				<type>java.lang.String</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>securityToken</name>
 				<type>org.apache.shindig.auth.SecurityToken</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<throws>
 				<name>Exception</name>
 				<type>java.lang.Exception</type>
+				<comment><![CDATA[]]></comment>
 			</throws>
 		</method>
 		<method>
@@ -3823,30 +4735,40 @@
 			<param>
 				<name>userId</name>
 				<type>org.apache.shindig.social.opensocial.spi.UserId</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>appId</name>
 				<type>java.lang.String</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>albumId</name>
 				<type>java.lang.String</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>mediaItemId</name>
 				<type>java.lang.String</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>fields</name>
 				<type>java.util.Set</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>securityToken</name>
 				<type>org.apache.shindig.auth.SecurityToken</type>
+				<comment><![CDATA[]]></comment>
 			</param>
+			<return>
+				<comment><![CDATA[]]></comment>
+			</return>
 			<throws>
 				<name>Exception</name>
 				<type>java.lang.Exception</type>
+				<comment><![CDATA[]]></comment>
 			</throws>
 		</method>
 		<method>
@@ -3854,30 +4776,40 @@
 			<param>
 				<name>userIds</name>
 				<type>java.util.Set</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>groupId</name>
 				<type>org.apache.shindig.social.opensocial.spi.GroupId</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>appId</name>
 				<type>java.lang.String</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>fields</name>
 				<type>java.util.Set</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>collectionOptions</name>
 				<type>org.apache.shindig.social.opensocial.spi.CollectionOptions</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>securityToken</name>
 				<type>org.apache.shindig.auth.SecurityToken</type>
+				<comment><![CDATA[]]></comment>
 			</param>
+			<return>
+				<comment><![CDATA[]]></comment>
+			</return>
 			<throws>
 				<name>Exception</name>
 				<type>java.lang.Exception</type>
+				<comment><![CDATA[]]></comment>
 			</throws>
 		</method>
 		<method>
@@ -3885,30 +4817,40 @@
 			<param>
 				<name>userId</name>
 				<type>org.apache.shindig.social.opensocial.spi.UserId</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>appId</name>
 				<type>java.lang.String</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>albumId</name>
 				<type>java.lang.String</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>fields</name>
 				<type>java.util.Set</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>collectionOptions</name>
 				<type>org.apache.shindig.social.opensocial.spi.CollectionOptions</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>securityToken</name>
 				<type>org.apache.shindig.auth.SecurityToken</type>
+				<comment><![CDATA[]]></comment>
 			</param>
+			<return>
+				<comment><![CDATA[]]></comment>
+			</return>
 			<throws>
 				<name>Exception</name>
 				<type>java.lang.Exception</type>
+				<comment><![CDATA[]]></comment>
 			</throws>
 		</method>
 		<method>
@@ -3916,34 +4858,45 @@
 			<param>
 				<name>userId</name>
 				<type>org.apache.shindig.social.opensocial.spi.UserId</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>appId</name>
 				<type>java.lang.String</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>albumId</name>
 				<type>java.lang.String</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>mediaItemIds</name>
 				<type>java.util.Set</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>fields</name>
 				<type>java.util.Set</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>collectionOptions</name>
 				<type>org.apache.shindig.social.opensocial.spi.CollectionOptions</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>securityToken</name>
 				<type>org.apache.shindig.auth.SecurityToken</type>
+				<comment><![CDATA[]]></comment>
 			</param>
+			<return>
+				<comment><![CDATA[]]></comment>
+			</return>
 			<throws>
 				<name>Exception</name>
 				<type>java.lang.Exception</type>
+				<comment><![CDATA[]]></comment>
 			</throws>
 		</method>
 		<method>
@@ -3951,30 +4904,37 @@
 			<param>
 				<name>userId</name>
 				<type>org.apache.shindig.social.opensocial.spi.UserId</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>appId</name>
 				<type>java.lang.String</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>albumId</name>
 				<type>java.lang.String</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>mediaItemId</name>
 				<type>java.lang.String</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>mediaItem</name>
 				<type>org.apache.shindig.social.opensocial.model.MediaItem</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>securityToken</name>
 				<type>org.apache.shindig.auth.SecurityToken</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<throws>
 				<name>Exception</name>
 				<type>java.lang.Exception</type>
+				<comment><![CDATA[]]></comment>
 			</throws>
 		</method>
 		<method>
@@ -3982,29 +4942,41 @@
 			<param>
 				<name>mediaItem</name>
 				<type>org.apache.shindig.social.opensocial.model.MediaItem</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>options</name>
 				<type>com.liferay.portal.kernel.util.Http.Options</type>
+				<comment><![CDATA[]]></comment>
 			</param>
+			<return>
+				<comment><![CDATA[]]></comment>
+			</return>
 		</method>
 		<method>
 			<name>toMediaItem</name>
 			<param>
 				<name>fileEntry</name>
 				<type>com.liferay.portal.kernel.repository.model.FileEntry</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>fields</name>
 				<type>java.util.Set</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>securityToken</name>
 				<type>org.apache.shindig.auth.SecurityToken</type>
+				<comment><![CDATA[]]></comment>
 			</param>
+			<return>
+				<comment><![CDATA[]]></comment>
+			</return>
 			<throws>
 				<name>Exception</name>
 				<type>java.lang.Exception</type>
+				<comment><![CDATA[]]></comment>
 			</throws>
 		</method>
 		<method>
@@ -4012,7 +4984,11 @@
 			<param>
 				<name>fileName</name>
 				<type>java.lang.String</type>
+				<comment><![CDATA[]]></comment>
 			</param>
+			<return>
+				<comment><![CDATA[]]></comment>
+			</return>
 		</method>
 		<field>
 			<name>_MEDIA_ITEM_FIELDS</name>
@@ -4033,26 +5009,35 @@
 			<param>
 				<name>userIds</name>
 				<type>java.util.Set</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>groupId</name>
 				<type>org.apache.shindig.social.opensocial.spi.GroupId</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>collectionOptions</name>
 				<type>org.apache.shindig.social.opensocial.spi.CollectionOptions</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>fields</name>
 				<type>java.util.Set</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>securityToken</name>
 				<type>org.apache.shindig.auth.SecurityToken</type>
+				<comment><![CDATA[]]></comment>
 			</param>
+			<return>
+				<comment><![CDATA[]]></comment>
+			</return>
 			<throws>
 				<name>org.apache.shindig.protocol.ProtocolException</name>
 				<type>org.apache.shindig.protocol.ProtocolException</type>
+				<comment><![CDATA[]]></comment>
 			</throws>
 		</method>
 		<method>
@@ -4060,18 +5045,25 @@
 			<param>
 				<name>userId</name>
 				<type>org.apache.shindig.social.opensocial.spi.UserId</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>fields</name>
 				<type>java.util.Set</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>securityToken</name>
 				<type>org.apache.shindig.auth.SecurityToken</type>
+				<comment><![CDATA[]]></comment>
 			</param>
+			<return>
+				<comment><![CDATA[]]></comment>
+			</return>
 			<throws>
 				<name>org.apache.shindig.protocol.ProtocolException</name>
 				<type>org.apache.shindig.protocol.ProtocolException</type>
+				<comment><![CDATA[]]></comment>
 			</throws>
 		</method>
 		<method>
@@ -4079,26 +5071,35 @@
 			<param>
 				<name>userIds</name>
 				<type>java.util.Set</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>groupId</name>
 				<type>org.apache.shindig.social.opensocial.spi.GroupId</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>collectionOptions</name>
 				<type>org.apache.shindig.social.opensocial.spi.CollectionOptions</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>fields</name>
 				<type>java.util.Set</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>securityToken</name>
 				<type>org.apache.shindig.auth.SecurityToken</type>
+				<comment><![CDATA[]]></comment>
 			</param>
+			<return>
+				<comment><![CDATA[]]></comment>
+			</return>
 			<throws>
 				<name>Exception</name>
 				<type>java.lang.Exception</type>
+				<comment><![CDATA[]]></comment>
 			</throws>
 		</method>
 		<method>
@@ -4106,18 +5107,25 @@
 			<param>
 				<name>userId</name>
 				<type>org.apache.shindig.social.opensocial.spi.UserId</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>fields</name>
 				<type>java.util.Set</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>securityToken</name>
 				<type>org.apache.shindig.auth.SecurityToken</type>
+				<comment><![CDATA[]]></comment>
 			</param>
+			<return>
+				<comment><![CDATA[]]></comment>
+			</return>
 			<throws>
 				<name>Exception</name>
 				<type>java.lang.Exception</type>
+				<comment><![CDATA[]]></comment>
 			</throws>
 		</method>
 		<method>
@@ -4125,10 +5133,15 @@
 			<param>
 				<name>user</name>
 				<type>com.liferay.portal.model.User</type>
+				<comment><![CDATA[]]></comment>
 			</param>
+			<return>
+				<comment><![CDATA[]]></comment>
+			</return>
 			<throws>
 				<name>Exception</name>
 				<type>java.lang.Exception</type>
+				<comment><![CDATA[]]></comment>
 			</throws>
 		</method>
 		<method>
@@ -4136,10 +5149,15 @@
 			<param>
 				<name>groupId</name>
 				<type>java.lang.String</type>
+				<comment><![CDATA[]]></comment>
 			</param>
+			<return>
+				<comment><![CDATA[]]></comment>
+			</return>
 			<throws>
 				<name>Exception</name>
 				<type>java.lang.Exception</type>
+				<comment><![CDATA[]]></comment>
 			</throws>
 		</method>
 		<method>
@@ -4147,14 +5165,20 @@
 			<param>
 				<name>className</name>
 				<type>java.lang.String</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>classPK</name>
 				<type>long</type>
+				<comment><![CDATA[]]></comment>
 			</param>
+			<return>
+				<comment><![CDATA[]]></comment>
+			</return>
 			<throws>
 				<name>Exception</name>
 				<type>java.lang.Exception</type>
+				<comment><![CDATA[]]></comment>
 			</throws>
 		</method>
 		<method>
@@ -4162,18 +5186,25 @@
 			<param>
 				<name>user</name>
 				<type>com.liferay.portal.model.User</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>fields</name>
 				<type>java.util.Set</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>securityToken</name>
 				<type>org.apache.shindig.auth.SecurityToken</type>
+				<comment><![CDATA[]]></comment>
 			</param>
+			<return>
+				<comment><![CDATA[]]></comment>
+			</return>
 			<throws>
 				<name>Exception</name>
 				<type>java.lang.Exception</type>
+				<comment><![CDATA[]]></comment>
 			</throws>
 		</method>
 		<field>
@@ -4189,22 +5220,27 @@
 			<param>
 				<name>servletRequest</name>
 				<type>javax.servlet.ServletRequest</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>servletResponse</name>
 				<type>javax.servlet.ServletResponse</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>filterChain</name>
 				<type>javax.servlet.FilterChain</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<throws>
 				<name>IOException</name>
 				<type>java.io.IOException</type>
+				<comment><![CDATA[]]></comment>
 			</throws>
 			<throws>
 				<name>ServletException</name>
 				<type>javax.servlet.ServletException</type>
+				<comment><![CDATA[]]></comment>
 			</throws>
 		</method>
 		<method>
@@ -4212,10 +5248,12 @@
 			<param>
 				<name>filterConfig</name>
 				<type>javax.servlet.FilterConfig</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<throws>
 				<name>ServletException</name>
 				<type>javax.servlet.ServletException</type>
+				<comment><![CDATA[]]></comment>
 			</throws>
 		</method>
 		<method>
@@ -4223,10 +5261,12 @@
 			<param>
 				<name>servletContext</name>
 				<type>javax.servlet.ServletContext</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<throws>
 				<name>ServletException</name>
 				<type>javax.servlet.ServletException</type>
+				<comment><![CDATA[]]></comment>
 			</throws>
 		</method>
 	</javadoc>
@@ -4239,6 +5279,7 @@
 			<param>
 				<name>servletContextEvent</name>
 				<type>javax.servlet.ServletContextEvent</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 		</method>
 		<method>
@@ -4246,6 +5287,7 @@
 			<param>
 				<name>servletContextEvent</name>
 				<type>javax.servlet.ServletContextEvent</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 		</method>
 		<method>
@@ -4253,6 +5295,7 @@
 			<throws>
 				<name>Exception</name>
 				<type>java.lang.Exception</type>
+				<comment><![CDATA[]]></comment>
 			</throws>
 		</method>
 		<method>
@@ -4260,6 +5303,7 @@
 			<throws>
 				<name>Exception</name>
 				<type>java.lang.Exception</type>
+				<comment><![CDATA[]]></comment>
 			</throws>
 		</method>
 		<field>
@@ -4282,22 +5326,27 @@
 			<param>
 				<name>servletRequest</name>
 				<type>javax.servlet.ServletRequest</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>servletResponse</name>
 				<type>javax.servlet.ServletResponse</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>filterChain</name>
 				<type>javax.servlet.FilterChain</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<throws>
 				<name>IOException</name>
 				<type>java.io.IOException</type>
+				<comment><![CDATA[]]></comment>
 			</throws>
 			<throws>
 				<name>ServletException</name>
 				<type>javax.servlet.ServletException</type>
+				<comment><![CDATA[]]></comment>
 			</throws>
 		</method>
 		<method>
@@ -4305,10 +5354,12 @@
 			<param>
 				<name>filterConfig</name>
 				<type>javax.servlet.FilterConfig</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<throws>
 				<name>ServletException</name>
 				<type>javax.servlet.ServletException</type>
+				<comment><![CDATA[]]></comment>
 			</throws>
 		</method>
 		<method>
@@ -4316,17 +5367,23 @@
 			<param>
 				<name>servletRequest</name>
 				<type>javax.servlet.ServletRequest</type>
+				<comment><![CDATA[]]></comment>
 			</param>
+			<return>
+				<comment><![CDATA[]]></comment>
+			</return>
 		</method>
 		<method>
 			<name>_init</name>
 			<param>
 				<name>servletContext</name>
 				<type>javax.servlet.ServletContext</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<throws>
 				<name>ServletException</name>
 				<type>javax.servlet.ServletException</type>
+				<comment><![CDATA[]]></comment>
 			</throws>
 		</method>
 		<field>
@@ -4342,18 +5399,22 @@
 			<param>
 				<name>jsonObject</name>
 				<type>com.liferay.portal.kernel.json.JSONObject</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>bean</name>
 				<type>java.lang.Object</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>fields</name>
 				<type>java.lang.Object[]</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<throws>
 				<name>JSONException</name>
 				<type>com.liferay.portal.kernel.json.JSONException</type>
+				<comment><![CDATA[]]></comment>
 			</throws>
 		</method>
 		<method>
@@ -4361,18 +5422,22 @@
 			<param>
 				<name>map</name>
 				<type>java.util.Map</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>bean</name>
 				<type>java.lang.Object</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>fields</name>
 				<type>java.lang.Object[]</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<throws>
 				<name>JSONException</name>
 				<type>com.liferay.portal.kernel.json.JSONException</type>
+				<comment><![CDATA[]]></comment>
 			</throws>
 		</method>
 		<method>
@@ -4380,14 +5445,17 @@
 			<param>
 				<name>bean</name>
 				<type>java.lang.Object</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>jsonObject</name>
 				<type>com.liferay.portal.kernel.json.JSONObject</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>fields</name>
 				<type>java.lang.Object[]</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 		</method>
 		<method>
@@ -4395,14 +5463,17 @@
 			<param>
 				<name>bean</name>
 				<type>java.lang.Object</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>map</name>
 				<type>java.util.Map</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>fields</name>
 				<type>java.lang.Object[]</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 		</method>
 		<method>
@@ -4410,18 +5481,22 @@
 			<param>
 				<name>jsonObject</name>
 				<type>com.liferay.portal.kernel.json.JSONObject</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>bean</name>
 				<type>java.lang.Object</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>field</name>
 				<type>java.lang.Object</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<throws>
 				<name>JSONException</name>
 				<type>com.liferay.portal.kernel.json.JSONException</type>
+				<comment><![CDATA[]]></comment>
 			</throws>
 		</method>
 		<method>
@@ -4429,18 +5504,22 @@
 			<param>
 				<name>map</name>
 				<type>java.util.Map</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>bean</name>
 				<type>java.lang.Object</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>field</name>
 				<type>java.lang.Object</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<throws>
 				<name>JSONException</name>
 				<type>com.liferay.portal.kernel.json.JSONException</type>
+				<comment><![CDATA[]]></comment>
 			</throws>
 		</method>
 		<method>
@@ -4448,14 +5527,17 @@
 			<param>
 				<name>bean</name>
 				<type>java.lang.Object</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>jsonObject</name>
 				<type>com.liferay.portal.kernel.json.JSONObject</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>field</name>
 				<type>java.lang.Object</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 		</method>
 		<method>
@@ -4463,14 +5545,17 @@
 			<param>
 				<name>bean</name>
 				<type>java.lang.Object</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>map</name>
 				<type>java.util.Map</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>field</name>
 				<type>java.lang.Object</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 		</method>
 		<method>
@@ -4478,22 +5563,30 @@
 			<param>
 				<name>bean</name>
 				<type>java.lang.Object</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>fields</name>
 				<type>java.lang.Object[]</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>companyId</name>
 				<type>long</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>className</name>
 				<type>java.lang.String</type>
+				<comment><![CDATA[]]></comment>
 			</param>
+			<return>
+				<comment><![CDATA[]]></comment>
+			</return>
 			<throws>
 				<name>PortalException</name>
 				<type>com.liferay.portal.kernel.exception.PortalException</type>
+				<comment><![CDATA[]]></comment>
 			</throws>
 		</method>
 		<method>
@@ -4501,29 +5594,38 @@
 			<param>
 				<name>bean</name>
 				<type>java.lang.Object</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>fieldName</name>
 				<type>java.lang.String</type>
+				<comment><![CDATA[]]></comment>
 			</param>
+			<return>
+				<comment><![CDATA[]]></comment>
+			</return>
 		</method>
 		<method>
 			<name>setBeanProperty</name>
 			<param>
 				<name>bean</name>
 				<type>java.lang.Object</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>fieldName</name>
 				<type>java.lang.String</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>value</name>
 				<type>java.lang.String</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<throws>
 				<name>JSONException</name>
 				<type>com.liferay.portal.kernel.json.JSONException</type>
+				<comment><![CDATA[]]></comment>
 			</throws>
 		</method>
 		<field>
@@ -4540,6 +5642,7 @@
 			<param>
 				<name>url</name>
 				<type>java.lang.String</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 		</method>
 		<method>
@@ -4547,34 +5650,45 @@
 			<param>
 				<name>ownerId</name>
 				<type>java.lang.String</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>viewerId</name>
 				<type>long</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>appId</name>
 				<type>java.lang.String</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>domain</name>
 				<type>java.lang.String</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>appUrl</name>
 				<type>java.lang.String</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>moduleId</name>
 				<type>long</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>activeUrl</name>
 				<type>java.lang.String</type>
+				<comment><![CDATA[]]></comment>
 			</param>
+			<return>
+				<comment><![CDATA[]]></comment>
+			</return>
 			<throws>
 				<name>Exception</name>
 				<type>java.lang.Exception</type>
+				<comment><![CDATA[]]></comment>
 			</throws>
 		</method>
 		<method>
@@ -4582,29 +5696,41 @@
 			<param>
 				<name>namespace</name>
 				<type>java.lang.String</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>themeDisplay</name>
 				<type>com.liferay.portal.theme.ThemeDisplay</type>
+				<comment><![CDATA[]]></comment>
 			</param>
+			<return>
+				<comment><![CDATA[]]></comment>
+			</return>
 		</method>
 		<method>
 			<name>getFileEntryURL</name>
 			<param>
 				<name>portalURL</name>
 				<type>java.lang.String</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>fileEntryId</name>
 				<type>long</type>
+				<comment><![CDATA[]]></comment>
 			</param>
+			<return>
+				<comment><![CDATA[]]></comment>
+			</return>
 			<throws>
 				<name>PortalException</name>
 				<type>com.liferay.portal.kernel.exception.PortalException</type>
+				<comment><![CDATA[]]></comment>
 			</throws>
 			<throws>
 				<name>SystemException</name>
 				<type>com.liferay.portal.kernel.exception.SystemException</type>
+				<comment><![CDATA[]]></comment>
 			</throws>
 		</method>
 		<method>
@@ -4612,10 +5738,15 @@
 			<param>
 				<name>portletPreferences</name>
 				<type>javax.portlet.PortletPreferences</type>
+				<comment><![CDATA[]]></comment>
 			</param>
+			<return>
+				<comment><![CDATA[]]></comment>
+			</return>
 			<throws>
 				<name>Exception</name>
 				<type>java.lang.Exception</type>
+				<comment><![CDATA[]]></comment>
 			</throws>
 		</method>
 		<method>
@@ -4623,10 +5754,15 @@
 			<param>
 				<name>portletName</name>
 				<type>java.lang.String</type>
+				<comment><![CDATA[]]></comment>
 			</param>
+			<return>
+				<comment><![CDATA[]]></comment>
+			</return>
 			<throws>
 				<name>Exception</name>
 				<type>java.lang.Exception</type>
+				<comment><![CDATA[]]></comment>
 			</throws>
 		</method>
 		<method>
@@ -4634,10 +5770,15 @@
 			<param>
 				<name>repositoryId</name>
 				<type>long</type>
+				<comment><![CDATA[]]></comment>
 			</param>
+			<return>
+				<comment><![CDATA[]]></comment>
+			</return>
 			<throws>
 				<name>Exception</name>
 				<type>java.lang.Exception</type>
+				<comment><![CDATA[]]></comment>
 			</throws>
 		</method>
 		<method>
@@ -4645,10 +5786,15 @@
 			<param>
 				<name>url</name>
 				<type>java.lang.String</type>
+				<comment><![CDATA[]]></comment>
 			</param>
+			<return>
+				<comment><![CDATA[]]></comment>
+			</return>
 			<throws>
 				<name>Exception</name>
 				<type>java.lang.Exception</type>
+				<comment><![CDATA[]]></comment>
 			</throws>
 		</method>
 		<method>
@@ -4656,39 +5802,58 @@
 			<param>
 				<name>url</name>
 				<type>java.lang.String</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>debug</name>
 				<type>boolean</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>ignoreCache</name>
 				<type>boolean</type>
+				<comment><![CDATA[]]></comment>
 			</param>
+			<return>
+				<comment><![CDATA[]]></comment>
+			</return>
 			<throws>
 				<name>Exception</name>
 				<type>java.lang.Exception</type>
+				<comment><![CDATA[]]></comment>
 			</throws>
 		</method>
 		<method>
 			<name>getHost</name>
+			<return>
+				<comment><![CDATA[]]></comment>
+			</return>
 		</method>
 		<method>
 			<name>getModuleId</name>
 			<param>
 				<name>namespace</name>
 				<type>java.lang.String</type>
+				<comment><![CDATA[]]></comment>
 			</param>
+			<return>
+				<comment><![CDATA[]]></comment>
+			</return>
 		</method>
 		<method>
 			<name>getOAuthServices</name>
 			<param>
 				<name>url</name>
 				<type>java.lang.String</type>
+				<comment><![CDATA[]]></comment>
 			</param>
+			<return>
+				<comment><![CDATA[]]></comment>
+			</return>
 			<throws>
 				<name>Exception</name>
 				<type>java.lang.Exception</type>
+				<comment><![CDATA[]]></comment>
 			</throws>
 		</method>
 		<method>
@@ -4696,14 +5861,20 @@
 			<param>
 				<name>layout</name>
 				<type>com.liferay.portal.model.Layout</type>
+				<comment><![CDATA[]]></comment>
 			</param>
+			<return>
+				<comment><![CDATA[]]></comment>
+			</return>
 			<throws>
 				<name>PortalException</name>
 				<type>com.liferay.portal.kernel.exception.PortalException</type>
+				<comment><![CDATA[]]></comment>
 			</throws>
 			<throws>
 				<name>SystemException</name>
 				<type>com.liferay.portal.kernel.exception.SystemException</type>
+				<comment><![CDATA[]]></comment>
 			</throws>
 		</method>
 		<method>
@@ -4711,28 +5882,48 @@
 			<param>
 				<name>portletRequest</name>
 				<type>javax.portlet.PortletRequest</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>themeDisplay</name>
 				<type>com.liferay.portal.theme.ThemeDisplay</type>
+				<comment><![CDATA[]]></comment>
 			</param>
+			<return>
+				<comment><![CDATA[]]></comment>
+			</return>
 			<throws>
 				<name>Exception</name>
 				<type>java.lang.Exception</type>
+				<comment><![CDATA[]]></comment>
 			</throws>
 		</method>
 		<method>
+			<name>getScheme</name>
+			<return>
+				<comment><![CDATA[]]></comment>
+			</return>
+		</method>
+		<method>
 			<name>getTableOpenSocial</name>
+			<return>
+				<comment><![CDATA[]]></comment>
+			</return>
 		</method>
 		<method>
 			<name>hasUserPrefs</name>
 			<param>
 				<name>gadgetSpec</name>
 				<type>org.apache.shindig.gadgets.spec.GadgetSpec</type>
+				<comment><![CDATA[]]></comment>
 			</param>
+			<return>
+				<comment><![CDATA[]]></comment>
+			</return>
 			<throws>
 				<name>Exception</name>
 				<type>java.lang.Exception</type>
+				<comment><![CDATA[]]></comment>
 			</throws>
 		</method>
 		<method>
@@ -4740,10 +5931,15 @@
 			<param>
 				<name>userPrefs</name>
 				<type>java.util.Map</type>
+				<comment><![CDATA[]]></comment>
 			</param>
+			<return>
+				<comment><![CDATA[]]></comment>
+			</return>
 			<throws>
 				<name>Exception</name>
 				<type>java.lang.Exception</type>
+				<comment><![CDATA[]]></comment>
 			</throws>
 		</method>
 		<method>
@@ -4751,28 +5947,55 @@
 			<param>
 				<name>content</name>
 				<type>java.lang.String</type>
+				<comment><![CDATA[]]></comment>
 			</param>
+			<return>
+				<comment><![CDATA[]]></comment>
+			</return>
 		</method>
 		<method>
 			<name>setHost</name>
 			<param>
 				<name>host</name>
 				<type>java.lang.String</type>
+				<comment><![CDATA[]]></comment>
 			</param>
+		</method>
+		<method>
+			<name>setScheme</name>
+			<param>
+				<name>scheme</name>
+				<type>java.lang.String</type>
+				<comment><![CDATA[]]></comment>
+			</param>
+		</method>
+		<method>
+			<name>transformURL</name>
+			<param>
+				<name>url</name>
+				<type>java.lang.String</type>
+				<comment><![CDATA[]]></comment>
+			</param>
+			<return>
+				<comment><![CDATA[]]></comment>
+			</return>
 		</method>
 		<method>
 			<name>updateOAuthConsumers</name>
 			<param>
 				<name>actionRequest</name>
 				<type>javax.portlet.ActionRequest</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
 				<name>actionResponse</name>
 				<type>javax.portlet.ActionResponse</type>
+				<comment><![CDATA[]]></comment>
 			</param>
 			<throws>
 				<name>Exception</name>
 				<type>java.lang.Exception</type>
+				<comment><![CDATA[]]></comment>
 			</throws>
 		</method>
 		<field>
@@ -4798,6 +6021,9 @@
 		</field>
 		<field>
 			<name>_processor</name>
+		</field>
+		<field>
+			<name>_scheme</name>
 		</field>
 	</javadoc>
 	<javadoc>

@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2000-2012 Liferay, Inc. All rights reserved.
+ * Copyright (c) 2000-2013 Liferay, Inc. All rights reserved.
  *
  * This library is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Lesser General Public License as published by the Free
@@ -22,8 +22,11 @@ import com.liferay.portal.model.BaseModel;
 import com.liferay.portal.model.impl.BaseModelImpl;
 
 import com.liferay.testtransaction.service.BarLocalServiceUtil;
+import com.liferay.testtransaction.service.ClpSerializer;
 
 import java.io.Serializable;
+
+import java.lang.reflect.Method;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -35,10 +38,12 @@ public class BarClp extends BaseModelImpl<Bar> implements Bar {
 	public BarClp() {
 	}
 
+	@Override
 	public Class<?> getModelClass() {
 		return Bar.class;
 	}
 
+	@Override
 	public String getModelClassName() {
 		return Bar.class.getName();
 	}
@@ -51,10 +56,12 @@ public class BarClp extends BaseModelImpl<Bar> implements Bar {
 		setBarId(primaryKey);
 	}
 
+	@Override
 	public Serializable getPrimaryKeyObj() {
 		return new Long(_barId);
 	}
 
+	@Override
 	public void setPrimaryKeyObj(Serializable primaryKeyObj) {
 		setPrimaryKey(((Long)primaryKeyObj).longValue());
 	}
@@ -90,6 +97,19 @@ public class BarClp extends BaseModelImpl<Bar> implements Bar {
 
 	public void setBarId(long barId) {
 		_barId = barId;
+
+		if (_barRemoteModel != null) {
+			try {
+				Class<?> clazz = _barRemoteModel.getClass();
+
+				Method method = clazz.getMethod("setBarId", long.class);
+
+				method.invoke(_barRemoteModel, barId);
+			}
+			catch (Exception e) {
+				throw new UnsupportedOperationException(e);
+			}
+		}
 	}
 
 	public String getText() {
@@ -98,6 +118,19 @@ public class BarClp extends BaseModelImpl<Bar> implements Bar {
 
 	public void setText(String text) {
 		_text = text;
+
+		if (_barRemoteModel != null) {
+			try {
+				Class<?> clazz = _barRemoteModel.getClass();
+
+				Method method = clazz.getMethod("setText", String.class);
+
+				method.invoke(_barRemoteModel, text);
+			}
+			catch (Exception e) {
+				throw new UnsupportedOperationException(e);
+			}
+		}
 	}
 
 	public BaseModel<?> getBarRemoteModel() {
@@ -106,6 +139,47 @@ public class BarClp extends BaseModelImpl<Bar> implements Bar {
 
 	public void setBarRemoteModel(BaseModel<?> barRemoteModel) {
 		_barRemoteModel = barRemoteModel;
+	}
+
+	public Object invokeOnRemoteModel(String methodName,
+		Class<?>[] parameterTypes, Object[] parameterValues)
+		throws Exception {
+		Object[] remoteParameterValues = new Object[parameterValues.length];
+
+		for (int i = 0; i < parameterValues.length; i++) {
+			if (parameterValues[i] != null) {
+				remoteParameterValues[i] = ClpSerializer.translateInput(parameterValues[i]);
+			}
+		}
+
+		Class<?> remoteModelClass = _barRemoteModel.getClass();
+
+		ClassLoader remoteModelClassLoader = remoteModelClass.getClassLoader();
+
+		Class<?>[] remoteParameterTypes = new Class[parameterTypes.length];
+
+		for (int i = 0; i < parameterTypes.length; i++) {
+			if (parameterTypes[i].isPrimitive()) {
+				remoteParameterTypes[i] = parameterTypes[i];
+			}
+			else {
+				String parameterTypeName = parameterTypes[i].getName();
+
+				remoteParameterTypes[i] = remoteModelClassLoader.loadClass(parameterTypeName);
+			}
+		}
+
+		Method method = remoteModelClass.getMethod(methodName,
+				remoteParameterTypes);
+
+		Object returnValue = method.invoke(_barRemoteModel,
+				remoteParameterValues);
+
+		if (returnValue != null) {
+			returnValue = ClpSerializer.translateOutput(returnValue);
+		}
+
+		return returnValue;
 	}
 
 	public void persist() throws SystemException {
@@ -123,6 +197,7 @@ public class BarClp extends BaseModelImpl<Bar> implements Bar {
 			new Class[] { Bar.class }, new AutoEscapeBeanHandler(this));
 	}
 
+	@Override
 	public Bar toUnescapedModel() {
 		return this;
 	}
@@ -151,18 +226,15 @@ public class BarClp extends BaseModelImpl<Bar> implements Bar {
 
 	@Override
 	public boolean equals(Object obj) {
-		if (obj == null) {
+		if (this == obj) {
+			return true;
+		}
+
+		if (!(obj instanceof BarClp)) {
 			return false;
 		}
 
-		BarClp bar = null;
-
-		try {
-			bar = (BarClp)obj;
-		}
-		catch (ClassCastException cce) {
-			return false;
-		}
+		BarClp bar = (BarClp)obj;
 
 		long primaryKey = bar.getPrimaryKey();
 
@@ -192,6 +264,7 @@ public class BarClp extends BaseModelImpl<Bar> implements Bar {
 		return sb.toString();
 	}
 
+	@Override
 	public String toXmlString() {
 		StringBundler sb = new StringBundler(10);
 

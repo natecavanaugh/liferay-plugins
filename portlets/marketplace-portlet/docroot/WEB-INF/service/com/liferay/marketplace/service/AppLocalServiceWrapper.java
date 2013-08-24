@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2000-2012 Liferay, Inc. All rights reserved.
+ * Copyright (c) 2000-2013 Liferay, Inc. All rights reserved.
  *
  * This library is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Lesser General Public License as published by the Free
@@ -263,11 +263,10 @@ public class AppLocalServiceWrapper implements AppLocalService,
 	}
 
 	public com.liferay.marketplace.model.App addApp(long userId,
-		long remoteAppId, java.lang.String version,
-		java.io.InputStream inputStream)
+		long remoteAppId, java.lang.String version, java.io.File file)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
-		return _appLocalService.addApp(userId, remoteAppId, version, inputStream);
+		return _appLocalService.addApp(userId, remoteAppId, version, file);
 	}
 
 	public com.liferay.marketplace.model.App fetchRemoteApp(long remoteAppId)
@@ -294,10 +293,10 @@ public class AppLocalServiceWrapper implements AppLocalService,
 	}
 
 	public com.liferay.marketplace.model.App updateApp(long appId,
-		java.lang.String version, java.io.InputStream inputStream)
+		java.lang.String version, java.io.File file)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
-		return _appLocalService.updateApp(appId, version, inputStream);
+		return _appLocalService.updateApp(appId, version, file);
 	}
 
 	/**

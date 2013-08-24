@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2000-2012 Liferay, Inc. All rights reserved.
+ * Copyright (c) 2000-2013 Liferay, Inc. All rights reserved.
  *
  * This library is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Lesser General Public License as published by the Free
@@ -22,6 +22,7 @@ import java.util.Comparator;
 public class SolrServerWrapperComparator
 	implements Comparator<SolrServerWrapper> {
 
+	@Override
 	public int compare(
 		SolrServerWrapper solrServerWrapper1,
 		SolrServerWrapper solrServerWrapper2) {
@@ -32,7 +33,7 @@ public class SolrServerWrapperComparator
 			return 1;
 		}
 		else if (solrServerWrapper1.getInvocationCount() <
-						solrServerWrapper2.getInvocationCount()) {
+					solrServerWrapper2.getInvocationCount()) {
 
 			return -1;
 		}

@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2000-2012 Liferay, Inc. All rights reserved.
+ * Copyright (c) 2000-2013 Liferay, Inc. All rights reserved.
  *
  * This library is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Lesser General Public License as published by the Free
@@ -14,6 +14,7 @@
 
 package com.liferay.opensocial.model;
 
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.ModelWrapper;
 
 import java.util.Date;
@@ -514,6 +515,25 @@ public class OAuthTokenWrapper implements OAuthToken, ModelWrapper<OAuthToken> {
 	public void persist()
 		throws com.liferay.portal.kernel.exception.SystemException {
 		_oAuthToken.persist();
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj) {
+			return true;
+		}
+
+		if (!(obj instanceof OAuthTokenWrapper)) {
+			return false;
+		}
+
+		OAuthTokenWrapper oAuthTokenWrapper = (OAuthTokenWrapper)obj;
+
+		if (Validator.equals(_oAuthToken, oAuthTokenWrapper._oAuthToken)) {
+			return true;
+		}
+
+		return false;
 	}
 
 	/**

@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2000-2012 Liferay, Inc. All rights reserved.
+ * Copyright (c) 2000-2013 Liferay, Inc. All rights reserved.
  *
  * This library is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Lesser General Public License as published by the Free
@@ -14,6 +14,7 @@
 
 package com.liferay.knowledgebase.hook.upgrade.v1_1_0;
 
+import com.liferay.compat.portal.util.PortalUtil;
 import com.liferay.knowledgebase.hook.upgrade.v1_1_0.util.KBArticleAttachmentsUtil;
 import com.liferay.knowledgebase.hook.upgrade.v1_1_0.util.KBArticleLatestUpgradeColumnImpl;
 import com.liferay.knowledgebase.hook.upgrade.v1_1_0.util.KBArticleMainUpgradeColumnImpl;
@@ -29,7 +30,6 @@ import com.liferay.portal.kernel.upgrade.util.UpgradeTableFactoryUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.util.PortalUtil;
 
 /**
  * @author Peter Shin
@@ -42,8 +42,7 @@ public class UpgradeKBArticle extends UpgradeProcess {
 			StringUtil.replaceFirst(
 				KBArticleTable.TABLE_NAME, "KB", "KB_"),
 			KBArticleTable.TABLE_NAME, KBArticleTable.TABLE_COLUMNS,
-			KBArticleTable.TABLE_SQL_CREATE,
-			KBArticleTable.TABLE_SQL_DROP);
+			KBArticleTable.TABLE_SQL_CREATE, KBArticleTable.TABLE_SQL_DROP);
 	}
 
 	protected void renameAndUpdateTable(

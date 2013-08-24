@@ -1,6 +1,6 @@
 <%--
 /**
- * Copyright (c) 2000-2012 Liferay, Inc. All rights reserved.
+ * Copyright (c) 2000-2013 Liferay, Inc. All rights reserved.
  *
  * This library is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Lesser General Public License as published by the Free
@@ -65,7 +65,7 @@
 			protected void test() throws Exception {
 				EntityCacheUtil entityCacheUtil = new EntityCacheUtil();
 
-				EntityCache entityCache = entityCacheUtil.getEntityCache();
+				EntityCache entityCache = EntityCacheUtil.getEntityCache();
 
 				entityCacheUtil.setEntityCache(entityCache);
 			}
@@ -81,7 +81,7 @@
 			protected void test() throws Exception {
 				FinderCacheUtil finderCacheUtil = new FinderCacheUtil();
 
-				FinderCache finderCache = finderCacheUtil.getFinderCache();
+				FinderCache finderCache = FinderCacheUtil.getFinderCache();
 
 				finderCacheUtil.setFinderCache(finderCache);
 			}
@@ -97,7 +97,7 @@
 			protected void test() throws Exception {
 				PortalCustomSQLUtil portalCustomSQLUtil = new PortalCustomSQLUtil();
 
-				PortalCustomSQL portalCustomSQL = portalCustomSQLUtil.getPortalCustomSQL();
+				PortalCustomSQL portalCustomSQL = PortalCustomSQLUtil.getPortalCustomSQL();
 
 				portalCustomSQLUtil.setPortalCustomSQL(portalCustomSQL);
 			}
@@ -106,7 +106,6 @@
 		%>
 
 </p>
-
 
 <liferay-ui:header
 	title="Class Loader"
@@ -284,7 +283,7 @@
 	java.lang.ClassLoader#getSystemClassLoader=
 
 		<%
-		new SecurityExceptionTest(out, themeDisplay, false) {
+		new SecurityExceptionTest(out, themeDisplay, true) {
 
 			protected void test() throws Exception {
 				ClassLoader.getSystemClassLoader();
@@ -338,7 +337,7 @@
 	java.lang.Thread#getContextClassLoader=
 
 		<%
-		new SecurityExceptionTest(out, themeDisplay, false) {
+		new SecurityExceptionTest(out, themeDisplay, true) {
 
 			protected void test() throws Exception {
 				Thread thread = Thread.currentThread();
@@ -472,6 +471,37 @@
 
 			protected void test() throws Exception {
 				FooLocalServiceUtil.dynamicQuery();
+			}
+
+		};
+		%>
+
+</p>
+
+<liferay-ui:header
+	title="Environment Variables"
+/>
+
+<p>
+	JAVA_HOME= (<%= System.getenv("JAVA_HOME") %>)
+
+		<%
+		new SecurityExceptionTest(out, themeDisplay, false) {
+
+			protected void test() throws Exception {
+				System.getenv("JAVA_HOME");
+			}
+
+		};
+		%>
+
+	PATH=
+
+		<%
+		new SecurityExceptionTest(out, themeDisplay, true) {
+
+			protected void test() throws Exception {
+				System.getenv("PATH");
 			}
 
 		};
@@ -644,7 +674,7 @@
 	new FileSecurityExceptionTest(out, themeDisplay, false) {
 
 		protected void test() throws Exception {
-			testDeleteWithFile("../webapps/chat-portlet/WEB-INF/src/com/liferay/chat/util/ChatUtil.java");
+			testDeleteWithFile("../webapps/chat-portlet/WEB-INF/src/com/liferay/chat/util/ChatConstants.java");
 		}
 
 	};
@@ -652,7 +682,7 @@
 	new FileSecurityExceptionTest(out, themeDisplay, false) {
 
 		protected void test() throws Exception {
-			testDeleteWithFileUtil("../webapps/chat-portlet/WEB-INF/src/com/liferay/chat/util/ChatUtil.java");
+			testDeleteWithFileUtil("../webapps/chat-portlet/WEB-INF/src/com/liferay/chat/util/ChatConstants.java");
 		}
 
 	};
@@ -729,7 +759,6 @@
 
 </p>
 
-
 <p>
 	<h3>Read</h3>
 </p>
@@ -797,6 +826,36 @@
 
 		protected void test() throws Exception {
 			testReadWithFileUtil("../webapps/chat-portlet/WEB-INF/src/content/Language.properties");
+		}
+
+	};
+
+	new FileSecurityExceptionTest(out, themeDisplay, false) {
+
+		protected void test() throws Exception {
+			testReadWithFile(System.getenv("JAVA_HOME"));
+		}
+
+	};
+
+	new FileSecurityExceptionTest(out, themeDisplay, true) {
+
+		protected void test() throws Exception {
+			testReadWithFile(System.getenv("JAVA_HOME") + "/bin");
+		}
+
+	};
+
+	new FileSecurityExceptionTest(out, themeDisplay, false) {
+
+		protected void test() throws Exception {
+			String javaCommand = "java";
+
+			if (OSDetector.isWindows()) {
+				javaCommand = "java.exe";
+			}
+
+			testReadWithFile(System.getenv("JAVA_HOME") + "/bin/" + javaCommand);
 		}
 
 	};
@@ -934,6 +993,61 @@
 <p>
 	/portal/test/pacl/failure=<%= _assertFalse(FailureStrutsAction.isInstantiated()) %><br />
 	/portal/test/pacl/success=<%= _assertTrue(SuccessStrutsAction.isInstantiated()) %>
+</p>
+
+<liferay-ui:header
+	title="Java Security"
+/>
+
+<p>
+	<h3>Crypto</h3>
+</p>
+
+<p>
+	AES Encrypt=
+
+		<%
+		new SecurityExceptionTest(out, themeDisplay, false) {
+
+			protected void test() throws Exception {
+				KeyGenerator keyGenerator = KeyGenerator.getInstance("AES");
+
+				keyGenerator.init(128);
+
+				SecretKey secretKey = keyGenerator.generateKey();
+
+				Cipher cipher = Cipher.getInstance("AES");
+
+				cipher.init(Cipher.ENCRYPT_MODE, secretKey);
+
+				String text = "Hello World";
+
+				cipher.doFinal(text.getBytes());
+			}
+		};
+		%>
+
+	HmacMD5=
+
+		<%
+		new SecurityExceptionTest(out, themeDisplay, false) {
+
+			protected void test() throws Exception {
+				Mac mac = Mac.getInstance("HmacMD5");
+
+				String key = "123456789";
+
+				SecretKeySpec secretKeySpec = new SecretKeySpec(key.getBytes(), "HmacMD5");
+
+				mac.init(secretKeySpec);
+
+				String text = "Hello World";
+
+				mac.doFinal(text.getBytes());
+			}
+		};
+		%>
+
 </p>
 
 <liferay-ui:header
@@ -1588,13 +1702,13 @@
 </p>
 
 <p>
-	CompanyLocalServiceUtil#getCompany=
+	CompanyLocalServiceUtil#getCompanyByWebId=
 
 		<%
 		new SecurityExceptionTest(out, themeDisplay, true) {
 
 			protected void test() throws Exception {
-				CompanyLocalServiceUtil.getCompany(themeDisplay.getCompanyId());
+				CompanyLocalServiceUtil.getCompanyByWebId("liferay.com");
 			}
 
 		};
@@ -2136,7 +2250,6 @@
 		};
 		%>
 
-
 	4319=
 
 		<%
@@ -2148,7 +2261,6 @@
 
 		};
 		%>
-
 
 	4320=
 
@@ -2163,7 +2275,6 @@
 
 		};
 		%>
-
 
 	4321=
 
@@ -2270,6 +2381,56 @@
 			executeStatement("create table TestPACL_DropSuccess (userId bigint)");
 
 			testStatement("drop table TestPACL_DropSuccess");
+		}
+
+	};
+	%>
+
+</p>
+
+<p>
+	<h3>Index</h3>
+</p>
+
+<p>
+
+	<%
+	new SQLSecurityExceptionTest(out, themeDisplay, true) {
+
+		protected void test() throws Exception {
+			testPreparedStatement("create index index1 ON TestPACL_CreateFailure (userId)");
+		}
+
+	};
+
+	new SQLSecurityExceptionTest(out, themeDisplay, true) {
+
+		protected void test() throws Exception {
+			testStatement("create index index1 ON TestPACL_CreateFailure (userId)");
+		}
+
+	};
+
+	new SQLSecurityExceptionTest(out, themeDisplay, false) {
+
+		protected void test() throws Exception {
+			executePreparedStatement("create table TestPACL_CreateSuccess (userId bigint)");
+
+			testPreparedStatement("create index index1 ON TestPACL_CreateSuccess (userId)");
+
+			executePreparedStatement("drop table TestPACL_CreateSuccess");
+		}
+
+	};
+
+	new SQLSecurityExceptionTest(out, themeDisplay, false) {
+
+		protected void test() throws Exception {
+			executePreparedStatement("create table TestPACL_CreateSuccess (userId bigint)");
+
+			testStatement("create index index1 ON TestPACL_CreateSuccess (userId)");
+
+			executePreparedStatement("drop table TestPACL_CreateSuccess");
 		}
 
 	};
@@ -2616,11 +2777,11 @@ String dbType = db.getType();
 <p>
 
 	<%
-	Map<String, Boolean> results = TestPACLUtil.testCurrentThread(themeDisplay.getUserId());
+	Map<String, Boolean> testPACLUtilResults = TestPACLUtil.testCurrentThread(themeDisplay.getUserId());
 	%>
 
-	PortalServiceUtil#getBuildNumber=<%= _assertTrue(results.get("PortalServiceUtil#getBuildNumber")) %><br />
-	UserLocalServiceUtil#getUser=<%= _assertTrue(results.get("UserLocalServiceUtil#getUser")) %>
+	PortalServiceUtil#getBuildNumber=<%= _assertTrue(testPACLUtilResults.get("PortalServiceUtil#getBuildNumber")) %><br />
+	UserLocalServiceUtil#getUser=<%= _assertTrue(testPACLUtilResults.get("UserLocalServiceUtil#getUser")) %>
 </p>
 
 <p>
@@ -2630,11 +2791,11 @@ String dbType = db.getType();
 <p>
 
 	<%
-	results = TestPACLUtil.testMessageBusThread(themeDisplay.getUserId());
+	testPACLUtilResults = TestPACLUtil.testMessageBusThread(themeDisplay.getUserId());
 	%>
 
-	PortalServiceUtil#getBuildNumber=<%= _assertTrue(results.get("PortalServiceUtil#getBuildNumber")) %><br />
-	UserLocalServiceUtil#getUser=<%= _assertTrue(results.get("UserLocalServiceUtil#getUser")) %>
+	PortalServiceUtil#getBuildNumber=<%= _assertTrue(testPACLUtilResults.get("PortalServiceUtil#getBuildNumber")) %><br />
+	UserLocalServiceUtil#getUser=<%= _assertTrue(testPACLUtilResults.get("UserLocalServiceUtil#getUser")) %>
 </p>
 
 <p>
@@ -2644,11 +2805,11 @@ String dbType = db.getType();
 <p>
 
 	<%
-	results = TestPACLUtil.testNewThread(themeDisplay.getUserId());
+	testPACLUtilResults = TestPACLUtil.testNewThread(themeDisplay.getUserId());
 	%>
 
-	PortalServiceUtil#getBuildNumber=<%= _assertTrue(results.get("PortalServiceUtil#getBuildNumber")) %><br />
-	UserLocalServiceUtil#getUser=<%= _assertTrue(results.get("UserLocalServiceUtil#getUser")) %>
+	PortalServiceUtil#getBuildNumber=<%= _assertTrue(testPACLUtilResults.get("PortalServiceUtil#getBuildNumber")) %><br />
+	UserLocalServiceUtil#getUser=<%= _assertTrue(testPACLUtilResults.get("UserLocalServiceUtil#getUser")) %>
 </p>
 
 <p>

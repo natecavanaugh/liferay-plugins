@@ -1,6 +1,6 @@
 <%--
 /**
- * Copyright (c) 2000-2012 Liferay, Inc. All rights reserved.
+ * Copyright (c) 2000-2013 Liferay, Inc. All rights reserved.
  *
  * This library is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Lesser General Public License as published by the Free
@@ -26,20 +26,26 @@
 			sb.append("autoplay=1&amp;");
 		}
 
-		sb.append("clip_id=" + id);
-		sb.append("&amp;color=" + playerColorHex);
-		sb.append("&amp;fullscreen=" + enableFullscreenBinary);
+		sb.append("clip_id=");
+		sb.append(id);
+		sb.append("&amp;color=");
+		sb.append(playerColorHex);
+		sb.append("&amp;fullscreen=");
+		sb.append(enableFullscreenBinary);
 		sb.append("&amp;server=vimeo.com");
-		sb.append("&amp;show_byline=" + showBylineBinary);
-		sb.append("&amp;show_portrait=" + showPortraitBinary);
-		sb.append("&amp;show_title=" + showTitleBinary);
+		sb.append("&amp;show_byline=");
+		sb.append(showBylineBinary);
+		sb.append("&amp;show_portrait=");
+		sb.append(showPortraitBinary);
+		sb.append("&amp;show_title=");
+		sb.append(showTitleBinary);
 		%>
 
 		<liferay-ui:flash
 			allowFullScreen="true"
 			allowScriptAccess="true"
 			height="<%= height %>"
-			movie='<%= _SWF_URL + "?" + sb.toString() %>'
+			movie='<%= HttpUtil.getProtocol(request) + _SWF_URL + "?" + sb.toString() %>'
 			width="<%= width %>"
 			wmode="opaque"
 		/>
