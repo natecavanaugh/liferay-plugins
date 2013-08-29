@@ -325,21 +325,25 @@ boolean columnCollapsed = GetterUtil.getBoolean(SessionClicks.get(request, "cale
 		);
 	</c:if>
 
-	A.all('.calendar-collapse-button').on(
+	A.one('.calendar-collapse-button').on(
 		'click',
 		function(event) {
-			var parentElement = A.one('.calendar-portlet-column-parent').toggleClass('calendar-child-column-collapsed');
-			var isCollapsed = parentElement.hasClass('calendar-child-column-collapsed');
+			var parentColumn = A.one('.calendar-portlet-column-parent');
 
-			if (isCollapsed) {
+			parentColumn.toggleClass('calendar-child-column-collapsed');
+
+			var collapsed = parentColumn.hasClass('calendar-child-column-collapsed');
+
+			if (collapsed) {
 				A.one('.calendar-portlet-column-grid').replaceClass('span9', 'span12');
 				A.one('.calendar-collapse-button i').replaceClass('icon-caret-left', 'icon-caret-right');
-			} else {
+			}
+			else {
 				A.one('.calendar-portlet-column-grid').replaceClass('span12', 'span9');
 				A.one('.calendar-collapse-button i').replaceClass('icon-caret-right', 'icon-caret-left');
 			}
 
-			Liferay.Store('calendar-portlet-column-options-collapsed', isCollapsed);
+			Liferay.Store('calendar-portlet-column-options-collapsed', collapsed);
 		}
 	);
 </aui:script>
