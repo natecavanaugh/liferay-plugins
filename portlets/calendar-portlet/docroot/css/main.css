@@ -23,6 +23,13 @@
 	}
 }
 
+.calendar-collapse-button {
+	cursor: pointer;
+	padding: 33% 0.3em;
+	position: absolute;
+	right: 74%;
+}
+	
 .calendar-list-empty-message {
 	color: #666;
 	margin-top: 4px;
@@ -154,6 +161,27 @@
 	height: 80%;
 	vertical-align: middle;
 	width: 80%;
+}
+
+.calendar-portlet-column-parent {
+	position: relative;
+
+	&.calendar-child-column-collapsed {
+		.calendar-collapse-button {
+			right: auto;
+			left: 0%;
+		}
+
+		.calendar-portlet-column-grid {
+			float: right;
+			margin-left: 0;
+		}
+		
+		.calendar-portlet-column-options {
+			overflow: hidden;
+			width: 0;
+		}
+	}
 }
 
 .calendar-portlet-confirmation-text {
