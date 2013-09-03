@@ -27,11 +27,11 @@ AUI.add(
 
 AUI().use(
 	'aui-base',
-	'aui-dialog',
-	'aui-io-plugin',
+	'aui-io-plugin-deprecated',
 	'datasource-io',
 	'json-parse',
 	'liferay-so-site-list',
+	'liferay-util-window',
 	function(A) {
 		var Lang = A.Lang;
 
@@ -103,7 +103,7 @@ AUI().use(
 
 				popup.show();
 
-				popup.set('title', title);
+				popup.titleNode.html(title);
 
 				popup.io.set('uri', url);
 				popup.io.set('data', data);
@@ -122,17 +122,19 @@ AUI().use(
 				var instance = this;
 
 				if (!instance._popup) {
-					instance._popup = new A.Dialog(
+					instance._popup = Liferay.Util.Window.getWindow(
 						{
-							align: {
-								node: null,
-								points: ['tc', 'tc']
-							},
-							constrain2view: true,
-							cssClass: 'so-portlet-sites-dialog',
-							modal: true,
-							resizable: true,
-							width: 650
+							dialog: {
+								align: {
+									node: null,
+									points: ['tc', 'tc']
+								},
+								constrain2view: true,
+								cssClass: 'so-portlet-sites-dialog',
+								modal: true,
+								resizable: true,
+								width: 650
+							}
 						}
 					).plug(
 						A.Plugin.IO,
