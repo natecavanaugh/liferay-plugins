@@ -159,7 +159,7 @@ String dirName = ParamUtil.getString(request, "dirName");
 
 	function <portlet:namespace />updateAttachments(dirName, html) {
 		document.<portlet:namespace />fm.<portlet:namespace />dirName.value = dirName;
-		document.getElementById("<portlet:namespace />attachments").innerHTML = html;
+		document.getElementById('<portlet:namespace />attachments').innerHTML = html;
 	}
 
 	function <portlet:namespace />updateKBArticle() {

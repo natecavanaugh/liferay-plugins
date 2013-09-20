@@ -93,7 +93,7 @@ long folderId = BeanParamUtil.getLong(entry, request, "folderId");
 	function <portlet:namespace />removeFolder() {
 		document.<portlet:namespace />fm.<portlet:namespace />folderId.value = "<%= rootFolderId %>";
 
-		var nameEl = document.getElementById("<portlet:namespace />folderName");
+		var nameEl = document.getElementById('<portlet:namespace />folderName');
 
 		nameEl.href = "";
 		nameEl.innerHTML = "";
@@ -107,7 +107,7 @@ long folderId = BeanParamUtil.getLong(entry, request, "folderId");
 	function <portlet:namespace />selectFolder(folderId, folderName) {
 		document.<portlet:namespace />fm.<portlet:namespace />folderId.value = folderId;
 
-		var nameEl = document.getElementById("<portlet:namespace />folderName");
+		var nameEl = document.getElementById('<portlet:namespace />folderName');
 
 		nameEl.href = "<portlet:renderURL windowState="<%= WindowState.MAXIMIZED.toString() %>"><portlet:param name="struts_action" value="/bookmarks/view" /></portlet:renderURL>&<portlet:namespace />folderId=" + folderId;
 		nameEl.innerHTML = folderName + "&nbsp;";
