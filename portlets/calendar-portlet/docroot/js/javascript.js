@@ -417,28 +417,6 @@ AUI.add(
 				return A.JSON.stringify(map);
 			},
 
-			getStatusLabel: function(statusId) {
-				var status = STR_BLANK;
-
-				if (CalendarWorkflow.STATUS_APPROVED === statusId) {
-					status = Liferay.Language.get('accepted');
-				}
-				else if (CalendarWorkflow.STATUS_DENIED === statusId) {
-					status = Liferay.Language.get('declined');
-				}
-				else if (CalendarWorkflow.STATUS_DRAFT === statusId) {
-					status = Liferay.Language.get('draft');
-				}
-				else if (CalendarWorkflow.STATUS_MAYBE === statusId) {
-					status = Liferay.Language.get('maybe');
-				}
-				else if (CalendarWorkflow.STATUS_PENDING === statusId) {
-					status = Liferay.Language.get('pending');
-				}
-
-				return status;
-			},
-
 			invokeService: function(payload, callback) {
 				var instance = this;
 
@@ -477,7 +455,7 @@ AUI.add(
 					{
 						'/calendar-portlet/calendarbooking/invoke-transition': {
 							calendarBookingId: schedulerEvent.get('calendarBookingId'),
-							transitionName: instance.getStatusLabel(status).toLowerCase(),
+							status: status,
 							userId: USER_ID
 						}
 					},
@@ -1011,7 +989,7 @@ AUI.add(
 
 						var node = instance.get('node');
 
-						node.attr('data-endDate', instance._formatDate(val, '%m-%d-%Y %l:%M %p'));
+						node.attr('data-endDate', instance._formatDate(val, '%m/%d/%Y %I:%M %p'));
 					},
 
 					_uiSetLoading: function(val) {
@@ -1025,7 +1003,7 @@ AUI.add(
 
 						var node = instance.get('node');
 
-						node.attr('data-startDate', instance._formatDate(val, '%m-%d-%Y %l:%M %p'));
+						node.attr('data-startDate', instance._formatDate(val, '%m/%d/%Y %I:%M %p'));
 					},
 
 					_uiSetStatus: function(val) {

@@ -112,7 +112,7 @@ if (PortalUtil.isRSSFeedsEnabled()) {
 	<aui:script>
 		function <portlet:namespace />selectConfigurationKBArticle(resourcePrimKey, title) {
 			document.<portlet:namespace />fm.<portlet:namespace />resourcePrimKey.value = resourcePrimKey;
-			document.getElementById("<portlet:namespace />configurationKBArticle").innerHTML = title;
+			document.getElementById('<portlet:namespace />configurationKBArticle').innerHTML = title;
 		}
 	</aui:script>
 </c:if>
