@@ -1,5 +1,10 @@
 @import "compass";
 
+.aui .row-fluid .span9.calendar-portlet-column-full {
+	margin-left: 0;
+	width: 100%;
+}
+
 .calendar-booking-invitations {
 	min-height: 110px;
 
@@ -97,11 +102,6 @@
 
 	.calendar-portlet-column-grid {
 		position: relative;
-
-		&.calendar-portlet-column-full {
-			margin-left: 0;
-			width: 100%;
-		}
 
 		.calendar-portlet-column-toggler {
 			bottom: 0;
