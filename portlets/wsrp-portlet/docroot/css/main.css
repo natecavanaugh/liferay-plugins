@@ -1,0 +1,36 @@
+@import "compass";
+@import "mixins";
+
+.wsrp-portlet-admin {
+	.edit-producer {
+		width: 100%;
+
+		tr td:first-child {
+			width: 75px;
+		}
+	}
+}
+
+@include respond-to(phone) {
+	.wsrp-portlet-admin {
+		.edit-producer {
+			.left-selector-column .control-group {
+				margin-bottom: 0;
+			}
+
+			.move-arrow-buttons {
+				margin-top: 0;
+			}
+
+			.right-selector-column .control-group {
+				margin-bottom: 0;
+				margin-top: 5px;
+			}
+		}
+
+		.lfr-table tr td {
+			display: block;
+			padding: 5px 0 0 0;
+		}
+	}
+}

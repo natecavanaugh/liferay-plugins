@@ -15,12 +15,14 @@
 		</scheduler-entry>
 		<portlet-data-handler-class>com.liferay.wsrp.admin.lar.AdminPortletDataHandler</portlet-data-handler-class>
 		<control-panel-entry-category>apps</control-panel-entry-category>
+		<header-portlet-css>/css/main.css</header-portlet-css>
 		<css-class-wrapper>wsrp-portlet-admin</css-class-wrapper>
 	</portlet>
 	<portlet>
 		<portlet-name>2</portlet-name>
 		<friendly-url-mapper-class>com.liferay.wsrp.consumer.portlet.ConsumerFriendlyURLMapper</friendly-url-mapper-class>
 		<requires-namespaced-parameters>false</requires-namespaced-parameters>
+		<header-portlet-css>/css/main.css</header-portlet-css>
 	</portlet>
 	<role-mapper>
 		<role-name>administrator</role-name>

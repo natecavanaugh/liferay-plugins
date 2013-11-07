@@ -63,11 +63,17 @@
 		/>
 	</liferay-ui:search-container-row>
 
-	<div>
-		<input onClick="location.href = '<portlet:renderURL><portlet:param name="mvcPath" value="/admin/edit_producer.jsp" /><portlet:param name="redirect" value="<%= currentURL %>" /></portlet:renderURL>';" type="button" value="<liferay-ui:message key="add-producer" />" />
-	</div>
+	<portlet:renderURL var="addProducerURL">
+		<portlet:param name="mvcPath" value="/admin/edit_producer.jsp" />
+		<portlet:param name="redirect" value="<%= currentURL %>" />
+	</portlet:renderURL>
 
-	<br />
+	<div class="btn-toolbar">
+		<%
+			String taglibAddProducerURL = "location.href='" + addProducerURL + "';";
+		%>
+		<aui:button onClick="<%= addProducerURL %>" type="button" value="add-producer" />
+	</div>
 
 	<liferay-ui:search-iterator />
 </liferay-ui:search-container>

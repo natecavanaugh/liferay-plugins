@@ -81,11 +81,15 @@ WSRPConsumer wsrpConsumer = WSRPConsumerLocalServiceUtil.fetchWSRPConsumer(wsrpC
 </tr>
 </table>
 
-<br />
+<div class="btn-toolbar">
+	<aui:button type="submit" value="save" />
 
-<input type="submit" value="<liferay-ui:message key="save" />" />
+	<%
+		String taglibCancelURL = "location.href='" + HtmlUtil.escape(PortalUtil.escapeRedirect(redirect)) + "';";
+	%>
 
-<input onClick="location.href = '<%= HtmlUtil.escape(PortalUtil.escapeRedirect(redirect)) %>';" type="button" value="<liferay-ui:message key="cancel" />" />
+	<aui:button onClick="<%= taglibCancelURL %>" value="cancel" />
+</div>
 
 </form>
 

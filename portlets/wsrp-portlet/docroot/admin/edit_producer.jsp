@@ -53,7 +53,7 @@ ServletContext portalServletContext = ServletContextPool.get(portalServletContex
 
 <liferay-ui:error exception="<%= WSRPProducerNameException.class %>" message="please-enter-a-valid-name" />
 
-<table class="lfr-table">
+<table class="lfr-table edit-producer">
 <tr>
 	<td>
 		<liferay-ui:message key="name" />
@@ -165,11 +165,15 @@ ServletContext portalServletContext = ServletContextPool.get(portalServletContex
 </tr>
 </table>
 
-<br />
+<div class="btn-toolbar">
+	<aui:button type="submit" value="save" />
 
-<input type="submit" value="<liferay-ui:message key="save" />" />
+	<%
+		String taglibCancelURL = "location.href='" + HtmlUtil.escape(PortalUtil.escapeRedirect(redirect)) + "';";
+	%>
 
-<input onClick="location.href = '<%= HtmlUtil.escape(PortalUtil.escapeRedirect(redirect)) %>';" type="button" value="<liferay-ui:message key="cancel" />" />
+	<aui:button onClick="<%= taglibCancelURL %>" value="cancel" />
+</div>
 
 </form>
 
