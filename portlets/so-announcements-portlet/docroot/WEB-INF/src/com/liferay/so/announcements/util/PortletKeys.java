@@ -15,14 +15,14 @@
  * Liferay Social Office. If not, see http://www.gnu.org/licenses/agpl-3.0.html.
  */
 
-package com.liferay.privatemessaging.util;
+package com.liferay.so.announcements.util;
 
 /**
- * @author Eudaldo Alonso
+ * @author Jonathan Lee
  */
 public class PortletKeys extends com.liferay.portal.util.PortletKeys {
 
-	public static final String PRIVATE_MESSAGING =
-		"1_WAR_privatemessagingportlet";
+	public static final String SO_ANNOUNCEMENTS =
+		"1_WAR_soannouncementsportlet";
 
 }
