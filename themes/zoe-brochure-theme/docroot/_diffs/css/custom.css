@@ -662,6 +662,29 @@ $default-box-shadow-v-offset: 1px;
 		}
 	}
 
+	/* -------- Theme Modules -------- */
+
+	.banner {
+		background-color: #FAFAFA;
+
+		@include box-shadow(0 1px 1px #E7E7E7);
+		@include box-sizing(border-box);
+
+		float: left;
+		padding: 30px;
+		width: 100%;
+
+		.banner-call-to-action {
+			width: 30%;
+		}
+
+		.banner-call-to-action, .banner-main-message {
+			display: table-cell;
+			text-align: center;
+			vertical-align: middle;
+		}
+	}
+
 	/* -------- Hidden accessible -------- */
 
 	#breadcrumbs, #heading .page-title, #navigation h1, #skip-to-content {
@@ -726,6 +749,17 @@ $default-box-shadow-v-offset: 1px;
 
 		&:hover {
 			@include box-shadow(0 1px 1px -1px #000);
+		}
+	}
+
+	/* -------- Media Queries -------- */
+
+	@media (max-width: 979px) {
+		.banner {
+			.bannerCallToAction, .bannerMainMessage {
+				display: block;
+				width: 100%;
+			}
 		}
 	}
 }
