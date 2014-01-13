@@ -5,15 +5,6 @@
 			"columns": [
 				[
 					"Home Carousel.xml"
-				],
-				[
-					"How Do We Do It.xml"
-				],
-				[
-					"Our Strategy.xml"
-				],
-				[
-					"Our Achievements.xml"
 				]
 			],
 			"friendlyURL": "/home",
@@ -21,36 +12,10 @@
 			"title": "Home"
 		},
 		{
-			"columns": [
-				[
-					"Who We Are.xml"
-				],
-				[
-					"Download Pod.xml"
-				],
-				[
-					"Innovating For Over 30 Years.xml"
-				]
-			],
 			"friendlyURL": "/about",
 			"layoutTemplateId": "2_1_2_columns",
 			"name": "About",
 			"title": "About"
-		},
-		{
-			"friendlyURL": "/pricing",
-			"name": "Pricing",
-			"title": "Pricing"
-		},
-		{
-			"friendlyURL": "/support",
-			"name": "Support",
-			"title": "Support"
-		},
-		{
-			"friendlyURL": "/contact",
-			"name": "Contact",
-			"title": "Contact"
 		}
 	]
 }
