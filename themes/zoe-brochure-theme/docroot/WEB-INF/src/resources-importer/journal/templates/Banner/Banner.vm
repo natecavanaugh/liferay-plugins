@@ -1,0 +1,11 @@
+<div class="banner">
+	<div class="banner-main-message">
+		<h2>$Banner_Message.getData()</h2>
+	</div>
+
+	#if (!$Banner_Button_Text.getData().isEmpty())
+		<div class="banner-call-to-action">
+			<a href="$Banner_Button_Text.Banner_Button_Link.getData()" class="$Banner_Button_Text.Banner_Button_Style.getData() $Banner_Button_Text.Banner_Button_Size.getData()">$Banner_Button_Text.getData()</a>
+		</div>
+	#end
+</div>
