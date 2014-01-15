@@ -4,28 +4,28 @@
 	<dynamic-element name="title">
 		<dynamic-content><![CDATA[Panel1]]></dynamic-content>
 	</dynamic-element>
-	<dynamic-element name="Panel_Icon">
+	<dynamic-element name="panel_icon">
 		<dynamic-content><![CDATA[icon-signal]]></dynamic-content>
 	</dynamic-element>
-	<dynamic-element name="Panel_Image">
+	<dynamic-element name="panel_image">
 		<dynamic-content><![CDATA[]]></dynamic-content>
 	</dynamic-element>
-	<dynamic-element name="Panel_Heading">
+	<dynamic-element name="panel_heading">
 		<dynamic-content><![CDATA[Marketing Message #2]]></dynamic-content>
 	</dynamic-element>
-	<dynamic-element name="Panel_Content">
+	<dynamic-element name="panel_content">
 		<dynamic-content><![CDATA[Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin commodo. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc ac nisi vulputate fringilla. Donec lacinia congue felis in faucibus.]]></dynamic-content>
 	</dynamic-element>
-	<dynamic-element name="Panel_Button_Text">
+	<dynamic-element name="panel_button_text">
 		<dynamic-content><![CDATA[Download]]></dynamic-content>
 	</dynamic-element>
-	<dynamic-element name="Panel_Button_Link">
+	<dynamic-element name="panel_button_link">
 		<dynamic-content><![CDATA[2]]></dynamic-content>
 	</dynamic-element>
-	<dynamic-element name="Panel_Button_Style">
+	<dynamic-element name="panel_button_style">
 		<dynamic-content><![CDATA[btn]]></dynamic-content>
 	</dynamic-element>
-	<dynamic-element name="Panel_Button_Size">
+	<dynamic-element name="panel_button_size">
 		<dynamic-content><![CDATA[btn-large]]></dynamic-content>
 	</dynamic-element>
 </root>

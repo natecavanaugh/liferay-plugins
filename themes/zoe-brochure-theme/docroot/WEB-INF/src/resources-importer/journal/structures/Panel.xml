@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 
 <root available-locales="en_US" default-locale="en_US">
-	<dynamic-element dataType="string" indexType="keyword" name="Panel_Icon" readOnly="false" repeatable="false" required="false" showLabel="true" type="text" width="small">
+	<dynamic-element dataType="string" indexType="keyword" name="panel_icon" readOnly="false" repeatable="false" required="false" showLabel="true" type="text" width="small">
 		<meta-data locale="en_US">
 			<entry name="label">
 				<![CDATA[Panel Icon]]>
@@ -14,7 +14,7 @@
 			</entry>
 		</meta-data>
 	</dynamic-element>
-	<dynamic-element dataType="document-library" fieldNamespace="ddm" indexType="keyword" name="Panel_Image" readOnly="false" repeatable="false" required="false" showLabel="true" type="ddm-documentlibrary" width="">
+	<dynamic-element dataType="document-library" fieldNamespace="ddm" indexType="keyword" name="panel_image" readOnly="false" repeatable="false" required="false" showLabel="true" type="ddm-documentlibrary" width="">
 		<meta-data locale="en_US">
 			<entry name="label">
 				<![CDATA[Panel Image]]>
@@ -27,7 +27,7 @@
 			</entry>
 		</meta-data>
 	</dynamic-element>
-	<dynamic-element dataType="string" indexType="keyword" name="Panel_Heading" readOnly="false" repeatable="false" required="false" showLabel="true" type="text" width="small">
+	<dynamic-element dataType="string" indexType="keyword" name="panel_heading" readOnly="false" repeatable="false" required="false" showLabel="true" type="text" width="small">
 		<meta-data locale="en_US">
 			<entry name="label">
 				<![CDATA[Panel Heading]]>
@@ -40,7 +40,7 @@
 			</entry>
 		</meta-data>
 	</dynamic-element>
-	<dynamic-element dataType="string" indexType="keyword" name="Panel_Content" readOnly="false" repeatable="false" required="false" showLabel="true" type="textarea" width="small">
+	<dynamic-element dataType="string" indexType="keyword" name="panel_content" readOnly="false" repeatable="false" required="false" showLabel="true" type="textarea" width="small">
 		<meta-data locale="en_US">
 			<entry name="label">
 				<![CDATA[Panel Content]]>
@@ -53,7 +53,7 @@
 			</entry>
 		</meta-data>
 	</dynamic-element>
-	<dynamic-element dataType="string" indexType="keyword" name="Panel_Button_Text" readOnly="false" repeatable="false" required="false" showLabel="true" type="text" width="small">
+	<dynamic-element dataType="string" indexType="keyword" name="panel_button_text" readOnly="false" repeatable="false" required="false" showLabel="true" type="text" width="small">
 		<meta-data locale="en_US">
 			<entry name="label">
 				<![CDATA[Panel Button Text]]>
@@ -66,7 +66,7 @@
 			</entry>
 		</meta-data>
 	</dynamic-element>
-	<dynamic-element dataType="string" indexType="keyword" name="Panel_Button_Link" readOnly="false" repeatable="false" required="false" showLabel="true" type="text" width="small">
+	<dynamic-element dataType="string" indexType="keyword" name="panel_button_link" readOnly="false" repeatable="false" required="false" showLabel="true" type="text" width="small">
 		<meta-data locale="en_US">
 			<entry name="label">
 				<![CDATA[Panel Button Link]]>
@@ -79,57 +79,57 @@
 			</entry>
 		</meta-data>
 	</dynamic-element>
-	<dynamic-element dataType="string" indexType="keyword" multiple="false" name="Panel_Button_Style" readOnly="false" repeatable="false" required="false" showLabel="true" type="select" width="">
-		<dynamic-element name="optionPanelButtonStandard" type="option" value="btn">
+	<dynamic-element dataType="string" indexType="keyword" multiple="false" name="panel_button_style" readOnly="false" repeatable="false" required="false" showLabel="true" type="select" width="">
+		<dynamic-element name="option_panel_button_style_standard" type="option" value="btn">
 			<meta-data locale="en_US">
 				<entry name="label">
 					<![CDATA[Standard]]>
 				</entry>
 			</meta-data>
 		</dynamic-element>
-		<dynamic-element name="optionPanelButtonPrimary" type="option" value="btn btn-primary">
+		<dynamic-element name="option_panel_button_style_primary" type="option" value="btn btn-primary">
 			<meta-data locale="en_US">
 				<entry name="label">
 					<![CDATA[Primary]]>
 				</entry>
 			</meta-data>
 		</dynamic-element>
-		<dynamic-element name="optionPanelButtonInfo" type="option" value="btn btn-info">
+		<dynamic-element name="option_panel_button_style_info" type="option" value="btn btn-info">
 			<meta-data locale="en_US">
 				<entry name="label">
 					<![CDATA[Info]]>
 				</entry>
 			</meta-data>
 		</dynamic-element>
-		<dynamic-element name="optionPanelButtonSuccess" type="option" value="btn btn-success">
+		<dynamic-element name="option_panel_button_style_success" type="option" value="btn btn-success">
 			<meta-data locale="en_US">
 				<entry name="label">
 					<![CDATA[Success]]>
 				</entry>
 			</meta-data>
 		</dynamic-element>
-		<dynamic-element name="optionPanelButtonWarning" type="option" value="btn btn-warning">
+		<dynamic-element name="option_panel_button_style_warning" type="option" value="btn btn-warning">
 			<meta-data locale="en_US">
 				<entry name="label">
 					<![CDATA[Warning]]>
 				</entry>
 			</meta-data>
 		</dynamic-element>
-		<dynamic-element name="optionPanelButtonDanger" type="option" value="btn btn-danger">
+		<dynamic-element name="option_panel_button_style_danger" type="option" value="btn btn-danger">
 			<meta-data locale="en_US">
 				<entry name="label">
 					<![CDATA[Danger]]>
 				</entry>
 			</meta-data>
 		</dynamic-element>
-		<dynamic-element name="optionPanelButtonInverse" type="option" value="btn btn-inverse">
+		<dynamic-element name="option_panel_button_style_inverse" type="option" value="btn btn-inverse">
 			<meta-data locale="en_US">
 				<entry name="label">
 					<![CDATA[Inverse]]>
 				</entry>
 			</meta-data>
 		</dynamic-element>
-		<dynamic-element name="optionPanelButtonLink" type="option" value="btn btn-link">
+		<dynamic-element name="option_panel_button_style_link" type="option" value="btn btn-link">
 			<meta-data locale="en_US">
 				<entry name="label">
 					<![CDATA[Link]]>
@@ -148,29 +148,29 @@
 			</entry>
 		</meta-data>
 	</dynamic-element>
-	<dynamic-element dataType="string" indexType="keyword" multiple="false" name="Panel_Button_Size" readOnly="false" repeatable="false" required="false" showLabel="true" type="select" width="">
-		<dynamic-element name="optionPanelButtonLarge" type="option" value="btn-large">
+	<dynamic-element dataType="string" indexType="keyword" multiple="false" name="panel_button_size" readOnly="false" repeatable="false" required="false" showLabel="true" type="select" width="">
+		<dynamic-element name="option_panel_button_size_large" type="option" value="btn-large">
 			<meta-data locale="en_US">
 				<entry name="label">
 					<![CDATA[Large]]>
 				</entry>
 			</meta-data>
 		</dynamic-element>
-		<dynamic-element name="optionPanelButtonRegular" type="option" value="btn-default">
+		<dynamic-element name="option_panel_button_size_regular" type="option" value="btn-default">
 			<meta-data locale="en_US">
 				<entry name="label">
 					<![CDATA[Regular]]>
 				</entry>
 			</meta-data>
 		</dynamic-element>
-		<dynamic-element name="optionPanelButtonSmall" type="option" value="btn-small">
+		<dynamic-element name="option_panel_button_size_small" type="option" value="btn-small">
 			<meta-data locale="en_US">
 				<entry name="label">
 					<![CDATA[Small]]>
 				</entry>
 			</meta-data>
 		</dynamic-element>
-		<dynamic-element name="optionPanelButtonMini" type="option" value="btn-mini">
+		<dynamic-element name="option_panel_button_size_mini" type="option" value="btn-mini">
 			<meta-data locale="en_US">
 				<entry name="label">
 					<![CDATA[Mini]]>
