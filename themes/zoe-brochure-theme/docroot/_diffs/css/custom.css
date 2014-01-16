@@ -151,6 +151,8 @@ $default-box-shadow-v-offset: 1px;
 			}
 
 			> li {
+				background-color: #FFF;
+
 				&:last-of-type > .dropdown-menu {
 					left: auto;
 					right: 0;
