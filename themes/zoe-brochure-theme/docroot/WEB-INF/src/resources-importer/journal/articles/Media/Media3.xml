@@ -2,7 +2,7 @@
 
 <root available-locales="en_US" default-locale="en_US">
 	<dynamic-element name="title" type="text">
-		<dynamic-content><![CDATA[Media1]]></dynamic-content>
+		<dynamic-content><![CDATA[Media3]]></dynamic-content>
 	</dynamic-element>
 	<dynamic-element name="number_of_columns" type="select">
 		<dynamic-content><![CDATA[1]]></dynamic-content>
@@ -26,6 +26,6 @@
 		<dynamic-element name="media_image" type="ddm-documentlibrary">
 			<dynamic-content><![CDATA[]]></dynamic-content>
 		</dynamic-element>
-		<dynamic-content><![CDATA[Media Heading #1]]></dynamic-content>
+		<dynamic-content><![CDATA[Media Heading #3]]></dynamic-content>
 	</dynamic-element>
 </root>
