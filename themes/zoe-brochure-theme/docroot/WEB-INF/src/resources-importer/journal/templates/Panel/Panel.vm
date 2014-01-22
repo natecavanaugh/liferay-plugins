@@ -1,5 +1,5 @@
-<div class="panel">
-	<div class="panel-image">
+<div class="content-panel">
+	<div class="content-panel-image">
 		#if (!$panel_icon.data.isEmpty())
 			<i class="$panel_icon.data"></i>
 		#end

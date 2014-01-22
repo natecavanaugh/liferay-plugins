@@ -517,7 +517,7 @@ $default-box-shadow-v-offset: 1px;
 
 	/* ------- Panels -------- */
 
-	.panel {
+	.content-panel {
 		background-color: #FAFAFA;
 		display: table-cell;
 		padding: 60px 40px;
@@ -526,7 +526,7 @@ $default-box-shadow-v-offset: 1px;
 
 		@include word-break(break-word);
 
-		.panel-image {
+		.content-panel-image {
 			margin-bottom: 24px;
 
 			i {
@@ -725,7 +725,7 @@ $default-box-shadow-v-offset: 1px;
 		@include single-box-shadow;
 	}
 
-	.panel {
+	.content-panel {
 		@include box-shadow(0 1px 1px #E7E7E7);
 	}
 
