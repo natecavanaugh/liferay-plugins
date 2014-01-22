@@ -1,0 +1,19 @@
+<div class="panel">
+	<div class="panel-image">
+		#if (!$panel_icon.data.isEmpty())
+			<i class="$panel_icon.data"></i>
+		#end
+
+		#if (!$panel_image.data.isEmpty())
+			<img alt="" src="$panel_image.data" />
+		#end
+	</div>
+
+	<h3>$panel_heading.data</h3>
+
+	<p>$panel_content.data</p>
+
+	#if (!$panel_button_text.data.isEmpty())
+		<a class="$panel_button_style.data $panel_button_size.data" href="$panel_button_link.data">$panel_button_text.data</a>
+	#end
+</div>
