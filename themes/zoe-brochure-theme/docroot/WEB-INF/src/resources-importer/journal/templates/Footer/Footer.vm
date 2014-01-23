@@ -1,0 +1,31 @@
+#if ($footer_column_title.getSiblings().size() == 6)
+	#set ($span = "span2")
+#elseif ($footer_column_title.getSiblings().size() == 5)
+	#set ($span = "span2dot4")
+#elseif ($footer_column_title.getSiblings().size() == 4)
+	#set ($span = "span3")
+#elseif ($footer_column_title.getSiblings().size() == 3)
+	#set ($span = "span4")
+#elseif ($footer_column_title.getSiblings().size() == 2)
+	#set ($span = "span6")
+#else
+	#set ($span = "span12")
+#end
+
+<div class="row-fluid zoe-footer">
+	#if (!$footer_column_title.getSiblings().isEmpty())
+		#foreach ($cur_footer_column_title in $footer_column_title.getSiblings())
+			<div class="$span">
+				<h4>$cur_footer_column_title.data</h4>
+
+				<p>$cur_footer_column_title.column_content.data</p>
+			</div>
+		#end
+	#end
+</div>
+
+#if (!$secondary_footer_content.data.isEmpty())
+	<div class="zoe-footer-secondary">
+		$secondary_footer_content.data
+	</div>
+#end
