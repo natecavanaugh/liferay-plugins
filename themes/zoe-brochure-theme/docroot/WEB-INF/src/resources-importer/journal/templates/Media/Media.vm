@@ -1,0 +1,53 @@
+#set ($integer = 0)
+
+#set ($num_cols = $integer.parseInt($number_of_columns.data))
+
+#if ($num_cols == 4)
+	#set ($span = "span3")
+#elseif ($num_cols == 3)
+	#set ($span = "span4")
+#elseif ($num_cols == 2)
+	#set ($span = "span6")
+#else
+	#set ($span = "")
+#end
+
+#if ($num_cols ==1)
+	<div class="$media_icon_background.data media-row row-fluid">
+#end
+
+#foreach ($heading in $media_heading.getSiblings())
+	#set ($mod = ${velocityCount}%${num_cols})
+
+	#if ($mod == 1 && $num_cols != 1)
+		<div class="$media_icon_background.data media-row row-fluid">
+	#end
+		<div class="media $span">
+			#if (!$heading.media_icon.data.isEmpty() || !$heading.media_image.data.isEmpty())
+				<div class="media-image pull-left">
+					#if (!$heading.media_icon.data.isEmpty())
+						<i class="$heading.media_icon.data"></i>
+					#end
+
+					#if (!$heading.media_image.data.isEmpty())
+						<img src="$heading.media_image.data" />
+					#end
+				</div>
+			#end
+
+			<div class="media-body">
+				#if (!$heading.data.isEmpty())
+					<h4 class="media-heading">$heading.data</h4>
+				#end
+
+				$heading.media_content.data
+			</div>
+		</div>
+	#if ($mod == 0 && $num_cols != 1)
+		</div>
+	#end
+#end
+
+#if ($num_cols == 1)
+	</div>
+#end

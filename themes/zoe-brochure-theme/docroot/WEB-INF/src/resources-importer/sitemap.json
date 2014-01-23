@@ -46,6 +46,23 @@
 			"title": "Pricing"
 		},
 		{
+			"columns": [
+				[
+					"Home Carousel.xml"
+				],
+				[
+					"Media1.xml"
+				],
+				[
+					"Media2.xml"
+				],
+				[
+					"Media3.xml"
+				],
+				[
+					"Media4.xml"
+				]
+			],
 			"friendlyURL": "/support",
 			"name": "Support",
 			"title": "Support"

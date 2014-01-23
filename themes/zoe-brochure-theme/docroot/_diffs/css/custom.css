@@ -521,6 +521,58 @@ $default-box-shadow-v-offset: 1px;
 		}
 	}
 
+	.media-row {
+		.media {
+			&:first-child {
+				margin-top: 15px;
+			}
+
+			> .media-image.pull-left {
+				margin-right: 25px;
+			}
+		}
+	}
+
+	.media-row {
+		&.circle, &.square {
+			.media-image i {
+				background: #7C9CBE;
+				color: #FFF;
+				display: table-cell;
+				font-size: 30px;
+				height: 60px;
+				text-align: center;
+				vertical-align: middle;
+				width: 60px;
+			}
+		}
+
+		&.circle .media-image i {
+			@include border-radius(50%);
+		}
+
+		.media {
+			&:first-child {
+				margin-top: 15px;
+			}
+
+			> .media-image.pull-left {
+				margin-right: 25px;
+				text-align: center;
+				width: 60px;
+			}
+		}
+	}
+
+	.media-image {
+		i {
+			color: #333;
+			font-size: 50px;
+
+			@include text-shadow(0 1px 1px rgba(0,0,0,0.2));
+		}
+	}
+
 	/* -------- Internet explorer -------- */
 
 	.ie6 {
