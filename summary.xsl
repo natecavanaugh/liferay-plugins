@@ -118,7 +118,7 @@
 								}
 							);
 
-							pluginsDataTable.render("#plugins");
+							pluginsDataTable.render('#plugins');
 
 							var authorsCols = [
 								{
@@ -139,7 +139,7 @@
 								}
 							);
 
-							authorsDataTable.render("#authors");
+							authorsDataTable.render('#authors');
 
 							var licensesCols = [
 								{
@@ -160,7 +160,7 @@
 								}
 							);
 
-							licensesDataTable.render("#licenses");
+							licensesDataTable.render('#licenses');
 						}
 					);
 				</script>
