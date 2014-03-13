@@ -128,7 +128,7 @@ boolean helpful = BeanParamUtil.getBoolean(kbComment, request, "helpful", true);
 		}
 
 		function <portlet:namespace />updateKBComment() {
-			document.<portlet:namespace />fm.<portlet:namespace /><%= Constants.CMD %>.value = "<%= (kbComment == null) ? Constants.ADD : Constants.UPDATE %>";
+			document.<portlet:namespace />fm.<portlet:namespace /><%= Constants.CMD %>.value = '<%= (kbComment == null) ? Constants.ADD : Constants.UPDATE %>';
 			submitForm(document.<portlet:namespace />fm, '<liferay-portlet:actionURL name="updateKBComment"><portlet:param name="mvcPath" value='<%= templatePath + "view_template.jsp" %>' /><portlet:param name="redirect" value="<%= redirect %>" /><portlet:param name="kbTemplateId" value="<%= String.valueOf(kbTemplate.getKbTemplateId()) %>" /></liferay-portlet:actionURL>');
 		}
 	</aui:script>

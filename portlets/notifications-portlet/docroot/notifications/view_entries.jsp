@@ -213,7 +213,7 @@ for (UserNotificationEvent userNotificationEvent : userNotificationEvents) {
 						userNotificationsList.plug(
 							A.Plugin.IO,
 							{
-							autoLoad: false
+								autoLoad: false
 							}
 						);
 					}
