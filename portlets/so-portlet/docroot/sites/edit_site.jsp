@@ -378,7 +378,7 @@ portletURL.setParameter("mvcPath", "/sites/edit_site.jsp");
 	typeSelect.on(
 		'change',
 		function(event) {
-			var type = typeSelect.get("value");
+			var type = typeSelect.get('value');
 
 			var message = "";
 
