@@ -30,6 +30,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.User;
@@ -47,6 +48,50 @@ public class MessageLocalServiceImpl extends MessageLocalServiceBaseImpl {
 			String bcc, Date sentDate, String subject, String body,
 			String flags, long remoteMessageId)
 		throws PortalException, SystemException {
+
+		String toAddress = StringPool.BLANK;
+		String ccAddress = StringPool.BLANK;
+		String bccAddress = StringPool.BLANK;
+
+		String[] toAddresses = StringUtil.split(to, StringPool.COMMA);
+		String[] ccAddresses = StringUtil.split(cc, StringPool.COMMA);
+		String[] bccAddresses = StringUtil.split(bcc, StringPool.COMMA);
+
+		if (toAddresses.length <= 1) {
+			toAddress = to;
+		}
+		else {
+			for (int i = 0; i < (toAddresses.length - 1); i++) {
+				toAddress +=
+					toAddresses[i] + StringPool.COMMA + StringPool.SPACE;
+			}
+
+			toAddress += toAddresses[toAddresses.length - 1];
+		}
+
+		if (ccAddresses.length <= 1) {
+			ccAddress = cc;
+		}
+		else {
+			for (int i = 0; i < (ccAddresses.length - 1); i++) {
+				ccAddress +=
+					ccAddresses[i] + StringPool.COMMA + StringPool.SPACE;
+			}
+
+			ccAddress += ccAddresses[ccAddresses.length - 1];
+		}
+
+		if (bccAddresses.length <= 1) {
+			bccAddress = bcc;
+		}
+		else {
+			for (int i = 0; i < (bccAddresses.length - 1); i++) {
+				bccAddress +=
+					bccAddresses[i] + StringPool.COMMA + StringPool.SPACE;
+			}
+
+			bccAddress += bccAddresses[bccAddresses.length - 1];
+		}
 
 		// Message
 
@@ -66,9 +111,9 @@ public class MessageLocalServiceImpl extends MessageLocalServiceBaseImpl {
 		message.setAccountId(folder.getAccountId());
 		message.setFolderId(folderId);
 		message.setSender(sender);
-		message.setTo(to);
-		message.setCc(cc);
-		message.setBcc(bcc);
+		message.setTo(toAddress);
+		message.setCc(ccAddress);
+		message.setBcc(bccAddress);
 		message.setSentDate(sentDate);
 		message.setSubject(subject);
 		message.setPreview(getPreview(body));
@@ -300,6 +345,50 @@ public class MessageLocalServiceImpl extends MessageLocalServiceBaseImpl {
 			String flags, long remoteMessageId)
 		throws PortalException, SystemException {
 
+		String toAddress = StringPool.BLANK;
+		String ccAddress = StringPool.BLANK;
+		String bccAddress = StringPool.BLANK;
+
+		String[] toAddresses = StringUtil.split(to, StringPool.COMMA);
+		String[] ccAddresses = StringUtil.split(cc, StringPool.COMMA);
+		String[] bccAddresses = StringUtil.split(bcc, StringPool.COMMA);
+
+		if (toAddresses.length <= 1) {
+			toAddress = to;
+		}
+		else {
+			for (int i = 0; i < (toAddresses.length - 1); i++) {
+				toAddress +=
+					toAddresses[i] + StringPool.COMMA + StringPool.SPACE;
+			}
+
+			toAddress += toAddresses[toAddresses.length - 1];
+		}
+
+		if (ccAddresses.length <= 1) {
+			ccAddress = cc;
+		}
+		else {
+			for (int i = 0; i < (ccAddresses.length - 1); i++) {
+				ccAddress +=
+					ccAddresses[i] + StringPool.COMMA + StringPool.SPACE;
+			}
+
+			ccAddress += ccAddresses[ccAddresses.length - 1];
+		}
+
+		if (bccAddresses.length <= 1) {
+			bccAddress = bcc;
+		}
+		else {
+			for (int i = 0; i < (bccAddresses.length - 1); i++) {
+				bccAddress +=
+					bccAddresses[i] + StringPool.COMMA + StringPool.SPACE;
+			}
+
+			bccAddress += bccAddresses[bccAddresses.length - 1];
+		}
+
 		// Message
 
 		Message message = messagePersistence.findByPrimaryKey(messageId);
@@ -307,9 +396,9 @@ public class MessageLocalServiceImpl extends MessageLocalServiceBaseImpl {
 		message.setModifiedDate(new Date());
 		message.setFolderId(folderId);
 		message.setSender(sender);
-		message.setTo(to);
-		message.setCc(cc);
-		message.setBcc(bcc);
+		message.setTo(toAddress);
+		message.setCc(ccAddress);
+		message.setBcc(bccAddress);
 		message.setSentDate(sentDate);
 		message.setSubject(subject);
 		message.setPreview(getPreview(body));
