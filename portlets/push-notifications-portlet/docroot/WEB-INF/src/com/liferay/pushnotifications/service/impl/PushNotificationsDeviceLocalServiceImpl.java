@@ -14,11 +14,80 @@
 
 package com.liferay.pushnotifications.service.impl;
 
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.pushnotifications.model.PushNotificationsDevice;
 import com.liferay.pushnotifications.service.base.PushNotificationsDeviceLocalServiceBaseImpl;
 
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+
 /**
+ * @author Silvio Santos
  * @author Bruno Farache
  */
 public class PushNotificationsDeviceLocalServiceImpl
 	extends PushNotificationsDeviceLocalServiceBaseImpl {
+
+	@Override
+	public PushNotificationsDevice addPushNotificationsDevice(
+			long userId, String platform, String token)
+		throws SystemException {
+
+		long pushNotificationsDeviceId = counterLocalService.increment();
+
+		PushNotificationsDevice pushNotificationsDevice =
+			pushNotificationsDevicePersistence.create(
+				pushNotificationsDeviceId);
+
+		pushNotificationsDevice.setUserId(userId);
+		pushNotificationsDevice.setCreateDate(new Date());
+		pushNotificationsDevice.setPlatform(platform);
+		pushNotificationsDevice.setToken(token);
+
+		pushNotificationsDevicePersistence.update(pushNotificationsDevice);
+
+		return pushNotificationsDevice;
+	}
+
+	@Override
+	public PushNotificationsDevice deletePushNotificationsDevice(String token)
+		throws PortalException, SystemException {
+
+		PushNotificationsDevice pushNotificationsDevice =
+			pushNotificationsDevicePersistence.findByToken(token);
+
+		pushNotificationsDevicePersistence.remove(pushNotificationsDevice);
+
+		return pushNotificationsDevice;
+	}
+
+	@Override
+	public PushNotificationsDevice getPushNotificationsDevices(String token)
+		throws PortalException, SystemException {
+
+		return pushNotificationsDevicePersistence.findByToken(token);
+	}
+
+	@Override
+	public List<String> getTokens(
+			long userId, String platform, int start, int end)
+		throws SystemException {
+
+		List<String> tokens = new ArrayList<String>();
+
+		List<PushNotificationsDevice> pushNotificationsDevices =
+			pushNotificationsDevicePersistence.findByU_P(
+				userId, platform, start, end);
+
+		for (PushNotificationsDevice pushNotificationsDevice :
+				pushNotificationsDevices) {
+
+			tokens.add(pushNotificationsDevice.getToken());
+		}
+
+		return tokens;
+	}
+
 }
