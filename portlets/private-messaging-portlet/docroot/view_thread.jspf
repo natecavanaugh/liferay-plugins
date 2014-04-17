@@ -23,8 +23,6 @@ UserThreadLocalServiceUtil.markUserThreadAsRead(user.getUserId(), mbThreadId);
 boolean hasExistingRecipients = false;
 %>
 
-<portlet:renderURL var="backURL" windowState="<%= WindowState.NORMAL.toString() %>" />
-
 <aui:button-row cssClass="controls">
 	<liferay-portlet:actionURL name="markMessagesAsUnread" var="markAsUnreadURL">
 		<portlet:param name="mbThreadIds" value="<%= String.valueOf(mbThreadId) %>" />
@@ -42,6 +40,8 @@ boolean hasExistingRecipients = false;
 <%
 String subject = PrivateMessagingUtil.getThreadSubject(mbThreadId);
 %>
+
+<portlet:renderURL var="backURL" windowState="<%= WindowState.NORMAL.toString() %>" />
 
 <liferay-ui:header
 	backLabel="messages"
