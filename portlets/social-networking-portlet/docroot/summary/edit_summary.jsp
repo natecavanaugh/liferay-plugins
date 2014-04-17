@@ -20,9 +20,9 @@
 String aboutMe = HtmlUtil.escape(ExpandoValueLocalServiceUtil.getData(User.class.getName(), "SN", "aboutMe", user2.getUserId(), StringPool.BLANK));
 %>
 
-<portlet:renderURL var="redirectURL" windowState="<%= WindowState.NORMAL.toString() %>" />
-
 <portlet:actionURL name="updateSummary" var="updateSummaryURL" />
+
+<portlet:renderURL var="redirectURL" windowState="<%= WindowState.NORMAL.toString() %>" />
 
 <aui:form action="<%= updateSummaryURL %>" method="post" name="<portlet:namespace />fm">
 	<aui:input name="redirect" type="hidden" value="<%= redirectURL %>" />
