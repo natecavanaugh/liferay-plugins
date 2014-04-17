@@ -23,12 +23,12 @@
 Portlet portlet = PortletLocalServiceUtil.getPortletById(company.getCompanyId(), PortletKeys.SITE_REDIRECTOR);
 %>
 
-<liferay-portlet:actionURL portletName="<%= PortletKeys.SITE_REDIRECTOR %>" varImpl="profileURL">
-	<portlet:param name="struts_action" value="/my_sites/view" />
-	<portlet:param name="privateLayout" value="<%= Boolean.FALSE.toString() %>" />
-</liferay-portlet:actionURL>
-
 <aui:script>
+	<liferay-portlet:actionURL portletName="<%= PortletKeys.SITE_REDIRECTOR %>" varImpl="profileURL">
+		<portlet:param name="struts_action" value="/my_sites/view" />
+		<portlet:param name="privateLayout" value="<%= Boolean.FALSE.toString() %>" />
+	</liferay-portlet:actionURL>
+
 	Liferay.on(
 		'chatPortletReady',
 		function() {
