@@ -126,7 +126,7 @@ AUI().use(
 				return new A.DataSource.IO(
 					{
 						ioConfig: {
-							method: "post"
+							method: "POST"
 						},
 						on: {
 							request: function(event) {
@@ -330,7 +330,7 @@ AUI().use(
 							'</a>' +
 						'</span>';
 
-					return 	A.Lang.sub(
+					return	A.Lang.sub(
 						siteActionTemplate,
 						{
 							actionClassNames: actionClassNames,
