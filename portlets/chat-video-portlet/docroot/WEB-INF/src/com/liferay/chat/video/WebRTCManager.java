@@ -287,9 +287,9 @@ public class WebRTCManager {
 			WebRTCConnection webRTCConnection =
 				webRTCClient.getWebRTCConnection(otherWebRTCClient);
 
-            if (webRTCConnection == null) {
-                continue;
-            }
+			if (webRTCConnection == null) {
+				continue;
+			}
 
 			WebRTCConnection.State state = webRTCConnection.getState();
 
