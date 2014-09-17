@@ -1,0 +1,45 @@
+<?xml version="1.0"?>
+
+<root available-locales="en_US" default-locale="en_US">
+	<dynamic-element name="footer_column_title" type="text">
+		<dynamic-content><![CDATA[Recent Posts]]></dynamic-content>
+		<dynamic-element name="column_content" type="textarea">
+			<dynamic-content>
+				<![CDATA[<div id="zoe-footer-blogs-aggregator-portlet"><runtime-portlet name="115" /></div>]]>
+			</dynamic-content>
+		</dynamic-element>
+	</dynamic-element>
+
+	<dynamic-element name="footer_column_title" type="text">
+		<dynamic-content><![CDATA[Contact Us]]></dynamic-content>
+		<dynamic-element name="column_content" type="textarea">
+			<dynamic-content>
+				<![CDATA[<ul class="list-style-icon"><li class="icon-map-marker"><a href="#">Liferay, Inc. (Global HQ)<br />1400 Montefino Ave<br />Diamond Bar, CA 91765</a></li><li class="icon-phone"><a href="#">+1-877-LIFERAY<br />(1-877-543-3729)<br /></a></li><li class="icon-time"><a href="#">Office Hours: 9AM-6PM PT</a></li><li class="icon-envelope"><a href="#">sales@liferay.com</a></li></ul>]]>
+			</dynamic-content>
+		</dynamic-element>
+	</dynamic-element>
+
+	<dynamic-element name="footer_column_title" type="text">
+		<dynamic-content><![CDATA[About Us]]></dynamic-content>
+		<dynamic-element name="column_content" type="textarea">
+			<dynamic-content>
+				<![CDATA[<ul class="unstyled"><li><a href="#">Our Story</a></li><li><a href="#">Awards</a></li><li><a href="#">Events</a></li><li><a href="#">Careers</a></li><li><a href="#">Newsroom</a></li></ul>]]>
+			</dynamic-content>
+		</dynamic-element>
+	</dynamic-element>
+
+	<dynamic-element name="footer_column_title" type="text">
+		<dynamic-content><![CDATA[Follow Zoe Themes]]></dynamic-content>
+		<dynamic-element name="column_content" type="textarea">
+			<dynamic-content>
+				<![CDATA[<ul class="list-style-icon"><li class="icon-facebook-sign"><a href="#">Facebook</a></li><li class="icon-twitter-sign"><a href="#">Twitter</a></li><li class="icon-google-plus-sign"><a href="#">Google +</a></li><li class="icon-linkedin-sign"><a href="#">Linkedin</a></li></ul>]]>
+			</dynamic-content>
+		</dynamic-element>
+	</dynamic-element>
+
+	<dynamic-element name="secondary_footer_content" type="textarea">
+		<dynamic-content>
+			<![CDATA[<div class="powered-by">Powered by <a href="http://www.liferay.com">Liferay</a></div>]]>
+		</dynamic-content>
+	</dynamic-element>
+</root>

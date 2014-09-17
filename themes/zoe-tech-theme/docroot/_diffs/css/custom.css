@@ -8,6 +8,8 @@ $default-box-shadow-h-offset: 0;
 $default-box-shadow-spread: 1px;
 $default-box-shadow-v-offset: 1px;
 
+$default-font-size: 12px;
+
 /* ---------- Global ---------- */
 
 .aui {
@@ -18,7 +20,7 @@ $default-box-shadow-v-offset: 1px;
 
 	body {
 		background: url(../images/custom/background.png) 0 0;
-		font: "Helvetica Neue", Helvetica, Arial, sans-serif;
+		font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
 		padding: 0;
 
 		&.html-editor {
@@ -48,7 +50,7 @@ $default-box-shadow-v-offset: 1px;
 	}
 
 	#wrapper {
-		font-size: 12px;
+		font-size: $default-font-size;
 		padding-top: 0;
 		position: relative;
 	}
@@ -271,82 +273,6 @@ $default-box-shadow-v-offset: 1px;
 		margin-top: 20px;
 		min-height: 200px;
 		padding-bottom: 20px;
-	}
-
-	/* ---------- Carousel ---------- */
-
-	.carousel-container {
-		background: #1D1D1B;
-		margin-bottom: 25px;
-
-		#carousel {
-			margin-left: 287px;
-
-			.carousel-item {
-				text-indent: -9999px;
-			}
-		}
-
-		#tabs {
-			display: inline-block;
-			float: left;
-			left: 0;
-			list-style: none;
-			margin: 0;
-			position: absolute;
-			top: 0;
-			width: 287px;
-			z-index: 4;
-
-			.tab-item {
-				background-color: none;
-				color: #C2C2C2;
-				cursor: pointer;
-				height: 30px;
-				margin: 0 5px;
-				padding: 20px 0 20px 15px;
-				position: relative;
-				text-shadow: 1px 1px 0 rgba(0, 0, 0, 0.5);
-				width: 277px;
-				z-index: 2;
-
-				&.first {
-					margin-top: 5px;
-				}
-
-				&.last {
-					margin-bottom: 5px;
-				}
-
-				.carousel-menu-index .carousel-menu-active {
-					color: #EBEBEB;
-				}
-
-				.icon {
-					float: left;
-					margin: 4px 15px 0 0;
-				}
-
-				h4 {
-					margin: 0;
-					padding: 0;
-					text-transform: uppercase;
-				}
-			}
-
-			.divider {
-				background: url(../images/custom/separator.png) repeat-x 0 0;
-				display: block;
-				height: 2px;
-				margin: 5px 10px 3px;
-				width: 268px;
-			}
-		}
-	}
-
-	.carousel-menu-active {
-		background: url(../images/custom/tabwarrow.png) no-repeat 0 0;
-		color: #C2C2C2;
 	}
 
 	/* ---------- Pod ---------- */
@@ -615,5 +541,482 @@ $default-box-shadow-v-offset: 1px;
 
 	#quoteBox h3 {
 		@include text-shadow(1px 1px rgba(255, 255, 255, 1));
+	}
+
+	/* -------- Liferay Portal Style Overrides -------- */
+
+	.portlet-content {
+		padding: 0;
+	}
+
+	.portlet-topper-toolbar .caret.lfr-icon-menu-arrow {
+		display: none;
+	}
+
+	/* -------- Use Font Awesome Icons in Unordered List -------- */
+
+	.list-style-icon, .list-style-icon li[class^="icon-"]:before {
+		font-size: 21px;
+	}
+
+	.list-style-icon {
+		list-style: none;
+		margin-left: 1.5em;
+
+		li[class^="icon-"] {
+			display: block;
+
+			&:before {
+				display: inline-block;
+				font-family: 'fontawesome-alloy';
+				font-weight: 100;
+				margin-left: -1.5em;
+				vertical-align: middle;
+				width: 1.5em;
+			}
+		}
+
+		li {
+			font-size: $default-font-size;
+		}
+	}
+
+	/* -------- Override Bootstrap Buttons to Flat Style (only in theme pages) -------- */
+
+	#wrapper {
+		.btn {
+			@include background-image(none);
+
+			border-width: 0;
+
+			@include border-radius(0);
+			@include box-shadow(none);
+
+			font-weight: 100;
+
+			@include text-shadow(none);
+		}
+
+		.btn-large {
+			font-size: 25px;
+			padding: 20px 25px;
+		}
+	}
+
+	/* -------- Zoe Carousel Common Styles -------- */
+
+	.zoe-carousel {
+		margin-bottom: 0;
+
+		&:hover {
+			a.carousel-menu-next {
+				right: 0;
+			}
+
+			a.carousel-menu-prev {
+				left: 0;
+			}
+		}
+
+		.carousel-item {
+			opacity: 0;
+			top: 0;
+			width: 100%;
+		}
+
+		.carousel-item-active {
+			opacity: 1;
+			position: relative;
+			width: 100%;
+		}
+
+		.carousel-panel-center {
+			text-align: center;
+		}
+
+		.carousel-panel-left {
+			text-align: left;
+		}
+
+		.carousel-panel-right {
+			text-align: right;
+		}
+
+		> menu {
+			height: 0;
+		}
+
+		menu {
+			background-color: transparent;
+			bottom: auto;
+			padding: 0;
+			position: static;
+			right: auto;
+
+			.carousel-menu-index-container {
+				bottom: 0;
+				position: absolute;
+				text-align: center;
+				width: 100%;
+				z-index: 4;
+
+				.carousel-menu-index {
+					background-color: #333;
+					background-color: rgba(0, 0, 0, 0.5);
+
+					@include border-radius(50px);
+
+					color: transparent;
+					height: 10px;
+					text-align: center;
+					width: 10px;
+
+					&.carousel-menu-active {
+						background-color: #333;
+						background-color: rgba(0, 0, 0, 0.7);
+					}
+				}
+			}
+
+			.carousel-menu-item {
+				background-color: transparent;
+				overflow: visible;
+				text-indent: 0;
+
+				&:hover {
+					a.carousel-menu-next {
+						right: 0;
+
+						@include transition(all 0.5s ease);
+					}
+
+					a.carousel-menu-prev {
+						left: 0;
+
+						@include transition(all 0.5s ease);
+					}
+				}
+			}
+
+			a.carousel-menu-pause, a.carousel-menu-play {
+				background-color: #333;
+				background-color: rgba(0, 0, 0, 0.5);
+				background-image: none;
+
+				@include border-radius(0);
+
+				bottom: 0;
+				color: #FFF;
+				padding: 5px 0px 5px 7px;
+				position: absolute;
+				right: 0;
+				text-decoration: none;
+				z-index: 5;
+			}
+
+			a.carousel-menu-pause:after {
+				content: '\f04c';
+				font-family: 'fontawesome-alloy';
+			}
+
+			a.carousel-menu-play:after {
+				content: '\f04b';
+				font-family: 'fontawesome-alloy';
+			}
+
+			a.carousel-menu-next, a.carousel-menu-prev {
+				background-image: none;
+				color: #FFF;
+				height: auto;
+				font-size: 30px;
+				margin: 0;
+				position: absolute;
+				text-decoration: none;
+				top: 50%;
+
+				@include transition(all 0.25s ease);
+
+				width: auto;
+				z-index: 5;
+
+				&:after {
+					background-color: rgba(0, 0, 0, 0.4);
+					font-family: 'fontawesome-alloy';
+					padding: 15px;
+					text-indent: 0;
+				}
+			}
+
+			a.carousel-menu-next {
+				right: -100px;
+
+				&:after {
+					content: '\f054';
+				}
+			}
+
+			a.carousel-menu-prev {
+				left: -100px;
+
+				&:after {
+					content: '\f053';
+				}
+			}
+
+			li {
+				display: inline-block;
+				float: none;
+			}
+		}
+	}
+
+	/* -------- Zoe Footer Common Styles -------- */
+
+	.row-fluid .span2-4 {
+		margin-left: 1%;
+		width: 19%;
+	}
+
+	.zoe-footer {
+		background-color: #232625;
+
+		@include box-sizing(border-box);
+
+		color: #FFF;
+		padding: 25px;
+
+		&.row-fluid .span12 {
+			margin: 0;
+		}
+
+		a {
+			color: #FFF;
+			font-weight: 100;
+			letter-spacing: 1px;
+
+			&:focus, &:hover {
+				color: #FFF;
+			}
+		}
+
+		ul li {
+			margin: 15px 0;
+		}
+
+		.footer-column-title {
+			border-bottom: 2px solid #4F4F4F;
+			font-size: 16px;
+			font-weight: 300;
+			padding-bottom: 8px;
+
+			&:after {
+				background: #B3D929;
+				content: "";
+				display: block;
+				height: 2px;
+				position: relative;
+				top: 10px;
+				width: 65px;
+			}
+		}
+	}
+
+	.zoe-footer-secondary {
+		background-color: #222;
+
+		@include box-sizing(border-box);
+
+		color: #FFF;
+		font-size: 16px;
+		font-weight: 100;
+		padding: 20px 25px;
+
+		a {
+			color: #FFF;
+			font-weight: 300;
+
+			&:focus, &:hover {
+				color: #FFF;
+			}
+		}
+	}
+
+	/* ------- Zoe Panel Common Styles -------- */
+
+	.zoe-panel {
+		font-size: 18px;
+		font-weight: 200;
+		line-height: 28px;
+		text-align: center;
+		vertical-align: middle;
+
+		@include word-break(break-word);
+
+		.zoe-panel-image {
+			display: inline-block;
+			margin-bottom: 24px;
+
+			&.img-circle {
+				overflow: hidden;
+			}
+
+			i {
+				font-size: 90px;
+			}
+		}
+
+		button {
+			margin-top: 24px;
+		}
+	}
+
+	/* -------- Home Main Carousel -------- */
+
+	#zoe-tech-HOME-MAIN-CAROUSEL {
+		.carousel-item .btn {
+			margin-top: 3px;
+		}
+
+		.carousel-panel-center, .carousel-panel-left, .carousel-panel-right {
+			position: absolute;
+			top: 50%;
+			width: 50%;
+		}
+
+		.carousel-panel-center {
+			left: 50%;
+			margin-left: -25%;
+			text-align: left;
+		}
+
+		.carousel-panel-left {
+			left: 10%;
+			text-align: left;
+		}
+
+		.carousel-panel-right {
+			right: 10%;
+			text-align: left;
+		}
+
+		.carousel-panel-text {
+			margin-left: 10px;
+
+			span {
+				background-color: #888;
+				background-color: rgba(0, 0, 0, 0.5);
+
+				@include box-shadow(10px 0 0 rgba(0, 0, 0, 0.5), -10px 0 0 rgba(0, 0, 0, 0.5));
+
+				color: #FFF;
+				font-size: 32px;
+				font-weight: 100;
+				line-height: 47px;
+				padding: 5px 0;
+			}
+		}
+	}
+
+		/* -------- Home Our Features Panel -------- */
+
+	.our-features-panel {
+		background-color: #FFF;
+		padding: 40px 30px;
+
+		.portlet-title {
+			margin-bottom: 53px;
+		}
+	}
+
+	/* -------- Home Getting Started Panel -------- */
+
+	.getting-started-panel {
+		background-color: #232625;
+
+		.zoe-panel {
+			color: #FFF;
+			padding: 40px;
+			text-align: left;
+
+			&:first-of-type {
+				padding: 0;
+			}
+
+			h3, p {
+				font-weight: 100;
+			}
+
+			.zoe-panel-image {
+				margin-bottom: 0;
+			}
+		}
+	}
+
+	/* -------- Home Testimonials Carousel -------- */
+
+	.home-testimonials-carousel {
+		background-color: #FFF;
+
+		.portlet-title {
+			margin-top: 0;
+			position: relative;
+			text-align: center;
+			top: 60px;
+			z-index: 4;
+		}
+	}
+
+	.portlet-title {
+		font-size: 32px;
+		font-weight: 300;
+	}
+
+	.portlet-title-centered {
+		text-align: center;
+	}
+
+	#zoe-tech-HOME-TESTIMONIALS-CAROUSEL {
+		&.fixed-height {
+			.carousel-panel-container {
+				margin: 0 auto;
+				padding-bottom: 0;
+				padding-top: 3%;
+			}
+		}
+
+		&.zoe-carousel menu a {
+			&.carousel-menu-pause, &.carousel-menu-play {
+				background-color: transparent;
+				color: #999;
+			}
+
+			&.carousel-menu-next, &.carousel-menu-prev {
+				color: #999;
+
+				&:after {
+					background-color: transparent;
+				}
+			}
+
+			&.carousel-menu-next {
+				right: 0;
+			}
+
+			&.carousel-menu-prev {
+				left: 0;
+			}
+		}
+
+		.carousel-panel-container {
+			font-size: 21px;
+			font-style: italic;
+			font-weight: 100;
+			line-height: 35px;
+			margin: 90px auto 0;
+			padding-bottom: 45px;
+			position: relative;
+			top: 50%;
+			width: 80%;
+		}
 	}
 }

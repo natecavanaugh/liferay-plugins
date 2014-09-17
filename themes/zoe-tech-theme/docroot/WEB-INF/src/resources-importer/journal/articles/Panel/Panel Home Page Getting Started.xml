@@ -1,0 +1,90 @@
+<?xml version="1.0"?>
+
+<root>
+	<dynamic-element name="title">
+		<dynamic-content><![CDATA[Getting Started]]></dynamic-content>
+	</dynamic-element>
+	<dynamic-element name="number_of_columns" type="select">
+		<dynamic-content><![CDATA[2]]></dynamic-content>
+	</dynamic-element>
+
+	<dynamic-element name="panel_heading" type="text">
+		<dynamic-element name="panel_icon" type="text">
+			<dynamic-content><![CDATA[]]></dynamic-content>
+			<dynamic-element name="icon_image" type="ddm-documentlibrary">
+				<dynamic-content><![CDATA[[$FILE=getting_help.jpg$]]]></dynamic-content>
+			</dynamic-element>
+			<dynamic-element name="icon_shape" type="select">
+				<dynamic-content><![CDATA[]]></dynamic-content>
+			</dynamic-element>
+			<dynamic-element name="icon_background_color" type="text">
+				<dynamic-content><![CDATA[]]></dynamic-content>
+			</dynamic-element>
+			<dynamic-element name="icon_padding" type="text">
+				<dynamic-content><![CDATA[]]></dynamic-content>
+			</dynamic-element>
+			<dynamic-element name="icon_color" type="text">
+				<dynamic-content><![CDATA[]]></dynamic-content>
+			</dynamic-element>
+			<dynamic-element name="icon_size" type="text">
+				<dynamic-content><![CDATA[]]></dynamic-content>
+			</dynamic-element>
+		</dynamic-element>
+		<dynamic-element name="panel_content" type="textarea">
+			<dynamic-content><![CDATA[]]></dynamic-content>
+		</dynamic-element>
+		<dynamic-element name="panel_button_text" type="text">
+			<dynamic-element name="button_link" type="text">
+				<dynamic-content><![CDATA[1]]></dynamic-content>
+			</dynamic-element>
+			<dynamic-element name="button_size" type="select">
+				<dynamic-content><![CDATA[btn-large]]></dynamic-content>
+			</dynamic-element>
+			<dynamic-element name="button_style" type="select">
+				<dynamic-content><![CDATA[btn]]></dynamic-content>
+			</dynamic-element>
+			<dynamic-content><![CDATA[]]></dynamic-content>
+		</dynamic-element>
+		<dynamic-content><![CDATA[]]></dynamic-content>
+	</dynamic-element>
+
+	<dynamic-element name="panel_heading" type="text">
+		<dynamic-element name="panel_icon" type="text">
+			<dynamic-content><![CDATA[]]></dynamic-content>
+			<dynamic-element name="icon_image" type="ddm-documentlibrary">
+				<dynamic-content><![CDATA[]]></dynamic-content>
+			</dynamic-element>
+			<dynamic-element name="icon_shape" type="select">
+				<dynamic-content><![CDATA[]]></dynamic-content>
+			</dynamic-element>
+			<dynamic-element name="icon_background_color" type="text">
+				<dynamic-content><![CDATA[]]></dynamic-content>
+			</dynamic-element>
+			<dynamic-element name="icon_padding" type="text">
+				<dynamic-content><![CDATA[]]></dynamic-content>
+			</dynamic-element>
+			<dynamic-element name="icon_color" type="text">
+				<dynamic-content><![CDATA[]]></dynamic-content>
+			</dynamic-element>
+			<dynamic-element name="icon_size" type="text">
+				<dynamic-content><![CDATA[]]></dynamic-content>
+			</dynamic-element>
+		</dynamic-element>
+		<dynamic-element name="panel_content" type="textarea">
+			<dynamic-content><![CDATA[Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur?]]></dynamic-content>
+		</dynamic-element>
+		<dynamic-element name="panel_button_text" type="text">
+			<dynamic-element name="button_link" type="text">
+				<dynamic-content><![CDATA[1]]></dynamic-content>
+			</dynamic-element>
+			<dynamic-element name="button_size" type="select">
+				<dynamic-content><![CDATA[btn-large]]></dynamic-content>
+			</dynamic-element>
+			<dynamic-element name="button_style" type="select">
+				<dynamic-content><![CDATA[btn btn-success]]></dynamic-content>
+			</dynamic-element>
+			<dynamic-content><![CDATA[Get Started]]></dynamic-content>
+		</dynamic-element>
+		<dynamic-content><![CDATA[Our team is here to help.]]></dynamic-content>
+	</dynamic-element>
+</root>

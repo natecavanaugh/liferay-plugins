@@ -1,0 +1,100 @@
+<?xml version="1.0"?>
+
+<root available-locales="en_US" default-locale="en_US">
+	<dynamic-element name="carousel_height" type="text">
+		<dynamic-content><![CDATA[400px]]></dynamic-content>
+	</dynamic-element>
+	<dynamic-element name="duration" type="select">
+		<dynamic-content><![CDATA[4]]></dynamic-content>
+	</dynamic-element>
+	<dynamic-element name="transition_type" type="select">
+		<dynamic-content><![CDATA[press-away]]></dynamic-content>
+	</dynamic-element>
+	<dynamic-element name="controls_pagination" type="checkbox">
+		<dynamic-content><![CDATA[true]]></dynamic-content>
+	</dynamic-element>
+	<dynamic-element name="controls_play" type="checkbox">
+		<dynamic-content><![CDATA[true]]></dynamic-content>
+	</dynamic-element>
+	<dynamic-element name="controls_prev_next" type="checkbox">
+		<dynamic-content><![CDATA[true]]></dynamic-content>
+	</dynamic-element>
+	<dynamic-element name="auto_play" type="checkbox">
+		<dynamic-content><![CDATA[true]]></dynamic-content>
+	</dynamic-element>
+
+	<dynamic-element name="carousel_text" type="textarea">
+		<dynamic-element name="carousel_text_position" type="select">
+			<dynamic-content><![CDATA[top]]></dynamic-content>
+		</dynamic-element>
+		<dynamic-element name="image" type="ddm-documentlibrary">
+			<dynamic-content><![CDATA[]]></dynamic-content>
+		</dynamic-element>
+		<dynamic-element name="carousel_button_text" type="text">
+			<dynamic-element name="carousel_button_link" type="text">
+				<dynamic-content><![CDATA[]]></dynamic-content>
+			</dynamic-element>
+			<dynamic-element name="carousel_button_style" type="select">
+				<dynamic-content><![CDATA[btn]]></dynamic-content>
+			</dynamic-element>
+			<dynamic-element name="carousel_button_size" type="select">
+				<dynamic-content><![CDATA[btn-large]]></dynamic-content>
+			</dynamic-element>
+			<dynamic-content><![CDATA[]]></dynamic-content>
+		</dynamic-element>
+		<dynamic-element name="carousel_caption_alignment" type="select">
+			<dynamic-content><![CDATA[center]]></dynamic-content>
+		</dynamic-element>
+		<dynamic-content><![CDATA[&quot;Ei quas delicatissimi pro, noster veritus adipiscing ei eos, affert recteque ea duo. At vix soleat partiendo contentiones, pri everti complectitur cu. No numquam rationibus sit, est indoctum honestatis eu.&quot;<br><br><p>The Boss - Some Big Corp.</p>]]></dynamic-content>
+	</dynamic-element>
+
+	<dynamic-element name="carousel_text" type="textarea">
+		<dynamic-element name="carousel_text_position" type="select">
+			<dynamic-content><![CDATA[top]]></dynamic-content>
+		</dynamic-element>
+		<dynamic-element name="image" type="ddm-documentlibrary">
+			<dynamic-content><![CDATA[]]></dynamic-content>
+		</dynamic-element>
+		<dynamic-element name="carousel_button_text" type="text">
+			<dynamic-element name="carousel_button_link" type="ddm-link-to-page">
+				<dynamic-content><![CDATA[]]></dynamic-content>
+			</dynamic-element>
+			<dynamic-element name="carousel_button_style" type="select">
+				<dynamic-content><![CDATA[btn]]></dynamic-content>
+			</dynamic-element>
+			<dynamic-element name="carousel_button_size" type="select">
+				<dynamic-content><![CDATA[btn-large]]></dynamic-content>
+			</dynamic-element>
+			<dynamic-content><![CDATA[]]></dynamic-content>
+		</dynamic-element>
+		<dynamic-element name="carousel_caption_alignment" type="select">
+			<dynamic-content><![CDATA[center]]></dynamic-content>
+		</dynamic-element>
+		<dynamic-content><![CDATA[&quot;At vim justo detracto, nam eu autem partiendo ullamcorper. Mel in offendit recusabo, harum legendos inciderint no pro, veritus pericula omittantur cum ut. Purto fugit vis at, eu eius vivendo ius. Ut rebum simul pro, facer abhorreant vis cu. Ex eos duis fierent.&quot;<br><br><p>Rito in Marketing</p>]]></dynamic-content>
+	</dynamic-element>
+
+	<dynamic-element name="carousel_text" type="textarea">
+		<dynamic-element name="carousel_text_position" type="select">
+			<dynamic-content><![CDATA[top]]></dynamic-content>
+		</dynamic-element>
+		<dynamic-element name="image" type="ddm-documentlibrary">
+			<dynamic-content><![CDATA[]]></dynamic-content>
+		</dynamic-element>
+		<dynamic-element name="carousel_button_text" type="text">
+			<dynamic-element name="carousel_button_link" type="ddm-link-to-page">
+				<dynamic-content><![CDATA[]]></dynamic-content>
+			</dynamic-element>
+			<dynamic-element name="carousel_button_style" type="select">
+				<dynamic-content><![CDATA[btn]]></dynamic-content>
+			</dynamic-element>
+			<dynamic-element name="carousel_button_size" type="select">
+				<dynamic-content><![CDATA[btn-large]]></dynamic-content>
+			</dynamic-element>
+			<dynamic-content><![CDATA[]]></dynamic-content>
+		</dynamic-element>
+		<dynamic-element name="carousel_caption_alignment" type="select">
+			<dynamic-content><![CDATA[center]]></dynamic-content>
+		</dynamic-element>
+		<dynamic-content><![CDATA[&quot;Sit error aliquip vivendum id, sumo facilisis quo ex. Constituam consectetuer eos ei. Te iudico constituto qui, omnis ridens ex est. Te quas inimicus sed, ex nam reque adipisci gubergren. Sonet nobis reformidans no sit. Eam vidit posse recusabo an. Possit laoreet electram ex eam, nam id omnes praesent similique.&quot;<br><br><p>Lulu - Sr. Business Analyst of Fancy Firm, LLC</p>]]></dynamic-content>
+	</dynamic-element>
+</root>

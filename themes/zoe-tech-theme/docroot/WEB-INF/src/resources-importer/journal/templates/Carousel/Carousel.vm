@@ -1,83 +1,131 @@
-#set ($article_id = $reserved-article-id.getData())
-#set ($content_id = "carousel-${article_id}")
+#set ($content_id = "zoe-tech-${reserved-article-id.getData()}")
+#set ($carousel_css_class = "zoe-carousel")
 
-<style>
+
+#if ($getterUtil.getBoolean($auto_play.getData()))
+	#set ($playing = $getterUtil.getBoolean($auto_play.getData()))
+#end
+
+#if (!$carousel_height.data.isEmpty())
+	#set ($carousel_css_class = $carousel_css_class + " fixed-height")
+#end
+
+<style type="text/css">
 	#${content_id} {
-		height: ${height.data}px;
+		overflow: hidden;
+		position: relative;
 	}
+
+	#${content_id} .carousel-item {
+		top: 0;
+	}
+
+	#if (!$getterUtil.getBoolean($controls_pagination.getData()))
+		#${content_id} menu .carousel-menu-index {
+			display: none;
+		}
+	#end
+
+	#if (!$getterUtil.getBoolean($controls_play.getData()))
+		#${content_id} menu .carousel-menu-pause, #${content_id} menu .carousel-menu-play {
+			display: none;
+		}
+	#end
+
+	#if (!$getterUtil.getBoolean($controls_prev_next.getData()))
+		#${content_id} menu .carousel-menu-next, #${content_id} menu .carousel-menu-prev {
+			display: none;
+		}
+	#end
+
+	#if (!$carousel_height.data.isEmpty())
+		#${content_id}, #${content_id} .carousel-item {
+			height: ${carousel_height.data};
+		}
+	#end
 </style>
 
-<div class="carousel-container" id="$content_id">
-	<ul id="tabs">
-		#foreach ($item in $carousel-item.siblings)
-			#set ($carousel_menu_item_class = "tab-item item-${velocityCount} carousel-menu-index")
+<div class="$carousel_css_class" id="$content_id">
+	#if (!$carousel_text.getSiblings().isEmpty())
+		#foreach ($cur_carousel_text in $carousel_text.getSiblings())
+			#set($caption_alignment = $cur_carousel_text.carousel_caption_alignment.data)
 
-			#if ($velocityCount == 1)
-				#set ($carousel_menu_item_class = "$carousel_menu_item_class carousel-menu-active first")
-			#end
+			<div class="carousel-item item${velocityCount}">
+				#if ($cur_carousel_text.carousel_text_position.data == "top")
+					<div class="carousel-panel-container carousel-panel-${caption_alignment}">
+						#if (!$cur_carousel_text.data.isEmpty())
+							<div class="carousel-panel-text">
+								<span>
+									$cur_carousel_text.data
+								</span>
+							</div>
+						#end
 
-			#if (!$velocityHasNext)
-				#set ($carousel_menu_item_class = "$carousel_menu_item_class last")
-			#end
-
-			<li class="$carousel_menu_item_class">
-				#if ($item.icon.data != "")
-					<img class="icon" src="$item.icon.data" />
+						#if (!$cur_carousel_text.carousel_button_text.data.isEmpty())
+							<a class="$cur_carousel_text.carousel_button_text.carousel_button_size.data $cur_carousel_text.carousel_button_text.carousel_button_style.data" href="$cur_carousel_text.carousel_button_text.carousel_button_link.data">$cur_carousel_text.carousel_button_text.data</a>
+						#end
+					</div>
 				#end
 
-				#if ($item.data != "")
-					<h4 class="title">
-						$item.data
-					</h4>
+				#if (!$cur_carousel_text.image.data.isEmpty())
+					<div class="carousel-image">
+						<img src="$cur_carousel_text.image.data" />
+					</div>
 				#end
 
-				#if ($item.tagline.data != "")
-					<span class="tagline">
-						$item.tagline.data
-					</span>
+				#if ($cur_carousel_text.carousel_text_position.data == "bottom")
+					<div class="carousel-panel-container carousel-panel-${caption_alignment}">
+						#if (!$cur_carousel_text.data.isEmpty())
+							<div class="carousel-panel-text">
+								<span>
+									$cur_carousel_text.data
+								</span>
+							</div>
+						#end
+
+						#if (!$cur_carousel_text.carousel_button_text.data.isEmpty())
+							<a class="$cur_carousel_text.carousel_button_text.carousel_button_size.data $cur_carousel_text.carousel_button_text.carousel_button_style.data" href="$cur_carousel_text.carousel_button_text.carousel_button_link.data">$cur_carousel_text.carousel_button_text.data</a>
+						#end
+					</div>
 				#end
-			</li>
-
-			#if ($velocityHasNext)
-				<div class="divider"></div>
-			#end
-		#end
-	</ul>
-
-	<div id="carousel">
-		#foreach ($item in $carousel-item.siblings)
-			#set ($carousel_item_class = "carousel-item")
-
-			#if ($velocityCount == 1)
-				#set ($carousel_item_class = "$carousel_item_class carousel-item-active")
-			#end
-
-			#if ($item.url-location.data != "")
-				<a class="$carousel_item_class" href="$item.url-location.friendlyUrl" style="background: url(${item.image.data}) no-repeat; height: ${height.data}px; width: 674px;" title="$item.data">$item.data</a>
-			#else
-
-			<div class="$carousel_item_class" style="background: url(${item.image.data}) no-repeat; height: ${height.data}px; width: 674px;">
-				$item.data
 			</div>
-			#end
 		#end
-	</div>
+	#end
 </div>
+
+<script src="/zoe-tech-theme/js/zoe-carousel.js"></script>
 
 <script type="text/javascript">
 	AUI().ready(
-		'aui-carousel',
+		'zoe-carousel',
 		function(A) {
-			new A.Carousel(
+			new A.ZoeCarousel(
 				{
-					contentBox: '#${content_id} #carousel',
-					height: $height.data,
+					contentBox: '#${content_id}',
 					intervalTime: $duration.data,
-					nodeMenu: '#${content_id} #tabs',
-					nodeMenuItemSelector: '.tab-item',
-					width: 287
+					itemSelector: '.carousel-item',
+					playing: $getterUtil.getBoolean($auto_play.getData()),
+					transitionType: '${transition_type.data}'
 				}
 			).render();
+
+			(function() {
+				var carouselPanelCenter = A.all('.zoe-carousel.fixed-height .carousel-panel-container');
+
+				A.each(
+					carouselPanelCenter,
+					function(node) {
+						var config = {};
+						var panelHeight = node.get('offsetHeight');
+
+						config = {
+							marginTop: -panelHeight/2 + 'px'
+						}
+
+						node.setStyles(config);
+					}
+				);
+			})();
 		}
 	);
 </script>

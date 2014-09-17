@@ -1,22 +1,85 @@
 {
-	"layoutTemplateId": "1_3_1_columns",
-	"privatePages": [
+	"layoutTemplateId": "1_column",
+	"publicPages": [
 		{
 			"columns": [
 				[
-					"Main Carousel.xml"
-				],
-				[
-					"Our Goal.xml"
-				],
-				[
-					"Exceptional Support.xml"
-				],
-				[
-					"The Experience.xml"
-				],
-				[
-					"What Our Clients Are Saying.xml"
+					{
+						"portletId": "56",
+						"portletPreferences": {
+							"articleId": "Home Main Carousel.xml",
+							"groupId": "${groupId}",
+							"portletSetupShowBorders": "false",
+							"portletSetupTitle_en_US": "Web Content Display",
+							"portletSetupUseCustomTitle": "false"
+						}
+					},
+					{
+						"portletId": "56",
+						"portletPreferences": {
+							"articleId": "Banner Home Page.xml",
+							"groupId": "${groupId}",
+							"portletSetupShowBorders": "false",
+							"portletSetupTitle_en_US": "Web Content Display",
+							"portletSetupUseCustomTitle": "false"
+						}
+					},
+					{
+						"portletId": "56",
+						"portletPreferences": {
+							"articleId": "Panel Home Page.xml",
+							"groupId": "${groupId}",
+							"portletSetupCss": {
+								"advancedData": {
+									"customCSSClassName": "our-features-panel"
+								}
+							},
+							"portletSetupShowBorders": "true",
+							"portletSetupTitle_en_US": "Our Features",
+							"portletSetupUseCustomTitle": "true"
+						}
+					},
+					{
+						"portletId": "56",
+						"portletPreferences": {
+							"articleId": "Panel Home Page Getting Started.xml",
+							"groupId": "${groupId}",
+							"portletSetupCss": {
+								"advancedData": {
+									"customCSSClassName": "getting-started-panel"
+								}
+							},
+							"portletSetupShowBorders": "false",
+							"portletSetupTitle_en_US": "Getting Started",
+							"portletSetupUseCustomTitle": "false"
+						}
+					},
+					{
+						"portletId": "56",
+						"portletPreferences": {
+							"articleId": "Home Testimonials Carousel.xml",
+							"groupId": "${groupId}",
+							"portletSetupCss": {
+								"advancedData": {
+									"customCSSClassName": "home-testimonials-carousel"
+								}
+							},
+							"portletSetupShowBorders": "true",
+							"portletSetupTitle_en_US": "Client Testimonials",
+							"portletSetupUseCustomTitle": "true"
+						}
+					},
+					{
+						"portletId": "56",
+						"portletPreferences": {
+							"articleId": "Footer.xml",
+							"groupId": "${groupId}",
+							"portletSetupShowBorders": "false",
+							"portletSetupTitle_en_US":
+								"Web Content Display",
+							"portletSetupUseCustomTitle": "false"
+						}
+					}
 				]
 			],
 			"friendlyURL": "/home",

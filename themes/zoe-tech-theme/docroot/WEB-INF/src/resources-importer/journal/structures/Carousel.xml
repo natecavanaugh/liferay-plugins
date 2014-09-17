@@ -1,103 +1,378 @@
 <?xml version="1.0"?>
 
 <root available-locales="en_US" default-locale="en_US">
-	<dynamic-element dataType="string" indexType="" name="height" readOnly="false" repeatable="false" required="true" showLabel="true" type="text" width="small">
+	<dynamic-element dataType="string" indexType="keyword" localizable="true" name="carousel_height" readOnly="false" repeatable="false" required="false" showLabel="true" type="text" width="small">
 		<meta-data locale="en_US">
-			<entry name="label"><![CDATA[Carousel Height]]></entry>
-			<entry name="predefinedValue"><![CDATA[320]]></entry>
-			<entry name="tip"><![CDATA[]]></entry>
+			<entry name="label">
+				<![CDATA[Carousel Height (e.g. 300px or 18.75em)]]>
+			</entry>
+			<entry name="predefinedValue">
+				<![CDATA[]]>
+			</entry>
 		</meta-data>
 	</dynamic-element>
 	<dynamic-element dataType="string" indexType="" multiple="false" name="duration" readOnly="false" repeatable="false" required="false" showLabel="true" type="select" width="">
-		<dynamic-element name="option1" type="option" value="1">
+		<dynamic-element name="option_duration_3" type="option" value="3">
 			<meta-data locale="en_US">
-				<entry name="label"><![CDATA[1]]></entry>
+				<entry name="label">
+					<![CDATA[3]]>
+				</entry>
 			</meta-data>
 		</dynamic-element>
-		<dynamic-element name="option2" type="option" value="2">
+		<dynamic-element name="option_duration_4" type="option" value="4">
 			<meta-data locale="en_US">
-				<entry name="label"><![CDATA[2]]></entry>
+				<entry name="label">
+					<![CDATA[4]]>
+				</entry>
 			</meta-data>
 		</dynamic-element>
-		<dynamic-element name="option3" type="option" value="3">
+		<dynamic-element name="option_duration_5" type="option" value="5">
 			<meta-data locale="en_US">
-				<entry name="label"><![CDATA[3]]></entry>
+				<entry name="label">
+					<![CDATA[5]]>
+				</entry>
 			</meta-data>
 		</dynamic-element>
-		<dynamic-element name="option4" type="option" value="4">
+		<dynamic-element name="option_duration_6" type="option" value="6">
 			<meta-data locale="en_US">
-				<entry name="label"><![CDATA[4]]></entry>
+				<entry name="label">
+					<![CDATA[6]]>
+				</entry>
 			</meta-data>
 		</dynamic-element>
-		<dynamic-element name="option5" type="option" value="5">
+		<dynamic-element name="option_duration_7" type="option" value="7">
 			<meta-data locale="en_US">
-				<entry name="label"><![CDATA[5]]></entry>
+				<entry name="label">
+					<![CDATA[7]]>
+				</entry>
 			</meta-data>
 		</dynamic-element>
-		<dynamic-element name="option6" type="option" value="6">
+		<dynamic-element name="option_duration_8" type="option" value="8">
 			<meta-data locale="en_US">
-				<entry name="label"><![CDATA[6]]></entry>
+				<entry name="label">
+					<![CDATA[8]]>
+				</entry>
 			</meta-data>
 		</dynamic-element>
-		<dynamic-element name="option7" type="option" value="7">
+		<dynamic-element name="option_duration_9" type="option" value="9">
 			<meta-data locale="en_US">
-				<entry name="label"><![CDATA[7]]></entry>
+				<entry name="label">
+					<![CDATA[9]]>
+				</entry>
 			</meta-data>
 		</dynamic-element>
-		<dynamic-element name="option8" type="option" value="8">
+		<dynamic-element name="option_duration_10" type="option" value="10">
 			<meta-data locale="en_US">
-				<entry name="label"><![CDATA[8]]></entry>
-			</meta-data>
-		</dynamic-element>
-		<dynamic-element name="option9" type="option" value="9">
-			<meta-data locale="en_US">
-				<entry name="label"><![CDATA[9]]></entry>
-			</meta-data>
-		</dynamic-element>
-		<dynamic-element name="option10" type="option" value="10">
-			<meta-data locale="en_US">
-				<entry name="label"><![CDATA[10]]></entry>
+				<entry name="label">
+					<![CDATA[10]]>
+				</entry>
 			</meta-data>
 		</dynamic-element>
 		<meta-data locale="en_US">
-			<entry name="label"><![CDATA[Transition Duration]]></entry>
-			<entry name="predefinedValue"><![CDATA[["5"]]]></entry>
-			<entry name="tip"><![CDATA[]]></entry>
+			<entry name="label">
+				<![CDATA[Transition Delay]]>
+			</entry>
+			<entry name="predefinedValue">
+				<![CDATA[[]]]>
+			</entry>
 		</meta-data>
 	</dynamic-element>
-	<dynamic-element dataType="string" indexType="" name="carousel-item" readOnly="false" repeatable="true" required="false" showLabel="true" type="text" width="small">
-		<dynamic-element dataType="string" indexType="" name="tagline" readOnly="false" repeatable="false" required="false" showLabel="true" type="text" width="small">
+	<dynamic-element dataType="string" indexType="" multiple="false" name="transition_type" readOnly="false" repeatable="false" required="false" showLabel="true" type="select" width="">
+		<dynamic-element name="option_transition_type_default" type="option" value="default">
 			<meta-data locale="en_US">
-				<entry name="label"><![CDATA[Item Tagline]]></entry>
-				<entry name="predefinedValue"><![CDATA[]]></entry>
-				<entry name="tip"><![CDATA[]]></entry>
+				<entry name="label">
+					<![CDATA[Default]]>
+				</entry>
 			</meta-data>
 		</dynamic-element>
-		<dynamic-element dataType="document-library" fieldNamespace="ddm" indexType="" name="icon" readOnly="false" repeatable="false" required="false" showLabel="true" type="ddm-documentlibrary" width="">
+		<dynamic-element name="option_transition_type_slide" type="option" value="slide">
 			<meta-data locale="en_US">
-				<entry name="label"><![CDATA[Item Icon]]></entry>
-				<entry name="predefinedValue"><![CDATA[]]></entry>
-				<entry name="tip"><![CDATA[]]></entry>
+				<entry name="label">
+					<![CDATA[Slide]]>
+				</entry>
 			</meta-data>
 		</dynamic-element>
-		<dynamic-element dataType="document-library" fieldNamespace="ddm" indexType="" name="image" readOnly="false" repeatable="false" required="true" showLabel="true" type="ddm-documentlibrary" width="">
+		<dynamic-element name="option_transition_type_press_away" type="option" value="press-away">
 			<meta-data locale="en_US">
-				<entry name="label"><![CDATA[Item Image]]></entry>
-				<entry name="predefinedValue"><![CDATA[]]></entry>
-				<entry name="tip"><![CDATA[]]></entry>
+				<entry name="label">
+					<![CDATA[Press Away]]>
+				</entry>
 			</meta-data>
 		</dynamic-element>
-		<dynamic-element dataType="link-to-page" fieldNamespace="ddm" indexType="" name="url-location" readOnly="false" repeatable="false" required="false" showLabel="true" type="ddm-link-to-page" width="small">
+		<dynamic-element name="option_transition_type_soft_scale" type="option" value="soft-scale">
 			<meta-data locale="en_US">
-				<entry name="label"><![CDATA[Item Url]]></entry>
-				<entry name="predefinedValue"><![CDATA[]]></entry>
-				<entry name="tip"><![CDATA[]]></entry>
+				<entry name="label">
+					<![CDATA[Soft Scale]]>
+				</entry>
+			</meta-data>
+		</dynamic-element>
+		<dynamic-element name="option_transition_type_snapin" type="option" value="snapin">
+			<meta-data locale="en_US">
+				<entry name="label">
+					<![CDATA[Snap In]]>
+				</entry>
 			</meta-data>
 		</dynamic-element>
 		<meta-data locale="en_US">
-			<entry name="label"><![CDATA[Carousel Item]]></entry>
-			<entry name="predefinedValue"><![CDATA[]]></entry>
-			<entry name="tip"><![CDATA[]]></entry>
+			<entry name="label">
+				<![CDATA[Transition Type]]>
+			</entry>
+			<entry name="predefinedValue">
+				<![CDATA[["default"]]]>
+			</entry>
+		</meta-data>
+	</dynamic-element>
+	<dynamic-element dataType="boolean" indexType="keyword" localizable="true" name="controls_pagination" readOnly="false" repeatable="false" required="false" showLabel="true" type="checkbox" width="">
+		<meta-data locale="en_US">
+			<entry name="label">
+				<![CDATA[Pagination]]>
+			</entry>
+			<entry name="predefinedValue">
+				<![CDATA[true]]>
+			</entry>
+		</meta-data>
+	</dynamic-element>
+	<dynamic-element dataType="boolean" indexType="keyword" localizable="true" name="controls_play" readOnly="false" repeatable="false" required="false" showLabel="true" type="checkbox" width="">
+		<meta-data locale="en_US">
+			<entry name="label">
+				<![CDATA[Play]]>
+			</entry>
+			<entry name="predefinedValue">
+				<![CDATA[true]]>
+			</entry>
+		</meta-data>
+	</dynamic-element>
+	<dynamic-element dataType="boolean" indexType="keyword" localizable="true" name="controls_prev_next" readOnly="false" repeatable="false" required="false" showLabel="true" type="checkbox" width="">
+		<meta-data locale="en_US">
+			<entry name="label">
+				<![CDATA[Prev and Next]]>
+			</entry>
+			<entry name="predefinedValue">
+				<![CDATA[true]]>
+			</entry>
+		</meta-data>
+	</dynamic-element>
+	<dynamic-element dataType="boolean" indexType="" name="auto_play" readOnly="false" repeatable="false" required="false" showLabel="true" type="checkbox" width="">
+		<meta-data locale="en_US">
+			<entry name="label">
+				<![CDATA[Auto Play]]>
+			</entry>
+			<entry name="predefinedValue">
+				<![CDATA[true]]>
+			</entry>
+		</meta-data>
+	</dynamic-element>
+	<dynamic-element dataType="string" indexType="keyword" name="carousel_text" readOnly="false" repeatable="true" required="false" showLabel="true" type="textarea" width="large">
+		<dynamic-element dataType="string" indexType="keyword" localizable="true" multiple="false" name="carousel_text_position" readOnly="false" repeatable="false" required="false" showLabel="true" type="select" width="">
+			<dynamic-element name="carousel_text_position_option_top" type="option" value="top">
+				<meta-data locale="en_US">
+					<entry name="label">
+						<![CDATA[Top]]>
+					</entry>
+				</meta-data>
+			</dynamic-element>
+			<dynamic-element name="carousel_text_position_option_bottom" type="option" value="bottom">
+				<meta-data locale="en_US">
+					<entry name="label">
+						<![CDATA[Bottom]]>
+					</entry>
+				</meta-data>
+			</dynamic-element>
+			<meta-data locale="en_US">
+				<entry name="label">
+					<![CDATA[Carousel Text Position]]>
+				</entry>
+				<entry name="predefinedValue">
+					<![CDATA[[""]]]>
+				</entry>
+			</meta-data>
+		</dynamic-element>
+		<dynamic-element dataType="document-library" fieldNamespace="ddm" indexType="" name="image" readOnly="false" repeatable="false" required="false" showLabel="true" type="ddm-documentlibrary" width="">
+			<meta-data locale="en_US">
+				<entry name="label">
+					<![CDATA[Image]]>
+				</entry>
+				<entry name="predefinedValue">
+					<![CDATA[]]>
+				</entry>
+			</meta-data>
+		</dynamic-element>
+		<dynamic-element dataType="string" indexType="keyword" name="carousel_button_text" readOnly="false" repeatable="false" required="false" showLabel="true" type="text" width="large">
+			<dynamic-element dataType="string" indexType="keyword" name="carousel_button_link" readOnly="false" repeatable="false" required="false" showLabel="true" type="text" width="large">
+				<meta-data locale="en_US">
+					<entry name="label">
+						<![CDATA[Carousel Button Link]]>
+					</entry>
+					<entry name="predefinedValue">
+						<![CDATA[]]>
+					</entry>
+				</meta-data>
+			</dynamic-element>
+			<dynamic-element dataType="string" indexType="keyword" multiple="false" name="carousel_button_style" readOnly="false" repeatable="false" required="false" showLabel="true" type="select" width="">
+				<dynamic-element name="option_carousel_button_style_standard" type="option" value="btn">
+					<meta-data locale="en_US">
+						<entry name="label">
+							<![CDATA[Standard]]>
+						</entry>
+					</meta-data>
+				</dynamic-element>
+				<dynamic-element name="option_carousel_button_style_primary" type="option" value="btn btn-primary">
+					<meta-data locale="en_US">
+						<entry name="label">
+							<![CDATA[Primary]]>
+						</entry>
+					</meta-data>
+				</dynamic-element>
+				<dynamic-element name="option_carousel_button_style_info" type="option" value="btn btn-info">
+					<meta-data locale="en_US">
+						<entry name="label">
+							<![CDATA[Info]]>
+						</entry>
+					</meta-data>
+				</dynamic-element>
+				<dynamic-element name="option_carousel_button_style_success" type="option" value="btn btn-success">
+					<meta-data locale="en_US">
+						<entry name="label">
+							<![CDATA[Success]]>
+						</entry>
+					</meta-data>
+				</dynamic-element>
+				<dynamic-element name="option_carousel_button_style_warning" type="option" value="btn btn-warning">
+					<meta-data locale="en_US">
+						<entry name="label">
+							<![CDATA[Warning]]>
+						</entry>
+					</meta-data>
+				</dynamic-element>
+				<dynamic-element name="option_carousel_button_style_danger" type="option" value="btn btn-danger">
+					<meta-data locale="en_US">
+						<entry name="label">
+							<![CDATA[Danger]]>
+						</entry>
+					</meta-data>
+				</dynamic-element>
+				<dynamic-element name="option_carousel_button_style_inverse" type="option" value="btn btn-inverse">
+					<meta-data locale="en_US">
+						<entry name="label">
+							<![CDATA[Inverse]]>
+						</entry>
+					</meta-data>
+				</dynamic-element>
+				<dynamic-element name="option_carousel_button_style_link" type="option" value="btn btn-link">
+					<meta-data locale="en_US">
+						<entry name="label">
+							<![CDATA[Link]]>
+						</entry>
+					</meta-data>
+				</dynamic-element>
+				<dynamic-element name="option_carousel_button_style_custom" type="option" value="btn btn-custom">
+					<meta-data locale="en_US">
+						<entry name="label">
+							<![CDATA[Custom]]>
+						</entry>
+					</meta-data>
+				</dynamic-element>
+				<meta-data locale="en_US">
+					<entry name="label">
+						<![CDATA[Carousel Button Style]]>
+					</entry>
+					<entry name="predefinedValue">
+						<![CDATA[[""]]]>
+					</entry>
+				</meta-data>
+			</dynamic-element>
+			<dynamic-element dataType="string" indexType="keyword" multiple="false" name="carousel_button_size" readOnly="false" repeatable="false" required="false" showLabel="true" type="select" width="">
+				<dynamic-element name="option_carousel_button_size_large" type="option" value="btn-large">
+					<meta-data locale="en_US">
+						<entry name="label">
+							<![CDATA[Large]]>
+						</entry>
+					</meta-data>
+				</dynamic-element>
+				<dynamic-element name="option_carousel_button_size_regular" type="option" value="btn-default">
+					<meta-data locale="en_US">
+						<entry name="label">
+							<![CDATA[Regular]]>
+						</entry>
+					</meta-data>
+				</dynamic-element>
+				<dynamic-element name="option_carousel_button_size_small" type="option" value="btn-small">
+					<meta-data locale="en_US">
+						<entry name="label">
+							<![CDATA[Small]]>
+						</entry>
+					</meta-data>
+				</dynamic-element>
+				<dynamic-element name="option_carousel_button_size_mini" type="option" value="btn-mini">
+					<meta-data locale="en_US">
+						<entry name="label">
+							<![CDATA[Mini]]>
+						</entry>
+					</meta-data>
+				</dynamic-element>
+				<meta-data locale="en_US">
+					<entry name="label">
+						<![CDATA[Carousel Button Size]]>
+					</entry>
+					<entry name="predefinedValue">
+						<![CDATA[[""]]]>
+					</entry>
+				</meta-data>
+			</dynamic-element>
+			<meta-data locale="en_US">
+				<entry name="label">
+					<![CDATA[Carousel Button Text]]>
+				</entry>
+				<entry name="predefinedValue">
+					<![CDATA[]]>
+				</entry>
+			</meta-data>
+		</dynamic-element>
+		<dynamic-element dataType="string" indexType="keyword" multiple="false" name="carousel_caption_alignment" readOnly="false" repeatable="false" required="false" showLabel="true" type="select" width="">
+			<dynamic-element name="option_carousel_caption_alignment_center" type="option" value="center">
+				<meta-data locale="en_US">
+					<entry name="label">
+						<![CDATA[Center]]>
+					</entry>
+				</meta-data>
+			</dynamic-element>
+			<dynamic-element name="option_carousel_caption_alignment_left" type="option" value="left">
+				<meta-data locale="en_US">
+					<entry name="label">
+						<![CDATA[Left]]>
+					</entry>
+				</meta-data>
+			</dynamic-element>
+			<dynamic-element name="option_carousel_caption_alignment_right" type="option" value="right">
+				<meta-data locale="en_US">
+					<entry name="label">
+						<![CDATA[Right]]>
+					</entry>
+				</meta-data>
+			</dynamic-element>
+			<dynamic-element name="option_carousel_caption_alignment_custom" type="option" value="custom">
+				<meta-data locale="en_US">
+					<entry name="label">
+						<![CDATA[Custom]]>
+					</entry>
+				</meta-data>
+			</dynamic-element>
+			<meta-data locale="en_US">
+				<entry name="label">
+					<![CDATA[Carousel Caption Alignment]]>
+				</entry>
+				<entry name="predefinedValue">
+					<![CDATA[[""]]]>
+				</entry>
+			</meta-data>
+		</dynamic-element>
+		<meta-data locale="en_US">
+			<entry name="label">
+				<![CDATA[Carousel Text]]>
+			</entry>
+			<entry name="predefinedValue">
+				<![CDATA[]]>
+			</entry>
 		</meta-data>
 	</dynamic-element>
 </root>

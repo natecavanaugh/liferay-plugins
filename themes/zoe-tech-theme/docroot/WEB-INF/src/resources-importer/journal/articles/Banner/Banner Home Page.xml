@@ -1,0 +1,46 @@
+<?xml version="1.0"?>
+
+<root available-locales="en_US" default-locale="en_US">
+	<dynamic-element name="title" type="text">
+		<dynamic-content><![CDATA[Banner Home Page]]></dynamic-content>
+	</dynamic-element>
+	<dynamic-element name="banner_message" type="textarea">
+		<dynamic-content><![CDATA[Use this element to promote a message or advertisement.]]></dynamic-content>
+	</dynamic-element>
+	<dynamic-element name="banner_message_color" type="text">
+		<dynamic-content><![CDATA[#FFF]]></dynamic-content>
+	</dynamic-element>
+	<dynamic-element name="banner_message_font_weight" type="select">
+		<dynamic-content><![CDATA[100]]></dynamic-content>
+	</dynamic-element>
+	<dynamic-element name="banner_secondary_message" type="textarea">
+		<dynamic-content><![CDATA[]]></dynamic-content>
+	</dynamic-element>
+	<dynamic-element name="banner_secondary_message_font_weight" type="select">
+		<dynamic-content><![CDATA[300]]></dynamic-content>
+	</dynamic-element>
+	<dynamic-element name="banner_secondary_message_color" type="text">
+		<dynamic-content><![CDATA[]]></dynamic-content>
+	</dynamic-element>
+	<dynamic-element name="banner_message_alignment" type="select">
+		<dynamic-content><![CDATA[center]]></dynamic-content>
+	</dynamic-element>
+	<dynamic-element name="banner_background_color" type="text">
+		<dynamic-content><![CDATA[#B3D929]]></dynamic-content>
+	</dynamic-element>
+	<dynamic-element name="banner_background_padding" type="text">
+		<dynamic-content><![CDATA[25px 20px]]></dynamic-content>
+	</dynamic-element>
+	<dynamic-element name="banner_button_text" type="text">
+		<dynamic-content><![CDATA[]]></dynamic-content>
+		<dynamic-element name="banner_button_link" type="text">
+			<dynamic-content><![CDATA[1]]></dynamic-content>
+		</dynamic-element>
+		<dynamic-element name="banner_button_style" type="select">
+			<dynamic-content><![CDATA[btn]]></dynamic-content>
+		</dynamic-element>
+		<dynamic-element name="banner_button_size" type="select">
+			<dynamic-content><![CDATA[btn-large]]></dynamic-content>
+		</dynamic-element>
+	</dynamic-element>
+</root>

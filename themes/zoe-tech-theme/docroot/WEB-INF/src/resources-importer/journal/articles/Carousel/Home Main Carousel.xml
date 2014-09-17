@@ -1,0 +1,100 @@
+<?xml version="1.0"?>
+
+<root available-locales="en_US" default-locale="en_US">
+	<dynamic-element name="carousel_height" type="text">
+		<dynamic-content><![CDATA[450px]]></dynamic-content>
+	</dynamic-element>
+	<dynamic-element name="duration" type="select">
+		<dynamic-content><![CDATA[4]]></dynamic-content>
+	</dynamic-element>
+	<dynamic-element name="transition_type" type="select">
+		<dynamic-content><![CDATA[soft-scale]]></dynamic-content>
+	</dynamic-element>
+	<dynamic-element name="controls_pagination" type="checkbox">
+		<dynamic-content><![CDATA[true]]></dynamic-content>
+	</dynamic-element>
+	<dynamic-element name="controls_play" type="checkbox">
+		<dynamic-content><![CDATA[true]]></dynamic-content>
+	</dynamic-element>
+	<dynamic-element name="controls_prev_next" type="checkbox">
+		<dynamic-content><![CDATA[true]]></dynamic-content>
+	</dynamic-element>
+	<dynamic-element name="auto_play" type="checkbox">
+		<dynamic-content><![CDATA[true]]></dynamic-content>
+	</dynamic-element>
+
+	<dynamic-element name="carousel_text" type="textarea">
+		<dynamic-element name="carousel_text_position" type="select">
+			<dynamic-content><![CDATA[top]]></dynamic-content>
+		</dynamic-element>
+		<dynamic-element name="image" type="ddm-documentlibrary">
+			<dynamic-content><![CDATA[[$FILE=zt_carousel_image1.jpg$]]]></dynamic-content>
+		</dynamic-element>
+		<dynamic-element name="carousel_button_text" type="text">
+			<dynamic-element name="carousel_button_link" type="text">
+				<dynamic-content><![CDATA[1]]></dynamic-content>
+			</dynamic-element>
+			<dynamic-element name="carousel_button_style" type="select">
+				<dynamic-content><![CDATA[btn btn-success]]></dynamic-content>
+			</dynamic-element>
+			<dynamic-element name="carousel_button_size" type="select">
+				<dynamic-content><![CDATA[btn-large]]></dynamic-content>
+			</dynamic-element>
+			<dynamic-content><![CDATA[View More]]></dynamic-content>
+		</dynamic-element>
+		<dynamic-element name="carousel_caption_alignment" type="select">
+			<dynamic-content><![CDATA[center]]></dynamic-content>
+		</dynamic-element>
+		<dynamic-content><![CDATA[Si terrena dixi vobis, et non creditis: quomodo, si dixero vobis cælestia, credetis?]]></dynamic-content>
+	</dynamic-element>
+
+	<dynamic-element name="carousel_text" type="textarea">
+		<dynamic-element name="carousel_text_position" type="select">
+			<dynamic-content><![CDATA[top]]></dynamic-content>
+		</dynamic-element>
+		<dynamic-element name="image" type="ddm-documentlibrary">
+			<dynamic-content><![CDATA[[$FILE=zt_carousel_image2.jpg$]]]></dynamic-content>
+		</dynamic-element>
+		<dynamic-element name="carousel_button_text" type="text">
+			<dynamic-element name="carousel_button_link" type="ddm-link-to-page">
+				<dynamic-content><![CDATA[1]]></dynamic-content>
+			</dynamic-element>
+			<dynamic-element name="carousel_button_style" type="select">
+				<dynamic-content><![CDATA[btn btn-info]]></dynamic-content>
+			</dynamic-element>
+			<dynamic-element name="carousel_button_size" type="select">
+				<dynamic-content><![CDATA[btn-large]]></dynamic-content>
+			</dynamic-element>
+			<dynamic-content><![CDATA[View More]]></dynamic-content>
+		</dynamic-element>
+		<dynamic-element name="carousel_caption_alignment" type="select">
+			<dynamic-content><![CDATA[left]]></dynamic-content>
+		</dynamic-element>
+		<dynamic-content><![CDATA[Spiritus ubi vult spirat, et vocem ejus audis, sed nescis unde veniat, aut quo vadat: sic est omnis qui natus est ex spiritu.]]></dynamic-content>
+	</dynamic-element>
+
+	<dynamic-element name="carousel_text" type="textarea">
+		<dynamic-element name="carousel_text_position" type="select">
+			<dynamic-content><![CDATA[top]]></dynamic-content>
+		</dynamic-element>
+		<dynamic-element name="image" type="ddm-documentlibrary">
+			<dynamic-content><![CDATA[[$FILE=zt_carousel_image3.jpg$]]]></dynamic-content>
+		</dynamic-element>
+		<dynamic-element name="carousel_button_text" type="text">
+			<dynamic-element name="carousel_button_link" type="ddm-link-to-page">
+				<dynamic-content><![CDATA[]]></dynamic-content>
+			</dynamic-element>
+			<dynamic-element name="carousel_button_style" type="select">
+				<dynamic-content><![CDATA[btn btn-warning]]></dynamic-content>
+			</dynamic-element>
+			<dynamic-element name="carousel_button_size" type="select">
+				<dynamic-content><![CDATA[btn-large]]></dynamic-content>
+			</dynamic-element>
+			<dynamic-content><![CDATA[View More]]></dynamic-content>
+		</dynamic-element>
+		<dynamic-element name="carousel_caption_alignment" type="select">
+			<dynamic-content><![CDATA[right]]></dynamic-content>
+		</dynamic-element>
+		<dynamic-content><![CDATA[Nihil ergo nunc damnationis est iis qui sunt in Christo Jesu: qui non secundum carnem ambulant. Lex enim spiritus vitæ in Christo Jesu liberavit me a lege peccati et mortis.]]></dynamic-content>
+	</dynamic-element>
+</root>
