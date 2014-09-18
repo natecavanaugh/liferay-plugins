@@ -83,6 +83,8 @@ JSONArray declinedCalendarsJSONArray = JSONFactoryUtil.createJSONArray();
 JSONArray maybeCalendarsJSONArray = JSONFactoryUtil.createJSONArray();
 JSONArray pendingCalendarsJSONArray = JSONFactoryUtil.createJSONArray();
 
+boolean hasChildCalendarBookings = false;
+boolean isMasterBooking = false;
 boolean invitable = true;
 Recurrence recurrence = null;
 boolean recurring = false;
@@ -101,6 +103,16 @@ if (calendarBooking != null) {
 
 	if (calendarBooking.isRecurring()) {
 		recurring = true;
+	}
+
+	List<CalendarBooking> childCalendarBookings = CalendarBookingServiceUtil.getChildCalendarBookings(calendarBooking.getParentCalendarBookingId());
+
+	if (childCalendarBookings.size() > 1) {
+		hasChildCalendarBookings = true;
+	}
+
+	if (calendarBooking.isMasterBooking()) {
+		isMasterBooking = true;
 	}
 
 	recurrence = calendarBooking.getRecurrenceObj();
