@@ -332,20 +332,25 @@ List<Calendar> manageableCalendars = CalendarServiceUtil.search(themeDisplay.get
 		return document.<portlet:namespace />fm.<portlet:namespace />title.value + ' ' + window.<portlet:namespace />description.getHTML();
 	}
 
-	function <portlet:namespace />resolver(data) {
-		var A = AUI();
+	Liferay.provide(
+		window,
+		'<portlet:namespace />resolver',
+		function(data) {
+			var A = AUI();
 
-		var answers = data.answers;
+			var answers = data.answers;
 
-		if (answers.cancel) {
-			return;
-		}
+			if (answers.cancel) {
+				return;
+			}
 
-		A.one('#<portlet:namespace />allFollowing').val(!!answers.allFollowing);
-		A.one('#<portlet:namespace />updateCalendarBookingInstance').val(!!answers.updateInstance);
+			A.one('#<portlet:namespace />allFollowing').val(!!answers.allFollowing);
+			A.one('#<portlet:namespace />updateCalendarBookingInstance').val(!!answers.updateInstance);
 
-		submitForm(document.<portlet:namespace />fm);
-	}
+			submitForm(document.<portlet:namespace />fm);
+		},
+		['aui-base']
+	);
 
 	Liferay.provide(
 		window,
