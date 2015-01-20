@@ -1,4 +1,4 @@
-@import "compass";
+@import "bourbon";
 @import "so";
 
 $buttonTextColor: #34404F;
@@ -110,8 +110,7 @@ body.so-classic {
 			a {
 				background: #F4F4F4;
 				color: $red;
-
-				@include box-shadow(none);
+				box-shadow: none;
 			}
 		}
 	}
@@ -125,9 +124,7 @@ body.so-classic {
 		background: none;
 		border-bottom: 1px solid $defaultBorderColor;
 		border-left: 1px solid $defaultBorderColor;
-
-		@include box-shadow(none);
-
+		box-shadow: none;
 		margin-left: -1px;
 	}
 
@@ -153,7 +150,7 @@ body.so-classic {
 	}
 
 	.invite-members, .social-relations a {
-		@include border-radius(4px);
+		border-radius: 4px;
 
 		&:hover, &:focus {
 			text-decoration: none;

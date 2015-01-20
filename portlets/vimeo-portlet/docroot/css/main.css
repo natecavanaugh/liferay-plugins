@@ -1,4 +1,4 @@
-@import "compass";
+@import "bourbon";
 
 .portlet-configuration {
 	.preview {
@@ -70,5 +70,5 @@
 /* ---------- Extras ---------- */
 
 .portlet-configuration #preview {
-	@include border-radius(4px);
+	border-radius: 4px;
 }
