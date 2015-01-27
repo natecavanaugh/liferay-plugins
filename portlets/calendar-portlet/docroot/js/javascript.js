@@ -1320,6 +1320,9 @@ AUI.add(
 
 						Scheduler.superclass.renderUI.apply(this, arguments);
 
+						instance.navDateNode.replaceClass('hidden-xs', 'hidden');
+						instance.viewDateNode.removeClass('visible-xs');
+
 						var showAddEventBtn = instance.get('showAddEventBtn');
 
 						if (showAddEventBtn) {
@@ -1461,6 +1464,35 @@ AUI.add(
 								instance._updateSchedulerEvent(schedulerEvent, changedAttributes);
 							}
 						}
+					},
+
+					_createViewTriggerNode: function(view, tpl) {
+						var instance = this;
+
+						var node = Scheduler.superclass._createViewTriggerNode.apply(this, arguments);
+
+						var schedulerView = '';
+
+						var viewName = view.get('name');
+
+						if (viewName == 'agenda') {
+							schedulerView = Liferay.Language.get('agenda-view');
+						}
+						else if (viewName == 'day') {
+							schedulerView = Liferay.Language.get('day-view');
+						}
+						else if (viewName == 'month') {
+							schedulerView = Liferay.Language.get('month-view');
+						}
+						else if (viewName == 'week') {
+							schedulerView = Liferay.Language.get('week-view');
+						}
+
+						if (node.get('nodeName') === 'OPTION') {
+							node.text(schedulerView);
+						}
+
+						return node;
 					},
 
 					_getCalendarBookingDuration: function(schedulerEvent) {
