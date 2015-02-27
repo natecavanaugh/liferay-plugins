@@ -300,7 +300,16 @@ AUI.add(
 
 										notificationsConfigurationNode.load(
 											portletURL.toString(),
+											'#manage-notifications-wrapper',
 											function() {
+												var manageNotificationsNode = A.one('#manage-notifications-wrapper');
+
+												if (!manageNotificationsNode) {
+													var message = Liferay.Language.get('please-sign-in-to-continue');
+
+													notificationsConfigurationNode.setHTML('<div class=\"manage-notifications\">' + message + '</div>');
+												}
+
 												notificationsConfigurationNode.unplug(A.LoadingMask);
 											}
 										);
