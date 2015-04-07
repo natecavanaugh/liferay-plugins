@@ -1220,10 +1220,10 @@ AUI().use(
 				if (instance._initialRequest) {
 					instance._loadCache(entries);
 
-					if (instance._openPanelId.length) {
-						var openPanelId = parseInt(instance._openPanelId, 10);
+					if (instance._openPanelId) {
+						openPanelId = parseInt(instance._openPanelId, 10);
 
-						if (!isNaN(openPanelId)) {
+						if (Lang.isNumber(openPanelId)) {
 							instance._createChatFromUser(instance._openPanelId);
 						}
 					}
