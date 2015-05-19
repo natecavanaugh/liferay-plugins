@@ -70,7 +70,7 @@ AUI.add(
 							value = milliseconds / item;
 							desc = Time.TIME_DESC[index];
 
-							return (milliseconds % item === 0);
+							return milliseconds % item === 0;
 						}
 					);
 				}
@@ -232,8 +232,8 @@ AUI.add(
 								results,
 								function(result) {
 									var calendar = result.raw;
-									var name = calendar.name;
 									var calendarResourceName = calendar.calendarResourceName;
+									var name = calendar.name;
 
 									if (name !== calendarResourceName) {
 										name = [calendarResourceName, STR_DASH, name].join(STR_SPACE);
@@ -674,8 +674,8 @@ AUI.add(
 				var oldCalendarId = schedulerEvent.get('calendarId');
 
 				if (scheduler) {
-					var oldCalendar = instance.availableCalendars[oldCalendarId];
 					var newCalendar = instance.availableCalendars[newCalendarId];
+					var oldCalendar = instance.availableCalendars[oldCalendarId];
 
 					if (oldCalendar !== newCalendar) {
 						oldCalendar.remove(schedulerEvent);
@@ -706,8 +706,8 @@ AUI.add(
 			syncCalendarsMap: function(calendarLists) {
 				var instance = this;
 
-				var visibleCalendars = instance.visibleCalendars = {};
 				var availableCalendars = instance.availableCalendars = {};
+				var visibleCalendars = instance.visibleCalendars = {};
 
 				calendarLists.forEach(
 					function(calendarList) {
@@ -804,8 +804,8 @@ AUI.add(
 			updateEventInstance: function(schedulerEvent, allFollowing, success) {
 				var instance = this;
 
-				var startDate = schedulerEvent.get('startDate');
 				var endDate = schedulerEvent.get('endDate');
+				var startDate = schedulerEvent.get('startDate');
 
 				instance.invokeService(
 					{
@@ -861,6 +861,15 @@ AUI.add(
 								success.call(instance, data);
 							}
 						}
+					}
+				);
+			},
+
+			updateSchedulerEvents: function(schedulerEvents, calendarBooking) {
+				A.each(
+					schedulerEvents,
+					function(schedulerEvent) {
+						schedulerEvent.set('status', calendarBooking.status);
 					}
 				);
 			}
@@ -1031,16 +1040,24 @@ AUI.add(
 						instance.on('statusChange', instance._onStatusChange);
 					},
 
+					syncUI: function() {
+						var instance = this;
+
+						Liferay.SchedulerEvent.superclass.syncUI.apply(instance, arguments);
+
+						instance._uiSetStatus(instance.get('status'));
+					},
+
 					isMasterBooking: function() {
 						var instance = this;
 
-						return (instance.get('parentCalendarBookingId') === instance.get('calendarBookingId'));
+						return instance.get('parentCalendarBookingId') === instance.get('calendarBookingId');
 					},
 
 					isRecurring: function() {
 						var instance = this;
 
-						return (instance.get('recurrence') !== STR_BLANK);
+						return instance.get('recurrence') !== STR_BLANK;
 					},
 
 					syncNodeColorUI: function() {
@@ -1067,12 +1084,17 @@ AUI.add(
 						}
 					},
 
-					syncUI: function() {
+					syncWithServer: function() {
 						var instance = this;
 
-						Liferay.SchedulerEvent.superclass.syncUI.apply(instance, arguments);
+						var calendarBookingId = instance.get('calendarBookingId');
+						var scheduler = instance.get('scheduler');
+						var schedulerEvents = scheduler.getEventsByCalendarBookingId(calendarBookingId);
 
-						instance._uiSetStatus(instance.get('status'));
+						CalendarUtil.getEvent(
+							calendarBookingId,
+							A.bind(CalendarUtil.updateSchedulerEvents, CalendarUtil, schedulerEvents)
+						);
 					},
 
 					_onLoadingChange: function(event) {
@@ -1124,9 +1146,9 @@ AUI.add(
 
 						var node = instance.get('node');
 
-						node.toggleClass('calendar-portlet-event-approved', (val === CalendarWorkflow.STATUS_APPROVED));
-						node.toggleClass('calendar-portlet-event-maybe', (val === CalendarWorkflow.STATUS_MAYBE));
-						node.toggleClass('calendar-portlet-event-pending', (val === CalendarWorkflow.STATUS_PENDING));
+						node.toggleClass('calendar-portlet-event-approved', val === CalendarWorkflow.STATUS_APPROVED);
+						node.toggleClass('calendar-portlet-event-maybe', val === CalendarWorkflow.STATUS_MAYBE);
+						node.toggleClass('calendar-portlet-event-pending', val === CalendarWorkflow.STATUS_PENDING);
 					}
 				}
 			}
@@ -1384,6 +1406,16 @@ AUI.add(
 						Scheduler.superclass.bindUI.apply(this, arguments);
 					},
 
+					getEventsByCalendarBookingId: function(calendarBookingId) {
+						var instance = this;
+
+						return instance.getEvents(
+							function(schedulerEvent) {
+								return schedulerEvent.get('calendarBookingId') === calendarBookingId;
+							}
+						);
+					},
+
 					load: function() {
 						var instance = this;
 
@@ -1395,8 +1427,8 @@ AUI.add(
 					plotCalendarBookings: function(calendarBookings) {
 						var instance = this;
 
-						var events = [];
 						var calendarEvents = {};
+						var events = [];
 
 						calendarBookings.forEach(
 							function(item, index) {
@@ -1893,8 +1925,8 @@ AUI.add(
 						var editGroup = [];
 						var respondGroup = [];
 
-						var status = schedulerEvent.get('status');
 						var calendar = CalendarUtil.availableCalendars[schedulerEvent.get('calendarId')];
+						var status = schedulerEvent.get('status');
 
 						if (calendar) {
 							var permissions = calendar.get('permissions');
@@ -2060,7 +2092,7 @@ AUI.add(
 								dialog: {
 									after: {
 										destroy: function(event) {
-											scheduler.load();
+											schedulerEvent.syncWithServer();
 										}
 									},
 									destroyOnHide: true,
