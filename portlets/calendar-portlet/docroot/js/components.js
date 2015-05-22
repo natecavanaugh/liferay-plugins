@@ -25,8 +25,6 @@
 
 			var isArray = Lang.isArray;
 
-			var owns = A.Object.owns;
-
 			var CSS_SIMPLE_MENU_ITEM = getClassName('simple-menu', 'item');
 
 			var CSS_SIMPLE_MENU_ITEM_HIDDEN = getClassName('simple-menu', 'item', 'hidden');
@@ -182,7 +180,7 @@
 								function(item, index) {
 									var caption = item.caption;
 
-									if (!owns(item, 'id')) {
+									if (!item.hasOwnProperty('id')) {
 										item.id = A.guid();
 									}
 
