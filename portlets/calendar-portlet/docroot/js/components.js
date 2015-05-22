@@ -23,7 +23,7 @@
 
 			var getClassName = A.getClassName;
 
-			var isArray = Lang.isArray;
+			var isArray = Array.isArray;
 
 			var owns = A.Object.owns;
 
@@ -274,7 +274,7 @@
 			var AArray = A.Array;
 			var Lang = A.Lang;
 
-			var isArray = Lang.isArray;
+			var isArray = Array.isArray;
 			var isObject = Lang.isObject;
 
 			var	getClassName = A.getClassName;
@@ -701,7 +701,7 @@
 							setter: function(val) {
 								return AArray.invoke(val, 'toUpperCase');
 							},
-							validator: Lang.isArray,
+							validator: Array.isArray,
 							value: ['#d96666', '#e67399', '#b373b3', '#8c66d9', '#668cb3', '#668cd9', '#59bfb3', '#65ad89', '#4cb052', '#8cbf40', '#bfbf4d', '#e0c240', '#f2a640', '#e6804d', '#be9494', '#a992a9', '#8997a5', '#94a2be', '#85aaa5', '#a7a77d', '#c4a883', '#c7561e', '#b5515d', '#c244ab']
 						}
 					},
@@ -820,7 +820,7 @@
 						},
 
 						values: {
-							validator: Lang.isArray,
+							validator: Array.isArray,
 							value: [
 								{
 									interval: 10,
