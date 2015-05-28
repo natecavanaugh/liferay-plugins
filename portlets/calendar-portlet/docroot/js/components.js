@@ -23,7 +23,7 @@
 
 			var getClassName = A.getClassName;
 
-			var isArray = Lang.isArray;
+			var isArray = Array.isArray;
 
 			var owns = A.Object.owns;
 
@@ -54,7 +54,7 @@
 						}
 					);
 
-					return (found && found.fn);
+					return found && found.fn;
 				}
 			);
 
@@ -243,7 +243,7 @@
 									function(item, index) {
 										var id = item.attr('data-id');
 
-										item.toggleClass(CSS_SIMPLE_MENU_ITEM_HIDDEN, (AArray.indexOf(val, id) > -1));
+										item.toggleClass(CSS_SIMPLE_MENU_ITEM_HIDDEN, AArray.indexOf(val, id) > -1);
 									}
 								);
 							}
@@ -274,7 +274,7 @@
 			var AArray = A.Array;
 			var Lang = A.Lang;
 
-			var isArray = Lang.isArray;
+			var isArray = Array.isArray;
 			var isObject = Lang.isObject;
 
 			var	getClassName = A.getClassName;
@@ -516,7 +516,7 @@
 								simpleMenu.setAttrs(
 									{
 										alignNode: target,
-										visible: ((simpleMenu.get('align.node') !== target) || !simpleMenu.get('visible'))
+										visible: simpleMenu.get('align.node') !== target || !simpleMenu.get('visible')
 									}
 								);
 							}
@@ -701,7 +701,7 @@
 							setter: function(val) {
 								return AArray.invoke(val, 'toUpperCase');
 							},
-							validator: Lang.isArray,
+							validator: Array.isArray,
 							value: ['#d96666', '#e67399', '#b373b3', '#8c66d9', '#668cb3', '#668cd9', '#59bfb3', '#65ad89', '#4cb052', '#8cbf40', '#bfbf4d', '#e0c240', '#f2a640', '#e6804d', '#be9494', '#a992a9', '#8997a5', '#94a2be', '#85aaa5', '#a7a77d', '#c4a883', '#c7561e', '#b5515d', '#c244ab']
 						}
 					},
@@ -820,7 +820,7 @@
 						},
 
 						values: {
-							validator: Lang.isArray,
+							validator: Array.isArray,
 							value: [
 								{
 									interval: 10,
@@ -857,6 +857,7 @@
 							var instance = this;
 
 							var target = event.target;
+
 							var checked = target.get('checked');
 							var elements = target.ancestor().siblings('input[type=text],select');
 
@@ -937,7 +938,7 @@
 					var hours = date.getHours();
 					var minutes = date.getMinutes();
 
-					var amPm = (hours < 12) ? 0 : 1;
+					var amPm = hours < 12 ? 0 : 1;
 
 					if (amPm === 1) {
 						hours -= 12;
@@ -970,12 +971,12 @@
 
 							var value = toInt(currentTarget.val());
 
-							if ((selectedSetter === 3) && (date.getHours() > 12)) {
+							if (selectedSetter === 3 && date.getHours() > 12) {
 								value += 12;
 							}
 
 							if (selectedSetter === 5) {
-								value = date.getHours() + ((value === 1) ? 12 : -12);
+								value = date.getHours() + (value === 1 ? 12 : -12);
 							}
 
 							setters[selectedSetter].call(date, value);
@@ -1070,14 +1071,14 @@
 						position = instance.POSITION_LABELS[recurrence.positionalWeekday.position];
 						weekDay = instance.WEEKDAY_LABELS[recurrence.positionalWeekday.weekday];
 					}
-					else if ((recurrence.frequency == instance.FREQUENCY.WEEKLY) && (recurrence.weekdays.length > 0)) {
+					else if (recurrence.frequency == instance.FREQUENCY.WEEKLY && recurrence.weekdays.length > 0) {
 						template.push(STR_SPACE, TPL_SPAN, Liferay.Language.get('on'), TPL_SPAN_CLOSE, ' {weekDays}');
 					}
 
-					if (recurrence.count && (recurrence.endValue === 'after')) {
+					if (recurrence.count && recurrence.endValue === 'after') {
 						template.push(', {count} ', Liferay.Language.get('times'));
 					}
-					else if (recurrence.untilDate && (recurrence.endValue === 'on')) {
+					else if (recurrence.untilDate && recurrence.endValue === 'on') {
 						var untilDate = recurrence.untilDate;
 
 						template.push(
