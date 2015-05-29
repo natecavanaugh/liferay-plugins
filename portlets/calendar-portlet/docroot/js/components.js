@@ -54,7 +54,7 @@
 						}
 					);
 
-					return (found && found.fn);
+					return found && found.fn;
 				}
 			);
 
@@ -194,7 +194,7 @@
 										cssClass = CSS_SIMPLE_MENU_SEPARATOR;
 									}
 
-									if (AArray.indexOf(hiddenItems, id) > -1) {
+									if (hiddenItems.indexOf(id) > -1) {
 										cssClass += STR_SPACE + CSS_SIMPLE_MENU_ITEM_HIDDEN;
 									}
 
@@ -243,7 +243,7 @@
 									function(item, index) {
 										var id = item.attr('data-id');
 
-										item.toggleClass(CSS_SIMPLE_MENU_ITEM_HIDDEN, (AArray.indexOf(val, id) > -1));
+										item.toggleClass(CSS_SIMPLE_MENU_ITEM_HIDDEN, val.indexOf(id) > -1);
 									}
 								);
 							}
@@ -437,7 +437,7 @@
 
 							var calendars = instance.get('calendars');
 
-							return instance.items.item(AArray.indexOf(calendars, calendar));
+							return instance.items.item(calendars.indexOf(calendar));
 						},
 
 						remove: function(calendar) {
@@ -446,7 +446,7 @@
 							var calendars = instance.get('calendars');
 
 							if (calendars.length > 0) {
-								var index = AArray.indexOf(calendars, calendar);
+								var index = calendars.indexOf(calendar);
 
 								if (index > -1) {
 									AArray.remove(calendars, index);
@@ -516,7 +516,7 @@
 								simpleMenu.setAttrs(
 									{
 										alignNode: target,
-										visible: ((simpleMenu.get('align.node') !== target) || !simpleMenu.get('visible'))
+										visible: simpleMenu.get('align.node') !== target || !simpleMenu.get('visible')
 									}
 								);
 							}
@@ -754,7 +754,7 @@
 
 							instance.items.removeClass(CSS_SIMPLE_COLOR_PICKER_ITEM_SELECTED);
 
-							var newNode = instance.items.item(AArray.indexOf(pallete, val));
+							var newNode = instance.items.item(pallete.indexOf(val));
 
 							if (newNode) {
 								newNode.addClass(CSS_SIMPLE_COLOR_PICKER_ITEM_SELECTED);
@@ -857,6 +857,7 @@
 							var instance = this;
 
 							var target = event.target;
+
 							var checked = target.get('checked');
 							var elements = target.ancestor().siblings('input[type=text],select');
 
@@ -937,7 +938,7 @@
 					var hours = date.getHours();
 					var minutes = date.getMinutes();
 
-					var amPm = (hours < 12) ? 0 : 1;
+					var amPm = hours < 12 ? 0 : 1;
 
 					if (amPm === 1) {
 						hours -= 12;
@@ -970,12 +971,12 @@
 
 							var value = toInt(currentTarget.val());
 
-							if ((selectedSetter === 3) && (date.getHours() > 12)) {
+							if (selectedSetter === 3 && date.getHours() > 12) {
 								value += 12;
 							}
 
 							if (selectedSetter === 5) {
-								value = date.getHours() + ((value === 1) ? 12 : -12);
+								value = date.getHours() + (value === 1 ? 12 : -12);
 							}
 
 							setters[selectedSetter].call(date, value);
@@ -1070,14 +1071,14 @@
 						position = instance.POSITION_LABELS[recurrence.positionalWeekday.position];
 						weekDay = instance.WEEKDAY_LABELS[recurrence.positionalWeekday.weekday];
 					}
-					else if ((recurrence.frequency == instance.FREQUENCY.WEEKLY) && (recurrence.weekdays.length > 0)) {
+					else if (recurrence.frequency == instance.FREQUENCY.WEEKLY && recurrence.weekdays.length > 0) {
 						template.push(STR_SPACE, TPL_SPAN, Liferay.Language.get('on'), TPL_SPAN_CLOSE, ' {weekDays}');
 					}
 
-					if (recurrence.count && (recurrence.endValue === 'after')) {
+					if (recurrence.count && recurrence.endValue === 'after') {
 						template.push(', {count} ', Liferay.Language.get('times'));
 					}
-					else if (recurrence.untilDate && (recurrence.endValue === 'on')) {
+					else if (recurrence.untilDate && recurrence.endValue === 'on') {
 						var untilDate = recurrence.untilDate;
 
 						template.push(
