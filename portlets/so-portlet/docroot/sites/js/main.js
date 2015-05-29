@@ -318,8 +318,8 @@ AUI().use(
 
 				var data = A.JSON.parse(event.data.responseText);
 
-				var results = data.sites;
 				var count = data.count;
+				var results = data.sites;
 
 				var buffer = [];
 
@@ -352,8 +352,7 @@ AUI().use(
 						'</li>';
 
 					buffer.push(
-						A.Array.map(
-							results,
+						results.map(
 							function(result) {
 								var classNames = [];
 
